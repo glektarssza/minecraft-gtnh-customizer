@@ -20,7 +20,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 /**
  * The root mod class.
  */
-@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", guiFactory = "com.glektarssza.player_handling_customizer.config.GuiFactory")
+@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", guiFactory = "com.glektarssza.player_handling_customizer_gtnh.config.GuiFactory")
 public class PlayerHandlingCustomizer {
     /**
      * The configuration directory.
