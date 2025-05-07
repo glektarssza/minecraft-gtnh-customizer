@@ -1,0 +1,371 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "workspace:setup",
+            "detail": "Setup the workspace for the first time.",
+            "icon": {
+                "id": "wrench",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": true,
+                "kind": "none"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:clean",
+                "gradle:setupDecompWorkspace",
+                "gradle:build",
+                "gradle:cleanEclipse",
+                "gradle:eclipse"
+            ],
+            "hide": false,
+            "isBackground": false,
+            "promptOnClose": false,
+            "runOptions": {
+                "instanceLimit": 1,
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "options": {},
+            "presentation": {
+                "echo": false,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "gradle:build",
+            "detail": "Assembles and tests this project.",
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "hide": true,
+            "promptOnClose": false,
+            "isBackground": false,
+            "type": "gradle",
+            "id": "${workspaceFolder}build${workspaceFolderBasename}",
+            "script": "build",
+            "description": "Assembles and tests this project.",
+            "group": "build",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:clean",
+            "detail": "Deletes the build directory.",
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "hide": true,
+            "promptOnClose": false,
+            "isBackground": false,
+            "type": "gradle",
+            "id": "${workspaceFolder}clean${workspaceFolderBasename}",
+            "script": "clean",
+            "description": "Deletes the build directory.",
+            "group": "build",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:setupDecompWorkspace",
+            "detail": "Prepares everything for mod building in a dev environment.",
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "hide": true,
+            "promptOnClose": false,
+            "isBackground": false,
+            "type": "gradle",
+            "id": "${workspaceFolder}setupDecompWorkspace${workspaceFolderBasename}",
+            "script": "setupDecompWorkspace",
+            "description": "Prepares everything for mod building in a dev environment.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:injectTags",
+            "detail": "Inject the mod tags file.",
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "hide": true,
+            "promptOnClose": false,
+            "isBackground": false,
+            "type": "gradle",
+            "id": "${workspaceFolder}injectTags${workspaceFolderBasename}",
+            "script": "injectTags",
+            "description": "Inject the mod tags file.",
+            "group": "internal modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:cleanEclipse",
+            "detail": "Clean all Eclipse files.",
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "hide": true,
+            "promptOnClose": false,
+            "isBackground": false,
+            "type": "gradle",
+            "id": "${workspaceFolder}cleanEclipse${workspaceFolderBasename}",
+            "script": "cleanEclipse",
+            "description": "Clean all Eclipse files.",
+            "group": "ide",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:eclipse",
+            "detail": "Generate all Eclipse files.",
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "hide": true,
+            "promptOnClose": false,
+            "isBackground": false,
+            "type": "gradle",
+            "id": "${workspaceFolder}eclipse${workspaceFolderBasename}",
+            "script": "eclipse",
+            "description": "Generate all Eclipse files.",
+            "group": "ide",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:runClient",
+            "detail": "Runs the deobfuscated client with your mod.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:build"
+            ],
+            "hide": false,
+            "promptOnClose": false,
+            "isBackground": true,
+            "type": "gradle",
+            "id": "${workspaceFolder}runClient${workspaceFolderBasename}",
+            "script": "runClient",
+            "description": "Runs the deobfuscated client with your mod.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:runClient:debug",
+            "detail": "Runs the deobfuscated client with your mod.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:build"
+            ],
+            "hide": false,
+            "promptOnClose": false,
+            "isBackground": true,
+            "type": "gradle",
+            "id": "${workspaceFolder}runClient${workspaceFolderBasename}",
+            "script": "runClient",
+            "description": "Runs the deobfuscated client with your mod.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:runObfClient",
+            "detail": "Runs the Forge obfuscated client with your mod.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:build"
+            ],
+            "hide": false,
+            "promptOnClose": false,
+            "isBackground": true,
+            "type": "gradle",
+            "id": "${workspaceFolder}runObfClient${workspaceFolderBasename}",
+            "script": "runObfClient",
+            "description": "Runs the Forge obfuscated client with your mod.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:runObfClient:debug",
+            "detail": "Runs the Forge obfuscated client with your mod.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:build"
+            ],
+            "hide": false,
+            "promptOnClose": false,
+            "isBackground": true,
+            "type": "gradle",
+            "id": "${workspaceFolder}runObfClient${workspaceFolderBasename}",
+            "script": "runObfClient",
+            "description": "Runs the Forge obfuscated client with your mod.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        }
+    ]
+}
