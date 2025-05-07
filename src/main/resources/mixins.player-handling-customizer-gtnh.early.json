@@ -1,0 +1,8 @@
+{
+    "required": true,
+    "target": "@env(DEFAULT)",
+    "minVersion": "0.8.3-GTNH",
+    "package": "com.glektarssza.player_handling_customizer.mixins.early",
+    "refmap": "mixins.player-handling-customizer.refmap.json",
+    "compatibilityLevel": "JAVA_8"
+}

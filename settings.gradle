@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        maven {
+            name 'GTNH Maven'
+            url 'https://nexus.gtnewhorizons.com/repository/public/'
+            mavenContent {
+                includeGroup('com.gtnewhorizons')
+                includeGroupByRegex('com\\.gtnewhorizons\\..+')
+            }
+        }
+        gradlePluginPortal()
+        mavenCentral()
+        mavenLocal()
+    }
+}
+plugins {
+    id('org.gradle.toolchains.foojay-resolver-convention') version('0.9.0')
+}
+rootProject.name = 'minecraft-player-handling-customizer-gtnh'
