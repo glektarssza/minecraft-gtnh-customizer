@@ -310,35 +310,35 @@ sourceSets {
     if (!isPropEnabled('use_advent_of_ascension')) {
         main {
             java {
-                exclude('**/player_handling_customizer/mixins/**/advent_of_ascension/**')
+                exclude("**/${project.mod_id}/mixins/**/advent_of_ascension/**")
             }
         }
     }
     if (!isPropEnabled('use_divinerpg')) {
         main {
             java {
-                exclude('**/player_handling_customizer/mixins/**/divinerpg/**')
+                exclude("**/${project.mod_id}/mixins/**/divinerpg/**")
             }
         }
     }
     if (!isPropEnabled('use_aether')) {
         main {
             java {
-                exclude('**/player_handling_customizer/mixins/**/aether/**')
+                exclude("**/${project.mod_id}/mixins/**/aether/**")
             }
         }
     }
     if (!isPropEnabled('use_thaumcraft')) {
         main {
             java {
-                exclude('**/player_handling_customizer/mixins/**/thaumcraft/**')
+                exclude("**/${project.mod_id}/mixins/**/thaumcraft/**")
             }
         }
     }
     if (!isPropEnabled('use_specialmobs')) {
         main {
             java {
-                exclude('**/player_handling_customizer/mixins/**/specialmobs/**')
+                exclude("**/${project.mod_id}/mixins/**/specialmobs/**")
             }
         }
     }
