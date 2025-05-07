@@ -276,7 +276,7 @@ jar {
             attribute_map['MixinConfigs'] = "mixins.${project.refmap_name}.json"
         }
         if (isPropEnabled('use_coremod')) {
-            attribute_map['FMLCorePlugin'] = "${project.mod_group}.${project.coremod_plugin_class_name}"
+            attribute_map['FMLCorePlugin'] = "${project.mod_group}.${project.mod_id}.${project.coremod_plugin_class_name}"
             if (isPropEnabled('include_mod')) {
                 attribute_map['FMLCorePluginContainsFMLMod'] = true
                 attribute_map['ForceLoadAsMod'] = project.gradle.startParameter.taskNames.contains('build')
