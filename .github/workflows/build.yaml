@@ -32,9 +32,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: wrapper
-      - id: setup-decomp-workspace
-        name: Setup Decomp Workspace
-        run: ./gradlew setupDecompWorkspace
+      - id: setup-ci-workspace
+        name: Setup CI Workspace
+        run: ./gradlew setupCIWorkspace
       - id: build
         name: Build
         run: ./gradlew build
