@@ -1,0 +1,350 @@
+import com.gtnewhorizons.retrofuturagradle.mcp.ReobfuscatedJar
+
+plugins {
+    id('java')
+    id('java-library')
+    id('maven-publish')
+    id('eclipse')
+    id('com.gtnewhorizons.retrofuturagradle') version('1.4.1')
+}
+
+/**
+ * Check if a project property is enabled.
+ */
+def isPropEnabled(String id) {
+    return project.hasProperty(id) && project.getProperty(id).toBoolean()
+}
+
+version = project.mod_version
+group = project.mod_group
+archivesBaseName = project.archive_base_name
+
+java {}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+    create('runtimeOnlyNonPublishable') {
+        description = 'Runtime only dependencies that are not published alongside the jar'
+        canBeConsumed = false
+        canBeResolved = false
+    }
+
+    create('devOnlyNonPublishable') {
+        description = 'Runtime and compiletime dependencies that are not published alongside the jar (compileOnly + runtimeOnlyNonPublishable)'
+        canBeConsumed = false
+        canBeResolved = false
+    }
+    compileOnly.extendsFrom(devOnlyNonPublishable)
+    runtimeOnlyNonPublishable.extendsFrom(devOnlyNonPublishable)
+    runtimeClasspath.extendsFrom(runtimeOnlyNonPublishable)
+    testRuntimeClasspath.extendsFrom(runtimeOnlyNonPublishable)
+}
+
+minecraft {
+    mcVersion = project.minecraft_version
+    def args = ["-ea:${project.group}"]
+    if (project.use_coremod.toBoolean()) {
+        args << "-Dfml.coreMods.load=${project.mod_group}.${project.coremod_plugin_class_name}"
+    }
+    if (isPropEnabled('use_mixins')) {
+        args << '-Dmixin.hotSwap=true'
+        args << '-Dmixin.checks.interfaces=true'
+        args << '-Dmixin.debug.export=true'
+    }
+    extraRunJvmArguments.addAll(args)
+
+    useDependencyAccessTransformers = true
+
+    injectedTags.put('MOD_ID', project.mod_id)
+    injectedTags.put('MOD_NAME', project.mod_name)
+    injectedTags.put('MOD_VERSION', project.mod_version)
+    injectedTags.put('MOD_DEPENDENCIES', '')
+}
+
+tasks.injectTags.configure {
+    outputClassName.set("${project.group}.${project.mod_id}.Tags")
+}
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'GTNH Maven'
+                url = 'https://nexus.gtnewhorizons.com/repository/public/'
+            }
+        }
+        filter {
+            includeGroup('io.github.legacymoddingmc')
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'CurseMaven'
+                url = 'https://cursemaven.com'
+            }
+        }
+        filter {
+            includeGroup('curse.maven')
+        }
+    }
+    maven {
+        name = 'SpongePowered Maven'
+        url = 'https://repo.spongepowered.org/maven'
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Jitpack'
+                url = 'https://jitpack.io'
+            }
+        }
+        filter {
+            includeGroup('com.github.LegacyModdingMC.UniMixins')
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Gregtech Maven (Thaumcraft)'
+                url = 'https://gregtech.overminddl1.com/'
+            }
+        }
+        filter {
+            includeGroup('thaumcraft')
+        }
+    }
+    maven {
+        name = 'Jitpack'
+        url = 'https://jitpack.io'
+    }
+    mavenLocal()
+}
+
+dependencies {
+    if (isPropEnabled('use_assetmover')) {
+        implementation 'com.cleanroommc:assetmover:2.5'
+    }
+    if (isPropEnabled('use_mixins')) {
+        def unimixinsVersion = '0.1.20'
+        def refMapName = "mixins.${project.refmap_name}.refmap.json"
+        def mixinProviderSpec = "io.github.legacymoddingmc:unimixins:${unimixinsVersion}"
+
+        // Common
+        annotationProcessor('org.ow2.asm:asm-debug-all:5.2')
+        annotationProcessor('com.google.guava:guava:33.4.0-jre')
+        annotationProcessor('com.google.code.gson:gson:2.12.1')
+
+        // Mixins
+        implementation(modUtils.enableMixins(mixinProviderSpec, refMapName))
+        api(mixinProviderSpec) { transitive = false }
+        annotationProcessor(mixinProviderSpec) { transitive = false }
+    }
+
+    // Runtime-only mods (things we like for easier testing!)
+    if (isPropEnabled('use_convenience_mods')) {
+        runtimeOnlyNonPublishable('com.github.glektarssza:GTNHLib:ee0589f230')
+        runtimeOnlyNonPublishable('com.github.glektarssza:CodeChickenCore:3b723a7f92')
+        runtimeOnlyNonPublishable('com.github.glektarssza:NotEnoughItems:ad5ba09b1e')
+        runtimeOnlyNonPublishable('com.github.glektarssza:waila:9639721fd4')
+    }
+
+    // Runtime-only mods (for testing various mod compatibility)
+    if (isPropEnabled('use_advent_of_ascension')) {
+        implementation rfg.deobf('curse.maven:advent-of-ascension-nevermine-311054:2973564')
+    }
+    if (isPropEnabled('use_divinerpg')) {
+        implementation rfg.deobf('curse.maven:official-divinerpg-363543:6330550')
+    }
+    if (isPropEnabled('use_aether')) {
+        implementation rfg.deobf('curse.maven:aether-255308:5875775')
+    }
+    if (isPropEnabled('use_thaumcraft')) {
+        api('thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev')
+    }
+    if (isPropEnabled('use_specialmobs')) {
+        implementation('com.github.GTNewHorizons:specialmobs:3.6.2:dev') {transitive = false}
+        implementation('com.github.glektarssza:NotEnoughItems:ad5ba09b1e:dev') {transitive = false}
+        implementation('com.github.glektarssza:CodeChickenCore:3b723a7f92:dev')
+    }
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.11.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+}
+
+// Exclude conflicting transitive dependencies if using mixins
+configurations.compileOnly.dependencies.each {
+    if (isPropEnabled('use_mixins')) {\
+        if (it instanceof ExternalModuleDependency) {
+            it.exclude module: 'SpongeMixins'
+            it.exclude module: 'SpongePoweredMixin'
+            it.exclude module: '00gasstation-mc1.7.10'
+            it.exclude module: 'gtnhmixins'
+        }
+    }
+}
+
+// Tweak client run settings if using mixins
+runClient {
+    if (isPropEnabled('use_mixins')) {
+        args('--tweakClass', 'org.spongepowered.asm.launch.MixinTweaker')
+    }
+}
+
+// Tweak server run settings if using mixins
+runServer {
+    if (isPropEnabled('use_mixins')) {
+        args('--tweakClass', 'org.spongepowered.asm.launch.MixinTweaker')
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def mixinConfigRefMap = "mixins.${project.refmap_name}.refmap.json"
+def mixinTmpDir = buildDir.path + File.separator + 'tmp' + File.separator + 'mixins'
+def refMap = mixinTmpDir + File.separator + mixinConfigRefMap
+def mixinSrg = mixinTmpDir + File.separator + 'mixins.srg'
+
+
+tasks.named('reobfJar', ReobfuscatedJar).configure {
+    if (isPropEnabled('use_mixins')) {
+        extraSrgFiles.from(mixinSrg)
+    }
+}
+
+tasks.named('compileJava', JavaCompile).configure {
+    if (isPropEnabled('use_mixins')) {
+        doFirst {
+            new File(mixinTmpDir).mkdirs()
+        }
+        options.compilerArgs += [
+                "-AreobfSrgFile=${tasks.reobfJar.srg.get().asFile}",
+                "-AoutSrgFile=${mixinSrg}",
+                "-AoutRefMapFile=${refMap}",
+        ]
+    }
+}
+
+
+if (isPropEnabled('use_access_transformer')) {
+    for (File at : sourceSets.getByName('main').resources.files) {
+        if (at.name.toLowerCase().endsWith('_at.cfg')) {
+            tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(at)
+            tasks.srgifyBinpatchedJar.accessTransformerFiles.from(at)
+        }
+    }
+}
+
+processResources {
+    inputs.property 'mod_version', project.version
+    inputs.property 'minecraft_version', project.minecraft.version
+
+    filesMatching(['mcmod.info', 'pack.mcmeta']) { fcd ->
+        fcd.expand(
+                'mod_id': project.mod_id,
+                'mod_name': project.mod_name,
+                'mod_version': project.version,
+                'mod_author': project.mod_author,
+                'mod_description': project.mod_description,
+                'minecraft_version': project.minecraft.version
+        )
+    }
+
+    if (isPropEnabled('use_access_transformer')) {
+        rename '(.+_at.cfg)', 'META-INF/$1'
+    }
+
+    if (isPropEnabled('use_mixins')) {
+        from refMap
+        dependsOn('compileJava')
+    }
+}
+jar {
+    manifest {
+        def attribute_map = [:]
+        if (isPropEnabled('use_mixins')) {
+            attribute_map['TweakClass'] = 'org.spongepowered.asm.launch.MixinTweaker'
+            attribute_map['MixinConfigs'] = "mixins.${project.refmap_name}.json"
+        }
+        if (isPropEnabled('use_coremod')) {
+            attribute_map['FMLCorePlugin'] = "${project.mod_group}.${project.coremod_plugin_class_name}"
+            if (isPropEnabled('include_mod')) {
+                attribute_map['FMLCorePluginContainsFMLMod'] = true
+                attribute_map['ForceLoadAsMod'] = project.gradle.startParameter.taskNames.contains('build')
+            }
+        }
+        if (isPropEnabled('use_access_transformer')) {
+            attribute_map['FMLAT'] = project.at_name + '_at.cfg'
+        }
+        attributes(attribute_map)
+    }
+    setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    from(provider {
+        configurations.embed.collect {
+            if (it.isDirectory()) {
+                return it
+            } else {
+                zipTree(it).matching {
+                    exclude '**/LICENSE*', 'META-INF/**'
+                }
+            }
+        }
+    })
+}
+
+sourceSets {
+    generator {
+        java {
+            srcDir 'src/generator/java'
+        }
+    }
+    if (!isPropEnabled('use_advent_of_ascension')) {
+        main {
+            java {
+                exclude('**/player_handling_customizer/mixins/**/advent_of_ascension/**')
+            }
+        }
+    }
+    if (!isPropEnabled('use_divinerpg')) {
+        main {
+            java {
+                exclude('**/player_handling_customizer/mixins/**/divinerpg/**')
+            }
+        }
+    }
+    if (!isPropEnabled('use_aether')) {
+        main {
+            java {
+                exclude('**/player_handling_customizer/mixins/**/aether/**')
+            }
+        }
+    }
+    if (!isPropEnabled('use_thaumcraft')) {
+        main {
+            java {
+                exclude('**/player_handling_customizer/mixins/**/thaumcraft/**')
+            }
+        }
+    }
+    if (!isPropEnabled('use_specialmobs')) {
+        main {
+            java {
+                exclude('**/player_handling_customizer/mixins/**/specialmobs/**')
+            }
+        }
+    }
+    api {
+        java {
+            srcDir 'src/api/java'
+        }
+    }
+}
