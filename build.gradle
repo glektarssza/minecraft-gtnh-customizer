@@ -16,7 +16,7 @@ def isPropEnabled(String id) {
 }
 
 version = project.mod_version
-group = project.mod_group
+group = "${project.mod_group}.${project.mod_id}"
 archivesBaseName = project.archive_base_name
 
 java {}
