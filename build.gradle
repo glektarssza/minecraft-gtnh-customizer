@@ -67,7 +67,7 @@ minecraft {
 }
 
 tasks.injectTags.configure {
-    outputClassName.set("${project.group}.${project.mod_id}.Tags")
+    outputClassName.set("${project.mod_group}.${project.mod_id}.Tags")
 }
 
 repositories {
