@@ -6,7 +6,7 @@
         "version": "${modVersion}",
         "mcversion": "${minecraftVersion}",
         "url": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh",
-        "updateJSON": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh/raw/refs/heads/main/update.json",
+        "updateJSON": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh/raw/refs/heads/main/forgeUpdateManifest.json",
         "authorList": [
             "G'lek Tarssza"
         ],
