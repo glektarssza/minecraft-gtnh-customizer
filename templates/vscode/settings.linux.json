@@ -29,6 +29,10 @@
         "org.spongepowered",
         "com.glektarssza"
     ],
+    "files.associations": {
+        "mcmod.info": "json",
+        "pack.mcmeta": "json"
+    },
     "java.completion.matchCase": "firstLetter",
     "java.codeGeneration.generateComments": false,
     "java.codeGeneration.hashCodeEquals.useInstanceof": true,
