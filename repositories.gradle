@@ -1,0 +1,22 @@
+/**
+ * Check if a project property is enabled.
+ */
+def isPropEnabled(String id) {
+    return project.hasProperty(id) && project.getProperty(id).toBoolean()
+}
+
+repositories {
+    if (isPropEnabled("use_thaumcraft")) {
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Gregtech Maven (Thaumcraft)"
+                    url = "https://gregtech.overminddl1.com/"
+                }
+            }
+            filter {
+                includeGroup("thaumcraft")
+            }
+        }
+    }
+}

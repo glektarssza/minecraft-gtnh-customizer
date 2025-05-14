@@ -20,13 +20,6 @@ public class LateMixinInitializer implements ILateMixinLoader {
     @Override
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
-        if (loadedMods.contains("divinerpg")) {
-            mixins.add("divinerpg.AIDivineFireballAttackMixin");
-            mixins.add("divinerpg.EntityFroshMixin");
-        }
-        if (loadedMods.contains("Aether")) {
-            mixins.add("aether.ZephyrAIShootTargetMixin");
-        }
         if (loadedMods.contains("SpecialMobs")) {
             mixins.add("specialmobs.Entity_SpecialGhastMixin");
             mixins.add("specialmobs.Entity_SpecialCaveSpiderMixin");

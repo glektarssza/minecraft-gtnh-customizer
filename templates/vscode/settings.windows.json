@@ -14,7 +14,7 @@
     "java.autobuild.enabled": false,
     "java.jdt.ls.java.home": "C:/Users/USERNAME/scoop/apps/temurin21-jdk/current/",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
-    "java.import.gradle.java.home": "C:/Users/USERNAME/scoop/apps/temurin8-jdk/current/",
+    "java.import.gradle.java.home": "C:/Users/USERNAME/scoop/apps/temurin17-jdk/current/",
     "java.completion.enabled": true,
     "java.completion.importOrder": [
         "#",
@@ -51,7 +51,7 @@
         "**/build/**"
     ],
     "terminal.integrated.env.windows": {
-        "JAVA_HOME": "C:/Users/USERNAME/scoop/apps/temurin8-jdk/current/"
+        "JAVA_HOME": "C:/Users/USERNAME/scoop/apps/temurin17-jdk/current/"
     },
     "cSpell.ignorePaths": [
         "vscode-extension",
