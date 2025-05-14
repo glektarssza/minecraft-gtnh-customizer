@@ -11,8 +11,6 @@ repos:
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
       - id: check-merge-conflict
-      - id: pretty-format-json
-        args: [--autofix, --indent, '4', --no-sort-keys]
       - id: check-json
       - id: check-toml
       - id: check-yaml
@@ -26,3 +24,7 @@ repos:
         args: [--fix=crlf]
         types: [batch]
       - id: trailing-whitespace
+  - repo: https://github.com/glektarssza/pre-commit-hooks.git
+    rev: v0.6.3
+    hooks:
+      - id: gradlew-spotless
