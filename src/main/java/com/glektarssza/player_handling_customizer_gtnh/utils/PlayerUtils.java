@@ -7,13 +7,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.mojang.authlib.GameProfile;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-
 import net.minecraftforge.common.util.Constants.NBT;
 
 import com.glektarssza.player_handling_customizer_gtnh.Tags;
@@ -28,11 +25,13 @@ import com.glektarssza.player_handling_customizer_gtnh.impl.DamageImmunity;
 import com.glektarssza.player_handling_customizer_gtnh.impl.HurtImmunity;
 import com.glektarssza.player_handling_customizer_gtnh.impl.KnockbackImmunity;
 import com.glektarssza.player_handling_customizer_gtnh.impl.TargetingImmunity;
+import com.mojang.authlib.GameProfile;
 
 /**
  * A collection of player-related utility methods.
  */
 public class PlayerUtils {
+
     /**
      * Check if a player is globally immune to being targeted.
      *
@@ -45,12 +44,12 @@ public class PlayerUtils {
         GameProfile playerProfile = player.getGameProfile();
         UUID playerUUID = playerProfile == null ? null
             : EntityPlayer.func_146094_a(playerProfile);
-        return Arrays
-            .asList(Config.getImmunePlayers())
+        return Arrays.asList(Config.getImmunePlayers())
             .stream()
-            .anyMatch((item) -> playerUUID != null
-                && item.equalsIgnoreCase(playerUUID.toString())
-                || item.equalsIgnoreCase(player.getDisplayName()));
+            .anyMatch(
+                (item) -> playerUUID != null
+                    && item.equalsIgnoreCase(playerUUID.toString())
+                    || item.equalsIgnoreCase(player.getDisplayName()));
     }
 
     /**
@@ -135,9 +134,11 @@ public class PlayerUtils {
      */
     public static List<IDamageImmunity> getPlayerDamageImmunities(
         EntityPlayer player) {
-        return PlayerUtils.getPlayerImmunities(player).stream()
+        return PlayerUtils.getPlayerImmunities(player)
+            .stream()
             .filter((item) -> item.getImmunityType() == ImmunityType.Damage)
-            .map((item) -> (IDamageImmunity) item).collect(Collectors.toList());
+            .map((item) -> (IDamageImmunity) item)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -150,9 +151,11 @@ public class PlayerUtils {
      */
     public static List<IHurtImmunity> getPlayerHurtImmunities(
         EntityPlayer player) {
-        return PlayerUtils.getPlayerImmunities(player).stream()
+        return PlayerUtils.getPlayerImmunities(player)
+            .stream()
             .filter((item) -> item.getImmunityType() == ImmunityType.Hurt)
-            .map((item) -> (IHurtImmunity) item).collect(Collectors.toList());
+            .map((item) -> (IHurtImmunity) item)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -165,7 +168,8 @@ public class PlayerUtils {
      */
     public static List<IKnockbackImmunity> getPlayerKnockbackImmunities(
         EntityPlayer player) {
-        return PlayerUtils.getPlayerImmunities(player).stream()
+        return PlayerUtils.getPlayerImmunities(player)
+            .stream()
             .filter((item) -> item.getImmunityType() == ImmunityType.Knockback)
             .map((item) -> (IKnockbackImmunity) item)
             .collect(Collectors.toList());
@@ -181,7 +185,8 @@ public class PlayerUtils {
      */
     public static List<ITargetingImmunity> getPlayerTargetingImmunities(
         EntityPlayer player) {
-        return PlayerUtils.getPlayerImmunities(player).stream()
+        return PlayerUtils.getPlayerImmunities(player)
+            .stream()
             .filter((item) -> item.getImmunityType() == ImmunityType.Targeting)
             .map((item) -> (ITargetingImmunity) item)
             .collect(Collectors.toList());

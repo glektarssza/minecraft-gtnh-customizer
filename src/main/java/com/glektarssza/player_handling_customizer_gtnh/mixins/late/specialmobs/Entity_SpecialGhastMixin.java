@@ -22,6 +22,7 @@ import toast.specialMobs.entity.ghast.Entity_SpecialGhast;
  */
 @Mixin(value = Entity_SpecialGhast.class, remap = false)
 public class Entity_SpecialGhastMixin {
+
     /**
      * Mixin for the {@code updateEntityTarget} method.
      */
@@ -44,7 +45,8 @@ public class Entity_SpecialGhastMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             self.targetedEntity = null;
         }
     }

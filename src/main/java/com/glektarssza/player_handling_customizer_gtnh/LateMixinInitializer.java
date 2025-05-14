@@ -12,6 +12,7 @@ import com.gtnewhorizon.gtnhmixins.LateMixin;
  */
 @LateMixin
 public class LateMixinInitializer implements ILateMixinLoader {
+
     @Override
     public String getMixinConfig() {
         return "mixins.player-handling-customizer.late.json";

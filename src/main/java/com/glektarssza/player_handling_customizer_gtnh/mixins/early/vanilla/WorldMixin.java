@@ -21,12 +21,14 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(World.class)
 public class WorldMixin {
+
     /**
      * Mixin for the {@code getClosestVulnerablePlayerToEntity} method.
      */
     @Inject(method = "getClosestVulnerablePlayerToEntity", at = @At("RETURN"), cancellable = true)
     public void getClosestVulnerablePlayerToEntity(Entity entityIn,
-        double distance, CallbackInfoReturnable<EntityPlayer> cir) {
+        double distance,
+        CallbackInfoReturnable<EntityPlayer> cir) {
         if (!(entityIn instanceof EntityLiving)) {
             return;
         }
@@ -38,7 +40,8 @@ public class WorldMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(null);
         }
     }

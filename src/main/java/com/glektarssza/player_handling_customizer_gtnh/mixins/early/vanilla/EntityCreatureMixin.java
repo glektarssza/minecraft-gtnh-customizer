@@ -22,6 +22,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityCreature.class)
 public class EntityCreatureMixin {
+
     /**
      * A shadow of the {@code entityToAttack} field.
      */
@@ -46,7 +47,8 @@ public class EntityCreatureMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.entityToAttack = null;
         }
     }

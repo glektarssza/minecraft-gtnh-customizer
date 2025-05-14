@@ -6,6 +6,7 @@ import com.glektarssza.player_handling_customizer_gtnh.api.IDamageImmunity;
  * A concrete implementation of the {@link IDamageImmunity} interface.
  */
 public class DamageImmunity implements IDamageImmunity {
+
     /**
      * The type of damage this instance represents immunity from.
      */

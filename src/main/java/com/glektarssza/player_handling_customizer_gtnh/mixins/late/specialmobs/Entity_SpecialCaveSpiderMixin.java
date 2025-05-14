@@ -23,6 +23,7 @@ import toast.specialMobs.entity.cavespider.Entity_SpecialCaveSpider;
  */
 @Mixin(value = Entity_SpecialCaveSpider.class, remap = false)
 public class Entity_SpecialCaveSpiderMixin {
+
     /**
      * Mixin for the {@code findPlayerToAttack} method.
      */
@@ -45,7 +46,8 @@ public class Entity_SpecialCaveSpiderMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(null);
         }
     }

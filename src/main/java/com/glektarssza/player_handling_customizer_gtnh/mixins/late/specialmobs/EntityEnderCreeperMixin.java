@@ -21,6 +21,7 @@ import toast.specialMobs.entity.creeper.EntityEnderCreeper;
  */
 @Mixin(EntityEnderCreeper.class)
 public class EntityEnderCreeperMixin {
+
     /**
      * Mixin for the {@code shouldAttackPlayer} method.
      */
@@ -35,7 +36,8 @@ public class EntityEnderCreeperMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }

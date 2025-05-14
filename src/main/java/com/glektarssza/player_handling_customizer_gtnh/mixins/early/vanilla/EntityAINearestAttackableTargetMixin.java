@@ -25,6 +25,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
 @Mixin(EntityAINearestAttackableTarget.class)
 public abstract class EntityAINearestAttackableTargetMixin
     extends EntityAITarget {
+
     /**
      * Constructor to shut Java up.
      */
@@ -38,7 +39,8 @@ public abstract class EntityAINearestAttackableTargetMixin
      * Constructor to shut Java up.
      */
     public EntityAINearestAttackableTargetMixin(EntityCreature taskOwner,
-        boolean shouldCheckSight, boolean nearbyOnly) {
+        boolean shouldCheckSight,
+        boolean nearbyOnly) {
         super(taskOwner, shouldCheckSight, nearbyOnly);
 
     }
@@ -65,7 +67,8 @@ public abstract class EntityAINearestAttackableTargetMixin
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.targetEntity = null;
             cir.setReturnValue(false);
         }

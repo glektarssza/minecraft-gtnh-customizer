@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTBase;
  * An interface that defines an immunity of some kind.
  */
 public interface IImmunity<T extends NBTBase> {
+
     /**
      * Get the type of immunity represented by this instance.
      *

@@ -15,6 +15,7 @@ import com.glektarssza.player_handling_customizer_gtnh.PlayerHandlingCustomizer;
  * The main configuration for the mod.
  */
 public class Config {
+
     /**
      * The configuration instance.
      */
@@ -111,9 +112,9 @@ public class Config {
                 "player_handling_customizer_gtnh.config.basic_category")
             .setCategoryRequiresMcRestart(CATEGORY_GENERAL, false);
 
-        configInstance
-            .get(CATEGORY_GENERAL, "immunePlayers", new String[0])
-            .setLanguageKey("player_handling_customizer_gtnh.config.immune_players")
+        configInstance.get(CATEGORY_GENERAL, "immunePlayers", new String[0])
+            .setLanguageKey(
+                "player_handling_customizer_gtnh.config.immune_players")
             .setShowInGui(true)
             .setRequiresMcRestart(false)
             .setRequiresWorldRestart(false);
@@ -124,8 +125,7 @@ public class Config {
      */
     public static void load() {
         if (configInstance == null) {
-            PlayerHandlingCustomizer.LOGGER.error(
-                "Cannot load configuration!");
+            PlayerHandlingCustomizer.LOGGER.error("Cannot load configuration!");
             PlayerHandlingCustomizer.LOGGER
                 .error("Configuration has not been initialized yet!");
             return;
@@ -144,8 +144,7 @@ public class Config {
      */
     public static void save() {
         if (configInstance == null) {
-            PlayerHandlingCustomizer.LOGGER.error(
-                "Cannot save configuration!");
+            PlayerHandlingCustomizer.LOGGER.error("Cannot save configuration!");
             PlayerHandlingCustomizer.LOGGER
                 .error("Configuration has not been initialized yet!");
             return;

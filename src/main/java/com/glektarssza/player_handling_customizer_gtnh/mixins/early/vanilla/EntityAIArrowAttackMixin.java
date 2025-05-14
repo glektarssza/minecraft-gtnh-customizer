@@ -22,6 +22,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityAIArrowAttack.class)
 public class EntityAIArrowAttackMixin {
+
     /**
      * A shadow of the {@code entityHost} field.
      */
@@ -44,7 +45,8 @@ public class EntityAIArrowAttackMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }
