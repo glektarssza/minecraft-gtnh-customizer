@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Lint
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        description: |
+          The token to use when making authenticated calls to the GitHub API.
+        required: true
+jobs:
+  build:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      #-- To clone repository
+      contents: read
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+      - id: setup-java
+        name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          distribution: temurin
+          java-version-file: .java-version
+      - id: setup-gradle
+        name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: wrapper
+      - id: setup-ci-workspace
+        name: Setup CI Workspace
+        run: ./gradlew setupCIWorkspace
+      - id: lint
+        name: Lint
+        run: ./gradlew spotlessJavaCheck
