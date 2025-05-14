@@ -12,6 +12,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     permissions:
+      #-- To clone repository
       contents: read
     steps:
       - id: checkout-repository
