@@ -25,6 +25,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityDragon.class)
 public class EntityDragonMixin {
+
     /**
      * A shadow of the {@code target} field.
      */
@@ -49,9 +50,8 @@ public class EntityDragonMixin {
                 if (player != null) {
                     List<ITargetingImmunity> immunities = PlayerUtils
                         .getPlayerTargetingImmunities(player);
-                    if (ImmunityUtils.entityMatchesAnyTargetingImmunity(
-                        attacker,
-                        immunities)
+                    if (ImmunityUtils
+                        .entityMatchesAnyTargetingImmunity(attacker, immunities)
                         || PlayerUtils.getIsPlayerGloballyImmune(player)) {
                         continue;
                     }
@@ -80,7 +80,8 @@ public class EntityDragonMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.target = null;
         }
     }

@@ -1,4 +1,4 @@
-package com.glektarssza.player_handling_customizer_gtnh.coremod;
+package com.glektarssza.player_handling_customizer_gtnh.core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,9 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
  * The core mod plugin for the mod.
  */
 @MCVersion("1.7.10")
-public class CorePlugin implements IFMLLoadingPlugin, IEarlyMixinLoader {
+public class PlayerHandlingCustomizerCore
+    implements IFMLLoadingPlugin, IEarlyMixinLoader {
+
     @Override
     public String getAccessTransformerClass() {
         return null;

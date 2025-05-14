@@ -6,6 +6,7 @@ import com.glektarssza.player_handling_customizer_gtnh.api.ITargetingImmunity;
  * A concrete implementation of the {@link ITargetingImmunity} interface.
  */
 public class TargetingImmunity implements ITargetingImmunity {
+
     /**
      * The entity source that this instance grants immunity to damage from.
      */

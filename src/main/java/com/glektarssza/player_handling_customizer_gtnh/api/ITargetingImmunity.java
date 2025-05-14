@@ -2,13 +2,13 @@ package com.glektarssza.player_handling_customizer_gtnh.api;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
-
 import net.minecraftforge.common.util.Constants.NBT;
 
 /**
  * An interface that represents immunity from being targeting by entities.
  */
 public interface ITargetingImmunity extends IImmunity<NBTTagCompound> {
+
     /**
      * Get whether this instance has an entity type from which this instance
      * grants immunity from.
@@ -64,8 +64,7 @@ public interface ITargetingImmunity extends IImmunity<NBTTagCompound> {
         if (this.hasEntityType()) {
             entityType = this.getEntityType();
         }
-        nbt.setTag("immunityType",
-            immunityType);
+        nbt.setTag("immunityType", immunityType);
         if (entityType != null) {
             nbt.setString("entityType", entityType);
         }

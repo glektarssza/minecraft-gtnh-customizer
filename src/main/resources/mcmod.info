@@ -1,19 +1,16 @@
 [
     {
-        "modid": "${mod_id}",
-        "name": "${mod_name}",
-        "description": "${mod_description}",
-        "version": "${mod_version}",
-        "mcversion": "${minecraft_version}",
-        "url": "https://github.com/glektarssza/minecraft-player-handling-customizer",
-        "updateUrl": "",
+        "modid": "${modId}",
+        "name": "${modName}",
+        "description": "A Minecraft mod for 1.7.10 that allows for customizing how players are damaged, targeted, and knocked back by various sources (GTNH Edition).",
+        "version": "${modVersion}",
+        "mcversion": "${minecraftVersion}",
+        "url": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh",
+        "updateJSON": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh/raw/refs/heads/main/forgeUpdateManifest.json",
         "authorList": [
-            "${mod_author}"
+            "G'lek Tarssza"
         ],
-        "credits": "",
-        "logoFile": "assets/player_handling_customizer/textures/logo.png",
-        "screenshots": [],
-        "parent": "",
-        "dependencies": []
+        "credits": "G'lek Tarssza for this mod, the GTNH team for their Gradle build tools, the RetroFuturaGradle team for their build tools.",
+        "logoFile": "assets/player_handling_customizer_gtnh/textures/logo.png"
     }
 ]

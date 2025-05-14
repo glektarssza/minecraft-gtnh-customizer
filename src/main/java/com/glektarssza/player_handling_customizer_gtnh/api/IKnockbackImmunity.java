@@ -2,13 +2,13 @@ package com.glektarssza.player_handling_customizer_gtnh.api;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
-
 import net.minecraftforge.common.util.Constants.NBT;
 
 /**
  * An interface that represents immunity from knockback events.
  */
 public interface IKnockbackImmunity extends IImmunity<NBTTagCompound> {
+
     /**
      * Get the type of immunity represented by this instance.
      *
@@ -36,8 +36,7 @@ public interface IKnockbackImmunity extends IImmunity<NBTTagCompound> {
         if (this.hasEntityType()) {
             entityType = this.getEntityType();
         }
-        nbt.setTag("immunityType",
-            immunityType);
+        nbt.setTag("immunityType", immunityType);
         if (entityType != null) {
             nbt.setString("entityType", entityType);
         }

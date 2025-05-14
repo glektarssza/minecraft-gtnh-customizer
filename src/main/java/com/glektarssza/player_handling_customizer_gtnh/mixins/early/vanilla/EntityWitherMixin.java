@@ -21,6 +21,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityWither.class)
 public class EntityWitherMixin {
+
     /**
      * Mixin for the {@code attackEntityWithRangedAttack} method.
      */
@@ -36,7 +37,8 @@ public class EntityWitherMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             ci.cancel();
         }
     }

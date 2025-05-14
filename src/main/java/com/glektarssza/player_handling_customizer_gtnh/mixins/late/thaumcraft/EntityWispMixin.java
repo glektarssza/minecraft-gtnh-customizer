@@ -12,8 +12,8 @@ import org.spongepowered.asm.lib.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -28,6 +28,7 @@ import thaumcraft.common.entities.monster.EntityWisp;
  */
 @Mixin(value = EntityWisp.class)
 public class EntityWispMixin {
+
     /**
      * A shadow of the {@code targetedEntity} field.
      */
@@ -56,7 +57,8 @@ public class EntityWispMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.targetedEntity = null;
         }
     }
@@ -82,7 +84,8 @@ public class EntityWispMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.targetedEntity = null;
         }
     }

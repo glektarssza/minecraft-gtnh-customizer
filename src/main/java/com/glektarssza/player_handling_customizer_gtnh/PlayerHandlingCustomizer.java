@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.Logger;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
+
+import org.apache.logging.log4j.Logger;
 
 import com.glektarssza.player_handling_customizer_gtnh.config.Config;
 
@@ -22,6 +22,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
  */
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", guiFactory = "com.glektarssza.player_handling_customizer_gtnh.config.GuiFactory")
 public class PlayerHandlingCustomizer {
+
     /**
      * The configuration directory.
      */
@@ -70,9 +71,10 @@ public class PlayerHandlingCustomizer {
         WARNING_LIMIT_TRACKER.putIfAbsent(category, WARNING_EMIT_LIMIT);
         int limit = WARNING_LIMIT_TRACKER.compute(category, (_k, v) -> v - 1);
         if (limit <= 0) {
-            LOGGER.warn(String.format(
-                "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
-                category));
+            LOGGER.warn(
+                String.format(
+                    "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
+                    category));
         }
     }
 
@@ -124,7 +126,8 @@ public class PlayerHandlingCustomizer {
      */
     @SubscribeEvent
     public void onCommand(CommandEvent event) {
-        if (event.command.getCommandName().equals("reload")) {
+        if (event.command.getCommandName()
+            .equals("reload")) {
             LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
             Config.sync();
         }

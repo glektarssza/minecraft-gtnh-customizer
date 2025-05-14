@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagString;
  * An enumeration of known types of immunities.
  */
 public enum ImmunityType {
+
     /**
      * Immunity to damage events.
      */
@@ -35,7 +36,8 @@ public enum ImmunityType {
      *         {@code null} if none match.
      */
     public static ImmunityType fromNBTString(NBTTagString value) {
-        switch (value.func_150285_a_().toLowerCase()) {
+        switch (value.func_150285_a_()
+            .toLowerCase()) {
             case "damage":
                 return Damage;
             case "hurt":

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Build
+name: Lint
 on:
   workflow_call:
     secrets:
@@ -9,7 +9,7 @@ on:
         required: true
 jobs:
   build:
-    name: Build
+    name: Lint
     runs-on: ubuntu-latest
     permissions:
       #-- To clone repository
@@ -36,14 +36,6 @@ jobs:
       - id: setup-ci-workspace
         name: Setup CI Workspace
         run: ./gradlew setupCIWorkspace
-      - id: build
-        name: Build
-        run: ./gradlew build
-      - id: upload-artifacts
-        name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: build/libs/
-          compression-level: 0
-          if-no-files-found: error
+      - id: lint
+        name: Lint
+        run: ./gradlew spotlessJavaCheck

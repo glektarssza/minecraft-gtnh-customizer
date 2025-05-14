@@ -23,6 +23,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityAITarget.class)
 public class EntityAITargetMixin {
+
     /**
      * A shadow of the {@code taskOwner} field.
      */
@@ -46,7 +47,8 @@ public class EntityAITargetMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }

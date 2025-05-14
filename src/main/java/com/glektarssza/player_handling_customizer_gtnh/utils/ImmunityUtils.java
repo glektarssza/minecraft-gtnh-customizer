@@ -13,6 +13,7 @@ import com.glektarssza.player_handling_customizer_gtnh.api.ITargetingImmunity;
  * A collection of utilities for working with immunities.
  */
 public class ImmunityUtils {
+
     /**
      * Check if an entity matches against an immunity from being targeted.
      *
@@ -37,10 +38,14 @@ public class ImmunityUtils {
             return true;
         }
         if (immunityId.contains("*")) {
-            return Pattern.matches(immunityId.replace("*", "[a-zA-Z0-9_-/]+"),
-                entityRL.toString().toLowerCase());
+            return Pattern.matches(
+                immunityId.replace("*", "[a-zA-Z0-9_-/]+"),
+                entityRL.toString()
+                    .toLowerCase());
         }
-        return entityRL.toString().toLowerCase().equals(immunityId);
+        return entityRL.toString()
+            .toLowerCase()
+            .equals(immunityId);
     }
 
     /**
@@ -54,8 +59,10 @@ public class ImmunityUtils {
      *         immune to being targeted by the entity; {@code false} otherwise.
      */
     public static boolean entityMatchesAnyTargetingImmunity(
-        EntityLivingBase entity, List<ITargetingImmunity> immunityList) {
-        return immunityList.stream().anyMatch((immunity) -> ImmunityUtils
-            .entityMatchesTargetingImmunity(entity, immunity));
+        EntityLivingBase entity,
+        List<ITargetingImmunity> immunityList) {
+        return immunityList.stream()
+            .anyMatch((immunity) -> ImmunityUtils
+                .entityMatchesTargetingImmunity(entity, immunity));
     }
 }

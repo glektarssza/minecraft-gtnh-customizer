@@ -23,6 +23,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityAIAttackOnCollide.class)
 public class EntityAIAttackOnCollideMixin {
+
     /**
      * A shadow of the {@code attacker} field.
      */
@@ -45,7 +46,8 @@ public class EntityAIAttackOnCollideMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }

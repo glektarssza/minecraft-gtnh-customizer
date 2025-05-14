@@ -6,6 +6,7 @@ import com.glektarssza.player_handling_customizer_gtnh.api.IKnockbackImmunity;
  * A concrete implementation of the {@link IKnockbackImmunity} interface.
  */
 public class KnockbackImmunity implements IKnockbackImmunity {
+
     /**
      * The entity source that this instance grants immunity to damage from.
      */

@@ -14,7 +14,7 @@
     "java.autobuild.enabled": false,
     "java.jdt.ls.java.home": "/lib/jvm/temurin-21-jdk-amd64/",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
-    "java.import.gradle.java.home": "/lib/jvm/temurin-8-jdk-amd64/",
+    "java.import.gradle.java.home": "/lib/jvm/temurin-17-jdk-amd64/",
     "java.completion.enabled": true,
     "java.completion.importOrder": [
         "#",
@@ -29,6 +29,10 @@
         "org.spongepowered",
         "com.glektarssza"
     ],
+    "files.associations": {
+        "mcmod.info": "json",
+        "pack.mcmeta": "json"
+    },
     "java.completion.matchCase": "firstLetter",
     "java.codeGeneration.generateComments": false,
     "java.codeGeneration.hashCodeEquals.useInstanceof": true,
@@ -40,7 +44,7 @@
     "java.format.comments.enabled": true,
     "java.format.onType.enabled": false,
     "java.format.settings.profile": "Custom",
-    "java.format.settings.url": "https://github.com/glektarssza/minecraft-player-handling-customizer/raw/refs/heads/main/formatter.xml",
+    "java.format.settings.url": "https://github.com/glektarssza/minecraft-player-handling-customizer/raw/refs/heads/main/gtnhShared/formatter.xml",
     "java.import.generatesMetadataFilesAtProjectRoot": true,
     "java.inlayHints.parameterNames.enabled": "none",
     "java.saveActions.cleanup": true,
@@ -51,7 +55,7 @@
         "**/build/**"
     ],
     "terminal.integrated.env.linux": {
-        "JAVA_HOME": "/lib/jvm/temurin-8-jdk-amd64/"
+        "JAVA_HOME": "/lib/jvm/temurin-17-jdk-amd64/"
     },
     "cSpell.ignorePaths": [
         "vscode-extension",

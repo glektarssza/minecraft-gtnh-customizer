@@ -23,6 +23,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntityAICreeperSwell.class)
 public class EntityAICreeperSwellMixin {
+
     /**
      * A shadow of the {@code swellingCreeper} field.
      */
@@ -45,7 +46,8 @@ public class EntityAICreeperSwellMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }

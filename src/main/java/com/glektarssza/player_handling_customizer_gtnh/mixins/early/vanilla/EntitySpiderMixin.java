@@ -21,6 +21,7 @@ import com.glektarssza.player_handling_customizer_gtnh.utils.PlayerUtils;
  */
 @Mixin(EntitySpider.class)
 public class EntitySpiderMixin {
+
     /**
      * Mixin for the {@code findPlayerToAttack} method.
      */
@@ -39,7 +40,8 @@ public class EntitySpiderMixin {
         List<ITargetingImmunity> immunities = PlayerUtils
             .getPlayerTargetingImmunities(player);
         if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities) || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(null);
         }
     }
