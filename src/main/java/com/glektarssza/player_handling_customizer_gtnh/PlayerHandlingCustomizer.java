@@ -4,18 +4,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CommandEvent;
-
 import org.apache.logging.log4j.Logger;
-
-import com.glektarssza.player_handling_customizer_gtnh.config.Config;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CommandEvent;
+
+import com.glektarssza.player_handling_customizer_gtnh.config.Config;
 
 /**
  * The root mod class.

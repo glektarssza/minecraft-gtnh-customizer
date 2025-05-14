@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import net.minecraft.client.gui.GuiScreen;
+
+import cpw.mods.fml.client.config.GuiConfig;
+import cpw.mods.fml.client.config.IConfigElement;
+
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 
 import com.glektarssza.player_handling_customizer_gtnh.Tags;
-
-import cpw.mods.fml.client.config.GuiConfig;
-import cpw.mods.fml.client.config.IConfigElement;
 
 /**
  * The configuration GUI.

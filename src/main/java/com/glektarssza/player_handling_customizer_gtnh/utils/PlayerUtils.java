@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+
 import net.minecraftforge.common.util.Constants.NBT;
 
 import com.glektarssza.player_handling_customizer_gtnh.Tags;
@@ -25,7 +28,6 @@ import com.glektarssza.player_handling_customizer_gtnh.impl.DamageImmunity;
 import com.glektarssza.player_handling_customizer_gtnh.impl.HurtImmunity;
 import com.glektarssza.player_handling_customizer_gtnh.impl.KnockbackImmunity;
 import com.glektarssza.player_handling_customizer_gtnh.impl.TargetingImmunity;
-import com.mojang.authlib.GameProfile;
 
 /**
  * A collection of player-related utility methods.
