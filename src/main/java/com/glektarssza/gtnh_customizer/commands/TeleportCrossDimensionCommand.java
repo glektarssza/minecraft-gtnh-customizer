@@ -359,29 +359,11 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             try {
                 targetDimension = Integer.parseInt(args[offset + 3], 10);
             } catch (Throwable t) {
-                String dimensionArg = args[offset + 3];
-                if (dimensionArg.startsWith("\"")
-                    && dimensionArg.endsWith("\"")) {
-                    dimensionArg = dimensionArg.substring(1,
-                        dimensionArg.length() - 1);
-                } else if (dimensionArg.startsWith("\"")
-                    || dimensionArg.endsWith("\"")) {
-                    throw new CommandException(
-                        "gtnh_customizer.commands.teleport_cross_dimension.error.unparsable_dimension_name",
-                        new Object[] {
-                            dimensionArg
-                        });
-                }
-                try {
-                    targetDimension = CommandUtils
-                        .findDimensionIDFromName(dimensionArg);
-                } catch (Throwable tt) {
-                    throw new CommandException(
-                        "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
-                        new Object[] {
-                            dimensionArg
-                        });
-                }
+                throw new CommandException(
+                    "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
+                    new Object[] {
+                        args[offset + 3]
+                    });
             }
             try {
                 yawOverride = Float.parseFloat(args[offset + 4]);
