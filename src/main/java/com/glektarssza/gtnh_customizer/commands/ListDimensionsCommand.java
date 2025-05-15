@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -119,15 +120,18 @@ public class ListDimensionsCommand extends CommandBase {
                 });
         }
 
-        List<ImmutableTuple<Integer, String>> dimensions = CommandUtils
+        List<ImmutableTuple<Integer, String>> dimensions;
+        Stream<ImmutableTuple<Integer, String>> dimensionStream = CommandUtils
             .getAllDimensionIDsIterable()
             .parallelStream()
             .map((id) -> new ImmutableTuple<Integer, String>(
-                id, DimensionManager.getProvider(id).getDimensionName()))
-            .filter((tuple) -> filters.stream()
-                .anyMatch((filter) -> tuple.getSecond().contains(filter)))
-            .limit(limit)
-            .collect(Collectors.toList());
+                id, DimensionManager.getProvider(id).getDimensionName()));
+        if (filters.size() > 0) {
+            dimensionStream = dimensionStream.filter((tuple) -> filters.stream()
+                .anyMatch((filter) -> tuple.getSecond().toLowerCase()
+                    .contains(filter.toLowerCase())));
+        }
+        dimensions = dimensionStream.limit(limit).collect(Collectors.toList());
 
         sender.addChatMessage(new ChatComponentTranslation(
             "gtnh_customizer.commands.list_dimensions.info.header",
