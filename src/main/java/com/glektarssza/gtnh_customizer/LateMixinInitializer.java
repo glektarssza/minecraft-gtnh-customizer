@@ -15,7 +15,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
 
     @Override
     public String getMixinConfig() {
-        return "mixins.player-handling-customizer.late.json";
+        return "mixins.gtnh_customizer.late.json";
     }
 
     @Override
