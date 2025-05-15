@@ -3,6 +3,7 @@ package com.glektarssza.gtnh_customizer.commands;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -248,7 +249,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 } catch (Throwable t) {
                     return null;
                 }
-                return CommandUtils.getTruncatedDimensionNamesIterable(512);
+                return CommandUtils.getTruncatedDimensionNamesIterable(512)
+                    .parallelStream()
+                    .map((name) -> name.contains(" ")
+                        ? String.format("\"%s\"", name)
+                        : name)
+                    .collect(Collectors.toList());
             case 4:
                 // -- Fifth argument is one of dimension ID or yaw
                 if (isUsernameIndex(args, 0)) {
@@ -257,7 +263,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     } catch (Throwable t) {
                         return null;
                     }
-                    return CommandUtils.getTruncatedDimensionNamesIterable(512);
+                    return CommandUtils.getTruncatedDimensionNamesIterable(512)
+                        .parallelStream()
+                        .map((name) -> name.contains(" ")
+                            ? String.format("\"%s\"", name)
+                            : name)
+                        .collect(Collectors.toList());
                 }
                 try {
                     victim = getCommandSenderAsPlayer(sender);
