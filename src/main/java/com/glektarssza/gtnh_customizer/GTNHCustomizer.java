@@ -16,6 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
 
+import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 
@@ -118,6 +119,7 @@ public class GTNHCustomizer {
         LOGGER.info("Handling server about to start...");
         LOGGER.info("Registering custom commands...");
         event.registerServerCommand(new TeleportCrossDimensionCommand());
+        event.registerServerCommand(new ListDimensionsCommand());
         LOGGER.info("Done registering custom commands!");
         LOGGER.info("Done handling server about to start!");
     }
