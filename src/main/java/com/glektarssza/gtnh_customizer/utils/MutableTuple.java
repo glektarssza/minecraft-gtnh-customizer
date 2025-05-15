@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.utils;
 
-public final class MutableTuple<A, B> extends ImmutableTuple<A, B> {
+public class MutableTuple<A, B> extends ImmutableTuple<A, B> {
     public MutableTuple(A first, B second) {
         super(first, second);
     }

@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.utils;
 
-public sealed class ImmutableTuple<A, B> permits MutableTuple {
+public class ImmutableTuple<A, B> {
     protected A first;
     protected B second;
 
