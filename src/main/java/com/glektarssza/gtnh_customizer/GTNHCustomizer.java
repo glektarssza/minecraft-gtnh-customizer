@@ -10,11 +10,14 @@ import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
 
+import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
+import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 
 /**
@@ -103,7 +106,22 @@ public class GTNHCustomizer {
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {}...", Tags.MOD_NAME);
-        LOGGER.info("Done Initializing {}!", Tags.MOD_NAME);
+        LOGGER.info("Done initializing {}!", Tags.MOD_NAME);
+    }
+
+    /**
+     * Handle the Forge Mod Loader server starting event.
+     *
+     * @param event The event to handle.
+     */
+    @Mod.EventHandler
+    public void onServerStarting(FMLServerStartingEvent event) {
+        LOGGER.info("Handling server about to start...");
+        LOGGER.info("Registering custom commands...");
+        event.registerServerCommand(new TeleportCrossDimensionCommand());
+        event.registerServerCommand(new ListDimensionsCommand());
+        LOGGER.info("Done registering custom commands!");
+        LOGGER.info("Done handling server about to start!");
     }
 
     /**

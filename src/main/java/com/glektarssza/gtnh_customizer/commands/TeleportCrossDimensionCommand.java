@@ -1,7 +1,9 @@
 package com.glektarssza.gtnh_customizer.commands;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -9,6 +11,11 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
+
+import net.minecraftforge.common.DimensionManager;
 
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 
@@ -25,7 +32,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     @Override
     public String getCommandName() {
-        return "teleport-xdim";
+        return "teleport-cross-dimension";
     }
 
     /**
@@ -35,7 +42,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     @Override
     public List<String> getCommandAliases() {
-        return Collections.singletonList("tpd");
+        return Arrays.asList("tpxd", "tpd");
     }
 
     /**
@@ -47,7 +54,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "player_handling_customizer.commands.teleport_xdim.usage";
+        return "gtnh_customizer.commands.teleport_cross_dimension.usage";
     }
 
     /**
@@ -152,7 +159,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         String[] args) {
         EntityPlayerMP victim = null;
         List<String> result = null;
-        switch (args.length) {
+        int index = args.length - 1;
+        switch (index) {
             case 0:
                 // -- First argument is one of victim, target, or X coordinate
                 try {
@@ -163,7 +171,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 result = CommandUtils
                     .getTruncatedPlayerUsernameIterable(512);
                 if (victim != null) {
-                    result.add(String.format("%i", victim.posX));
+                    result.add(String.format("%d", (int) victim.posX));
                 }
                 return result;
             case 1:
@@ -177,8 +185,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     }
                     result = CommandUtils
                         .getTruncatedPlayerUsernameIterable(512);
-                    result.add(String.format("%i", victim.posX));
-                    result.add(String.format("%i", victim.rotationYaw));
+                    result.add(String.format("%d", (int) victim.posX));
+                    result.add(String.format("%d", (int) victim.rotationYaw));
                     return result;
                 }
                 try {
@@ -188,7 +196,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 }
                 if (isCoordinateIndex(args, 0)) {
                     return Collections
-                        .singletonList(String.format("%i", victim.posY));
+                        .singletonList(String.format("%d", (int) victim.posY));
                 }
                 return null;
             case 2:
@@ -202,11 +210,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     if (isUsernameIndex(args, 1)) {
                         return Collections
                             .singletonList(
-                                String.format("%i", victim.rotationYaw));
+                                String.format("%d", (int) victim.rotationYaw));
                     }
                     if (isCoordinateIndex(args, 1)) {
                         return Collections
-                            .singletonList(String.format("%i", victim.posZ));
+                            .singletonList(String.format("%d",
+                                (int) victim.posY));
                     }
                     return null;
                 }
@@ -217,7 +226,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 }
                 if (isCoordinateIndex(args, 1)) {
                     return Collections
-                        .singletonList(String.format("%i", victim.posY));
+                        .singletonList(String.format("%d", (int) victim.posY));
                 }
                 return null;
             case 3:
@@ -228,9 +237,10 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     } catch (Throwable t) {
                         return null;
                     }
-                    if (isCoordinateIndex(args, args.length)) {
+                    if (isCoordinateIndex(args, index)) {
                         return Collections
-                            .singletonList(String.format("%i", victim.posZ));
+                            .singletonList(String.format("%d",
+                                (int) victim.posZ));
                     }
                     return null;
                 }
@@ -239,7 +249,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 } catch (Throwable t) {
                     return null;
                 }
-                return CommandUtils.getTruncatedDimensionNamesIterable(512);
+                return CommandUtils.getTruncatedDimensionNamesIterable(512)
+                    .parallelStream()
+                    .map((name) -> name.contains(" ")
+                        ? String.format("\"%s\"", name)
+                        : name)
+                    .collect(Collectors.toList());
             case 4:
                 // -- Fifth argument is one of dimension ID or yaw
                 if (isUsernameIndex(args, 0)) {
@@ -248,7 +263,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     } catch (Throwable t) {
                         return null;
                     }
-                    return CommandUtils.getTruncatedDimensionNamesIterable(512);
+                    return CommandUtils.getTruncatedDimensionNamesIterable(512)
+                        .parallelStream()
+                        .map((name) -> name.contains(" ")
+                            ? String.format("\"%s\"", name)
+                            : name)
+                        .collect(Collectors.toList());
                 }
                 try {
                     victim = getCommandSenderAsPlayer(sender);
@@ -256,7 +276,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     return null;
                 }
                 return Collections
-                    .singletonList(String.format("%i", victim.rotationYaw));
+                    .singletonList(String.format("%d",
+                        (int) victim.rotationYaw));
             case 5:
                 // -- Sixth argument is yaw
                 if (isUsernameIndex(args, 0)) {
@@ -266,7 +287,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         return null;
                     }
                     return Collections
-                        .singletonList(String.format("%i", victim.rotationYaw));
+                        .singletonList(String.format("%d",
+                            (int) victim.rotationYaw));
                 }
                 return null;
             default:
@@ -284,24 +306,37 @@ public class TeleportCrossDimensionCommand extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) {
         EntityPlayerMP victim = null;
         EntityPlayerMP target = null;
-        if (isUsernameIndex(args, 0) && isUsernameIndex(args, 1)) {
+        if (args.length > 1 && isUsernameIndex(args, 0)
+            && isUsernameIndex(args, 1)) {
             victim = getPlayer(sender, args[0]);
             target = getPlayer(sender, args[1]);
-        } else if (isUsernameIndex(args, 0)) {
+        } else if (args.length > 1 && isUsernameIndex(args, 0)
+            && isYawIndex(args, 1)) {
+            victim = getCommandSenderAsPlayer(sender);
+            target = getPlayer(sender, args[0]);
+        } else if (args.length > 1 && isUsernameIndex(args, 0)) {
             victim = getPlayer(sender, args[0]);
+        } else if (args.length == 1 && isUsernameIndex(args, 0)) {
+            victim = getCommandSenderAsPlayer(sender);
+            target = getPlayer(sender, args[0]);
         } else {
             victim = getCommandSenderAsPlayer(sender);
         }
         if (victim != null && target != null) {
             Float yawOverride = null;
-            if (args.length >= 3) {
+            if (args.length > 2) {
                 try {
                     yawOverride = Float.parseFloat(args[2]);
                 } catch (Throwable t) {
                     // -- Does nothing
                 }
-                sendVictimToTarget(victim, target, yawOverride);
             }
+            sendVictimToTarget(sender, victim, target, yawOverride);
+            sender.addChatMessage(new ChatComponentTranslation(
+                "gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self")
+                    .setChatStyle(
+                        new ChatStyle().setColor(EnumChatFormatting.GOLD)
+                            .setItalic(true)));
         } else if (victim != null) {
             Double targetPosX = null;
             Double targetPosY = null;
@@ -315,7 +350,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 targetPosZ = Double.parseDouble(args[offset + 2]);
             } catch (Throwable t) {
                 throw new CommandException(
-                    "player_handling_customizer.commands.teleport_xdim.error.bad_destination",
+                    "gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination",
                     new Object[] {
                         args[offset + 0],
                         args[offset + 1],
@@ -325,27 +360,24 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             try {
                 targetDimension = Integer.parseInt(args[offset + 3], 10);
             } catch (Throwable t) {
-                try {
-                    targetDimension = CommandUtils
-                        .findDimensionIDFromName(args[offset + 3]);
-                } catch (Throwable tt) {
-                    throw new CommandException(
-                        "player_handling_customizer.commands.teleport_xdim.error.unknown_dimension",
-                        new Object[] {
-                            args[offset + 3]
-                        });
-                }
+                throw new CommandException(
+                    "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
+                    new Object[] {
+                        args[offset + 3]
+                    });
             }
             try {
                 yawOverride = Float.parseFloat(args[offset + 4]);
+                yawOverride = ((Double) Math.toRadians(yawOverride))
+                    .floatValue();
             } catch (Throwable t) {
                 // -- Does nothing
             }
-            sendVictimToLocation(victim, targetPosX, targetPosY, targetPosZ,
-                targetDimension, yawOverride, victim.rotationPitch);
+            sendVictimToLocation(sender, victim, targetPosX, targetPosY,
+                targetPosZ, targetDimension, yawOverride, victim.rotationPitch);
         } else {
             throw new WrongUsageException(
-                "player_handling_customizer.commands.teleport_xdim.error.wrong_usage",
+                "gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage",
                 new Object[0]);
         }
     }
@@ -353,20 +385,23 @@ public class TeleportCrossDimensionCommand extends CommandBase {
     /**
      * Send the victim player to the target player's position.
      *
+     * @param sender The thing sending the command.
      * @param victim The victim player to teleport.
      * @param target The target player to send the victim player to.
      * @param yawOverride The yaw to override the victim player's yaw with.
      */
-    private void sendVictimToTarget(EntityPlayerMP victim,
+    private void sendVictimToTarget(ICommandSender sender,
+        EntityPlayerMP victim,
         EntityPlayerMP target, Float yawOverride) {
-        this.sendVictimToLocation(victim, target.posX, target.posY, target.posZ,
-            target.dimension, yawOverride, target.rotationPitch);
+        this.sendVictimToLocation(sender, victim, target.posX, target.posY,
+            target.posZ, target.dimension, yawOverride, target.rotationPitch);
     }
 
     /**
      * Send the victim player to the given target position in the given
      * dimension.
      *
+     * @param sender The thing sending the command.
      * @param victim The victim player to teleport.
      * @param xPos The target X position.
      * @param yPos The target Y position.
@@ -376,7 +411,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      * @param pitchOverride The pitch to override the victim player's pitch
      *        with.
      */
-    private void sendVictimToLocation(EntityPlayerMP victim,
+    private void sendVictimToLocation(ICommandSender sender,
+        EntityPlayerMP victim,
         double xPos, double yPos, double zPos, int dimension,
         Float yawOverride, Float pitchOverride) {
         if (victim.dimension != dimension) {
@@ -393,5 +429,13 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         }
         victim.playerNetServerHandler.setPlayerLocation(xPos, yPos, zPos, yaw,
             pitch);
+        // -- Notify admin 'console'
+        func_152373_a(sender, this,
+            "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
+            new Object[] {
+                victim.getDisplayName(), (int) xPos, (int) yPos, (int) zPos,
+                DimensionManager.getProvider(dimension).getDimensionName(),
+                dimension
+            });
     }
 }
