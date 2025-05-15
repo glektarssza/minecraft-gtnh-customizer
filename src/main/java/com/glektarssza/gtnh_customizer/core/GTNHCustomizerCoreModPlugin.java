@@ -44,7 +44,7 @@ public class GTNHCustomizerCoreModPlugin
 
     @Override
     public String getMixinConfig() {
-        return "mixins.player-handling-customizer.early.json";
+        return "mixins.gtnh_customizer.early.json";
     }
 
     @Override
