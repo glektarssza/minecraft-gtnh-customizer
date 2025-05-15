@@ -1,5 +1,6 @@
 package com.glektarssza.gtnh_customizer.commands;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     @Override
     public String getCommandName() {
-        return "teleport-xdim";
+        return "teleport-cross-dimension";
     }
 
     /**
@@ -35,7 +36,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     @Override
     public List<String> getCommandAliases() {
-        return Collections.singletonList("tpd");
+        return Arrays.asList("tpxd", "tpd");
     }
 
     /**
@@ -47,7 +48,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "player_handling_customizer.commands.teleport_xdim.usage";
+        return "gtnh_customizer.commands.teleport_cross_dimension.usage";
     }
 
     /**
@@ -315,7 +316,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 targetPosZ = Double.parseDouble(args[offset + 2]);
             } catch (Throwable t) {
                 throw new CommandException(
-                    "player_handling_customizer.commands.teleport_xdim.error.bad_destination",
+                    "gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination",
                     new Object[] {
                         args[offset + 0],
                         args[offset + 1],
@@ -330,7 +331,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         .findDimensionIDFromName(args[offset + 3]);
                 } catch (Throwable tt) {
                     throw new CommandException(
-                        "player_handling_customizer.commands.teleport_xdim.error.unknown_dimension",
+                        "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
                         new Object[] {
                             args[offset + 3]
                         });
@@ -345,7 +346,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 targetDimension, yawOverride, victim.rotationPitch);
         } else {
             throw new WrongUsageException(
-                "player_handling_customizer.commands.teleport_xdim.error.wrong_usage",
+                "gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage",
                 new Object[0]);
         }
     }

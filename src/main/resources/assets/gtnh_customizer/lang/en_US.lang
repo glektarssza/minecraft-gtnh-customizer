@@ -1,3 +1,10 @@
+# Configuration
 gtnh_customizer.config.category_general=General Settings
 gtnh_customizer.config.category_general.globally_immune_players=Globally Immune Players
 gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
+
+# Commands
+gtnh_customizer.commands.teleport_cross_dimension.usage=/teleport-cross-dimension [victim player] (<target player> [yaw override] | <x position> <y position> <z position> [dimension id | dimension name] [yaw])
+gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination=Bad destination '%s %s %s'!
+gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage=Wrong command format!
+gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension=Uknown dimension '%s'!
