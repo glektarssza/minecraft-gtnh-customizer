@@ -306,7 +306,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) {
         EntityPlayerMP victim = null;
         EntityPlayerMP target = null;
-        if (args.length > 2 && isUsernameIndex(args, 0)
+        if (args.length > 1 && isUsernameIndex(args, 0)
             && isUsernameIndex(args, 1)) {
             victim = getPlayer(sender, args[0]);
             target = getPlayer(sender, args[1]);
