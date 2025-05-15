@@ -1,2 +1,3 @@
 gtnh_customizer.config.category_general=General Settings
 gtnh_customizer.config.category_general.globally_immune_players=Globally Immune Players
+gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
