@@ -291,6 +291,7 @@ public final class CommandUtils {
     public static String[] getAllDimensionNames() {
         return (String[]) getAllDimensionIDsIterable().parallelStream()
             .map((id) -> DimensionManager.getProvider(id).getDimensionName())
+            .map((name) -> String.format("\"%s\"", name))
             .toArray();
     }
 
@@ -302,6 +303,7 @@ public final class CommandUtils {
     public static List<String> getAllDimensionNamesIterable() {
         return getAllDimensionIDsIterable().parallelStream()
             .map((id) -> DimensionManager.getProvider(id).getDimensionName())
+            .map((name) -> String.format("\"%s\"", name))
             .collect(Collectors.toList());
     }
 
@@ -314,6 +316,7 @@ public final class CommandUtils {
         return (String[]) getTruncatedDimensionIDsIterable(limit)
             .parallelStream()
             .map((id) -> DimensionManager.getProvider(id).getDimensionName())
+            .map((name) -> String.format("\"%s\"", name))
             .toArray();
     }
 
@@ -325,6 +328,7 @@ public final class CommandUtils {
     public static List<String> getTruncatedDimensionNamesIterable(int limit) {
         return getTruncatedDimensionIDsIterable(limit).parallelStream()
             .map((id) -> DimensionManager.getProvider(id).getDimensionName())
+            .map((name) -> String.format("\"%s\"", name))
             .collect(Collectors.toList());
     }
 
