@@ -2,11 +2,11 @@
     {
         "modid": "${modId}",
         "name": "${modName}",
-        "description": "A Minecraft mod for 1.7.10 that allows for customizing how players are damaged, targeted, and knocked back by various sources (GTNH Edition).",
+        "description": "A mod that customizes GTNH.",
         "version": "${modVersion}",
         "mcversion": "${minecraftVersion}",
-        "url": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh",
-        "updateJSON": "https://github.com/glektarssza/minecraft-player-handling-customizer-gtnh/raw/refs/heads/main/forgeUpdateManifest.json",
+        "url": "https://github.com/glektarssza/minecraft-gtnh-customizer",
+        "updateJSON": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/forgeUpdateManifest.json",
         "authorList": [
             "G'lek Tarssza"
         ],

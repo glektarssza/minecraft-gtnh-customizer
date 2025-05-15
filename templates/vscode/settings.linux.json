@@ -43,7 +43,7 @@
     "java.format.comments.enabled": true,
     "java.format.onType.enabled": false,
     "java.format.settings.profile": "Custom",
-    "java.format.settings.url": "https://github.com/glektarssza/minecraft-player-handling-customizer/raw/refs/heads/main/gtnhShared/formatter.xml",
+    "java.format.settings.url": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/gtnhShared/formatter.xml",
     "java.import.generatesMetadataFilesAtProjectRoot": true,
     "java.inlayHints.parameterNames.enabled": "none",
     "java.saveActions.cleanup": true,

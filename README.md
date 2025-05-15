@@ -1,17 +1,16 @@
-# Minecraft - Player Handling Customizer for 1.12.2 #
+# Minecraft - GTNH Customizer  #
 
-A Minecraft mod for 1.12.2 that allows for customizing how players are damaged,
-targeted, and knocked back by various sources.
+A mod that customizes GTNH.
 
 <!-- omit in toc -->
 ## Table of Contents ##
 
-* [Minecraft - Player Handling Customizer for 1.12.2](#minecraft---player-handling-customizer-for-1122)
+* [Minecraft - GTNH Customizer](#minecraft---gtnh-customizer)
     * [License](#license)
 
 ## License ##
 
-Copyright (c) 2024 G'lek Tarssza
+Copyright (c) 2025 G'lek Tarssza
 
 All rights reserved.
 
