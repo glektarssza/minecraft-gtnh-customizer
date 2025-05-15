@@ -46,7 +46,7 @@ public class PlayerUtils {
         GameProfile playerProfile = player.getGameProfile();
         UUID playerUUID = playerProfile == null ? null
             : EntityPlayer.func_146094_a(playerProfile);
-        return Arrays.asList(Config.getImmunePlayers())
+        return Arrays.asList(Config.getGloballyImmunePlayers())
             .stream()
             .anyMatch(
                 (item) -> playerUUID != null
