@@ -11,3 +11,7 @@ gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension=Unknow
 gtnh_customizer.commands.teleport_cross_dimension.error.unparsable_dimension_name=Unparsable dimension name '%s'!
 gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self=Teleported you to... Yourself?
 gtnh_customizer.commands.teleport_cross_dimension.info.teleported=Teleported '%s' to %d, %d, %d in dimension '%s' (ID %d)
+gtnh_customizer.commands.list_dimensions.usage=/list-dimensions [limit=512] [filters...]
+gtnh_customizer.commands.list_dimensions.error.invalid_limit=Invalid limit '%d'!
+gtnh_customizer.commands.list_dimensions.info.header=--- Dimension List ---
+gtnh_customizer.commands.list_dimensions.info.entry=%d: %s
