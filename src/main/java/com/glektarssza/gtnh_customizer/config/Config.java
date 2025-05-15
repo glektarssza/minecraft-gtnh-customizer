@@ -1,6 +1,8 @@
 package com.glektarssza.gtnh_customizer.config;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,16 +27,6 @@ public class Config {
      * The configuration instance.
      */
     private static Configuration CONFIG_INSTANCE;
-
-    /**
-     * The version of the configuration format.
-     */
-    public static final String CONFIG_VERSION = "2";
-
-    /**
-     * The general configuration category.
-     */
-    private static final String CATEGORY_GENERAL = "general";
 
     /**
      * A list of players who are globally immune.
@@ -120,8 +112,9 @@ public class Config {
         throws KeyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration("1", "2", (configInstance) -> {
-            configInstance.renameProperty(CATEGORY_GENERAL, "immunePlayers",
-                "globallyImmunePlayers");
+            configInstance.renameProperty(ConfigConstants.CATEGORY_GENERAL_NAME,
+                "immunePlayers",
+                ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
         });
 
         if (CONFIG_INSTANCE != null) {
@@ -129,22 +122,7 @@ public class Config {
         }
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
-            CONFIG_VERSION);
-
-        CONFIG_INSTANCE
-            .setCategoryComment(CATEGORY_GENERAL,
-                "The general configuration category.")
-            .setCategoryLanguageKey(CATEGORY_GENERAL,
-                "gtnh_customizer.config.category_general")
-            .setCategoryRequiresMcRestart(CATEGORY_GENERAL, false);
-
-        CONFIG_INSTANCE
-            .get(CATEGORY_GENERAL, "globallyImmunePlayers", new String[0])
-            .setLanguageKey(
-                "gtnh_customizer.config.category_general.globally_immune_players")
-            .setShowInGui(true)
-            .setRequiresMcRestart(false)
-            .setRequiresWorldRestart(false);
+            ConfigConstants.CONFIG_VERSION);
     }
 
     /**
@@ -158,18 +136,75 @@ public class Config {
             return;
         }
         CONFIG_INSTANCE.load();
-        if (!CONFIG_INSTANCE.getLoadedConfigVersion().equals(CONFIG_VERSION)) {
-            applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
-                CONFIG_VERSION, CONFIG_INSTANCE);
+        if (!CONFIG_INSTANCE.getLoadedConfigVersion()
+            .equals(ConfigConstants.CONFIG_VERSION)) {
+            try {
+                applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
+                    ConfigConstants.CONFIG_VERSION, CONFIG_INSTANCE);
+            } catch (Throwable t) {
+                GTNHCustomizer.LOGGER
+                    .warn(
+                        "Could not migrate configuration from version '{}' to version '{}'!",
+                        CONFIG_INSTANCE.getLoadedConfigVersion(),
+                        ConfigConstants.CONFIG_VERSION);
+                GTNHCustomizer.LOGGER
+                    .warn(
+                        "Any customizations you've made are probably about to get nuked!");
+                File backupLocation = new File(String.format("%s.bak",
+                    CONFIG_INSTANCE.getConfigFile()
+                        .getAbsolutePath()));
+                GTNHCustomizer.LOGGER
+                    .warn(
+                        "Copying your current configuration into '{}' as a backup...",
+                        backupLocation.getAbsolutePath());
+                try {
+                    Files.copy(CONFIG_INSTANCE.getConfigFile().toPath(),
+                        backupLocation.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING);
+                } catch (Throwable tt) {
+                    GTNHCustomizer.LOGGER
+                        .warn(
+                            "Failed to generate a backup of your current configuration!");
+                    GTNHCustomizer.LOGGER
+                        .warn(
+                            "Proceeding anyway, sorry!");
+                    GTNHCustomizer.LOGGER
+                        .warn(
+                            "Here's a stack trace for you to use if you want to diagnose what happened:");
+                    GTNHCustomizer.LOGGER
+                        .warn(tt);
+                    GTNHCustomizer.LOGGER
+                        .warn(
+                            "Please do NOT file a bug report, this is almost certainly NOT the mod developer's fault!");
+                }
+            }
         }
-        String[] currentImmunePlayers = new String[globallyImmunePlayers
+        CONFIG_INSTANCE
+            .setCategoryComment(ConfigConstants.CATEGORY_GENERAL_NAME,
+                ConfigConstants.CATEGORY_GENERAL_COMMENT)
+            .setCategoryLanguageKey(ConfigConstants.CATEGORY_GENERAL_NAME,
+                ConfigConstants.CATEGORY_GENERAL_LANG_KEY)
+            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_GENERAL_NAME,
+                false)
+            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_GENERAL_NAME,
+                false);
+
+        String[] currentGloballyImmunePlayers = new String[globallyImmunePlayers
             .size()];
-        globallyImmunePlayers.toArray(currentImmunePlayers);
-        currentImmunePlayers = CONFIG_INSTANCE
-            .get(CATEGORY_GENERAL, "globallyImmunePlayers",
-                currentImmunePlayers)
+        globallyImmunePlayers.toArray(currentGloballyImmunePlayers);
+
+        currentGloballyImmunePlayers = CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_GENERAL_NAME,
+            ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME,
+            currentGloballyImmunePlayers,
+            ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_COMMENT)
+            .setLanguageKey(
+                ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_LANG_KEY)
+            .setRequiresMcRestart(false)
+            .setRequiresWorldRestart(false)
             .getStringList();
-        setImmunePlayers(currentImmunePlayers);
+
+        setImmunePlayers(currentGloballyImmunePlayers);
     }
 
     /**
