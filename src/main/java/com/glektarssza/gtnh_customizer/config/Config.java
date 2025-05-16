@@ -112,9 +112,12 @@ public class Config {
         throws KeyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration("1", "2", (configInstance) -> {
-            configInstance.renameProperty(ConfigConstants.CATEGORY_GENERAL_NAME,
-                "immunePlayers",
-                ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
+            if (MigrationUtils.hasPropertyByPath(configInstance,
+                "general.immunePlayers")) {
+                MigrationUtils.moveAndRenameProperty(configInstance,
+                    "general.immunePlayers",
+                    ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
+            }
         });
 
         if (CONFIG_INSTANCE != null) {
@@ -141,6 +144,7 @@ public class Config {
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     ConfigConstants.CONFIG_VERSION, CONFIG_INSTANCE);
+                save();
             } catch (Throwable t) {
                 GTNHCustomizer.LOGGER
                     .warn(
