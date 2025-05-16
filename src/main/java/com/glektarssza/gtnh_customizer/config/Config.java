@@ -114,7 +114,7 @@ public class Config {
         registerMigration("1", "2", (configInstance) -> {
             if (MigrationUtils.hasPropertyByPath(configInstance,
                 "general.immunePlayers")) {
-                MigrationUtils.moveAndRenameProperty(configInstance,
+                MigrationUtils.renameProperty(configInstance,
                     "general.immunePlayers",
                     ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
             }
