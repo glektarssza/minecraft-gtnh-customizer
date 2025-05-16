@@ -267,7 +267,7 @@
         },
         {
             "label": "gradle:runClient:debug",
-            "detail": "Runs the deobfuscated client with your mod.",
+            "detail": "Runs and debugs the deobfuscated client with your mod.",
             "dependsOrder": "sequence",
             "dependsOn": [
                 "gradle:build"
@@ -278,7 +278,75 @@
             "type": "gradle",
             "id": "${workspaceFolder}runClient${workspaceFolderBasename}",
             "script": "runClient",
-            "description": "Runs the deobfuscated client with your mod.",
+            "description": "Runs and debugsthe deobfuscated client with your mod.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:runClient17",
+            "detail": "Runs the deobfuscated client with your mod using Java 17.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:build"
+            ],
+            "hide": false,
+            "promptOnClose": false,
+            "isBackground": true,
+            "type": "gradle",
+            "id": "${workspaceFolder}runClient${workspaceFolderBasename}",
+            "script": "runClient",
+            "description": "Runs the deobfuscated client with your mod using Java 17.",
+            "group": "modded minecraft",
+            "project": "${workspaceFolderBasename}",
+            "buildFile": "${workspaceFolder}/build.gradle",
+            "rootProject": "${workspaceFolderBasename}",
+            "projectFolder": "${workspaceFolder}",
+            "workspaceFolder": "${workspaceFolder}",
+            "args": "",
+            "javaDebug": false,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
+        },
+        {
+            "label": "gradle:runClient17:debug",
+            "detail": "Runs and debugs the deobfuscated client with your mod using Java 17.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:build"
+            ],
+            "hide": false,
+            "promptOnClose": false,
+            "isBackground": true,
+            "type": "gradle",
+            "id": "${workspaceFolder}runClient${workspaceFolderBasename}",
+            "script": "runClient",
+            "description": "Runs and debugs the deobfuscated client with your mod using Java 17.",
             "group": "modded minecraft",
             "project": "${workspaceFolderBasename}",
             "buildFile": "${workspaceFolder}/build.gradle",
