@@ -33,6 +33,11 @@ jobs:
       - build
       - lint
     steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
       - id: download-artifacts
         name: Download artifacts
         uses: actions/download-artifact@v4
