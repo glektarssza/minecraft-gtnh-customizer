@@ -141,6 +141,12 @@ public class Config {
         CONFIG_INSTANCE.load();
         if (!CONFIG_INSTANCE.getLoadedConfigVersion()
             .equals(ConfigConstants.CONFIG_VERSION)) {
+            GTNHCustomizer.LOGGER.warn("Your configuration is out of date!");
+            GTNHCustomizer.LOGGER.warn(
+                "We're running version '{}' but you have version '{}'",
+                ConfigConstants.CONFIG_VERSION,
+                CONFIG_INSTANCE.getLoadedConfigVersion());
+            GTNHCustomizer.LOGGER.warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     ConfigConstants.CONFIG_VERSION, CONFIG_INSTANCE);
@@ -151,6 +157,11 @@ public class Config {
                         "Could not migrate configuration from version '{}' to version '{}'!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
                         ConfigConstants.CONFIG_VERSION);
+                GTNHCustomizer.LOGGER
+                    .warn(
+                        "Here's a stack trace for you to use if you want to file a bug report about migrations failing:");
+                GTNHCustomizer.LOGGER
+                    .warn(t);
                 GTNHCustomizer.LOGGER
                     .warn(
                         "Any customizations you've made are probably about to get nuked!");
@@ -171,16 +182,19 @@ public class Config {
                             "Failed to generate a backup of your current configuration!");
                     GTNHCustomizer.LOGGER
                         .warn(
-                            "Proceeding anyway, sorry!");
-                    GTNHCustomizer.LOGGER
-                        .warn(
                             "Here's a stack trace for you to use if you want to diagnose what happened:");
                     GTNHCustomizer.LOGGER
                         .warn(tt);
                     GTNHCustomizer.LOGGER
                         .warn(
-                            "Please do NOT file a bug report, this is almost certainly NOT the mod developer's fault!");
+                            "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
+                    GTNHCustomizer.LOGGER
+                        .warn(
+                            "Proceeding anyway, sorry!");
                 }
+                CONFIG_INSTANCE.getCategoryNames().stream()
+                    .forEach((categoryName) -> CONFIG_INSTANCE.removeCategory(
+                        CONFIG_INSTANCE.getCategory(categoryName)));
             }
         }
         CONFIG_INSTANCE
