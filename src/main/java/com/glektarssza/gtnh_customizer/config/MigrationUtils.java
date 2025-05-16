@@ -417,7 +417,7 @@ public final class MigrationUtils {
         String path, CharSequence pathSeparators)
         throws NoSuchElementException {
         String[] pathComps = splitPath(path, pathSeparators);
-        if (pathComps.length > 1) {
+        if (pathComps.length > 0) {
             if (!instance.hasCategory(pathComps[0])) {
                 throw new NoSuchElementException(String
                     .format("No such configuration category with path '%s'",
