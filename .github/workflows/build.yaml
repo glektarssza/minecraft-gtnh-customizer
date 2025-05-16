@@ -17,6 +17,10 @@ on:
         description: |
           The ID of the generated artifacts.
         value: ${{jobs.build.outputs.artifacts-id}}
+      artifacts-name:
+        description: |
+          The name of the generated artifacts.
+        value: ${{jobs.build.outputs.artifacts-name}}
       artifacts-url:
         description: |
           The URL from which the generated artifacts can be downloaded.
@@ -35,6 +39,7 @@ jobs:
       contents: read
     outputs:
       artifacts-id: ${{steps.upload-artifacts.outputs.artifact-id}}
+      artifacts-name: dist
       artifacts-url: ${{steps.upload-artifacts.outputs.artifact-url}}
     steps:
       - id: checkout-repository

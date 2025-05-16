@@ -38,12 +38,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           artifact-ids: ${{needs.build.outputs.artifacts-id}}
+          path: artifacts
       - id: generate-checksums
         name: Generate checksums
         run: |
-          md5sum ${{steps.download-artifacts.outputs.download-path}}/* > checksums_md5.txt
-          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/* > checksums_sha1.txt
-          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/* > checksums_sha256.txt
+          md5sum ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifacts-name}}/* > checksums_md5.txt
+          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifacts-name}}/* > checksums_sha1.txt
+          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifacts-name}}/* > checksums_sha256.txt
           mv *.txt ${{steps.download-artifacts.outputs.download-path}}
       - id: attach-to-release
         name: Attach artifacts to release
