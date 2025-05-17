@@ -92,7 +92,7 @@
                 "color": "terminal.ansiWhite"
             },
             "group": {
-                "isDefault": true,
+                "isDefault": false,
                 "kind": "build"
             },
             "isBackground": false,
