@@ -249,11 +249,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 } catch (Throwable t) {
                     return null;
                 }
-                return CommandUtils.getTruncatedDimensionNamesIterable(512)
-                    .parallelStream()
-                    .map((name) -> name.contains(" ")
-                        ? String.format("\"%s\"", name)
-                        : name)
+                return CommandUtils.getTruncatedDimensionIDsIterable(512)
+                    .parallelStream().map((id) -> String.format("%d", id))
                     .collect(Collectors.toList());
             case 4:
                 // -- Fifth argument is one of dimension ID or yaw
@@ -263,11 +260,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     } catch (Throwable t) {
                         return null;
                     }
-                    return CommandUtils.getTruncatedDimensionNamesIterable(512)
-                        .parallelStream()
-                        .map((name) -> name.contains(" ")
-                            ? String.format("\"%s\"", name)
-                            : name)
+                    return CommandUtils.getTruncatedDimensionIDsIterable(512)
+                        .parallelStream().map((id) -> String.format("%d", id))
                         .collect(Collectors.toList());
                 }
                 try {
