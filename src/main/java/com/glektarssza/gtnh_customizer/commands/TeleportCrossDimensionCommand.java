@@ -365,9 +365,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 targetBlockPosY = CommandUtils.parseBlockRelativeDoubleArgument(
                     sender, args[offset + 1], victim.posY,
                     !args[offset + 1].startsWith("~")
-                        && !args[offset + 1].contains("."),
-                    0, DimensionManager.createProviderFor(targetDimension)
-                        .getHeight());
+                        && !args[offset + 1].contains("."));
                 targetBlockPosZ = CommandUtils.parseBlockRelativeDoubleArgument(
                     sender, args[offset + 2], victim.posZ,
                     !args[offset + 1].startsWith("~")
