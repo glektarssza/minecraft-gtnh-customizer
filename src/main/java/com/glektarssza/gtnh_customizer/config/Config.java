@@ -160,7 +160,7 @@ public class Config {
                     com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
                     MigrationUtils.renameProperty(configInstance,
                         com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
-                        com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH);
+                        com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
                 }
             });
         registerMigration(
@@ -170,7 +170,7 @@ public class Config {
                     com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
                     MigrationUtils.renameProperty(configInstance,
                         com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
-                        ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH);
+                        ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
                 }
             });
 
@@ -357,14 +357,12 @@ public class Config {
                 "No available migration route from configuration version '%s' to configuration version '%s'!",
                 fromVersion, toVersion));
         }
-        Configuration currentVersion = new Configuration(
-            configInstance.getConfigFile(),
-            configInstance.getLoadedConfigVersion());
+        Configuration currentVersion = MigrationUtils
+            .cloneConfiguration(CONFIG_INSTANCE);
         for (ImmutableTuple<String, Consumer<Configuration>> migrator : migrators) {
             migrator.getSecond().accept(currentVersion);
-            currentVersion = new Configuration(configInstance.getConfigFile(),
-                migrator.getFirst());
         }
+        CONFIG_INSTANCE = currentVersion;
     }
 
     /**
