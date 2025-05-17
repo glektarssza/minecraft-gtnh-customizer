@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -16,6 +18,8 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
+import com.glektarssza.gtnh_customizer.config.v3.ConfigConstants;
+import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.KeyAlreadyExistsException;
 
 /**
@@ -29,17 +33,22 @@ public class Config {
     private static Configuration CONFIG_INSTANCE;
 
     /**
-     * A list of players who are globally immune.
-     */
-    private static final List<String> globallyImmunePlayers = new ArrayList<String>();
-
-    /**
      * A map of configuration migrations to apply to move between configuration
      * versions.
      *
      * Keys are in the format of {@code fromVersion:toVersion}.
      */
-    private static final Map<String, Consumer<Configuration>> configMigrations = new HashMap<String, Consumer<Configuration>>();
+    private static final Map<String, ImmutableTuple<String, Consumer<Configuration>>> MIGRATIONS = new HashMap<String, ImmutableTuple<String, Consumer<Configuration>>>();
+
+    /**
+     * A list of players who are globally immune.
+     */
+    private static final List<String> globallyImmunePlayers = new ArrayList<String>();
+
+    /**
+     * Whether verbose logging is enabled.
+     */
+    private static boolean verboseLoggingEnabled = false;
 
     /**
      * Get the globally immune players.
@@ -67,6 +76,38 @@ public class Config {
      */
     public static void clearImmunePlayers() {
         globallyImmunePlayers.clear();
+    }
+
+    /**
+     * Get whether verbose logging is enabled.
+     *
+     * @return Whether verbose logging is enabled.
+     */
+    public static boolean getVerboseLoggingEnabled() {
+        return verboseLoggingEnabled;
+    }
+
+    /**
+     * Set whether verbose logging is enabled.
+     *
+     * @param value Whether verbose logging is enabled.
+     */
+    public static void setVerboseLoggingEnabled(boolean value) {
+        verboseLoggingEnabled = value;
+    }
+
+    /**
+     * Reset whether verbose logging is enabled.
+     */
+    public static void resetVerboseLoggingEnabled() {
+        setVerboseLoggingEnabled(false);
+    }
+
+    /**
+     * Toggle whether verbose logging is enabled.
+     */
+    public static void toggleVerboseLoggingEnabled() {
+        setVerboseLoggingEnabled(!getVerboseLoggingEnabled());
     }
 
     /**
@@ -111,14 +152,27 @@ public class Config {
     public static void init(File configDir, String fileName)
         throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
-        registerMigration("1", "2", (configInstance) -> {
-            if (MigrationUtils.hasPropertyByPath(configInstance,
-                "general.immunePlayers")) {
-                MigrationUtils.renameProperty(configInstance,
-                    "general.immunePlayers",
-                    ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
-            }
-        });
+        registerMigration(
+            com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.CONFIG_VERSION,
+            com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.CONFIG_VERSION,
+            (configInstance) -> {
+                if (MigrationUtils.hasPropertyByPath(configInstance,
+                    com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
+                    MigrationUtils.renameProperty(configInstance,
+                        com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
+                        com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH);
+                }
+            });
+        registerMigration(
+            com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.CONFIG_VERSION,
+            ConfigConstants.CONFIG_VERSION, (configInstance) -> {
+                if (MigrationUtils.hasPropertyByPath(configInstance,
+                    com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
+                    MigrationUtils.renameProperty(configInstance,
+                        com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
+                        ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH);
+                }
+            });
 
         if (CONFIG_INSTANCE != null) {
             return;
@@ -151,6 +205,12 @@ public class Config {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     ConfigConstants.CONFIG_VERSION, CONFIG_INSTANCE);
                 save();
+            } catch (NoSuchElementException t) {
+                GTNHCustomizer.LOGGER
+                    .info(
+                        "No migrations available from version '{}' to version '{}', assuming migration is not required!",
+                        CONFIG_INSTANCE.getLoadedConfigVersion(),
+                        ConfigConstants.CONFIG_VERSION);
             } catch (Throwable t) {
                 GTNHCustomizer.LOGGER
                     .warn(
@@ -207,22 +267,37 @@ public class Config {
             .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_GENERAL_NAME,
                 false);
 
-        String[] currentGloballyImmunePlayers = new String[globallyImmunePlayers
-            .size()];
-        globallyImmunePlayers.toArray(currentGloballyImmunePlayers);
-
-        currentGloballyImmunePlayers = CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_GENERAL_NAME,
+        setImmunePlayers(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_GENERAL_PATH,
             ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME,
-            currentGloballyImmunePlayers,
+            globallyImmunePlayers
+                .toArray(new String[globallyImmunePlayers.size()]),
             ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_LANG_KEY)
-            .setRequiresMcRestart(false)
-            .setRequiresWorldRestart(false)
-            .getStringList();
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getStringList());
 
-        setImmunePlayers(currentGloballyImmunePlayers);
+        CONFIG_INSTANCE
+            .setCategoryComment(ConfigConstants.CATEGORY_DEBUGGING_PATH,
+                ConfigConstants.CATEGORY_DEBUGGING_COMMENT)
+            .setCategoryLanguageKey(ConfigConstants.CATEGORY_DEBUGGING_PATH,
+                ConfigConstants.CATEGORY_DEBUGGING_LANG_KEY)
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_DEBUGGING_PATH,
+                false)
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_DEBUGGING_PATH,
+                false);
+
+        setVerboseLoggingEnabled(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_DEBUGGING_PATH,
+            ConfigConstants.PROPERTY_DEBUG_LOGGING_NAME,
+            verboseLoggingEnabled,
+            ConfigConstants.PROPERTY_DEBUG_LOGGING_COMMENT)
+            .setLanguageKey(ConfigConstants.PROPERTY_DEBUG_LOGGING_LANG_KEY)
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getBoolean());
     }
 
     /**
@@ -265,14 +340,31 @@ public class Config {
     private static void applyConfigMigrations(String fromVersion,
         String toVersion, Configuration configInstance)
         throws NoSuchElementException {
-        if (!configMigrations
-            .containsKey(String.format("%s:%s", fromVersion, toVersion))) {
+        LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
+        HashSet<String> alreadyMigratedVersions = new HashSet<String>();
+        while (MIGRATIONS.containsKey(fromVersion)
+            && !alreadyMigratedVersions.contains(fromVersion)
+            && !toVersion.equals(fromVersion)) {
+            migrators.push(MIGRATIONS.get(fromVersion));
+            alreadyMigratedVersions.add(fromVersion);
+            fromVersion = migrators.peekLast().getFirst();
+        }
+        if (alreadyMigratedVersions.contains(fromVersion)) {
+            throw new RuntimeException("Cyclic migration detected!");
+        }
+        if (!toVersion.equals(fromVersion)) {
             throw new NoSuchElementException(String.format(
-                "No available migration route from configuration versionn '%s' to configuration version '%s'!",
+                "No available migration route from configuration version '%s' to configuration version '%s'!",
                 fromVersion, toVersion));
         }
-        configMigrations.get(String.format("%s:%s", fromVersion, toVersion))
-            .accept(configInstance);
+        Configuration currentVersion = new Configuration(
+            configInstance.getConfigFile(),
+            configInstance.getLoadedConfigVersion());
+        for (ImmutableTuple<String, Consumer<Configuration>> migrator : migrators) {
+            migrator.getSecond().accept(currentVersion);
+            currentVersion = new Configuration(configInstance.getConfigFile(),
+                migrator.getFirst());
+        }
     }
 
     /**
@@ -289,7 +381,7 @@ public class Config {
      */
     private static void registerMigration(String fromVersion, String toVersion,
         Consumer<Configuration> migrator) throws KeyAlreadyExistsException {
-        if (configMigrations.containsKey(
+        if (MIGRATIONS.containsKey(
             String.format("%s:%s", fromVersion, toVersion))) {
             throw new KeyAlreadyExistsException(
                 String.format(
@@ -297,8 +389,8 @@ public class Config {
                     fromVersion,
                     toVersion));
         }
-        configMigrations.put(String.format("%s:%s", fromVersion, toVersion),
-            migrator);
-
+        MIGRATIONS.put(fromVersion,
+            new ImmutableTuple<String, Consumer<Configuration>>(toVersion,
+                migrator));
     }
 }
