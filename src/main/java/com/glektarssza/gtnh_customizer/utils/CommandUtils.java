@@ -86,7 +86,7 @@ public final class CommandUtils {
      * A regular expression for matching parsable coordinate values.
      */
     private static final Pattern COORDINATE_MATCHER = Pattern
-        .compile("(~(-?\\d+(\\.\\d*)?)?)|(-?\\\\d+(\\\\.\\\\d*)?)");
+        .compile("(~(-?\\d+(\\.\\d*)?)?)|(-?\\d+(\\.\\d*)?)");
 
     /**
      * A regular expression for matching parsable relative coordinate values.
