@@ -417,13 +417,14 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             MinecraftServer.getServer().getConfigurationManager()
                 .transferPlayerToDimension(victim, dimension);
         }
-        float pitch = victim.rotationPitch;
         float yaw = victim.rotationYaw;
+        float pitch = victim.rotationPitch;
+
         if (yawOverride != null) {
             yaw = yawOverride;
         }
         if (pitchOverride != null) {
-            yaw = pitchOverride;
+            pitch = pitchOverride;
         }
         victim.playerNetServerHandler.setPlayerLocation(xPos, yPos, zPos, yaw,
             pitch);
