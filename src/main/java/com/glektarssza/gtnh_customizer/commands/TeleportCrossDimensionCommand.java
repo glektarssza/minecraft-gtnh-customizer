@@ -431,6 +431,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
             new Object[] {
                 victim.getDisplayName(), (int) xPos, (int) yPos, (int) zPos,
+                yaw, pitch,
                 DimensionManager.getProvider(dimension).getDimensionName(),
                 dimension
             });
