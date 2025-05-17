@@ -410,9 +410,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *        with.
      */
     private void sendVictimToLocation(ICommandSender sender,
-        EntityPlayerMP victim,
-        double xPos, double yPos, double zPos, int dimension,
-        Float yawOverride, Float pitchOverride) {
+        EntityPlayerMP victim, double xPos, double yPos, double zPos,
+        int dimension, Float yawOverride, Float pitchOverride) {
         if (victim.dimension != dimension) {
             MinecraftServer.getServer().getConfigurationManager()
                 .transferPlayerToDimension(victim, dimension);
