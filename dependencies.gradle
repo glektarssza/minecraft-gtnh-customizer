@@ -7,11 +7,14 @@ def isPropEnabled(String id) {
 
 dependencies {
     //-- Support for other mods
-    compileOnly(deobfCurse("advent-of-ascension-nevermine-311054:2973564"))
     compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
     compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
 
-    //-- Local Testing
+    //-- Support for other mods AND local testing
+    devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
+    devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
+
+    //-- Local testing only
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.44-GTNH")
     runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.4")
 }
