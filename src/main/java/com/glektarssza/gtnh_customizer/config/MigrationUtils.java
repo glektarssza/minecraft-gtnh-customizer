@@ -12,7 +12,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.glektarssza.gtnh_customizer.utils.KeyExistsException;
+import com.glektarssza.gtnh_customizer.utils.KeyAlreadyExistsException;
 
 /**
  * A collection of utilities for migration configuration stuff.
@@ -27,12 +27,12 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws KeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be renamed to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be renamed to.
      */
     public static void renameProperty(Configuration instance, String path,
         String newName)
-        throws NoSuchElementException, KeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         renameProperty(instance, path, newName,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -48,17 +48,17 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws KeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be renamed to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be renamed to.
      */
     public static void renameProperty(Configuration instance, String path,
         String newName, CharSequence pathSeparators)
-        throws NoSuchElementException, KeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         ConfigCategory category = getPropertyParentCategoryByPath(instance,
             path, pathSeparators);
         Property property = getPropertyByPath(instance, path, pathSeparators);
         if (category.containsKey(newName)) {
-            throw new KeyExistsException(String.format(
+            throw new KeyAlreadyExistsException(String.format(
                 "Cannot rename configuration property '%s' from '%s' to '%s' (a property already exists there)",
                 path, property.getName(), newName));
         }
@@ -113,8 +113,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws KeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveProperty(Configuration instance, String path,
         String newCategoryPath)
@@ -135,8 +135,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws KeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveProperty(Configuration instance, String path,
         String newCategoryPath, CharSequence pathSeparators)
@@ -147,7 +147,7 @@ public final class MigrationUtils {
         ConfigCategory newCategory = getPropertyParentCategoryByPath(instance,
             newCategoryPath, pathSeparators);
         if (newCategory.containsKey(property.getName())) {
-            throw new KeyExistsException(String.format(
+            throw new KeyAlreadyExistsException(String.format(
                 "Cannot move configuration property '%s' from category '%s' to '%s' (a property already exists there of the same name)",
                 property.getName(), oldCategory.getQualifiedName(),
                 newCategory.getQualifiedName()));
@@ -204,8 +204,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws KeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveAndRenameProperty(Configuration instance,
         String path, String newPath)
@@ -226,8 +226,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws KeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveAndRenameProperty(Configuration instance,
         String path, String newPath, CharSequence pathSeparators)
@@ -240,7 +240,7 @@ public final class MigrationUtils {
         String[] newNameComps = splitPath(newPath, pathSeparators);
         String newName = newNameComps[newNameComps.length - 1];
         if (newCategory.containsKey(property.getName())) {
-            throw new KeyExistsException(String.format(
+            throw new KeyAlreadyExistsException(String.format(
                 "Cannot move and rename configuration property '%s' to '%s' (a property already exists there)",
                 path, newPath));
         }

@@ -16,7 +16,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.utils.KeyExistsException;
+import com.glektarssza.gtnh_customizer.utils.KeyAlreadyExistsException;
 
 /**
  * The main configuration for the mod.
@@ -102,14 +102,14 @@ public class Config {
      * @param configDir The directory the configuration file will live in.
      * @param fileName The name of the file to save the configuration to.
      *
-     * @throws KeyExistsException Thrown if a duplicate configuration migration
-     *         is registered.
+     * @throws KeyAlreadyExistsException Thrown if a duplicate configuration
+     *         migration is registered.
      * @throws NoSuchElementException Thrown if configuration migration is
      *         required and no migration route exists from the old configuration
      *         version to the new configuration version.
      */
     public static void init(File configDir, String fileName)
-        throws KeyExistsException, NoSuchElementException {
+        throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration("1", "2", (configInstance) -> {
             if (MigrationUtils.hasPropertyByPath(configInstance,
@@ -283,14 +283,15 @@ public class Config {
      * @param toVersion The version which will be migrated to.
      * @param migrator The function which will perform the migration.
      *
-     * @throws KeyExistsException Thrown if a migration already exists from the
-     *         old configuration version to the new configuration version.
+     * @throws KeyAlreadyExistsException Thrown if a migration already exists
+     *         from the old configuration version to the new configuration
+     *         version.
      */
     private static void registerMigration(String fromVersion, String toVersion,
-        Consumer<Configuration> migrator) throws KeyExistsException {
+        Consumer<Configuration> migrator) throws KeyAlreadyExistsException {
         if (configMigrations.containsKey(
             String.format("%s:%s", fromVersion, toVersion))) {
-            throw new KeyExistsException(
+            throw new KeyAlreadyExistsException(
                 String.format(
                     "Migration already exists from configuration '%s' version to configuration version '%s'",
                     fromVersion,
