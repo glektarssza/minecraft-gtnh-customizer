@@ -311,7 +311,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             victim = getPlayer(sender, args[0]);
             target = getPlayer(sender, args[1]);
         } else if (args.length > 1 && isUsernameIndex(args, 0)
-            && !isUsernameIndex(args, 0)) {
+            && !isUsernameIndex(args, 1)) {
             victim = getPlayer(sender, args[0]);
         } else if (args.length > 0 && isUsernameIndex(args, 0)) {
             victim = getCommandSenderAsPlayer(sender);
