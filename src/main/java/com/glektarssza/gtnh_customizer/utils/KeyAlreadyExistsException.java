@@ -3,12 +3,12 @@ package com.glektarssza.gtnh_customizer.utils;
 /**
  * An exception that signals a key already exists.
  */
-public class KeyExistsException extends RuntimeException {
+public class KeyAlreadyExistsException extends RuntimeException {
 
     /**
      * Create a new instance.
      */
-    public KeyExistsException() {
+    public KeyAlreadyExistsException() {
         super();
     }
 
@@ -17,7 +17,7 @@ public class KeyExistsException extends RuntimeException {
      *
      * @param message A string describing the exception.
      */
-    public KeyExistsException(String message) {
+    public KeyAlreadyExistsException(String message) {
         super(message);
     }
 
@@ -26,7 +26,7 @@ public class KeyExistsException extends RuntimeException {
      *
      * @param cause The throwable that caused the new instance to be created.
      */
-    public KeyExistsException(Throwable cause) {
+    public KeyAlreadyExistsException(Throwable cause) {
         super(cause);
     }
 
@@ -36,7 +36,7 @@ public class KeyExistsException extends RuntimeException {
      * @param message A string describing the exception.
      * @param cause The throwable that caused the new instance to be created.
      */
-    public KeyExistsException(String message, Throwable cause) {
+    public KeyAlreadyExistsException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -45,11 +45,12 @@ public class KeyExistsException extends RuntimeException {
      *
      * @param message A string describing the exception.
      * @param cause The throwable that caused the new instance to be created.
-     * @param enableSupression
+     * @param enableSuppression
      * @param writeableStackTrace
      */
-    public KeyExistsException(String m, Throwable t, boolean enableSupression,
+    public KeyAlreadyExistsException(String m, Throwable t,
+        boolean enableSuppression,
         boolean writeableStackTrace) {
-        super(m, t, enableSupression, writeableStackTrace);
+        super(m, t, enableSuppression, writeableStackTrace);
     }
 }
