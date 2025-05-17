@@ -364,12 +364,13 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         });
                 }
             }
-            try {
-                yawOverride = Float.parseFloat(args[offset + 4]);
-                yawOverride = ((Double) Math.toRadians(yawOverride))
-                    .floatValue();
-            } catch (Throwable t) {
-                // -- Does nothing
+            if (args.length > (offset + 4)) {
+                try {
+                    yawOverride = Float.parseFloat(args[offset + 4]);
+                    yawOverride = yawOverride * ((float) Math.PI / 180f);
+                } catch (Throwable t) {
+                    // -- Does nothing
+                }
             }
             sendVictimToLocation(sender, victim, targetPosX, targetPosY,
                 targetPosZ, targetDimension, yawOverride, victim.rotationPitch);
@@ -410,20 +411,20 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *        with.
      */
     private void sendVictimToLocation(ICommandSender sender,
-        EntityPlayerMP victim,
-        double xPos, double yPos, double zPos, int dimension,
-        Float yawOverride, Float pitchOverride) {
+        EntityPlayerMP victim, double xPos, double yPos, double zPos,
+        int dimension, Float yawOverride, Float pitchOverride) {
         if (victim.dimension != dimension) {
             MinecraftServer.getServer().getConfigurationManager()
                 .transferPlayerToDimension(victim, dimension);
         }
-        float pitch = victim.rotationPitch;
         float yaw = victim.rotationYaw;
+        float pitch = victim.rotationPitch;
+
         if (yawOverride != null) {
             yaw = yawOverride;
         }
         if (pitchOverride != null) {
-            yaw = pitchOverride;
+            pitch = pitchOverride;
         }
         victim.playerNetServerHandler.setPlayerLocation(xPos, yPos, zPos, yaw,
             pitch);
@@ -432,6 +433,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
             new Object[] {
                 victim.getDisplayName(), (int) xPos, (int) yPos, (int) zPos,
+                yaw, pitch,
                 DimensionManager.getProvider(dimension).getDimensionName(),
                 dimension
             });

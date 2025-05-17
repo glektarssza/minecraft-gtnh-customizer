@@ -33,8 +33,10 @@ invincibles
 jitpack
 jvmargs
 knockback
+ljava
 lnet
 Lthaumcraft
+lxaero
 mcmeta
 mcmod
 mcversion
@@ -61,4 +63,5 @@ tpxd
 tweaker
 unimixins
 waila
+xaero
 xaeros

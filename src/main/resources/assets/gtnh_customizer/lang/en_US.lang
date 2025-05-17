@@ -10,7 +10,7 @@ gtnh_customizer.commands.teleport_cross_dimension.error.not_enough_arguments=Not
 gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination=Bad destination coordinates '%s %s %s'!
 gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension=Unknown dimension ID '%s'!
 gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self=Teleported you to... Yourself?
-gtnh_customizer.commands.teleport_cross_dimension.info.teleported=Teleported '%s' to %d, %d, %d in dimension '%s' (ID %d)
+gtnh_customizer.commands.teleport_cross_dimension.info.teleported=Teleported '%s' to %d, %d, %d (%f, %f) in dimension '%s' (ID %d)
 gtnh_customizer.commands.list_dimensions.usage=/list-dimensions [limit=512] [filters...]
 gtnh_customizer.commands.list_dimensions.error.invalid_limit=Invalid limit '%d'!
 gtnh_customizer.commands.list_dimensions.info.header=--- Dimension List ---
