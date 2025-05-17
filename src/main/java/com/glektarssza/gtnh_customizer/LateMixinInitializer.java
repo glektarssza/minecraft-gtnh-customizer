@@ -7,6 +7,9 @@ import java.util.Set;
 import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
 import com.gtnewhorizon.gtnhmixins.LateMixin;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+
 /**
  * The late-stage mixin initializer.
  */
@@ -29,6 +32,10 @@ public class LateMixinInitializer implements ILateMixinLoader {
         }
         if (loadedMods.contains("Thaumcraft")) {
             mixins.add("thaumcraft.EntityWispMixin");
+        }
+        if (loadedMods.contains("XaeroMinimap")
+            && FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+            mixins.add("xaeros.client.WaypointsManagerMixins");
         }
         return mixins;
     }
