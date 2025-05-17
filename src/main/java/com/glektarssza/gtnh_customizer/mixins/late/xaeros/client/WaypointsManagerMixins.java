@@ -97,8 +97,6 @@ public class WaypointsManagerMixins {
                 teleportCommandBuffer, params.get(paramName));
         }
         matcher.appendTail(teleportCommandBuffer);
-        GTNHCustomizer.LOGGER.debug("Final teleport command: {}",
-            teleportCommandBuffer.toString());
         player.sendChatMessage(teleportCommandBuffer.toString());
     }
 }
