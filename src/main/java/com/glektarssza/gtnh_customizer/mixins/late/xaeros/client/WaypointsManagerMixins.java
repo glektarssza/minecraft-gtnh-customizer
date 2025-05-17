@@ -67,9 +67,9 @@ public class WaypointsManagerMixins {
         params.put("dimension", dimensionId);
         params.put("dim", dimensionId);
         params.put("d", dimensionId);
-        params.put("x", String.format("%d", x));
+        params.put("x", String.format("%d", selected.getX()));
         params.put("y", String.format("%d", selected.getY()));
-        params.put("z", String.format("%d", z));
+        params.put("z", String.format("%d", selected.getZ()));
         params.put("rotation",
             selected.isRotation() ? String.format("%d", selected.getYaw())
                 : "");
