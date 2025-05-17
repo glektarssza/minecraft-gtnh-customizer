@@ -56,6 +56,7 @@ specialmobs
 spongemixins
 spongepowered
 srgify
+teleporter
 teleporting
 temurin
 thaumcraft
