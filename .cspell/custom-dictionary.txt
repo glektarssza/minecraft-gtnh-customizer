@@ -21,6 +21,7 @@ factorypath
 fmlat
 foojay
 futura
+GAMEMASTER
 gasstation
 gson
 gtnewhorizons
@@ -53,8 +54,10 @@ specialmobs
 spongemixins
 spongepowered
 srgify
+teleporting
 temurin
 thaumcraft
+tpxd
 tweaker
 unimixins
 waila
