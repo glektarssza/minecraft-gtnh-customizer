@@ -249,11 +249,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 } catch (Throwable t) {
                     return null;
                 }
-                return CommandUtils.getTruncatedDimensionNamesIterable(512)
-                    .parallelStream()
-                    .map((name) -> name.contains(" ")
-                        ? String.format("\"%s\"", name)
-                        : name)
+                return CommandUtils.getTruncatedDimensionIDsIterable(512)
+                    .parallelStream().map((id) -> String.format("%d", id))
                     .collect(Collectors.toList());
             case 4:
                 // -- Fifth argument is one of dimension ID or yaw
@@ -263,11 +260,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     } catch (Throwable t) {
                         return null;
                     }
-                    return CommandUtils.getTruncatedDimensionNamesIterable(512)
-                        .parallelStream()
-                        .map((name) -> name.contains(" ")
-                            ? String.format("\"%s\"", name)
-                            : name)
+                    return CommandUtils.getTruncatedDimensionIDsIterable(512)
+                        .parallelStream().map((id) -> String.format("%d", id))
                         .collect(Collectors.toList());
                 }
                 try {
@@ -311,16 +305,17 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             victim = getPlayer(sender, args[0]);
             target = getPlayer(sender, args[1]);
         } else if (args.length > 1 && isUsernameIndex(args, 0)
-            && isYawIndex(args, 1)) {
-            victim = getCommandSenderAsPlayer(sender);
-            target = getPlayer(sender, args[0]);
-        } else if (args.length > 1 && isUsernameIndex(args, 0)) {
+            && !isUsernameIndex(args, 1)) {
             victim = getPlayer(sender, args[0]);
-        } else if (args.length == 1 && isUsernameIndex(args, 0)) {
+        } else if (args.length > 0 && isUsernameIndex(args, 0)) {
             victim = getCommandSenderAsPlayer(sender);
             target = getPlayer(sender, args[0]);
-        } else {
+        } else if (args.length > 0) {
             victim = getCommandSenderAsPlayer(sender);
+        } else {
+            throw new WrongUsageException(
+                "gtnh_customizer.commands.teleport_cross_dimension.error.not_enough_arguments",
+                new Object[0]);
         }
         if (victim != null && target != null) {
             Float yawOverride = null;
@@ -337,11 +332,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     .setChatStyle(
                         new ChatStyle().setColor(EnumChatFormatting.GOLD)
                             .setItalic(true)));
+            return;
         } else if (victim != null) {
             Double targetPosX = null;
             Double targetPosY = null;
             Double targetPosZ = null;
-            Integer targetDimension = null;
+            int targetDimension = victim.dimension;
             Float yawOverride = null;
             int offset = isUsernameIndex(args, 0) ? 1 : 0;
             try {
@@ -357,14 +353,16 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         args[offset + 2]
                     });
             }
-            try {
-                targetDimension = Integer.parseInt(args[offset + 3], 10);
-            } catch (Throwable t) {
-                throw new CommandException(
-                    "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
-                    new Object[] {
-                        args[offset + 3]
-                    });
+            if (args.length > (offset + 3)) {
+                try {
+                    targetDimension = Integer.parseInt(args[offset + 3], 10);
+                } catch (Throwable t) {
+                    throw new CommandException(
+                        "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
+                        new Object[] {
+                            args[offset + 3]
+                        });
+                }
             }
             try {
                 yawOverride = Float.parseFloat(args[offset + 4]);
@@ -375,11 +373,11 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             }
             sendVictimToLocation(sender, victim, targetPosX, targetPosY,
                 targetPosZ, targetDimension, yawOverride, victim.rotationPitch);
-        } else {
-            throw new WrongUsageException(
-                "gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage",
-                new Object[0]);
+            return;
         }
+        throw new WrongUsageException(
+            "gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage",
+            new Object[0]);
     }
 
     /**
