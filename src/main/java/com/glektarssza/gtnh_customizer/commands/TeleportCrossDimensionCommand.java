@@ -359,15 +359,15 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         args[offset + 2]
                     });
             }
-            if (args.length > offset + 3) {
-            try {
-                targetDimension = Integer.parseInt(args[offset + 3], 10);
-            } catch (Throwable t) {
-                throw new CommandException(
-                    "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
-                    new Object[] {
-                        args[offset + 3]
-                    });
+            if (args.length > (offset + 3)) {
+                try {
+                    targetDimension = Integer.parseInt(args[offset + 3], 10);
+                } catch (Throwable t) {
+                    throw new CommandException(
+                        "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
+                        new Object[] {
+                            args[offset + 3]
+                        });
                 }
             }
             try {
