@@ -43,37 +43,37 @@ public final class CommandUtils {
      * A regular expression for matching parsable boolean values.
      */
     private static final Pattern BOOLEAN_MATCHER = Pattern
-        .compile("^true|false|1|0$", Pattern.CASE_INSENSITIVE);
+        .compile("true|false|1|0", Pattern.CASE_INSENSITIVE);
 
     /**
      * A regular expression for matching parsable integer values.
      */
     private static final Pattern BYTE_MATCHER = Pattern
-        .compile("^\\d{1,3}$");
+        .compile("-?\\d{1,3}");
 
     /**
      * A regular expression for matching parsable integer values.
      */
     private static final Pattern SHORT_MATCHER = Pattern
-        .compile("^\\d{1,5}$");
+        .compile("-?\\d{1,5}");
 
     /**
      * A regular expression for matching parsable integer values.
      */
     private static final Pattern INTEGER_MATCHER = Pattern
-        .compile("^\\d{1,10}$");
+        .compile("-?\\d{1,10}");
 
     /**
      * A regular expression for matching parsable float values.
      */
     private static final Pattern FLOAT_MATCHER = Pattern
-        .compile("^\\d+(\\.\\d*)$");
+        .compile("-?\\d+(\\.\\d*)");
 
     /**
      * A regular expression for matching parsable double values.
      */
     private static final Pattern DOUBLE_MATCHER = Pattern
-        .compile("^\\d+(\\.\\d*)$");
+        .compile("-?\\d+(\\.\\d*)");
 
     /**
      * Check if an argument is a boolean.
