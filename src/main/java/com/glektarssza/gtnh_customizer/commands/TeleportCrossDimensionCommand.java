@@ -364,12 +364,13 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         });
                 }
             }
-            try {
-                yawOverride = Float.parseFloat(args[offset + 4]);
-                yawOverride = ((Double) Math.toRadians(yawOverride))
-                    .floatValue();
-            } catch (Throwable t) {
-                // -- Does nothing
+            if (args.length > (offset + 4)) {
+                try {
+                    yawOverride = Float.parseFloat(args[offset + 4]);
+                    yawOverride = yawOverride * ((float) Math.PI / 180f);
+                } catch (Throwable t) {
+                    // -- Does nothing
+                }
             }
             sendVictimToLocation(sender, victim, targetPosX, targetPosY,
                 targetPosZ, targetDimension, yawOverride, victim.rotationPitch);
