@@ -343,7 +343,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             Double targetPosX = null;
             Double targetPosY = null;
             Double targetPosZ = null;
-            Integer targetDimension = null;
+            int targetDimension = victim.dimension;
             Float yawOverride = null;
             int offset = isUsernameIndex(args, 0) ? 1 : 0;
             try {
