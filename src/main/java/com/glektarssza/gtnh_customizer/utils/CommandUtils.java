@@ -43,7 +43,7 @@ public final class CommandUtils {
      * A regular expression for matching parsable boolean values.
      */
     private static final Pattern BOOLEAN_MATCHER = Pattern
-        .compile("^true|false|1|0$", Pattern.CASE_INSENSITIVE);
+        .compile("true|false|1|0", Pattern.CASE_INSENSITIVE);
 
     /**
      * A regular expression for matching parsable integer values.
