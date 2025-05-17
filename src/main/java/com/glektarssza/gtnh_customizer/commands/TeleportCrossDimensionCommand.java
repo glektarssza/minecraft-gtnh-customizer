@@ -359,6 +359,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         args[offset + 2]
                     });
             }
+            if (args.length > offset + 3) {
             try {
                 targetDimension = Integer.parseInt(args[offset + 3], 10);
             } catch (Throwable t) {
@@ -367,6 +368,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     new Object[] {
                         args[offset + 3]
                     });
+                }
             }
             try {
                 yawOverride = Float.parseFloat(args[offset + 4]);
