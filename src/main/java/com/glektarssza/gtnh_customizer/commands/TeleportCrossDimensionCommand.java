@@ -329,9 +329,9 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             sendVictimToTarget(sender, victim, target, yawOverride);
             sender.addChatMessage(new ChatComponentTranslation(
                 "gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self")
-                .setChatStyle(
-                    new ChatStyle().setColor(EnumChatFormatting.GOLD)
-                        .setItalic(true)));
+                    .setChatStyle(
+                        new ChatStyle().setColor(EnumChatFormatting.GOLD)
+                            .setItalic(true)));
             return;
         } else if (victim != null) {
             Double targetPosX = null;
