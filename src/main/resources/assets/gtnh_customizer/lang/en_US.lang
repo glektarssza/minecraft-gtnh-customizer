@@ -5,8 +5,9 @@ gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list o
 
 # Commands
 gtnh_customizer.commands.teleport_cross_dimension.usage=/teleport-cross-dimension [victim player] (<target player> [yaw override] | <x position> <y position> <z position> [dimension id | dimension name] [yaw])
-gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination=Bad destination '%s %s %s'!
 gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage=Wrong command format!
+gtnh_customizer.commands.teleport_cross_dimension.error.not_enough_arguments=Not enough arguments!
+gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination=Bad destination coordinates '%s %s %s'!
 gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension=Unknown dimension ID '%s'!
 gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self=Teleported you to... Yourself?
 gtnh_customizer.commands.teleport_cross_dimension.info.teleported=Teleported '%s' to %d, %d, %d in dimension '%s' (ID %d)

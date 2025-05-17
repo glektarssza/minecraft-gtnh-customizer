@@ -311,16 +311,17 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             victim = getPlayer(sender, args[0]);
             target = getPlayer(sender, args[1]);
         } else if (args.length > 1 && isUsernameIndex(args, 0)
-            && isYawIndex(args, 1)) {
-            victim = getCommandSenderAsPlayer(sender);
-            target = getPlayer(sender, args[0]);
-        } else if (args.length > 1 && isUsernameIndex(args, 0)) {
+            && !isUsernameIndex(args, 0)) {
             victim = getPlayer(sender, args[0]);
-        } else if (args.length == 1 && isUsernameIndex(args, 0)) {
+        } else if (args.length > 0 && isUsernameIndex(args, 0)) {
             victim = getCommandSenderAsPlayer(sender);
             target = getPlayer(sender, args[0]);
-        } else {
+        } else if (args.length > 0) {
             victim = getCommandSenderAsPlayer(sender);
+        } else {
+            throw new WrongUsageException(
+                "gtnh_customizer.commands.teleport_cross_dimension.error.not_enough_arguments",
+                new Object[0]);
         }
         if (victim != null && target != null) {
             Float yawOverride = null;
@@ -334,9 +335,10 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             sendVictimToTarget(sender, victim, target, yawOverride);
             sender.addChatMessage(new ChatComponentTranslation(
                 "gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self")
-                    .setChatStyle(
-                        new ChatStyle().setColor(EnumChatFormatting.GOLD)
-                            .setItalic(true)));
+                .setChatStyle(
+                    new ChatStyle().setColor(EnumChatFormatting.GOLD)
+                        .setItalic(true)));
+            return;
         } else if (victim != null) {
             Double targetPosX = null;
             Double targetPosY = null;
@@ -375,11 +377,11 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             }
             sendVictimToLocation(sender, victim, targetPosX, targetPosY,
                 targetPosZ, targetDimension, yawOverride, victim.rotationPitch);
-        } else {
-            throw new WrongUsageException(
-                "gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage",
-                new Object[0]);
+            return;
         }
+        throw new WrongUsageException(
+            "gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage",
+            new Object[0]);
     }
 
     /**
