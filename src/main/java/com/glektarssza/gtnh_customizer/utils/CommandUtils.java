@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import net.minecraft.command.ICommandSender;
@@ -309,8 +310,8 @@ public final class CommandUtils {
      * @return A truncated list of registered dimension IDs.
      */
     public static Integer[] getTruncatedDimensionIDsList(int limit) {
-        return (Integer[]) Arrays.stream(getAllDimensionIDs()).limit(limit)
-            .toArray();
+        return Arrays.stream(getAllDimensionIDs()).limit(limit)
+            .toArray(Integer[]::new);
     }
 
     /**
@@ -385,14 +386,155 @@ public final class CommandUtils {
             .orElseThrow(() -> new NoSuchElementException()).dimensionId;
     }
 
-    public static int parseIntegerArgument(ICommandSender sender,
+    public static short parseShortArgument(ICommandSender sender,
         String arg)
+        throws NumberFormatException {
+        return parseShortArgument(sender, arg, 10);
+    }
+
+    public static short parseShortArgument(ICommandSender sender,
+        String arg, int radix)
+        throws NumberFormatException {
+        if (!INTEGER_MATCHER.matcher(arg).matches()) {
+            throw new NumberFormatException(String.format(
+                "Value '%s' does not match the format of an integer", arg));
+        }
+        return Short.parseShort(arg, radix);
+    }
+
+    public static short parseShortArgument(ICommandSender sender,
+        String arg, short min, short max)
+        throws NumberFormatException, NumberOutOfRangeException {
+        return parseShortArgument(sender, arg, 10, min, max);
+    }
+
+    public static short parseShortArgument(ICommandSender sender,
+        String arg, int radix, short min, short max)
+        throws NumberFormatException, NumberOutOfRangeException {
+        short result = parseShortArgument(sender, arg, radix);
+        if (result < min || result > max) {
+            throw new NumberOutOfRangeException(result, min, max);
+        }
+        return result;
+    }
+
+    public static short parseOptionalShortArgument(ICommandSender sender,
+        String arg, short defaultValue) {
+        try {
+            return parseShortArgument(sender, arg);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static short parseOptionalShortArgument(ICommandSender sender,
+        String arg, int radix, short defaultValue) {
+        try {
+            return parseShortArgument(sender, arg, radix);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static short parseOptionalShortArgument(ICommandSender sender,
+        String arg, short min, short max, short defaultValue) {
+        return parseOptionalShortArgument(sender, arg, 10, min, max,
+            defaultValue);
+    }
+
+    public static short parseOptionalShortArgument(ICommandSender sender,
+        String arg, int radix, short min, short max, short defaultValue) {
+        try {
+            return parseShortArgument(sender, arg, radix, min, max);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        } catch (NumberOutOfRangeException t) {
+            return defaultValue;
+        }
+    }
+
+    public static short parseBlockRelativeShortArgument(ICommandSender sender,
+        String arg, short baseValue)
+        throws NumberFormatException {
+        return parseBlockRelativeShortArgument(sender, arg, baseValue, 10);
+    }
+
+    public static short parseBlockRelativeShortArgument(ICommandSender sender,
+        String arg, short baseValue, int radix)
+        throws NumberFormatException {
+        short offset;
+        if (arg.startsWith("~")) {
+            offset = arg.length() == 1 ? 0
+                : parseShortArgument(sender, arg.substring(1), radix);
+        } else {
+            return parseShortArgument(sender, arg, radix);
+        }
+        return (short) (baseValue + offset);
+    }
+
+    public static short parseBlockRelativeShortArgument(ICommandSender sender,
+        String arg, short baseValue, short min, short max)
+        throws NumberFormatException {
+        return parseBlockRelativeShortArgument(sender, arg, baseValue, 10,
+            min, max);
+    }
+
+    public static short parseBlockRelativeShortArgument(ICommandSender sender,
+        String arg, short baseValue, int radix, short min, short max)
+        throws NumberFormatException {
+        short result = parseBlockRelativeShortArgument(sender, arg, baseValue,
+            radix);
+        if (result < min || result > max) {
+            throw new NumberOutOfRangeException(result, min, max);
+        }
+        return result;
+    }
+
+    public static short parseBlockRelativeOptionalShortArgument(
+        ICommandSender sender, String arg, short baseValue,
+        short defaultValue) {
+        return parseBlockRelativeOptionalShortArgument(sender, arg, baseValue,
+            10, defaultValue);
+    }
+
+    public static short parseBlockRelativeOptionalShortArgument(
+        ICommandSender sender, String arg, short baseValue, int radix,
+        short defaultValue) {
+        try {
+            return parseBlockRelativeShortArgument(sender, arg, baseValue,
+                radix);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static short parseBlockRelativeOptionalShortArgument(
+        ICommandSender sender, String arg, short baseValue, short min,
+        short max, short defaultValue) {
+        return parseBlockRelativeOptionalShortArgument(sender, arg, baseValue,
+            10, min, max, defaultValue);
+    }
+
+    public static short parseBlockRelativeOptionalShortArgument(
+        ICommandSender sender, String arg, short baseValue, int radix,
+        short min, short max, short defaultValue) {
+        try {
+            return parseBlockRelativeShortArgument(sender, arg, baseValue,
+                radix, min, max);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        } catch (NumberOutOfRangeException t) {
+            return defaultValue;
+        }
+    }
+
+    public static int parseIntegerArgument(ICommandSender sender, String arg)
         throws NumberFormatException {
         return parseIntegerArgument(sender, arg, 10);
     }
 
-    public static int parseIntegerArgument(ICommandSender sender,
-        String arg, int radix)
+    public static int parseIntegerArgument(ICommandSender sender, String arg,
+        int radix)
         throws NumberFormatException {
         if (!INTEGER_MATCHER.matcher(arg).matches()) {
             throw new NumberFormatException(String.format(
@@ -401,14 +543,14 @@ public final class CommandUtils {
         return Integer.parseInt(arg, radix);
     }
 
-    public static int parseIntegerArgument(ICommandSender sender,
-        String arg, int min, int max)
+    public static int parseIntegerArgument(ICommandSender sender, String arg,
+        int min, int max)
         throws NumberFormatException, NumberOutOfRangeException {
         return parseIntegerArgument(sender, arg, 10, min, max);
     }
 
-    public static int parseIntegerArgument(ICommandSender sender,
-        String arg, int radix, int min, int max)
+    public static int parseIntegerArgument(ICommandSender sender, String arg,
+        int radix, int min, int max)
         throws NumberFormatException, NumberOutOfRangeException {
         int result = parseIntegerArgument(sender, arg, radix);
         if (result < min || result > max) {
@@ -496,8 +638,8 @@ public final class CommandUtils {
     }
 
     public static int parseBlockRelativeOptionalIntegerArgument(
-        ICommandSender sender, String arg, int baseValue,
-        int radix, int defaultValue) {
+        ICommandSender sender, String arg, int baseValue, int radix,
+        int defaultValue) {
         try {
             return parseBlockRelativeIntegerArgument(sender, arg, baseValue,
                 radix);
@@ -507,8 +649,8 @@ public final class CommandUtils {
     }
 
     public static int parseBlockRelativeOptionalIntegerArgument(
-        ICommandSender sender, String arg, int baseValue, int min,
-        int max, int defaultValue) {
+        ICommandSender sender, String arg, int baseValue, int min, int max,
+        int defaultValue) {
         return parseBlockRelativeOptionalIntegerArgument(sender, arg, baseValue,
             10, min, max, defaultValue);
     }
@@ -607,7 +749,8 @@ public final class CommandUtils {
             offset = arg.length() == 1 ? 0.0f
                 : parseFloatArgument(sender, arg.substring(1));
         } else {
-            return parseFloatArgument(sender, arg);
+            return parseFloatArgument(sender, arg)
+                + (centerToBlock ? 0.5f : 0.0f);
         }
         return baseValue + offset + (centerToBlock ? 0.5f : 0.0f);
     }
@@ -750,7 +893,8 @@ public final class CommandUtils {
             offset = arg.length() == 1 ? 0.0
                 : parseDoubleArgument(sender, arg.substring(1));
         } else {
-            return parseDoubleArgument(sender, arg);
+            return parseDoubleArgument(sender, arg)
+                + (centerToBlock ? 0.5f : 0.0f);
         }
         return baseValue + offset + (centerToBlock ? 0.5f : 0.0f);
     }
