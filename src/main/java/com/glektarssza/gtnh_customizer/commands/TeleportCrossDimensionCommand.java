@@ -343,7 +343,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         throw new CommandException(
                             "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
                             new Object[] {
-                                args[offset + 3]
+                                String.format("%d", args[offset + 3])
                             });
                     }
                     targetDimension = victim.dimension;
@@ -355,7 +355,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         throw new CommandException(
                             "gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension",
                             new Object[] {
-                                args[offset + 3]
+                                String.format("%d", args[offset + 3])
                             });
                     }
                 }
@@ -363,23 +363,20 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             try {
                 targetBlockPosX = CommandUtils.parseBlockRelativeDoubleArgument(
                     sender, args[offset + 0], victim.posX,
-                    !args[offset + 1].startsWith("~")
-                        && !args[offset + 1].contains("."));
+                    !args[offset + 1].contains("."));
                 targetBlockPosY = CommandUtils.parseBlockRelativeDoubleArgument(
                     sender, args[offset + 1], victim.posY,
-                    !args[offset + 1].startsWith("~")
-                        && !args[offset + 1].contains("."));
+                    !args[offset + 1].contains("."));
                 targetBlockPosZ = CommandUtils.parseBlockRelativeDoubleArgument(
                     sender, args[offset + 2], victim.posZ,
-                    !args[offset + 1].startsWith("~")
-                        && !args[offset + 1].contains("."));
+                    !args[offset + 1].contains("."));
             } catch (Throwable t) {
                 throw new CommandException(
                     "gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination",
                     new Object[] {
-                        args[offset + 0],
-                        args[offset + 1],
-                        args[offset + 2]
+                        String.format("%.2f", args[offset + 0]),
+                        String.format("%.2f", args[offset + 1]),
+                        String.format("%.2f", args[offset + 2])
                     });
             }
             if (args.length > (offset + 4)) {
@@ -450,17 +447,17 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                         yPos, zPos, yaw, pitch));
         } else {
             victim.playerNetServerHandler.setPlayerLocation(xPos, yPos, zPos,
-                yaw,
-                pitch);
+                yaw, pitch);
         }
         // -- Notify admin 'console'
         func_152373_a(sender, this,
             "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
             new Object[] {
-                victim.getDisplayName(), (int) xPos, (int) yPos, (int) zPos,
-                yaw, pitch,
+                victim.getDisplayName(), String.format("%.2f", xPos),
+                String.format("%.2f", yPos), String.format("%.2f", zPos),
+                String.format("%.2f", yaw), String.format("%.2f", pitch),
                 DimensionManager.getProvider(dimension).getDimensionName(),
-                dimension
+                String.format("%d", dimension)
             });
     }
 
