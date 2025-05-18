@@ -18,9 +18,15 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 
+import cpw.mods.fml.common.Loader;
+
 import net.minecraftforge.common.DimensionManager;
 
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
+
+import serverutils.data.ServerUtilitiesPlayerData;
+import serverutils.data.TeleportType;
+import serverutils.lib.math.BlockDimPos;
 
 /**
  * A command for teleporting the command sender or a target player across to
@@ -439,6 +445,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         if (pitchOverride != null) {
             pitch = pitchOverride;
         }
+        updatePlayerLastLocation(victim);
         if (victim.dimension != dimension) {
             MinecraftServer.getServer().getConfigurationManager()
                 .transferPlayerToDimension(victim, dimension,
@@ -459,6 +466,21 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 DimensionManager.getProvider(dimension).getDimensionName(),
                 String.format("%d", dimension)
             });
+    }
+
+    /**
+     * Update the last position the victim was in before they were teleported.
+     *
+     * If the {@code ServerUtilities} mod is not loaded, this method does
+     * nothing.
+     *
+     * @param victim The player who is about to be teleported.
+     */
+    private void updatePlayerLastLocation(EntityPlayerMP victim) {
+        if (Loader.isModLoaded("serverutilities")) {
+            ServerUtilitiesPlayerData.get(victim).setLastTeleport(
+                TeleportType.VANILLA_TP, new BlockDimPos(victim));;
+        }
     }
 
     private static class CrossDimensionCommandTeleporter extends Teleporter {
