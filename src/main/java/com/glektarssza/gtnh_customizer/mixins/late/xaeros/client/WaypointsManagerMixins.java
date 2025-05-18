@@ -39,7 +39,7 @@ public class WaypointsManagerMixins {
      * @param originalTeleportCommand The teleport command being invoked.
      * @param
      */
-    @Redirect(method = "teleportToWaypoint(Lxaero/common/minimap/waypoints/Waypoint;Lxaero/common/minimap/waypoints/WaypointWorld;Lnet/minecraft/client/gui/GuiScreen;Z)V", at = @At(value = "INVOKE", target = "net.minecraft.client.entity.EntityClientPlayerMP.sendChatMessage(Ljava/lang/String;)V"), remap = false)
+    @Redirect(method = "teleportToWaypoint(Lxaero/common/minimap/waypoints/Waypoint;Lxaero/common/minimap/waypoints/WaypointWorld;Lnet/minecraft/client/gui/GuiScreen;Z)V", at = @At(value = "INVOKE", target = "net.minecraft.client.entity.EntityClientPlayerMP.sendChatMessage(Ljava/lang/String;)V"))
     private void teleportToWaypoint$overrideSendTeleportCommand(
         EntityClientPlayerMP player, String originalTeleportCommand,
         @Local(name = "x") int x, @Local(name = "z") int z,
