@@ -11,6 +11,7 @@ dependencies {
     compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
 
     //-- Support for other mods AND local testing
+    devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
     devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
     devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
 
