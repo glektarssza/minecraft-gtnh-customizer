@@ -9,11 +9,14 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.world.Teleporter;
+import net.minecraft.world.WorldServer;
 
 import net.minecraftforge.common.DimensionManager;
 
@@ -430,10 +433,6 @@ public class TeleportCrossDimensionCommand extends CommandBase {
     private void sendVictimToLocation(ICommandSender sender,
         EntityPlayerMP victim, double xPos, double yPos, double zPos,
         int dimension, Float yawOverride, Float pitchOverride) {
-        if (victim.dimension != dimension) {
-            MinecraftServer.getServer().getConfigurationManager()
-                .transferPlayerToDimension(victim, dimension);
-        }
         float yaw = victim.rotationYaw;
         float pitch = victim.rotationPitch;
 
@@ -443,8 +442,17 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         if (pitchOverride != null) {
             pitch = pitchOverride;
         }
-        victim.playerNetServerHandler.setPlayerLocation(xPos, yPos, zPos, yaw,
-            pitch);
+        if (victim.dimension != dimension) {
+            MinecraftServer.getServer().getConfigurationManager()
+                .transferPlayerToDimension(victim, dimension,
+                    new CrossDimensionCommandTeleporter(MinecraftServer
+                        .getServer().worldServerForDimension(dimension), xPos,
+                        yPos, zPos, yaw, pitch));
+        } else {
+            victim.playerNetServerHandler.setPlayerLocation(xPos, yPos, zPos,
+                yaw,
+                pitch);
+        }
         // -- Notify admin 'console'
         func_152373_a(sender, this,
             "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
@@ -454,5 +462,73 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 DimensionManager.getProvider(dimension).getDimensionName(),
                 dimension
             });
+    }
+
+    private static class CrossDimensionCommandTeleporter extends Teleporter {
+        /**
+         * The target X position.
+         */
+        private double xPos;
+
+        /**
+         * The target Y position.
+         */
+        private double yPos;
+
+        /**
+         * The target Z position.
+         */
+        private double zPos;
+
+        /**
+         * The target yaw (view horizontal rotation)
+         */
+        private float yaw;
+
+        /**
+         * The target pitch (view vertical rotation).
+         */
+        private float pitch;
+
+        /**
+         * Create a new instance with the given teleport target
+         * coordinates/rotations.
+         *
+         * @param worldIn The target dimension.
+         * @param xPos The target X position.
+         * @param yPos The target Y position.
+         * @param zPos The target Z position.
+         * @param yaw The target yaw (view horizontal rotation).
+         * @param pitch The target pitch (view vertical rotation).
+         */
+        public CrossDimensionCommandTeleporter(WorldServer worldIn, double xPos,
+            double yPos, double zPos, float yaw, float pitch) {
+            super(worldIn);
+            this.xPos = xPos;
+            this.yPos = yPos;
+            this.zPos = zPos;
+            this.yaw = yaw;
+            this.pitch = pitch;
+        }
+
+        /**
+         * Attempt to place an entity into the world represented by this
+         * instance at the given coordinates and yaw.
+         *
+         * @param entity The entity to position in the world.
+         * @param xPos The X position to place the entity at.
+         * @param yPos The Y position to place the entity at.
+         * @param zPos The Z position to place the entity at.
+         * @param yaw The yaw, in degrees, to rotate the entity to.
+         */
+        @Override
+        public void placeInPortal(Entity entity, double xPos,
+            double yPos, double zPos, float yaw) {
+            // -- Position the entity
+            entity.setLocationAndAngles(this.xPos, this.yPos, this.zPos,
+                this.yaw, this.pitch);
+            // -- Cancel all motion
+            entity.motionX = entity.motionY = entity.motionZ = 0.0;
+        }
     }
 }

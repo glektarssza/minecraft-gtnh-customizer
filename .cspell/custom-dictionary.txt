@@ -52,10 +52,12 @@ reobf
 reobfuscated
 retrofuturagradle
 rong
+seps
 specialmobs
 spongemixins
 spongepowered
 srgify
+teleporter
 teleporting
 temurin
 thaumcraft

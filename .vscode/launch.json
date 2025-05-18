@@ -6,6 +6,7 @@
             "name": "Debug",
             "request": "attach",
             "hostName": "localhost",
+            "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
             "preLaunchTask": "gradle:runClient17:debug"
         }
