@@ -14,6 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
+import com.glektarssza.gtnh_customizer.config.Config;
 
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.common.minimap.waypoints.WaypointWorld;
@@ -97,6 +98,10 @@ public class WaypointsManagerMixins {
                 teleportCommandBuffer, params.get(paramName));
         }
         matcher.appendTail(teleportCommandBuffer);
+        if (Config.getVerboseLoggingEnabled()) {
+            GTNHCustomizer.LOGGER.debug("Final Xaero's teleport command: {}",
+                teleportCommandBuffer.toString());
+        }
         player.sendChatMessage(teleportCommandBuffer.toString());
     }
 }
