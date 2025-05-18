@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import net.minecraft.command.ICommandSender;
@@ -386,6 +385,148 @@ public final class CommandUtils {
             .orElseThrow(() -> new NoSuchElementException()).dimensionId;
     }
 
+    public static byte parseByteArgument(ICommandSender sender,
+        String arg)
+        throws NumberFormatException {
+        return parseByteArgument(sender, arg, 10);
+    }
+
+    public static byte parseByteArgument(ICommandSender sender,
+        String arg, int radix)
+        throws NumberFormatException {
+        if (!INTEGER_MATCHER.matcher(arg).matches()) {
+            throw new NumberFormatException(String.format(
+                "Value '%s' does not match the format of an integer", arg));
+        }
+        return Byte.parseByte(arg, radix);
+    }
+
+    public static byte parseByteArgument(ICommandSender sender,
+        String arg, byte min, byte max)
+        throws NumberFormatException, NumberOutOfRangeException {
+        return parseByteArgument(sender, arg, 10, min, max);
+    }
+
+    public static byte parseByteArgument(ICommandSender sender,
+        String arg, int radix, byte min, byte max)
+        throws NumberFormatException, NumberOutOfRangeException {
+        byte result = parseByteArgument(sender, arg, radix);
+        if (result < min || result > max) {
+            throw new NumberOutOfRangeException(result, min, max);
+        }
+        return result;
+    }
+
+    public static byte parseOptionalByteArgument(ICommandSender sender,
+        String arg, byte defaultValue) {
+        try {
+            return parseByteArgument(sender, arg);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static byte parseOptionalByteArgument(ICommandSender sender,
+        String arg, int radix, byte defaultValue) {
+        try {
+            return parseByteArgument(sender, arg, radix);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static byte parseOptionalByteArgument(ICommandSender sender,
+        String arg, byte min, byte max, byte defaultValue) {
+        return parseOptionalByteArgument(sender, arg, 10, min, max,
+            defaultValue);
+    }
+
+    public static byte parseOptionalByteArgument(ICommandSender sender,
+        String arg, int radix, byte min, byte max, byte defaultValue) {
+        try {
+            return parseByteArgument(sender, arg, radix, min, max);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        } catch (NumberOutOfRangeException t) {
+            return defaultValue;
+        }
+    }
+
+    public static byte parseBlockRelativeByteArgument(ICommandSender sender,
+        String arg, byte baseValue)
+        throws NumberFormatException {
+        return parseBlockRelativeByteArgument(sender, arg, baseValue, 10);
+    }
+
+    public static byte parseBlockRelativeByteArgument(ICommandSender sender,
+        String arg, byte baseValue, int radix)
+        throws NumberFormatException {
+        byte offset;
+        if (arg.startsWith("~")) {
+            offset = arg.length() == 1 ? 0
+                : parseByteArgument(sender, arg.substring(1), radix);
+        } else {
+            return parseByteArgument(sender, arg, radix);
+        }
+        return (byte) (baseValue + offset);
+    }
+
+    public static byte parseBlockRelativeByteArgument(ICommandSender sender,
+        String arg, byte baseValue, byte min, byte max)
+        throws NumberFormatException {
+        return parseBlockRelativeByteArgument(sender, arg, baseValue, 10,
+            min, max);
+    }
+
+    public static byte parseBlockRelativeByteArgument(ICommandSender sender,
+        String arg, byte baseValue, int radix, byte min, byte max)
+        throws NumberFormatException {
+        byte result = parseBlockRelativeByteArgument(sender, arg, baseValue,
+            radix);
+        if (result < min || result > max) {
+            throw new NumberOutOfRangeException(result, min, max);
+        }
+        return result;
+    }
+
+    public static byte parseBlockRelativeOptionalByteArgument(
+        ICommandSender sender, String arg, byte baseValue,
+        byte defaultValue) {
+        return parseBlockRelativeOptionalByteArgument(sender, arg, baseValue,
+            10, defaultValue);
+    }
+
+    public static byte parseBlockRelativeOptionalByteArgument(
+        ICommandSender sender, String arg, byte baseValue, int radix,
+        byte defaultValue) {
+        try {
+            return parseBlockRelativeByteArgument(sender, arg, baseValue,
+                radix);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static byte parseBlockRelativeOptionalByteArgument(
+        ICommandSender sender, String arg, byte baseValue, byte min,
+        byte max, byte defaultValue) {
+        return parseBlockRelativeOptionalByteArgument(sender, arg, baseValue,
+            10, min, max, defaultValue);
+    }
+
+    public static byte parseBlockRelativeOptionalByteArgument(
+        ICommandSender sender, String arg, byte baseValue, int radix,
+        byte min, byte max, byte defaultValue) {
+        try {
+            return parseBlockRelativeByteArgument(sender, arg, baseValue,
+                radix, min, max);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        } catch (NumberOutOfRangeException t) {
+            return defaultValue;
+        }
+    }
+
     public static short parseShortArgument(ICommandSender sender,
         String arg)
         throws NumberFormatException {
@@ -395,7 +536,7 @@ public final class CommandUtils {
     public static short parseShortArgument(ICommandSender sender,
         String arg, int radix)
         throws NumberFormatException {
-        if (!INTEGER_MATCHER.matcher(arg).matches()) {
+        if (!SHORT_MATCHER.matcher(arg).matches()) {
             throw new NumberFormatException(String.format(
                 "Value '%s' does not match the format of an integer", arg));
         }
