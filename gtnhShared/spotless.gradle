@@ -15,6 +15,6 @@ spotless {
         toggleOffOn()
         importOrderFile(Blowdryer.file("spotless.importorder"))
         removeUnusedImports()
-        eclipse("4.19.0").configFile(Blowdryer.file("formatter.xml"))
+        eclipse("4.35").configFile(Blowdryer.file("formatter.xml"))
     }
 }
