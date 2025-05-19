@@ -13,8 +13,8 @@ spotless {
     java {
         target "src/*/java/**/*.java"
         toggleOffOn()
-        importOrderFile(Blowdryer.file("spotless.importorder"))
+        importOrderFile("spotless.importorder")
         removeUnusedImports()
-        eclipse("4.35").configFile(Blowdryer.file("formatter.xml"))
+        eclipse("4.35").configFile("formatter.xml")
     }
 }
