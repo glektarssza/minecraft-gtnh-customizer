@@ -30,14 +30,14 @@ public final class MigrationUtils {
         if (property.isList()) {
             return new Property(property.getName(), property.getStringList(),
                 property.getType(), property.getLanguageKey())
-                    .setRequiresMcRestart(property.requiresMcRestart())
-                    .setRequiresWorldRestart(property.requiresWorldRestart());
+                .setRequiresMcRestart(property.requiresMcRestart())
+                .setRequiresWorldRestart(property.requiresWorldRestart());
         } else {
             return new Property(property.getName(), property.getString(),
                 property.getType(), property.getValidValues(),
                 property.getLanguageKey())
-                    .setRequiresMcRestart(property.requiresMcRestart())
-                    .setRequiresWorldRestart(property.requiresWorldRestart());
+                .setRequiresMcRestart(property.requiresMcRestart())
+                .setRequiresWorldRestart(property.requiresWorldRestart());
         }
     }
 
