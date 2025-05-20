@@ -1,19 +1,35 @@
 {
     "[json]": {
+        "editor.formatOnPaste": false,
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[jsonc]": {
+        "editor.formatOnPaste": false,
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[jsonl]": {
+        "editor.formatOnPaste": false,
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[java]": {
+        "editor.formatOnPaste": false,
         "editor.defaultFormatter": "redhat.java"
     },
+    "cSpell.ignorePaths": [
+        "vscode-extension",
+        ".git/{info,lfs,logs,refs,objects}/**",
+        ".git/{index,*refs,*HEAD}",
+        ".vscode",
+        ".vscode-insiders",
+        "build",
+        "templates/vscode"
+    ],
+    "files.associations": {
+        "mcmod.info": "json",
+        "pack.mcmeta": "json"
+    },
     "java.autobuild.enabled": false,
-    "java.jdt.ls.java.home": "/lib/jvm/temurin-21-jdk-amd64/",
-    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
+    "java.configuration.updateBuildConfiguration": "automatic",
     "java.completion.enabled": true,
     "java.completion.importOrder": [
         "#",
@@ -24,14 +40,11 @@
         "net",
         "com.mojang",
         "net.minecraft",
+        "cpw.mods",
         "net.minecraftforge",
         "org.spongepowered",
         "com.glektarssza"
     ],
-    "files.associations": {
-        "mcmod.info": "json",
-        "pack.mcmeta": "json"
-    },
     "java.completion.matchCase": "firstLetter",
     "java.codeGeneration.generateComments": false,
     "java.codeGeneration.hashCodeEquals.useInstanceof": true,
@@ -39,30 +52,23 @@
     "java.codeGeneration.toString.codeStyle": "STRING_FORMAT",
     "java.codeGeneration.useBlocks": true,
     "java.compile.nullAnalysis.mode": "automatic",
+    "java.diagnostic.filter": [
+        "**/build/**"
+    ],
     "java.format.enabled": true,
     "java.format.comments.enabled": true,
     "java.format.onType.enabled": false,
     "java.format.settings.profile": "Spotless",
     "java.format.settings.url": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/formatter.xml",
     "java.import.generatesMetadataFilesAtProjectRoot": true,
+    "java.jdt.ls.java.home": "/lib/jvm/temurin-21-jdk-amd64/",
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
     "java.inlayHints.parameterNames.enabled": "none",
     "java.saveActions.cleanup": true,
     "java.saveActions.organizeImports": true,
     "java.silentNotification": true,
     "java.server.launchMode": "Standard",
-    "java.diagnostic.filter": [
-        "**/build/**"
-    ],
     "terminal.integrated.env.linux": {
         "JAVA_HOME": "/lib/jvm/temurin-21-jdk-amd64/"
-    },
-    "cSpell.ignorePaths": [
-        "vscode-extension",
-        ".git/{info,lfs,logs,refs,objects}/**",
-        ".git/{index,*refs,*HEAD}",
-        ".vscode",
-        ".vscode-insiders",
-        "build",
-        "templates/vscode"
-    ]
+    }
 }
