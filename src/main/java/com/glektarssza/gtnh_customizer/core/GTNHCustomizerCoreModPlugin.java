@@ -63,6 +63,7 @@ public class GTNHCustomizerCoreModPlugin
         mixins.add("vanilla.EntityDragonMixin");
         mixins.add("vanilla.EntityEndermanMixin");
         mixins.add("vanilla.EntityGhastMixin");
+        mixins.add("vanilla.EntityLivingMixin");
         mixins.add("vanilla.EntityMobMixin");
         mixins.add("vanilla.EntityPigZombieMixin");
         mixins.add("vanilla.EntitySilverfishMixin");

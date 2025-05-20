@@ -18,7 +18,7 @@ import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
- * Mixin for the {@code EntityCreature} class.
+ * Mixin for the {@link EntityCreature} class.
  */
 @Mixin(EntityCreature.class)
 public class EntityCreatureMixin {
@@ -30,7 +30,30 @@ public class EntityCreatureMixin {
     private Entity entityToAttack;
 
     /**
-     * Mixin for the {@code updateEntityActionState} method.
+     * Mixin for the {@link EntityCreature#setTarget} method.
+     */
+    @Inject(method = "setTarget", at = @At(value = "HEAD"), cancellable = true)
+    public void overrideSetTarget(Entity target, CallbackInfo ci) {
+        EntityCreature self = (EntityCreature) (Object) this;
+        EntityLiving attacker = (EntityLiving) self;
+        if (target == null) {
+            return;
+        }
+        if (!(target instanceof EntityPlayer)) {
+            return;
+        }
+        EntityPlayer player = (EntityPlayer) target;
+        List<ITargetingImmunity> immunities = PlayerUtils
+            .getPlayerTargetingImmunities(player);
+        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
+            immunities)
+            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            ci.cancel();
+        }
+    }
+
+    /**
+     * Mixin for the {@link EntityCreature#updateEntityActionState} method.
      */
     @Inject(method = "updateEntityActionState", at = @At(value = "INVOKE_ASSIGN", target = "net.minecraft.entity.EntityCreature.findPlayerToAttack()Lnet/minecraft/entity/Entity;"))
     public void overrideTargetedEntity(CallbackInfo ci) {

@@ -19,7 +19,7 @@ import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
- * Mixin for the {@code EntityMob} class.
+ * Mixin for the {@link EntityMob} class.
  */
 @Mixin(EntityMob.class)
 public class EntityMobMixin {
