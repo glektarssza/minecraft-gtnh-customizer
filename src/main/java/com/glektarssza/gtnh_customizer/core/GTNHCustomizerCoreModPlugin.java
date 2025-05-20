@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
  */
 @MCVersion("1.7.10")
 public class GTNHCustomizerCoreModPlugin
-    implements IFMLLoadingPlugin, IEarlyMixinLoader {
+        implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
     @Override
     public String getAccessTransformerClass() {
@@ -63,6 +63,7 @@ public class GTNHCustomizerCoreModPlugin
         mixins.add("vanilla.EntityDragonMixin");
         mixins.add("vanilla.EntityEndermanMixin");
         mixins.add("vanilla.EntityGhastMixin");
+        mixins.add("vanilla.EntityLivingMixin");
         mixins.add("vanilla.EntityMobMixin");
         mixins.add("vanilla.EntityPigZombieMixin");
         mixins.add("vanilla.EntitySilverfishMixin");
