@@ -15,7 +15,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
  */
 @MCVersion("1.7.10")
 public class GTNHCustomizerCoreModPlugin
-        implements IFMLLoadingPlugin, IEarlyMixinLoader {
+    implements IFMLLoadingPlugin, IEarlyMixinLoader {
 
     @Override
     public String getAccessTransformerClass() {
