@@ -4,10 +4,14 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
@@ -16,6 +20,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
 
+import com.glektarssza.gtnh_customizer.client.big_screenshots.ScreenshotHandler;
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
@@ -29,7 +34,12 @@ public class GTNHCustomizer {
     /**
      * The configuration directory.
      */
-    private static File configDir;
+    private static File CONFIG_DIR;
+
+    /**
+     * The screenshot handler.
+     */
+    private static ScreenshotHandler SCREENSHOT_HANDLER;
 
     /**
      * The logger to use for the mod.
@@ -49,7 +59,7 @@ public class GTNHCustomizer {
     /**
      * The mod singleton instance.
      */
-    @Mod.Instance
+    @Instance(Tags.MOD_ID)
     public static GTNHCustomizer instance;
 
     /**
@@ -82,16 +92,27 @@ public class GTNHCustomizer {
     }
 
     /**
+     * Get the screenshot handler.
+     *
+     * @return The screenshot handler if the mod is running on the client;
+     *         {@code null} otherwise.
+     */
+    @Nullable
+    public static ScreenshotHandler getScreenshotHandler() {
+        return SCREENSHOT_HANDLER;
+    }
+
+    /**
      * Handle the Forge Mod Loader pre-initialization event.
      *
      * @param event The event to handle.
      */
-    @Mod.EventHandler
+    @EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
         LOGGER.info("Pre-initializing {}...", Tags.MOD_NAME);
-        configDir = event.getModConfigurationDirectory();
-        Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
+        CONFIG_DIR = event.getModConfigurationDirectory();
+        Config.init(CONFIG_DIR, String.format("%s.cfg", Tags.MOD_ID));
         LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
         Config.sync();
         MinecraftForge.EVENT_BUS.register(this);
@@ -103,9 +124,13 @@ public class GTNHCustomizer {
      *
      * @param event The event to handle.
      */
-    @Mod.EventHandler
+    @EventHandler
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {}...", Tags.MOD_NAME);
+        if (event.getSide().isClient()) {
+            SCREENSHOT_HANDLER = new ScreenshotHandler();
+            MinecraftForge.EVENT_BUS.register(SCREENSHOT_HANDLER);
+        }
         LOGGER.info("Done initializing {}!", Tags.MOD_NAME);
     }
 
@@ -114,7 +139,7 @@ public class GTNHCustomizer {
      *
      * @param event The event to handle.
      */
-    @Mod.EventHandler
+    @EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         LOGGER.info("Handling server about to start...");
         LOGGER.info("Registering custom commands...");
