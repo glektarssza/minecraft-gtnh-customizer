@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.utils.functional;
+package com.glektarssza.gtnh_customizer.api.functional;
 
 /**
  * A functional interface representing a procedure that takes two arguments and
