@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.utils;
+package com.glektarssza.gtnh_customizer.utils.exceptions;
 
 /**
  * An exception that signals a key already exists.

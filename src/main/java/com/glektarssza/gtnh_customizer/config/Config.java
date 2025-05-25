@@ -20,7 +20,7 @@ import net.minecraftforge.common.config.Configuration;
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.config.v3.ConfigConstants;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
-import com.glektarssza.gtnh_customizer.utils.KeyAlreadyExistsException;
+import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
 /**
  * The main configuration for the mod.
