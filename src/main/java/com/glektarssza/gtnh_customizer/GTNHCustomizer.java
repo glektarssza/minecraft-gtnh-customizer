@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nullable;
-
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -20,7 +18,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
 
-import com.glektarssza.gtnh_customizer.client.big_screenshots.ScreenshotHandler;
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
@@ -35,11 +32,6 @@ public class GTNHCustomizer {
      * The configuration directory.
      */
     private static File CONFIG_DIR;
-
-    /**
-     * The screenshot handler.
-     */
-    private static ScreenshotHandler SCREENSHOT_HANDLER;
 
     /**
      * The logger to use for the mod.
@@ -92,17 +84,6 @@ public class GTNHCustomizer {
     }
 
     /**
-     * Get the screenshot handler.
-     *
-     * @return The screenshot handler if the mod is running on the client;
-     *         {@code null} otherwise.
-     */
-    @Nullable
-    public static ScreenshotHandler getScreenshotHandler() {
-        return SCREENSHOT_HANDLER;
-    }
-
-    /**
      * Handle the Forge Mod Loader pre-initialization event.
      *
      * @param event The event to handle.
@@ -127,10 +108,7 @@ public class GTNHCustomizer {
     @EventHandler
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {}...", Tags.MOD_NAME);
-        if (event.getSide().isClient()) {
-            SCREENSHOT_HANDLER = new ScreenshotHandler();
-            MinecraftForge.EVENT_BUS.register(SCREENSHOT_HANDLER);
-        }
+        // TODO: Add any initialization code here
         LOGGER.info("Done initializing {}!", Tags.MOD_NAME);
     }
 
