@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.impl;
 
-import com.glektarssza.gtnh_customizer.api.IKnockbackImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.IKnockbackImmunity;
 
 /**
  * A concrete implementation of the {@link IKnockbackImmunity} interface.

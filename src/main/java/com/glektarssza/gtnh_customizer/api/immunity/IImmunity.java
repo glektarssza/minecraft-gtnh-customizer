@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api;
+package com.glektarssza.gtnh_customizer.api.immunity;
 
 import net.minecraft.nbt.NBTBase;
 

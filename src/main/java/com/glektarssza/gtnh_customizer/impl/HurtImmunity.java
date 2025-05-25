@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.impl;
 
-import com.glektarssza.gtnh_customizer.api.IHurtImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.IHurtImmunity;
 
 /**
  * A concrete implementation of the {@link IHurtImmunity} interface.
