@@ -1,7 +1,10 @@
 package com.glektarssza.gtnh_customizer.api.tasks;
 
-import javax.annotation.Nonnull;
+import java.util.UUID;
+
 import javax.annotation.Nullable;
+
+import com.glektarssza.gtnh_customizer.impl.tasks.TaskManager;
 
 /**
  * An abstract base class for tasks.
@@ -12,6 +15,16 @@ public abstract class AbstractTask implements ITask {
      */
     @Nullable
     private final String name;
+
+    /**
+     * The unique ID of this instance.
+     */
+    private UUID id = null;
+
+    /**
+     * The task manager that this instance is registered to.
+     */
+    private ITaskManager taskManager = null;
 
     /**
      * Whether the task is initialized.
@@ -45,6 +58,44 @@ public abstract class AbstractTask implements ITask {
      */
     public AbstractTask(@Nullable String name) {
         this.name = name;
+    }
+
+    /**
+     * Get the unique identifier of this instance.
+     *
+     * @return The unique identifier of this instance or {@code null} if this
+     *         instance has not been assigned to a {@link TaskManager} yet.
+     */
+    @Nullable
+    public UUID getId() {
+        return this.id;
+    }
+
+    /**
+     * Get the task manager that this instance is registered to.
+     *
+     * @return The task manager that this instance is registered to or
+     *         {@code null} if this instance has not been assigned to a
+     *         {@link TaskManager} yet.
+     */
+    @Nullable
+    public ITaskManager getTaskManager() {
+        return this.taskManager;
+    }
+
+    /**
+     * Set the task manager that this instance is registered to.
+     *
+     * @param taskManager The new task manager to set this instance as
+     *        registered to.
+     */
+    public void setTaskManager(@Nullable ITaskManager taskManager) {
+        if (taskManager == null) {
+            this.id = null;
+        } else {
+            this.id = taskManager.getTaskId(this);
+        }
+        this.taskManager = taskManager;
     }
 
     /**
@@ -138,28 +189,38 @@ public abstract class AbstractTask implements ITask {
         this.initialized = false;
     }
 
-    /**
-     * Run the task.
-     *
-     * @return The result of the task run.
-     */
     @Override
-    @Nonnull
-    public TaskRunResult run() {
-        if (!this.isInitialized()) {
-            return TaskRunResult.failed(this,
-                new IllegalStateException("Task is not initialized"));
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
         }
-        if (this.isFinished()) {
-            return TaskRunResult.failed(this,
-                new IllegalStateException("Task is already finished"));
+        if (!ITask.class.isAssignableFrom(other.getClass())) {
+            return false;
         }
-        if (this.isRunning()) {
-            return TaskRunResult.failed(this,
-                new IllegalStateException("Task is already running"));
+        ITask otherTask = (ITask) other;
+        ITaskManager taskManager = this.getTaskManager();
+        ITaskManager otherTaskManager = otherTask.getTaskManager();
+        if (taskManager == null || otherTaskManager == null) {
+            return false;
         }
-        this.running = true;
-        return TaskRunResult.successNoRerun(this);
+        if (!taskManager.equals(otherTaskManager)) {
+            return false;
+        }
+        UUID id = this.getId();
+        UUID otherId = otherTask.getId();
+        if (id == null || otherId == null) {
+            return false;
+        }
+        return id.equals(otherId);
     }
 
+    @Override
+    public int hashCode() {
+        ITaskManager taskManager = getTaskManager();
+        UUID id = getId();
+        if (taskManager == null || id == null) {
+            return super.hashCode();
+        }
+        return taskManager.hashCode() ^ id.hashCode();
+    }
 }

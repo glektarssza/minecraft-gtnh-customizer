@@ -24,10 +24,10 @@ import com.glektarssza.gtnh_customizer.api.immunity.IKnockbackImmunity;
 import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
 import com.glektarssza.gtnh_customizer.api.immunity.ImmunityType;
 import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.impl.DamageImmunity;
-import com.glektarssza.gtnh_customizer.impl.HurtImmunity;
-import com.glektarssza.gtnh_customizer.impl.KnockbackImmunity;
-import com.glektarssza.gtnh_customizer.impl.TargetingImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.DamageImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.HurtImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.KnockbackImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.TargetingImmunity;
 
 /**
  * A collection of player-related utility methods.

@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.impl;
+package com.glektarssza.gtnh_customizer.impl.immunity;
 
 import com.glektarssza.gtnh_customizer.api.immunity.IHurtImmunity;
 

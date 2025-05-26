@@ -1,11 +1,11 @@
-package com.glektarssza.gtnh_customizer.impl;
+package com.glektarssza.gtnh_customizer.impl.immunity;
 
-import com.glektarssza.gtnh_customizer.api.immunity.IKnockbackImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
 
 /**
- * A concrete implementation of the {@link IKnockbackImmunity} interface.
+ * A concrete implementation of the {@link ITargetingImmunity} interface.
  */
-public class KnockbackImmunity implements IKnockbackImmunity {
+public class TargetingImmunity implements ITargetingImmunity {
 
     /**
      * The entity source that this instance grants immunity to damage from.
@@ -15,7 +15,7 @@ public class KnockbackImmunity implements IKnockbackImmunity {
     /**
      * Create a new instance.
      */
-    public KnockbackImmunity() {
+    public TargetingImmunity() {
         this.entityType = null;
     }
 
@@ -24,7 +24,7 @@ public class KnockbackImmunity implements IKnockbackImmunity {
      *
      * @param entityType The entity type to create the new instance with.
      */
-    public KnockbackImmunity(String entityType) {
+    public TargetingImmunity(String entityType) {
         this.entityType = entityType;
     }
 
