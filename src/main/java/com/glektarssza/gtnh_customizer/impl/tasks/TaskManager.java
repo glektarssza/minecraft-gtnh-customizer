@@ -1,15 +1,25 @@
 package com.glektarssza.gtnh_customizer.impl.tasks;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.api.tasks.ITask;
+import com.glektarssza.gtnh_customizer.api.tasks.ITaskData;
 import com.glektarssza.gtnh_customizer.api.tasks.ITaskManager;
+import com.glektarssza.gtnh_customizer.api.tasks.TaskRunResult;
+import com.glektarssza.gtnh_customizer.api.tasks.events.RenderTickTaskData;
+import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 
 /**
  * A class which manages {@link ITask} instances as well as subscribing to Forge
@@ -17,9 +27,35 @@ import com.glektarssza.gtnh_customizer.api.tasks.ITaskManager;
  */
 public class TaskManager implements ITaskManager {
     /**
+     * The maximum number of times a task can request immediate reruns.
+     */
+    private static final int MAX_IMMEDIATE_RERUNS = 100;
+
+    /**
+     * The maximum number of times a task can be caught being naughty.
+     */
+    private static final int MAX_ALLOWED_NAUGHTINESS = 3;
+
+    /**
      * The list of tasks that this instance is managing.
      */
     private final Map<UUID, ITask> tasks = new HashMap<UUID, ITask>();
+
+    /**
+     * A list of UUIDs for tasks that are being naughty against how naughty they
+     * are being.
+     *
+     * Tasks that are too naughty will be removed from the task manager.
+     *
+     * Things that are considered naughty:
+     * <ul>
+     * <li>Requesting immediate reruns repeatedly and excessively during the
+     * same pumping of the event loop.</li>
+     * <li>Failing to initialize repeatedly across multiple pumps of the event
+     * loop.</li>
+     * </ul>
+     */
+    private final Map<UUID, Integer> naughtyList = new HashMap<UUID, Integer>();
 
     /**
      * Create a new instance.
@@ -173,5 +209,86 @@ public class TaskManager implements ITaskManager {
                 "Failed to generate a unique ID for the task after 100 attempts");
         }
         return id;
+    }
+
+    private void pumpEventLoop(ITaskData data) {
+        this.tasks.values().stream()
+            // -- Filter out tasks that don't accept the given task data
+            .filter((task) -> task.acceptsTaskData(data))
+            // -- Filter out tasks that are already initialized
+            .filter((task) -> !task.isInitialized())
+            // -- Initialize the task and return a tuple of the task and whether
+            // -- the initialization was successful
+            .map((task) -> {
+                return new ImmutableTuple<ITask, Boolean>(task,
+                    task.initialize());
+            })
+            // -- Filter out tasks that successfully initialized
+            .filter((tuple) -> !tuple.getSecond())
+            // -- Get the tasks that failed to initialize
+            .map(ImmutableTuple::getFirst)
+            // -- Unregister the tasks that failed to initialize so we don't
+            // -- keep trying to initialize them again next time
+            .forEach((task) -> {
+                GTNHCustomizer.LOGGER.warn(
+                    "Task '{}' failed to initialize, naughty!", task.getId());
+                this.naughtyList.merge(task.getId(), 1, Integer::sum);
+            });
+        try {
+            this.tasks.values().stream()
+                // -- Filter out tasks that don't accept the given task data
+                .filter((task) -> task.acceptsTaskData(data))
+                // -- Filter out tasks that are not running or not ready to run
+                .filter((task) -> task.isInitialized() || task.isRunning())
+                // -- Run tasks with the given task data
+                .forEach((task) -> {
+                    int rerunCount = 0;
+                    TaskRunResult result = task.run(data);
+                    while (result.isRerunImmediate
+                        && rerunCount < MAX_IMMEDIATE_RERUNS) {
+                        result = task.run(data);
+                        rerunCount += 1;
+                    }
+                    if (rerunCount >= MAX_IMMEDIATE_RERUNS) {
+                        GTNHCustomizer.LOGGER.warn(
+                            "Task '{}' requested to be rerun immediately too many times, naughty!",
+                            task.getId());
+                        this.naughtyList.merge(task.getId(), 1, Integer::sum);
+                    }
+                });
+        } catch (Throwable t) {
+            GTNHCustomizer.LOGGER.warn(
+                "Exception while pumping the task manager event loop!\n{}", t);
+        }
+        this.tasks.values().stream()
+            // -- Filter out tasks that don't accept the given task data
+            .filter((task) -> task.acceptsTaskData(data))
+            // -- Filter out tasks that are not finished
+            .filter(ITask::isFinished)
+            // -- Unregister the tasks that are finished
+            .forEach(this::unregisterTask);
+        List<UUID> removedNaughtyItems = this.naughtyList.entrySet().stream()
+            .filter((entry) -> entry.getValue() > MAX_ALLOWED_NAUGHTINESS)
+            .map((entry) -> {
+                GTNHCustomizer.LOGGER.warn(
+                    "Task '{}' is too naughty, removing it from the task manager",
+                    entry.getKey());
+                ITask task = this.tryGetTask(entry.getKey());
+                if (task != null) {
+                    this.tryUnregisterTask(task);
+                } else {
+                    GTNHCustomizer.LOGGER.warn(
+                        "Task '{}' was not found in the task manager? Hmmm...",
+                        entry.getKey());
+                }
+                return entry.getKey();
+            }).collect(Collectors.toList());
+        removedNaughtyItems.forEach(this.naughtyList::remove);
+    }
+
+    @SubscribeEvent
+    public void onRenderTick(RenderTickEvent event) {
+        ITaskData data = new RenderTickTaskData(event);
+        this.pumpEventLoop(data);
     }
 }

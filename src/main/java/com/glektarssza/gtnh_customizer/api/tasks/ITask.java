@@ -122,6 +122,18 @@ public interface ITask {
     public void tearDown();
 
     /**
+     * Check whether the instance accepts the given task data.
+     *
+     * @param data The task data to check.
+     *
+     * @return {@code true} if the instance accepts the given task data,
+     *         {@code false} otherwise.
+     */
+    public default boolean acceptsTaskData(@Nullable ITaskData data) {
+        return false;
+    }
+
+    /**
      * Run the instance.
      *
      * @param data The task data to run the instance with.

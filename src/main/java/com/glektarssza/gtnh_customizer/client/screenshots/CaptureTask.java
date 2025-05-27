@@ -7,19 +7,17 @@ import org.lwjgl.util.Dimension;
 
 import net.minecraft.client.Minecraft;
 
-import com.glektarssza.gtnh_customizer.api.tasks.AbstractTask;
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
+
 import com.glektarssza.gtnh_customizer.api.tasks.ITaskData;
 import com.glektarssza.gtnh_customizer.api.tasks.TaskRunResult;
+import com.glektarssza.gtnh_customizer.api.tasks.events.AbstractRenderTickTask;
+import com.glektarssza.gtnh_customizer.api.tasks.events.RenderTickTaskData;
 
 /**
  * A task that captures a screenshot.
  */
-public class CaptureTask extends AbstractTask {
-    /**
-     * The number of frames that have elapsed since the task started.
-     */
-    private int frameCount = 0;
-
+public class CaptureTask extends AbstractRenderTickTask {
     /**
      * The target size of the screenshot to capture.
      */
@@ -63,6 +61,21 @@ public class CaptureTask extends AbstractTask {
     @Override
     @Nonnull
     public TaskRunResult run(@Nullable ITaskData data) {
+        if (data == null) {
+            return TaskRunResult.failed(this,
+                new IllegalArgumentException("Task data cannot be null"));
+        }
+        if (!(data instanceof RenderTickTaskData)) {
+            return TaskRunResult.failed(this,
+                new IllegalArgumentException(
+                    "Task data must be an instance of RenderTickTaskData"));
+        }
+        RenderTickEvent event = ((RenderTickTaskData) data).event;
+        if (!event.side.isClient()) {
+            return TaskRunResult.failed(this,
+                new IllegalStateException(
+                    "Task can only run on the client side"));
+        }
         if (!isInitialized()) {
             return TaskRunResult.failed(this,
                 new IllegalStateException("Task is not initialized"));
@@ -77,7 +90,7 @@ public class CaptureTask extends AbstractTask {
         }
         Minecraft mcInstance = Minecraft.getMinecraft();
         TaskRunResult result;
-        if (this.frameCount <= 0) {
+        if (this.getElapsedTicks() <= 0) {
             // -- Back up original display size
             this.originalDisplaySize = new Dimension(
                 mcInstance.displayWidth, mcInstance.displayHeight);
@@ -86,22 +99,24 @@ public class CaptureTask extends AbstractTask {
                 this.targetScreenshotSize.getWidth(),
                 this.targetScreenshotSize.getHeight());
             result = TaskRunResult.successRerun(this);
-        } else if (this.frameCount > 0 && this.frameCount < 3) {
-            // -- Wait for the re-render to finish
+        } else if (this.getElapsedTicks() >= 1 && this.getElapsedTicks() < 3) {
+            // -- Wait for the re-renders to finish
+            // -- First frame will just be black for some reason
+            // -- Second frame will be the actual screenshot render
             result = TaskRunResult.successRerun(this);
         } else {
             // -- Capture the screenshot
             // TODO: Implement the screenshot capture logic here.
             // -- Restore the original framebuffer state
-            if (this.originalDisplaySize != null) {
-                mcInstance.resize(
-                    this.originalDisplaySize.getWidth(),
-                    this.originalDisplaySize.getHeight());
+            Dimension originalSize = this.originalDisplaySize;
+            if (originalSize != null) {
+                mcInstance.resize(originalSize.getWidth(),
+                    originalSize.getHeight());
             }
             this.originalDisplaySize = null;
             result = TaskRunResult.successNoRerun(this);
         }
-        this.frameCount += 1;
+        this.incrementElapsedTicks();
         return result;
     }
 }
