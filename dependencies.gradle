@@ -8,6 +8,7 @@ def isPropEnabled(String id) {
 dependencies {
     //-- Support for other mods
     compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
+    compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
     compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
 
     //-- Support for other mods AND local testing
