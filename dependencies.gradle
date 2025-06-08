@@ -8,11 +8,11 @@ def isPropEnabled(String id) {
 dependencies {
     //-- Support for other mods
     compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
-    compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
     compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
 
     //-- Support for other mods AND local testing
     devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
+    devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
     devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
     devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
 
