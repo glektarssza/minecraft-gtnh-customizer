@@ -1,4 +1,3 @@
-# Custom Dictionary Words
 adoptium
 aout
 areobf
@@ -23,6 +22,7 @@ foojay
 futura
 GAMEMASTER
 gasstation
+gregtech
 gson
 gtnewhorizons
 gtnh
@@ -35,7 +35,8 @@ jvmargs
 knockback
 ljava
 lnet
-Lthaumcraft
+ltconstruct
+lthaumcraft
 lxaero
 mcmeta
 mcmod
@@ -58,6 +59,7 @@ specialmobs
 spongemixins
 spongepowered
 srgify
+tconstruct
 teleporter
 teleporting
 temurin
