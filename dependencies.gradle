@@ -6,17 +6,30 @@ def isPropEnabled(String id) {
 }
 
 dependencies {
-    //-- Support for other mods
-    compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
-    compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
-
-    //-- Support for other mods AND local testing
-    devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
-    devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
-    devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
-    devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
+    if (isPropEnabled("enableDependenciesForLocalTesting")) {
+        //-- Support for other mods and local testing
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
+        devOnlyNonPublishable(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
+        //-- Required by Thaumcraft
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles:1.0.4")
+        devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
+        devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
+    } else {
+        //-- Support for other mods
+        api(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
+        compileOnly(deobfCurse("xaeros-minimap-263420:6012805"))
+        compileOnly(deobfCurse("xaeros-world-map-317780:5987124"))
+    }
 
     //-- Local testing only
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.44-GTNH")
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.4")
+    if (isPropEnabled("enableConvenienceRuntimeMods")) {
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.44-GTNH")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.4")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta45")
+    }
 }
