@@ -1,5 +1,10 @@
 package com.glektarssza.gtnh_customizer.mixins.late.tconstruct;
 
+import org.spongepowered.asm.lib.Opcodes;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
 import tconstruct.blocks.slime.SlimeSapling;
 
 /**
