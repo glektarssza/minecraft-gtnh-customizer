@@ -1,8 +1,13 @@
-# Configuration
+# Configuration - General
 gtnh_customizer.config.category_general=General Settings
-gtnh_customizer.config.category_debug=Debugging Settings
 gtnh_customizer.config.category_general.globally_immune_players=Globally Immune Players
 gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
+
+# Configuration - Debugging
+gtnh_customizer.config.category_debugging=Debugging Settings
+gtnh_customizer.config.category_debugging.verbose_logging=Verbose Logging
+gtnh_customizer.config.category_debugging.verbose_logging.tooltip=Whether to verbose logging is enabled.
+
 
 # Commands
 gtnh_customizer.commands.teleport_cross_dimension.usage=/teleport-cross-dimension [victim player] (<target player> [yaw override] | <x position> <y position> <z position> [dimension id | dimension name] [yaw])

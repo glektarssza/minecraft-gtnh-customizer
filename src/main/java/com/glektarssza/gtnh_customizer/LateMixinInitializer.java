@@ -37,6 +37,9 @@ public class LateMixinInitializer implements ILateMixinLoader {
             && FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
             mixins.add("xaeros.client.WaypointsManagerMixins");
         }
+        if (loadedMods.contains("TConstruct")) {
+            mixins.add("tconstruct.SlimeSaplingMixin");
+        }
         return mixins;
     }
 }
