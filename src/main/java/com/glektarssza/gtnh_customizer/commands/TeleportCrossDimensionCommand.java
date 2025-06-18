@@ -387,7 +387,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             if (args.length > (offset + 4)) {
                 try {
                     yawOverride = CommandUtils
-                        parseBlockRelativeFloatArgument(sender,
+                        .parseBlockRelativeFloatArgument(sender,
                             args[offset + 4], victim.rotationYaw, false);
                 } catch (Throwable t) {
                     // -- Does nothing
