@@ -1,6 +1,7 @@
 {
     "homepage": "",
     "1.7.10": {
+        "0.5.0": "* Added a command to repair items that can be repaired in various inventory types.",
         "0.4.0": "* Added a mixin to permit applying bone meal to Tinker's Construct slime saplings.",
         "0.3.1": "* Fixed Zombie Pigmen attacking when you mine ores in the Nether.",
         "0.3.0": "* Integrated into ServerUtils.",
@@ -14,7 +15,7 @@
         "0.0.0": "Initial release."
     },
     "promos": {
-        "1.7.10-latest": "0.4.0",
-        "1.7.10-recommended": "0.4.0"
+        "1.7.10-latest": "0.5.0",
+        "1.7.10-recommended": "0.5.0"
     }
 }
