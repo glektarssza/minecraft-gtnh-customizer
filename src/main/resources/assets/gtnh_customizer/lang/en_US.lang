@@ -4,6 +4,12 @@ gtnh_customizer.config.category_general.tooltip=Settings relating to general fun
 gtnh_customizer.config.category_general.globally_immune_players=Globally Immune Players
 gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
 
+# Configuration Categories - Commands
+gtnh_customizer.config.category_command=Command Settings
+gtnh_customizer.config.category_command.tooltip=Settings relating to command functionality.
+gtnh_customizer.config.category_command.repair_ignores_liquids=Repair Command Ignores Liquids
+gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when looking for contains to repair items inside of.
+
 # Configuration Categories - Debugging
 gtnh_customizer.config.category_debugging=Debugging Settings
 gtnh_customizer.config.category_debugging.tooltip=Settings relating to debugging.

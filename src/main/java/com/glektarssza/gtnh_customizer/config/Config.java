@@ -18,7 +18,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.config.v3.ConfigConstants;
+import com.glektarssza.gtnh_customizer.config.v4.ConfigConstants;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
@@ -44,6 +44,11 @@ public class Config {
      * A list of players who are globally immune.
      */
     private static final List<String> globallyImmunePlayers = new ArrayList<String>();
+
+    /**
+     * Whether the {@code repair} command ignores liquids.
+     */
+    private static boolean repairCommandIgnoresLiquids = false;
 
     /**
      * Whether verbose logging is enabled.
@@ -76,6 +81,38 @@ public class Config {
      */
     public static void clearImmunePlayers() {
         globallyImmunePlayers.clear();
+    }
+
+    /**
+     * Get whether the {@code repair} command ignores liquids.
+     *
+     * @return Whether the {@code repair} command ignores liquids.
+     */
+    public static boolean getRepairCommandIgnoresLiquids() {
+        return repairCommandIgnoresLiquids;
+    }
+
+    /**
+     * Set whether the {@code repair} command ignores liquids.
+     *
+     * @param value Whether the {@code repair} command ignores liquids.
+     */
+    public static void setRepairCommandIgnoresLiquids(boolean value) {
+        repairCommandIgnoresLiquids = value;
+    }
+
+    /**
+     * Reset whether the {@code repair} command ignores liquids.
+     */
+    public static void resetRepairCommandIgnoresLiquids() {
+        setRepairCommandIgnoresLiquids(false);
+    }
+
+    /**
+     * Toggle whether the {@code repair} command ignores liquids.
+     */
+    public static void toggleRepairCommandIgnoresLiquids() {
+        setRepairCommandIgnoresLiquids(!getRepairCommandIgnoresLiquids());
     }
 
     /**
@@ -277,6 +314,26 @@ public class Config {
                 ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_LANG_KEY)
             .setRequiresMcRestart(false).setRequiresWorldRestart(false)
             .getStringList());
+
+        CONFIG_INSTANCE
+            .setCategoryComment(ConfigConstants.CATEGORY_COMMAND_NAME,
+                ConfigConstants.CATEGORY_COMMAND_COMMENT)
+            .setCategoryLanguageKey(ConfigConstants.CATEGORY_COMMAND_NAME,
+                ConfigConstants.CATEGORY_COMMAND_LANG_KEY)
+            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_NAME,
+                false)
+            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_NAME,
+                false);
+
+        setRepairCommandIgnoresLiquids(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_COMMAND_PATH,
+            ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_NAME,
+            repairCommandIgnoresLiquids,
+            ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_COMMENT)
+            .setLanguageKey(
+                ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_LANG_KEY)
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getBoolean());
 
         CONFIG_INSTANCE
             .setCategoryComment(ConfigConstants.CATEGORY_DEBUGGING_PATH,
