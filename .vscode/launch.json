@@ -8,7 +8,7 @@
             "hostName": "localhost",
             "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient17:debug"
+            "preLaunchTask": "gradle:runClient21:debug"
         }
     ]
 }
