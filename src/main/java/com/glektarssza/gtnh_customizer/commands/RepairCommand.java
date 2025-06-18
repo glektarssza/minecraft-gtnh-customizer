@@ -367,12 +367,13 @@ public class RepairCommand extends CommandBase {
                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)
                     .setItalic(true)));
             func_152373_a(sender, this,
-                "gtnh_customizer.commands.teleport_cross_dimension.info.admin_notify",
+                "gtnh_customizer.commands.repair.info.admin_notify",
                 new Object[] {
                     victim.getDisplayName(), victim.getUniqueID().toString(),
                     items.stream().mapToInt((itemStack) -> itemStack.stackSize)
                         .sum()
                 });
+            return;
         }
         throw new WrongUsageException(
             "gtnh_customizer.commands.repair.error.wrong_usage",
