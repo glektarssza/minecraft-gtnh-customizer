@@ -335,9 +335,54 @@ public class RepairCommand extends CommandBase {
                         .collect(Collectors.toList()));
                     break;
                 case Inventory:
-                    items.addAll(Arrays.stream(victim.inventory.mainInventory)
-                        .filter((item) -> item != null)
-                        .collect(Collectors.toList()));
+                    if (Loader.isModLoaded("backhand")) {
+                        int offhandIndex = BackhandUtils.getOffhandSlot(victim);
+                        if (offhandIndex < InventoryPlayer.getHotbarSize()) {
+                            items.addAll(Arrays.asList(
+                                Arrays.copyOfRange(
+                                    victim.inventory.mainInventory,
+                                    InventoryPlayer
+                                        .getHotbarSize(),
+                                    victim.inventory.mainInventory.length))
+                                .stream().filter((item) -> item != null)
+                                .collect(Collectors.toList()));
+                        } else if (offhandIndex >= victim.inventory.mainInventory.length
+                            - 1) {
+                            items.addAll(Arrays.asList(
+                                Arrays.copyOfRange(
+                                    victim.inventory.mainInventory,
+                                    InventoryPlayer
+                                        .getHotbarSize(),
+                                    offhandIndex))
+                                .stream().filter((item) -> item != null)
+                                .collect(Collectors.toList()));
+                        } else {
+                            items.addAll(Arrays.asList(
+                                Arrays.copyOfRange(
+                                    victim.inventory.mainInventory,
+                                    InventoryPlayer
+                                        .getHotbarSize(),
+                                    offhandIndex))
+                                .stream().filter((item) -> item != null)
+                                .collect(Collectors.toList()));
+                            items.addAll(Arrays.asList(
+                                Arrays.copyOfRange(
+                                    victim.inventory.mainInventory,
+                                    offhandIndex + 1,
+                                    victim.inventory.mainInventory.length))
+                                .stream().filter((item) -> item != null)
+                                .collect(Collectors.toList()));
+                        }
+
+                    } else {
+                        items.addAll(Arrays.asList(
+                            Arrays.copyOfRange(victim.inventory.mainInventory,
+                                InventoryPlayer
+                                    .getHotbarSize() + 1,
+                                victim.inventory.mainInventory.length))
+                            .stream().filter((item) -> item != null)
+                            .collect(Collectors.toList()));
+                    }
                     break;
                 case Everything:
                     items.addAll(Arrays.stream(victim.inventory.mainInventory)
