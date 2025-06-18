@@ -10,17 +10,24 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 import cpw.mods.fml.common.Loader;
 
+import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 
 import xonin.backhand.api.core.BackhandUtils;
@@ -79,7 +86,12 @@ public class RepairCommand extends CommandBase {
          * All the repairable items in victim's inventory, hotbar, hand, off
          * hand, and armor slots.
          */
-        Everything("everything");
+        Everything("everything"),
+
+        /**
+         * All the repairable items in given container.
+         */
+        Container("container");
 
         /**
          * The value to be used in commands when represent this instance.
@@ -391,6 +403,100 @@ public class RepairCommand extends CommandBase {
                     items.addAll(Arrays.stream(victim.inventory.armorInventory)
                         .filter((item) -> item != null)
                         .collect(Collectors.toList()));
+                    break;
+                case Container: {
+                    Integer targetBlockPosX = null;
+                    Integer targetBlockPosY = null;
+                    Integer targetBlockPosZ = null;
+                    TileEntity tileEntity = null;
+                    IInventory tileInventory = null;
+                    if (args.length >= 5 && isUsernameIndex(args, 0)) {
+                        // -- Arguments contain a victim player and position
+                        // -- data
+                        try {
+                            targetBlockPosX = CommandUtils
+                                .parseBlockRelativeIntegerArgument(
+                                    sender, args[2], (int) victim.posX);
+                            targetBlockPosY = CommandUtils
+                                .parseBlockRelativeIntegerArgument(
+                                    sender, args[3], (int) victim.posY);
+                            targetBlockPosZ = CommandUtils
+                                .parseBlockRelativeIntegerArgument(
+                                    sender, args[4], (int) victim.posZ);
+                        } catch (Throwable t) {
+                            throw new CommandException(
+                                "gtnh_customizer.commands.repair.error.bad_container_position",
+                                new Object[] {
+                                    String.format("%.2f", args[1]),
+                                    String.format("%.2f", args[2]),
+                                    String.format("%.2f", args[3])
+                                });
+                        }
+                    } else if (args.length >= 4 && !isUsernameIndex(args, 0)) {
+                        // -- Arguments contain no victim player and position
+                        // -- data
+                        try {
+                            targetBlockPosX = CommandUtils
+                                .parseBlockRelativeIntegerArgument(
+                                    sender, args[1], (int) victim.posX);
+                            targetBlockPosY = CommandUtils
+                                .parseBlockRelativeIntegerArgument(
+                                    sender, args[2], (int) victim.posY);
+                            targetBlockPosZ = CommandUtils
+                                .parseBlockRelativeIntegerArgument(
+                                    sender, args[3], (int) victim.posZ);
+                        } catch (Throwable t) {
+                            throw new CommandException(
+                                "gtnh_customizer.commands.repair.error.bad_container_position",
+                                new Object[] {
+                                    String.format("%.2f", args[1]),
+                                    String.format("%.2f", args[2]),
+                                    String.format("%.2f", args[3])
+                                });
+                        }
+                    } else {
+                        // -- Arguments contain no victim player and no position
+                        // -- data, fall back to container being looked at
+                        double reach = victim.theItemInWorldManager
+                            .getBlockReachDistance();
+                        Vec3 start = Vec3.createVectorHelper(victim.posX,
+                            victim.posY + victim.getEyeHeight(), victim.posZ);
+                        Vec3 look = victim.getLookVec();
+                        Vec3 end = start.addVector(look.xCoord * reach,
+                            look.yCoord * reach, look.zCoord * reach);
+                        MovingObjectPosition pos = victim.worldObj
+                            .func_147447_a(start, end,
+                                !Config.getRepairCommandIgnoresLiquids(),
+                                Config.getRepairCommandIgnoresLiquids(), false);
+                        if (pos == null
+                            || pos.typeOfHit != MovingObjectType.BLOCK) {
+                            throw new WrongUsageException(
+                                "gtnh_customizer.commands.repair.error.no_container",
+                                new Object[0]);
+                        }
+                        targetBlockPosX = pos.blockX;
+                        targetBlockPosY = pos.blockY;
+                        targetBlockPosZ = pos.blockZ;
+                    }
+                    tileEntity = victim.worldObj.getTileEntity(targetBlockPosX,
+                        targetBlockPosY, targetBlockPosZ);
+                    if (tileEntity instanceof IInventory) {
+                        tileInventory = (IInventory) tileEntity;
+                    }
+                    if (!(tileInventory instanceof IInventory)) {
+                        throw new WrongUsageException(
+                            "gtnh_customizer.commands.repair.error.no_container",
+                            new Object[0]);
+                    }
+                    int slotCount = tileInventory.getSizeInventory();
+                    for (int i = 0; i < slotCount; i += 1) {
+                        ItemStack itemStack = tileInventory
+                            .getStackInSlot(i);
+                        if (itemStack != null) {
+                            items.add(itemStack);
+                        }
+                    }
+                }
                     break;
             }
             items.parallelStream()
