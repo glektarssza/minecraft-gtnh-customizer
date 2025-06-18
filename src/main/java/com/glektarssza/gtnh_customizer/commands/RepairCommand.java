@@ -542,9 +542,11 @@ public class RepairCommand extends CommandBase {
             func_152373_a(sender, this,
                 "gtnh_customizer.commands.repair.info.admin_notify",
                 new Object[] {
-                    victim.getDisplayName(), victim.getUniqueID().toString(),
-                    items.stream().mapToInt((itemStack) -> itemStack.stackSize)
-                        .sum()
+                    String.format("%d", victim.getDisplayName(),
+                        victim.getUniqueID().toString(),
+                        items.stream()
+                            .mapToInt((itemStack) -> itemStack.stackSize)
+                            .sum())
                 });
             return;
         }
