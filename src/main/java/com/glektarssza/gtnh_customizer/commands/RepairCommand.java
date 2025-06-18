@@ -260,7 +260,8 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[1],
                         Arrays.stream(ItemTarget.values())
-                            .map(ItemTarget::toString).map(String::toLowerCase)
+                            .map(ItemTarget::toString)
+                            .map(String::toLowerCase)
                             .collect(Collectors.joining(", "))
                     });
             }
@@ -273,7 +274,8 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[0],
                         Arrays.stream(ItemTarget.values())
-                            .map(ItemTarget::toString).map(String::toLowerCase)
+                            .map(ItemTarget::toString)
+                            .map(String::toLowerCase)
                             .collect(Collectors.joining(", "))
                     });
             }
