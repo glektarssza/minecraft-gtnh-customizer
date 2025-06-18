@@ -22,7 +22,7 @@ jobs:
         name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: typescript
+          languages: java
           queries: security-and-quality
       - id: autobuild
         name: Autobuild
