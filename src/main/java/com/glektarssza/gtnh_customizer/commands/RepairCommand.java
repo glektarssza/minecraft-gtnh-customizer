@@ -53,7 +53,7 @@ public class RepairCommand extends CommandBase {
         /**
          * The item in the victim's legs armor slot.
          */
-        Leggings("legging"),
+        Leggings("leggings"),
 
         /**
          * The item in the victim's boots armor slot.
