@@ -2,7 +2,7 @@
     {
         "modid": "${modId}",
         "name": "${modName}",
-        "description": "A mod that customizes Gregtech: New Horizons.",
+        "description": "A mod that customizes GTNH.",
         "version": "${modVersion}",
         "mcversion": "${minecraftVersion}",
         "url": "https://github.com/glektarssza/minecraft-gtnh-customizer",

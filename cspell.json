@@ -1,19 +1,19 @@
 {
-    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
     "version": "0.2",
-    "id": "root",
-    "name": "Root Configuration",
-    "description": "Root configuration for the project.",
-    "enabled": true,
-    "import": [
-        "./.cspell/configs/dictionary-project.json"
+    "ignorePaths": [
+        "build/**"
     ],
-    "useGitignore": true,
-    "gitignoreRoot": [
-        "."
+    "dictionaryDefinitions": [
+        {
+            "name": "custom-dictionary",
+            "path": "./.cspell/custom-dictionary.txt",
+            "addWords": true
+        }
     ],
-    "caseSensitive": false,
-    "loadDefaultConfiguration": true,
-    "unknownWords": "report-all",
-    "readonly": true
+    "dictionaries": [
+        "custom-dictionary"
+    ],
+    "words": [],
+    "ignoreWords": [],
+    "import": []
 }

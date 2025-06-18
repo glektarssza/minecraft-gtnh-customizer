@@ -18,7 +18,7 @@
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
             "args": [
-                "spotlessCheck"
+                "spotlessJavaCheck"
             ],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
@@ -58,7 +58,7 @@
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
             "args": [
-                "spotlessApply"
+                "spotlessJavaApply"
             ],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"

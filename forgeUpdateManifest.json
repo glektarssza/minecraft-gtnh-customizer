@@ -1,20 +1,10 @@
 {
     "homepage": "",
     "1.7.10": {
-        "0.4.0": "* Added a mixin to permit applying bone meal to Tinker's Construct slime saplings.",
-        "0.3.1": "* Fixed Zombie Pigmen attacking when you mine ores in the Nether.",
-        "0.3.0": "* Integrated into ServerUtils.",
-        "0.2.3": "* Fixed mixins not applying correctly to Xaero's.",
-        "0.2.2": "* Fixed broken teleport command.",
-        "0.2.1": "* Fixed teleport command argument processing.",
-        "0.2.0": "* Added ability to customize Xaero's teleport command.",
-        "0.1.2": "* Fixed teleport command not respecting coordinates.",
-        "0.1.1": "* Fixed config migrations.",
-        "0.1.0": "* Updated several dependencies.\n* Added a cross-dimension teleport command.\n* Changed logo.\n* Ported existing code from old repository.",
-        "0.0.0": "Initial release."
+        "0.0.1": "Initial release."
     },
     "promos": {
-        "1.7.10-latest": "0.4.0",
-        "1.7.10-recommended": "0.4.0"
+        "1.7.10-latest": "0.0.1",
+        "1.7.10-recommended": "0.0.1"
     }
 }
