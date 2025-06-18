@@ -89,7 +89,7 @@ public class RepairCommand extends CommandBase {
         /**
          * Create a new instance.
          *
-         * @param commandValue The vlaue to use in commands when representing
+         * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
         private ItemTarget(String commandValue) {
