@@ -109,7 +109,7 @@ public class GTNHCustomizer {
     @EventHandler
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {}...", Tags.MOD_NAME);
-        // TODO: Add any initialization code here
+        // -- No initialization code... Yet
         LOGGER.info("Done initializing {}!", Tags.MOD_NAME);
     }
 
