@@ -43,17 +43,17 @@ public class RepairCommand extends CommandBase {
         /**
          * The item in the victim's head armor slot.
          */
-        Head("head"),
+        Helmet("helmet"),
 
         /**
          * The item in the victim's chest armor slot.
          */
-        Chest("chest"),
+        Chestplate("chestplate"),
 
         /**
          * The item in the victim's legs armor slot.
          */
-        Legs("legs"),
+        Leggings("legging"),
 
         /**
          * The item in the victim's boots armor slot.
@@ -299,17 +299,17 @@ public class RepairCommand extends CommandBase {
                         items.add(BackhandUtils.getOffhandItem(victim));
                     }
                     break;
-                case Head:
+                case Helmet:
                     if (victim.inventory.armorInventory[3] != null) {
                         items.add(victim.inventory.armorInventory[3]);
                     }
                     break;
-                case Chest:
+                case Chestplate:
                     if (victim.inventory.armorInventory[2] != null) {
                         items.add(victim.inventory.armorInventory[2]);
                     }
                     break;
-                case Legs:
+                case Leggings:
                     if (victim.inventory.armorInventory[1] != null) {
                         items.add(victim.inventory.armorInventory[1]);
                     }
@@ -324,8 +324,7 @@ public class RepairCommand extends CommandBase {
                         .filter((item) -> item != null)
                         .collect(Collectors.toList()));
                     break;
-                case Hotbar: {
-                    int hotbarSize = InventoryPlayer.getHotbarSize();
+                case Hotbar:
                     items.addAll(Arrays.asList(
                         Arrays.copyOfRange(victim.inventory.mainInventory, 0,
                             hotbarSize))
