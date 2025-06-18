@@ -333,7 +333,6 @@ public class RepairCommand extends CommandBase {
                                 .getHotbarSize()))
                         .stream().filter((item) -> item != null)
                         .collect(Collectors.toList()));
-                }
                     break;
                 case Inventory:
                     items.addAll(Arrays.stream(victim.inventory.mainInventory)
