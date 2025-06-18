@@ -6,6 +6,7 @@ assetmover
 attackable
 autobuild
 binpatched
+chestplate
 cleanroom
 cleanroommc
 compiletime
@@ -28,6 +29,7 @@ gtnewhorizons
 gtnh
 gtnhmixins
 gtnhsettingsconvention
+hotbar
 ifml
 invincibles
 jitpack
