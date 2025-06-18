@@ -350,9 +350,10 @@ public class RepairCommand extends CommandBase {
             }
             items.parallelStream()
                 .forEach((itemStack) -> {
-                    // -- Undamage the items in this stack only if they can be
-                    // -- damaged in the first place
-                    if (itemStack.getItem().isDamageable()) {
+                    // -- Repair the items in this stack only if they can be
+                    // -- damaged and are damaged in the first place
+                    if (itemStack.getItem().isDamageable()
+                        && itemStack.getItemDamage() > 0) {
                         itemStack.setItemDamage(0);
                         // -- Also reset the anvil repair cost at the same time
                         // -- if it is present
