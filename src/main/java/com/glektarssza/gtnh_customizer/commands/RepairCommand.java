@@ -327,7 +327,8 @@ public class RepairCommand extends CommandBase {
                 case Hotbar:
                     items.addAll(Arrays.asList(
                         Arrays.copyOfRange(victim.inventory.mainInventory, 0,
-                            hotbarSize))
+                            InventoryPlayer
+                                .getHotbarSize()))
                         .stream().filter((item) -> item != null)
                         .collect(Collectors.toList()));
                 }
