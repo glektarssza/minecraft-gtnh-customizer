@@ -17,17 +17,17 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.util.Constants.NBT;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.IDamageImmunity;
-import com.glektarssza.gtnh_customizer.api.IHurtImmunity;
-import com.glektarssza.gtnh_customizer.api.IImmunity;
-import com.glektarssza.gtnh_customizer.api.IKnockbackImmunity;
-import com.glektarssza.gtnh_customizer.api.ITargetingImmunity;
-import com.glektarssza.gtnh_customizer.api.ImmunityType;
+import com.glektarssza.gtnh_customizer.api.immunity.IDamageImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.IHurtImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.IImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.IKnockbackImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.ImmunityType;
 import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.impl.DamageImmunity;
-import com.glektarssza.gtnh_customizer.impl.HurtImmunity;
-import com.glektarssza.gtnh_customizer.impl.KnockbackImmunity;
-import com.glektarssza.gtnh_customizer.impl.TargetingImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.DamageImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.HurtImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.KnockbackImmunity;
+import com.glektarssza.gtnh_customizer.impl.immunity.TargetingImmunity;
 
 /**
  * A collection of player-related utility methods.

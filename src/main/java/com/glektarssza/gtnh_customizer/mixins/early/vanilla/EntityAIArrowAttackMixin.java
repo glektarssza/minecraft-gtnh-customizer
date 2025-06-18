@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.glektarssza.gtnh_customizer.api.ITargetingImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
 import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 

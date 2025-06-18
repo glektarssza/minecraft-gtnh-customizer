@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api;
+package com.glektarssza.gtnh_customizer.api.immunity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
@@ -6,9 +6,37 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.util.Constants.NBT;
 
 /**
- * An interface that represents immunity from hurt events.
+ * An interface that represents immunity from being targeting by entities.
  */
-public interface IHurtImmunity extends IPhysicalImmunity {
+public interface ITargetingImmunity extends IImmunity<NBTTagCompound> {
+
+    /**
+     * Get whether this instance has an entity type from which this instance
+     * grants immunity from.
+     *
+     * @return Whether this instance has an entity type from which this instance
+     *         grants immunity from.
+     */
+    @Override
+    boolean hasEntityType();
+
+    /**
+     * Get the entity source that this instance grants immunity to damage from.
+     *
+     * @return The entity source that this instance grants immunity to damage
+     *         from.
+     */
+    @Override
+    String getEntityType();
+
+    /**
+     * Set the entity type that this instance grants immunity to damage from.
+     *
+     * @param entityType The entity type that this instance grants immunity to
+     *        damage from.
+     */
+    @Override
+    void setEntityType(String entityType);
 
     /**
      * Get the type of immunity represented by this instance.
@@ -17,7 +45,7 @@ public interface IHurtImmunity extends IPhysicalImmunity {
      */
     @Override
     default ImmunityType getImmunityType() {
-        return ImmunityType.Hurt;
+        return ImmunityType.Targeting;
     }
 
     /**
@@ -38,12 +66,9 @@ public interface IHurtImmunity extends IPhysicalImmunity {
             entityType = this.getEntityType();
         }
         nbt.setTag("immunityType", immunityType);
-        nbt.setString("damageType", this.getDamageType());
         if (entityType != null) {
             nbt.setString("entityType", entityType);
         }
-        nbt.setBoolean("appliesToDirect", this.getAppliesToDirectDamage());
-        nbt.setBoolean("appliesToIndirect", this.getAppliesToIndirectDamage());
         return nbt;
     }
 
@@ -59,27 +84,13 @@ public interface IHurtImmunity extends IPhysicalImmunity {
         }
         ImmunityType type = ImmunityType
             .fromNBTString((NBTTagString) nbt.getTag("immunityType"));
-        if (type != ImmunityType.Hurt) {
+        if (type != ImmunityType.Targeting) {
             return;
         }
-        if (!nbt.hasKey("damageType", NBT.TAG_STRING)) {
-            return;
-        }
-        this.setDamageType(nbt.getString("damageType"));
         if (nbt.hasKey("entityType", NBT.TAG_STRING)) {
             this.setEntityType(nbt.getString("entityType"));
         } else {
             this.setEntityType(null);
-        }
-        if (nbt.hasKey("appliesToDirect", NBT.TAG_ANY_NUMERIC)) {
-            this.setAppliesToDirectDamage(nbt.getBoolean("appliesToDirect"));
-        } else {
-            this.setAppliesToDirectDamage(false);
-        }
-        if (nbt.hasKey("appliesToIndirect", NBT.TAG_ANY_NUMERIC)) {
-            this.setAppliesToDirectDamage(nbt.getBoolean("appliesToIndirect"));
-        } else {
-            this.setAppliesToDirectDamage(false);
         }
     }
 }

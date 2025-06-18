@@ -17,6 +17,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CommandEvent;
 
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
+import com.glektarssza.gtnh_customizer.commands.RepairCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 
@@ -106,6 +107,7 @@ public class GTNHCustomizer {
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {}...", Tags.MOD_NAME);
+        // -- No initialization code... Yet
         LOGGER.info("Done initializing {}!", Tags.MOD_NAME);
     }
 
@@ -120,6 +122,7 @@ public class GTNHCustomizer {
         LOGGER.info("Registering custom commands...");
         event.registerServerCommand(new TeleportCrossDimensionCommand());
         event.registerServerCommand(new ListDimensionsCommand());
+        event.registerServerCommand(new RepairCommand());
         LOGGER.info("Done registering custom commands!");
         LOGGER.info("Done handling server about to start!");
     }

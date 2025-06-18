@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api;
+package com.glektarssza.gtnh_customizer.api.immunity;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
@@ -6,37 +6,9 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.util.Constants.NBT;
 
 /**
- * An interface that represents immunity from being targeting by entities.
+ * An interface that represents immunity from knockback events.
  */
-public interface ITargetingImmunity extends IImmunity<NBTTagCompound> {
-
-    /**
-     * Get whether this instance has an entity type from which this instance
-     * grants immunity from.
-     *
-     * @return Whether this instance has an entity type from which this instance
-     *         grants immunity from.
-     */
-    @Override
-    boolean hasEntityType();
-
-    /**
-     * Get the entity source that this instance grants immunity to damage from.
-     *
-     * @return The entity source that this instance grants immunity to damage
-     *         from.
-     */
-    @Override
-    String getEntityType();
-
-    /**
-     * Set the entity type that this instance grants immunity to damage from.
-     *
-     * @param entityType The entity type that this instance grants immunity to
-     *        damage from.
-     */
-    @Override
-    void setEntityType(String entityType);
+public interface IKnockbackImmunity extends IImmunity<NBTTagCompound> {
 
     /**
      * Get the type of immunity represented by this instance.
@@ -45,7 +17,7 @@ public interface ITargetingImmunity extends IImmunity<NBTTagCompound> {
      */
     @Override
     default ImmunityType getImmunityType() {
-        return ImmunityType.Targeting;
+        return ImmunityType.Hurt;
     }
 
     /**
@@ -84,7 +56,7 @@ public interface ITargetingImmunity extends IImmunity<NBTTagCompound> {
         }
         ImmunityType type = ImmunityType
             .fromNBTString((NBTTagString) nbt.getTag("immunityType"));
-        if (type != ImmunityType.Targeting) {
+        if (type != ImmunityType.Knockback) {
             return;
         }
         if (nbt.hasKey("entityType", NBT.TAG_STRING)) {

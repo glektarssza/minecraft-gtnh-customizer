@@ -1,15 +1,22 @@
-# Configuration - General
+# Configuration Categories - General
 gtnh_customizer.config.category_general=General Settings
+gtnh_customizer.config.category_general.tooltip=Settings relating to general functionality.
 gtnh_customizer.config.category_general.globally_immune_players=Globally Immune Players
 gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
 
-# Configuration - Debugging
+# Configuration Categories - Commands
+gtnh_customizer.config.category_command=Command Settings
+gtnh_customizer.config.category_command.tooltip=Settings relating to command functionality.
+gtnh_customizer.config.category_command.repair_ignores_liquids=Repair Command Ignores Liquids
+gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when looking for contains to repair items inside of.
+
+# Configuration Categories - Debugging
 gtnh_customizer.config.category_debugging=Debugging Settings
+gtnh_customizer.config.category_debugging.tooltip=Settings relating to debugging.
 gtnh_customizer.config.category_debugging.verbose_logging=Verbose Logging
-gtnh_customizer.config.category_debugging.verbose_logging.tooltip=Whether to verbose logging is enabled.
+gtnh_customizer.config.category_debugging.verbose_logging.tooltip=Whether verbose logging is enabled.
 
-
-# Commands
+# Commands - Cross-dimension teleportation
 gtnh_customizer.commands.teleport_cross_dimension.usage=/teleport-cross-dimension [victim player] (<target player> [yaw override] | <x position> <y position> <z position> [dimension id | dimension name] [yaw])
 gtnh_customizer.commands.teleport_cross_dimension.error.wrong_usage=Wrong command format!
 gtnh_customizer.commands.teleport_cross_dimension.error.not_enough_arguments=Not enough arguments!
@@ -17,7 +24,19 @@ gtnh_customizer.commands.teleport_cross_dimension.error.bad_destination=Bad dest
 gtnh_customizer.commands.teleport_cross_dimension.error.unknown_dimension=Unknown dimension ID '%s'!
 gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self=Teleported you to... Yourself?
 gtnh_customizer.commands.teleport_cross_dimension.info.teleported=Teleported '%s' to %s, %s, %s (%s, %s) in dimension '%s' (ID %s)
+
+# Commands - List dimensions
 gtnh_customizer.commands.list_dimensions.usage=/list-dimensions [limit=512] [filters...]
 gtnh_customizer.commands.list_dimensions.error.invalid_limit=Invalid limit '%s'!
 gtnh_customizer.commands.list_dimensions.info.header=--- Dimension List ---
 gtnh_customizer.commands.list_dimensions.info.entry=%s: %s
+
+# Commands - Repair
+gtnh_customizer.commands.repair.usage=/repair [victim player] [item target=hand]
+gtnh_customizer.commands.repair.error.wrong_usage=Wrong command format!
+gtnh_customizer.commands.repair.error.not_enough_arguments=Not enough arguments!
+gtnh_customizer.commands.repair.error.invalid_item_target=Invalid item target '%s'! Must be one of: %s
+gtnh_customizer.commands.repair.error.invalid_item_target.backhand_not_loaded=Invalid item target '%s' (backhand mod is not loaded)!
+gtnh_customizer.commands.repair.error.no_container=No inventory at coordinates '%s %s %s'!
+gtnh_customizer.commands.repair.info.success=Successfully repaired your item(s)!
+gtnh_customizer.commands.repair.info.admin_notify=Player '%s' (GUID '%s') repaired '%s' items.

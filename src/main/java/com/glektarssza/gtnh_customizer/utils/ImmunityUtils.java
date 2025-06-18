@@ -7,7 +7,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
-import com.glektarssza.gtnh_customizer.api.ITargetingImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
 
 /**
  * A collection of utilities for working with immunities.

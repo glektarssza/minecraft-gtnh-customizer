@@ -293,53 +293,6 @@
             ]
         },
         {
-            "label": "gradle:runClient17",
-            "detail": "Run the game client.",
-            "hide": false,
-            "icon": {
-                "id": "run",
-                "color": "terminal.ansiWhite"
-            },
-            "group": {
-                "isDefault": false
-            },
-            "isBackground": true,
-            "dependsOrder": "sequence",
-            "dependsOn": [],
-            "type": "shell",
-            "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient17"
-            ],
-            "windows": {
-                "command": "${workspaceFolder}/gradlew.bat"
-            },
-            "runOptions": {
-                "instanceLimit": 1,
-                "instancePolicy": "silent",
-                "reevaluateOnRerun": true,
-                "runOn": "default"
-            },
-            "presentation": {
-                "echo": false,
-                "reveal": "always",
-                "focus": false,
-                "panel": "dedicated",
-                "showReuseMessage": false,
-                "clear": true
-            },
-            "problemMatcher": [
-                {
-                    "base": "$gradle",
-                    "background": {
-                        "activeOnStart": true,
-                        "beginsPattern": "Configure project",
-                        "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
-                    }
-                }
-            ]
-        },
-        {
             "label": "gradle:runClient:debug",
             "detail": "Run the game client in debug mode.",
             "hide": false,
@@ -388,6 +341,53 @@
             ]
         },
         {
+            "label": "gradle:runClient17",
+            "detail": "Run the game client.",
+            "hide": false,
+            "icon": {
+                "id": "run",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "runClient17"
+            ],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "base": "$gradle",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Configure project",
+                        "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                    }
+                }
+            ]
+        },
+        {
             "label": "gradle:runClient17:debug",
             "detail": "Run the game client in debug mode.",
             "hide": false,
@@ -405,6 +405,99 @@
             "command": "${workspaceFolder}/gradlew",
             "args": [
                 "runClient17",
+                "--debug-jvm"
+            ],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": {
+                "base": "$gradle",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Configure project",
+                    "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                }
+            }
+        },
+        {
+            "label": "gradle:runClient21",
+            "detail": "Run the game client.",
+            "hide": false,
+            "icon": {
+                "id": "run",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "runClient21"
+            ],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "base": "$gradle",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Configure project",
+                        "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "gradle:runClient21:debug",
+            "detail": "Run the game client in debug mode.",
+            "hide": false,
+            "icon": {
+                "id": "debug",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "runClient21",
                 "--debug-jvm"
             ],
             "windows": {

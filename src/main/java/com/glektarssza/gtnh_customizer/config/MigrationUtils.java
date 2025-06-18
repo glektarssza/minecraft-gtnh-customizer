@@ -13,7 +13,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.glektarssza.gtnh_customizer.utils.KeyAlreadyExistsException;
+import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
 /**
  * A collection of utilities for migration configuration stuff.

@@ -1,6 +1,6 @@
-package com.glektarssza.gtnh_customizer.impl;
+package com.glektarssza.gtnh_customizer.impl.immunity;
 
-import com.glektarssza.gtnh_customizer.api.ITargetingImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
 
 /**
  * A concrete implementation of the {@link ITargetingImmunity} interface.

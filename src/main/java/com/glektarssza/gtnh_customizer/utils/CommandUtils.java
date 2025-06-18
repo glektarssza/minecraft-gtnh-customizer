@@ -11,6 +11,8 @@ import net.minecraft.server.MinecraftServer;
 
 import net.minecraftforge.common.DimensionManager;
 
+import com.glektarssza.gtnh_customizer.utils.exceptions.NumberOutOfRangeException;
+
 /**
  * Utilities for commands.
  */

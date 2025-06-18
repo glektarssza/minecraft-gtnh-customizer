@@ -1,6 +1,6 @@
-package com.glektarssza.gtnh_customizer.impl;
+package com.glektarssza.gtnh_customizer.impl.immunity;
 
-import com.glektarssza.gtnh_customizer.api.IDamageImmunity;
+import com.glektarssza.gtnh_customizer.api.immunity.IDamageImmunity;
 
 /**
  * A concrete implementation of the {@link IDamageImmunity} interface.

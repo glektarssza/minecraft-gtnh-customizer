@@ -7,6 +7,7 @@ autobuild
 binpatched
 blowdryer
 buildcraft
+chestplate
 cleanroom
 cleanroommc
 cofhlib
@@ -38,6 +39,7 @@ gtnh
 gtnhconvention
 gtnhmixins
 gtnhsettingsconvention
+hotbar
 ifml
 invincibles
 jabel
