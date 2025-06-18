@@ -107,7 +107,7 @@ public class RepairCommand extends CommandBase {
         public static ItemTarget getFromCommandArgument(String argument)
             throws NoSuchElementException {
             return Arrays.stream(ItemTarget.values())
-                .filter((item) -> item.commandValue == argument)
+                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(String.format(
                     "No ItemTarget with command value of '%s'", argument)));
@@ -125,7 +125,7 @@ public class RepairCommand extends CommandBase {
         @Nullable
         public static ItemTarget tryGetFromCommandArgument(String argument) {
             return Arrays.stream(ItemTarget.values())
-                .filter((item) -> item.commandValue == argument)
+                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
                 .findFirst()
                 .orElse(null);
         }
