@@ -8,8 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
@@ -32,7 +30,7 @@ public class GTNHCustomizer {
     /**
      * The configuration directory.
      */
-    private static File CONFIG_DIR;
+    private static File configDir;
 
     /**
      * The logger to use for the mod.
@@ -52,7 +50,7 @@ public class GTNHCustomizer {
     /**
      * The mod singleton instance.
      */
-    @Instance(Tags.MOD_ID)
+    @Mod.Instance
     public static GTNHCustomizer instance;
 
     /**
@@ -89,12 +87,12 @@ public class GTNHCustomizer {
      *
      * @param event The event to handle.
      */
-    @EventHandler
+    @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
         LOGGER.info("Pre-initializing {}...", Tags.MOD_NAME);
-        CONFIG_DIR = event.getModConfigurationDirectory();
-        Config.init(CONFIG_DIR, String.format("%s.cfg", Tags.MOD_ID));
+        configDir = event.getModConfigurationDirectory();
+        Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
         LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
         Config.sync();
         MinecraftForge.EVENT_BUS.register(this);
@@ -106,7 +104,7 @@ public class GTNHCustomizer {
      *
      * @param event The event to handle.
      */
-    @EventHandler
+    @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         LOGGER.info("Initializing {}...", Tags.MOD_NAME);
         // -- No initialization code... Yet
@@ -118,7 +116,7 @@ public class GTNHCustomizer {
      *
      * @param event The event to handle.
      */
-    @EventHandler
+    @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         LOGGER.info("Handling server about to start...");
         LOGGER.info("Registering custom commands...");
