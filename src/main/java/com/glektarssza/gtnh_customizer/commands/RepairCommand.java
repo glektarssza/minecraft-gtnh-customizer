@@ -197,7 +197,27 @@ public class RepairCommand extends CommandBase {
      */
     @Override
     public boolean isUsernameIndex(String[] args, int index) {
-        return index == 0;
+        return index == 0 && !isItemTargetIndex(args, index);
+    }
+
+    /**
+     * Check if the given index in the given list of arguments is meant to be an
+     * item target.
+     *
+     * @param args The arguments being passed to the command.
+     * @param index The index being checked.
+     *
+     * @return {@code true} if the index should be for an item target;
+     *         {@code false} otherwise.
+     */
+    public boolean isItemTargetIndex(String[] args, int index) {
+        if (index < 0 || index >= args.length) {
+            return false;
+        }
+        return Arrays.stream(ItemTarget.values())
+            .filter((item) -> item.commandValue.equalsIgnoreCase(args[index]))
+            .findFirst()
+            .isPresent();
     }
 
     /**
@@ -427,12 +447,12 @@ public class RepairCommand extends CommandBase {
                             throw new CommandException(
                                 "gtnh_customizer.commands.repair.error.bad_container_position",
                                 new Object[] {
-                                    String.format("%.2f", args[1]),
-                                    String.format("%.2f", args[2]),
-                                    String.format("%.2f", args[3])
+                                    String.format("%d", args[2]),
+                                    String.format("%d", args[3]),
+                                    String.format("%d", args[4])
                                 });
                         }
-                    } else if (args.length >= 4 && !isUsernameIndex(args, 0)) {
+                    } else if (args.length >= 4 && isItemTargetIndex(args, 0)) {
                         // -- Arguments contain no victim player and position
                         // -- data
                         try {
@@ -449,9 +469,9 @@ public class RepairCommand extends CommandBase {
                             throw new CommandException(
                                 "gtnh_customizer.commands.repair.error.bad_container_position",
                                 new Object[] {
-                                    String.format("%.2f", args[1]),
-                                    String.format("%.2f", args[2]),
-                                    String.format("%.2f", args[3])
+                                    String.format("%d", args[1]),
+                                    String.format("%d", args[2]),
+                                    String.format("%d", args[3])
                                 });
                         }
                     } else {
