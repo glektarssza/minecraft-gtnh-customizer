@@ -1,6 +1,7 @@
 {
     "homepage": "",
     "1.7.10": {
+        "0.6.1": "* Fixed a bad render distance access on servers in the extinguish command.",
         "0.6.0": "* Added a command to extinguish flames in an area.",
         "0.5.3": "* Adjusted admin output of repair command.",
         "0.5.2": "* Fixed an issue where the repair command was formatting the number of repaired items VERY wrong.",
@@ -19,7 +20,7 @@
         "0.0.0": "Initial release."
     },
     "promos": {
-        "1.7.10-latest": "0.6.0",
-        "1.7.10-recommended": "0.6.0"
+        "1.7.10-latest": "0.6.1",
+        "1.7.10-recommended": "0.6.1"
     }
 }
