@@ -32,6 +32,9 @@ import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 
 import xonin.backhand.api.core.BackhandUtils;
 
+/**
+ * A command which provides the ability to repair equipment.
+ */
 public class RepairCommand extends CommandBase {
     /**
      * An enumeration of valid repair targets.
