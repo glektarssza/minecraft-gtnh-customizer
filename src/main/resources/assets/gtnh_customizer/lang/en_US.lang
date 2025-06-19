@@ -9,6 +9,8 @@ gtnh_customizer.config.category_command=Command Settings
 gtnh_customizer.config.category_command.tooltip=Settings relating to command functionality.
 gtnh_customizer.config.category_command.repair_ignores_liquids=Repair Command Ignores Liquids
 gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when looking for contains to repair items inside of.
+gtnh_customizer.config.category_command.extinguish_max_volume=Extinguish Max Volume
+gtnh_customizer.config.category_command.extinguish_max_volume.tooltip=The maximum number of blocks the 'extinguish' command will process.
 
 # Configuration Categories - Debugging
 gtnh_customizer.config.category_debugging=Debugging Settings
