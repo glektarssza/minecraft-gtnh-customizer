@@ -17,6 +17,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import com.glektarssza.gtnh_customizer.config.Config;
+import com.glektarssza.gtnh_customizer.mixins.early.vanilla.WorldMixin;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 
 /**
@@ -144,8 +145,8 @@ public class ExtinguishCommand extends CommandBase {
         Long endingBlockZPos = null;
         if (args.length <= 1) {
             if (args.length == 0) {
-                radius = Minecraft
-                    .getMinecraft().gameSettings.renderDistanceChunks * 16;
+                radius = ((WorldMixin) sender.getEntityWorld())
+                    .getRenderDistance() * 16;
             } else {
                 try {
                     radius = Integer.parseUnsignedInt(args[0], 10);
