@@ -16,14 +16,13 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
+import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 
 /**
  * A command which provides the ability to extinguish blocks which are on fire.
  */
 public class ExtinguishCommand extends CommandBase {
-    public static final long MAX_VOLUME = Integer.MAX_VALUE;
-
     /**
      * Get the command name.
      *
@@ -207,11 +206,12 @@ public class ExtinguishCommand extends CommandBase {
         long volume = (endingBlockXPos - startingBlockXPos)
             * (endingBlockYPos - startingBlockYPos)
             * (endingBlockZPos - startingBlockZPos);
-        if (volume > MAX_VOLUME) {
+        if (volume > Config.getExtinguishCommandMaxVolume()) {
             throw new WrongUsageException(
                 "gtnh_customizer.commands.extinguish.error.volume_too_large",
                 new Object[] {
-                    String.format("%d", volume), String.format("%d", MAX_VOLUME)
+                    String.format("%d", volume), String.format("%d",
+                        Config.getExtinguishCommandMaxVolume())
                 });
         }
         World world = sender.getEntityWorld();

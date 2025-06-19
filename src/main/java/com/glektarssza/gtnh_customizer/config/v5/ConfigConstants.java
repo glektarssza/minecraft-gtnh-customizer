@@ -85,7 +85,7 @@ public class ConfigConstants {
      * Whether the {@code repair} command should ignore liquids property path.
      */
     public static final String PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_PATH = String
-        .format("%s%s%s", CATEGORY_GENERAL_PATH,
+        .format("%s%s%s", CATEGORY_COMMAND_PATH,
             Configuration.CATEGORY_SPLITTER,
             PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_NAME);
 
