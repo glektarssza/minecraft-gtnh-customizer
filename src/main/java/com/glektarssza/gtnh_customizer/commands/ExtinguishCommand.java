@@ -230,7 +230,7 @@ public class ExtinguishCommand extends CommandBase {
                 .setItalic(true)));
         if (radius == null) {
             func_152373_a(sender, this,
-                "gtnh_customizer.commands.repair.info.admin_notify.zone",
+                "gtnh_customizer.commands.extinguish.info.admin_notify.zone",
                 new Object[] {
                     sender.getCommandSenderName(),
                     String.format("%d", startingBlockXPos),
@@ -242,7 +242,7 @@ public class ExtinguishCommand extends CommandBase {
                 });
         } else {
             func_152373_a(sender, this,
-                "gtnh_customizer.commands.repair.info.admin_notify.radius",
+                "gtnh_customizer.commands.extinguish.info.admin_notify.radius",
                 new Object[] {
                     sender.getCommandSenderName(),
                     String.format("%d", radius)
