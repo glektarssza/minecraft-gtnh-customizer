@@ -39,4 +39,4 @@ gtnh_customizer.commands.repair.error.invalid_item_target=Invalid item target '%
 gtnh_customizer.commands.repair.error.invalid_item_target.backhand_not_loaded=Invalid item target '%s' (backhand mod is not loaded)!
 gtnh_customizer.commands.repair.error.no_container=No inventory at coordinates '%s %s %s'!
 gtnh_customizer.commands.repair.info.success=Successfully repaired your item(s)!
-gtnh_customizer.commands.repair.info.admin_notify=Player '%s' (GUID '%s') repaired '%s' items.
+gtnh_customizer.commands.repair.info.admin_notify=Player '%s' repaired '%s' items.
