@@ -17,8 +17,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
 import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.mixins.early.vanilla.WorldMixin;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
+import com.glektarssza.gtnh_customizer.utils.ExtendedWorld;
 
 /**
  * A command which provides the ability to extinguish blocks which are on fire.
@@ -145,7 +145,7 @@ public class ExtinguishCommand extends CommandBase {
         Long endingBlockZPos = null;
         if (args.length <= 1) {
             if (args.length == 0) {
-                radius = ((WorldMixin) sender.getEntityWorld())
+                radius = ((ExtendedWorld) sender.getEntityWorld())
                     .getRenderDistance() * 16;
             } else {
                 try {
