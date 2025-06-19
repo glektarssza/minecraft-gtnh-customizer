@@ -545,8 +545,7 @@ public class RepairCommand extends CommandBase {
             func_152373_a(sender, this,
                 "gtnh_customizer.commands.repair.info.admin_notify",
                 new Object[] {
-                    victim.getDisplayName(),
-                    victim.getUniqueID().toString(),
+                    sender.getCommandSenderName(),
                     String.format("%d",
                         items.stream()
                             .mapToInt((itemStack) -> itemStack.stackSize)
