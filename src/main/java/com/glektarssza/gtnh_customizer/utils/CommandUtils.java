@@ -49,22 +49,28 @@ public final class CommandUtils {
         .compile("true|false|1|0", Pattern.CASE_INSENSITIVE);
 
     /**
-     * A regular expression for matching parsable int values.
+     * A regular expression for matching parsable byte integer values.
      */
     private static final Pattern BYTE_MATCHER = Pattern
         .compile("-?\\d{1,3}");
 
     /**
-     * A regular expression for matching parsable int values.
+     * A regular expression for matching parsable short integer values.
      */
     private static final Pattern SHORT_MATCHER = Pattern
         .compile("-?\\d{1,5}");
 
     /**
-     * A regular expression for matching parsable int values.
+     * A regular expression for matching parsable integer values.
      */
     private static final Pattern INTEGER_MATCHER = Pattern
         .compile("-?\\d{1,10}");
+
+    /**
+     * A regular expression for matching parsable long integer values.
+     */
+    private static final Pattern LONG_MATCHER = Pattern
+        .compile("-?\\d{1,19}");
 
     /**
      * A regular expression for matching parsable float values.
@@ -803,6 +809,146 @@ public final class CommandUtils {
         int max, int defaultValue) {
         try {
             return parseBlockRelativeIntegerArgument(sender, arg, baseValue,
+                radix, min, max);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        } catch (NumberOutOfRangeException t) {
+            return defaultValue;
+        }
+    }
+
+    public static long parseLongArgument(ICommandSender sender, String arg)
+        throws NumberFormatException {
+        return parseLongArgument(sender, arg, 10);
+    }
+
+    public static long parseLongArgument(ICommandSender sender, String arg,
+        int radix)
+        throws NumberFormatException {
+        if (!LONG_MATCHER.matcher(arg).matches()) {
+            throw new NumberFormatException(String.format(
+                "Value '%s' does not match the format of an long", arg));
+        }
+        return Long.parseLong(arg, radix);
+    }
+
+    public static long parseLongArgument(ICommandSender sender, String arg,
+        int min, int max)
+        throws NumberFormatException, NumberOutOfRangeException {
+        return parseLongArgument(sender, arg, 10, min, max);
+    }
+
+    public static long parseLongArgument(ICommandSender sender, String arg,
+        int radix, long min, long max)
+        throws NumberFormatException, NumberOutOfRangeException {
+        long result = parseLongArgument(sender, arg, radix);
+        if (result < min || result > max) {
+            throw new NumberOutOfRangeException(result, min, max);
+        }
+        return result;
+    }
+
+    public static long parseOptionalLongArgument(ICommandSender sender,
+        String arg, long defaultValue) {
+        try {
+            return parseLongArgument(sender, arg);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static long parseOptionalLongArgument(ICommandSender sender,
+        String arg, int radix, long defaultValue) {
+        try {
+            return parseLongArgument(sender, arg, radix);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static long parseOptionalLongArgument(ICommandSender sender,
+        String arg, long min, long max, long defaultValue) {
+        return parseOptionalLongArgument(sender, arg, 10, min, max,
+            defaultValue);
+    }
+
+    public static long parseOptionalLongArgument(ICommandSender sender,
+        String arg, int radix, long min, long max, long defaultValue) {
+        try {
+            return parseLongArgument(sender, arg, radix, min, max);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        } catch (NumberOutOfRangeException t) {
+            return defaultValue;
+        }
+    }
+
+    public static long parseBlockRelativeLongArgument(ICommandSender sender,
+        String arg, long baseValue)
+        throws NumberFormatException {
+        return parseBlockRelativeLongArgument(sender, arg, baseValue, 10);
+    }
+
+    public static long parseBlockRelativeLongArgument(ICommandSender sender,
+        String arg, long baseValue, int radix)
+        throws NumberFormatException {
+        long offset;
+        if (arg.startsWith("~")) {
+            offset = arg.length() == 1 ? 0
+                : parseLongArgument(sender, arg.substring(1), radix);
+        } else {
+            return parseLongArgument(sender, arg, radix);
+        }
+        return baseValue + offset;
+    }
+
+    public static long parseBlockRelativeLongArgument(ICommandSender sender,
+        String arg, long baseValue, long min, long max)
+        throws NumberFormatException {
+        return parseBlockRelativeLongArgument(sender, arg, baseValue, 10,
+            min, max);
+    }
+
+    public static long parseBlockRelativeLongArgument(ICommandSender sender,
+        String arg, long baseValue, int radix, long min, long max)
+        throws NumberFormatException {
+        long result = parseBlockRelativeLongArgument(sender, arg, baseValue,
+            radix);
+        if (result < min || result > max) {
+            throw new NumberOutOfRangeException(result, min, max);
+        }
+        return result;
+    }
+
+    public static long parseBlockRelativeOptionalLongArgument(
+        ICommandSender sender, String arg, long baseValue, long defaultValue) {
+        return parseBlockRelativeOptionalLongArgument(sender, arg, baseValue,
+            10, defaultValue);
+    }
+
+    public static long parseBlockRelativeOptionalLongArgument(
+        ICommandSender sender, String arg, long baseValue, int radix,
+        long defaultValue) {
+        try {
+            return parseBlockRelativeLongArgument(sender, arg, baseValue,
+                radix);
+        } catch (NumberFormatException t) {
+            return defaultValue;
+        }
+    }
+
+    public static long parseBlockRelativeOptionalLongArgument(
+        ICommandSender sender, String arg, long baseValue, long min, long max,
+        long defaultValue) {
+        return parseBlockRelativeOptionalLongArgument(sender, arg, baseValue,
+            10, min, max, defaultValue);
+    }
+
+    public static long parseBlockRelativeOptionalLongArgument(
+        ICommandSender sender, String arg, long baseValue, int radix, long min,
+        long max, long defaultValue) {
+        try {
+            return parseBlockRelativeLongArgument(sender, arg, baseValue,
                 radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
