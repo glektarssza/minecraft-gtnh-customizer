@@ -41,7 +41,7 @@ gtnh_customizer.commands.repair.info.success=Successfully repaired your item(s)!
 gtnh_customizer.commands.repair.info.admin_notify=Player '%s' repaired '%s' items.
 
 # Commands - Extinguish
-gtnh_customizer.commands.extinguish.usage=/extinguish [radius=32] | startXPos startYPos startZPos endXPos endYPos endZPos
+gtnh_customizer.commands.extinguish.usage=/extinguish [radius=%s] | startXPos startYPos startZPos endXPos endYPos endZPos
 gtnh_customizer.commands.extinguish.error.wrong_usage=Wrong command format!
 gtnh_customizer.commands.extinguish.error.not_enough_arguments=Not enough arguments!
 gtnh_customizer.commands.extinguish.error.volume_too_large=Cannot process that many blocks ('%s' is more than the limit of '%s')!
