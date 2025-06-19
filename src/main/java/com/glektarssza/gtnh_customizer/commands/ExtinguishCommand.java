@@ -22,7 +22,7 @@ import com.glektarssza.gtnh_customizer.utils.CommandUtils;
  * A command which provides the ability to extinguish blocks which are on fire.
  */
 public class ExtinguishCommand extends CommandBase {
-    public static final long MAX_VOLUME = Short.MAX_VALUE;
+    public static final long MAX_VOLUME = Integer.MAX_VALUE;
 
     /**
      * Get the command name.
