@@ -9,6 +9,8 @@ gtnh_customizer.config.category_command=Command Settings
 gtnh_customizer.config.category_command.tooltip=Settings relating to command functionality.
 gtnh_customizer.config.category_command.repair_ignores_liquids=Repair Command Ignores Liquids
 gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when looking for contains to repair items inside of.
+gtnh_customizer.config.category_command.extinguish_max_volume=Extinguish Max Volume
+gtnh_customizer.config.category_command.extinguish_max_volume.tooltip=The maximum number of blocks the 'extinguish' command will process.
 
 # Configuration Categories - Debugging
 gtnh_customizer.config.category_debugging=Debugging Settings
@@ -34,9 +36,17 @@ gtnh_customizer.commands.list_dimensions.info.entry=%s: %s
 # Commands - Repair
 gtnh_customizer.commands.repair.usage=/repair [victim player] [item target=hand]
 gtnh_customizer.commands.repair.error.wrong_usage=Wrong command format!
-gtnh_customizer.commands.repair.error.not_enough_arguments=Not enough arguments!
 gtnh_customizer.commands.repair.error.invalid_item_target=Invalid item target '%s'! Must be one of: %s
 gtnh_customizer.commands.repair.error.invalid_item_target.backhand_not_loaded=Invalid item target '%s' (backhand mod is not loaded)!
 gtnh_customizer.commands.repair.error.no_container=No inventory at coordinates '%s %s %s'!
 gtnh_customizer.commands.repair.info.success=Successfully repaired your item(s)!
 gtnh_customizer.commands.repair.info.admin_notify=Player '%s' repaired '%s' items.
+
+# Commands - Extinguish
+gtnh_customizer.commands.extinguish.usage=/extinguish [radius=%s] | startXPos startYPos startZPos endXPos endYPos endZPos
+gtnh_customizer.commands.extinguish.error.wrong_usage=Wrong command format!
+gtnh_customizer.commands.extinguish.error.not_enough_arguments=Not enough arguments!
+gtnh_customizer.commands.extinguish.error.volume_too_large=Cannot process that many blocks ('%s' is more than the limit of '%s')!
+gtnh_customizer.commands.extinguish.info.success=Successfully extinguished flame(s)!
+gtnh_customizer.commands.extinguish.info.admin_notify.radius=Player '%s' extinguished flames in a '%s' block radius.
+gtnh_customizer.commands.extinguish.info.admin_notify.zone=Player '%s' extinguished flames from '%s %s %s' to '%s %s %s'.

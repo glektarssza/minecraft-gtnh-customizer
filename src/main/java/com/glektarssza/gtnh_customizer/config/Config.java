@@ -18,7 +18,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.config.v4.ConfigConstants;
+import com.glektarssza.gtnh_customizer.config.v5.ConfigConstants;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
@@ -49,6 +49,12 @@ public class Config {
      * Whether the {@code repair} command ignores liquids.
      */
     private static boolean repairCommandIgnoresLiquids = false;
+
+    /**
+     * The maximum number of blocks the {@code extinguish} command should
+     * process.
+     */
+    private static int extinguishCommandMaxVolume = Integer.MAX_VALUE;
 
     /**
      * Whether verbose logging is enabled.
@@ -113,6 +119,36 @@ public class Config {
      */
     public static void toggleRepairCommandIgnoresLiquids() {
         setRepairCommandIgnoresLiquids(!getRepairCommandIgnoresLiquids());
+    }
+
+    /**
+     * Get the maximum number of blocks the {@code extinguish} command should
+     * process.
+     *
+     * @return The maximum number of blocks the {@code extinguish} command
+     *         should process.
+     */
+    public static int getExtinguishCommandMaxVolume() {
+        return extinguishCommandMaxVolume;
+    }
+
+    /**
+     * Set the maximum number of blocks the {@code extinguish} command should
+     * process.
+     *
+     * @param value The maximum number of blocks the {@code extinguish} command
+     *        should process.
+     */
+    public static void setExtinguishCommandMaxVolume(int value) {
+        extinguishCommandMaxVolume = value;
+    }
+
+    /**
+     * Reset the maximum number of blocks the {@code extinguish} command should
+     * process.
+     */
+    public static void resetExtinguishCommandMaxVolume() {
+        setExtinguishCommandMaxVolume(Integer.MAX_VALUE);
     }
 
     /**
@@ -334,6 +370,16 @@ public class Config {
                 ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_LANG_KEY)
             .setRequiresMcRestart(false).setRequiresWorldRestart(false)
             .getBoolean());
+
+        setExtinguishCommandMaxVolume(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_COMMAND_PATH,
+            ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_NAME,
+            extinguishCommandMaxVolume,
+            ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_COMMENT)
+            .setLanguageKey(
+                ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_LANG_KEY)
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getInt());
 
         CONFIG_INSTANCE
             .setCategoryComment(ConfigConstants.CATEGORY_DEBUGGING_PATH,
