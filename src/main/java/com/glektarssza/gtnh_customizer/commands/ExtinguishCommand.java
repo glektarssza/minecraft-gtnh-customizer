@@ -143,15 +143,20 @@ public class ExtinguishCommand extends CommandBase {
         Long endingBlockXPos = null;
         Long endingBlockYPos = null;
         Long endingBlockZPos = null;
-        if (args.length == 1) {
-            try {
-                radius = Integer.parseUnsignedInt(args[0], 10);
-            } catch (NumberFormatException ex) {
-                throw new WrongUsageException(
-                    "gtnh_customizer.commands.extinguish.error.invalid_radius",
-                    new Object[] {
-                        String.format("%d", args[0])
-                    });
+        if (args.length <= 1) {
+            if (args.length == 0) {
+                radius = Minecraft
+                    .getMinecraft().gameSettings.renderDistanceChunks * 16;
+            } else {
+                try {
+                    radius = Integer.parseUnsignedInt(args[0], 10);
+                } catch (NumberFormatException ex) {
+                    throw new WrongUsageException(
+                        "gtnh_customizer.commands.extinguish.error.invalid_radius",
+                        new Object[] {
+                            String.format("%d", args[0])
+                        });
+                }
             }
             ChunkCoordinates coords = sender.getPlayerCoordinates();
             startingBlockXPos = (long) (coords.posX - radius);
