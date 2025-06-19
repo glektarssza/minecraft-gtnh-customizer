@@ -20,13 +20,12 @@ import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
  * Mixin for the {@code World} class.
  */
 @Mixin(World.class)
-public class WorldMixin {
-
+public abstract class WorldMixin {
     /**
      * Mixin for the {@code getClosestVulnerablePlayerToEntity} method.
      */
     @Inject(method = "getClosestVulnerablePlayerToEntity", at = @At("RETURN"), cancellable = true)
-    public void getClosestVulnerablePlayerToEntity(Entity entityIn,
+    private void getClosestVulnerablePlayerToEntity(Entity entityIn,
         double distance,
         CallbackInfoReturnable<EntityPlayer> cir) {
         if (!(entityIn instanceof EntityLiving)) {
