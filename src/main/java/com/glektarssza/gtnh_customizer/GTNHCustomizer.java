@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.util.ResourceLocation;
+
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -14,13 +16,14 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.CommandEvent;
 
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.RepairCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
+
+import serverutils.events.ServerUtilitiesPreInitRegistryEvent;
 
 /**
  * The root mod class.
@@ -96,6 +99,8 @@ public class GTNHCustomizer {
         Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
         LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
         Config.sync();
+        LOGGER.info("Registering mod {} with the Forge event bus...",
+            Tags.MOD_NAME);
         MinecraftForge.EVENT_BUS.register(this);
         LOGGER.info("Done pre-initializing {}!", Tags.MOD_NAME);
     }
@@ -143,16 +148,23 @@ public class GTNHCustomizer {
     }
 
     /**
-     * An event handler for when a command is issued.
+     * An event handler for when the {@code ServerUtilities} mod triggers a
+     * server reload.
      *
      * @param event The event data.
      */
     @SubscribeEvent
-    public void onCommand(CommandEvent event) {
-        if (event.command.getCommandName()
-            .equals("reload")) {
-            LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
-            Config.sync();
-        }
+    public void onServerUtilitiesPreInitRegistry(
+        ServerUtilitiesPreInitRegistryEvent event) {
+        event.getRegistry().registerServerReloadHandler(
+            new ResourceLocation(Tags.MOD_ID, "config"),
+            reloadEvent -> {
+                try {
+                    Config.sync();
+                } catch (Throwable t) {
+                    return false;
+                }
+                return true;
+            });
     }
 }
