@@ -646,6 +646,50 @@
             "problemMatcher": [
                 "$gradle"
             ]
+        },
+        {
+            "label": "gradle:prepareWorkspace",
+            "detail": "Prepare the project workspace.",
+            "hide": false,
+            "icon": {
+                "id": "tools",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": false,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": [
+                "clean",
+                "cleanEclipse",
+                "setupDecompWorkspace",
+                "injectTags",
+                "eclipse"
+            ],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                "$gradle"
+            ]
         }
     ]
 }
