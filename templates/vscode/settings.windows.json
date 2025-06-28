@@ -29,7 +29,7 @@
         "pack.mcmeta": "json"
     },
     "java.autobuild.enabled": false,
-    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.configuration.updateBuildConfiguration": "disabled",
     "java.completion.enabled": true,
     "java.completion.importOrder": [
         "#",
@@ -52,6 +52,12 @@
     "java.codeGeneration.toString.codeStyle": "STRING_FORMAT",
     "java.codeGeneration.useBlocks": true,
     "java.compile.nullAnalysis.mode": "automatic",
+    "java.compile.nullAnalysis.nonnull": [
+        "javax.annotation.Nonnull"
+    ],
+    "java.compile.nullAnalysis.nullable": [
+        "javax.annotation.Nullable"
+    ],
     "java.diagnostic.filter": [
         "**/build/**"
     ],
@@ -67,8 +73,5 @@
     "java.saveActions.cleanup": true,
     "java.saveActions.organizeImports": true,
     "java.silentNotification": true,
-    "java.server.launchMode": "Standard",
-    "terminal.integrated.env.windows": {
-        "JAVA_HOME": "C:/Users/USERNAME/scoop/apps/temurin21-jdk/current/"
-    }
+    "java.server.launchMode": "Standard"
 }
