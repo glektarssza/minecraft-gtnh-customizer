@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
@@ -26,6 +27,8 @@ import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 
 import cpw.mods.fml.common.Loader;
+
+import net.minecraftforge.common.util.Constants.NBT;
 
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
@@ -90,6 +93,12 @@ public class RepairCommand extends CommandBase {
          * hand, and armor slots.
          */
         Everything("everything"),
+
+        /**
+         * All the repairable items in victim's inventory, hotbar, hand, off
+         * hand, and armor slots.
+         */
+        All("all"),
 
         /**
          * All the repairable items in given container.
@@ -419,6 +428,7 @@ public class RepairCommand extends CommandBase {
                             .collect(Collectors.toList()));
                     }
                     break;
+                case All:
                 case Everything:
                     items.addAll(Arrays.stream(victim.inventory.mainInventory)
                         .filter((item) -> item != null)
@@ -524,19 +534,37 @@ public class RepairCommand extends CommandBase {
             }
             items.parallelStream()
                 .forEach((itemStack) -> {
-                    // -- Repair the items in this stack only if they can be
-                    // -- damaged and are damaged in the first place
-                    if (itemStack.getItem().isDamageable()
-                        && itemStack.getItemDamage() > 0) {
+                    NBTTagCompound stackTag = itemStack.hasTagCompound()
+                        ? itemStack.stackTagCompound
+                        : new NBTTagCompound();
+                    if (stackTag.hasKey("InfiTool", NBT.TAG_COMPOUND)
+                        && stackTag
+                            .getCompoundTag("InfiTool")
+                            .getInteger("Damage") > 0) {
+                        // -- Tinker's Construct Tools
                         itemStack.setItemDamage(0);
-                        // -- Also reset the anvil repair cost at the same time
-                        // -- if it is present
-                        if (itemStack.hasTagCompound()
-                            && itemStack.stackTagCompound
-                                .hasKey("RepairCost")) {
-                            itemStack.stackTagCompound.removeTag("RepairCost");
+                        if (stackTag.hasKey("RepairCost")) {
+                            stackTag.removeTag("RepairCost");
+                        }
+                        stackTag.getCompoundTag("InfiTool")
+                            .setInteger("Damage", 0);
+                    } else if (stackTag.hasKey("GT.ToolStats",
+                        NBT.TAG_COMPOUND)
+                        && stackTag
+                            .getCompoundTag("GT.ToolStats")
+                            .getInteger("Damage") > 0) {
+                        // -- Gregtech Tools
+                        stackTag.getCompoundTag("GT.ToolStats")
+                            .setInteger("Damage", 0);
+                    } else if (itemStack.getItem().isDamageable()
+                        && itemStack.getItemDamage() > 0) {
+                        // -- Vanilla Tools
+                        itemStack.setItemDamage(0);
+                        if (stackTag.hasKey("RepairCost")) {
+                            stackTag.removeTag("RepairCost");
                         }
                     }
+                    itemStack.setTagCompound(stackTag);
                 });
             sender.addChatMessage(new ChatComponentTranslation(
                 "gtnh_customizer.commands.repair.info.success")
