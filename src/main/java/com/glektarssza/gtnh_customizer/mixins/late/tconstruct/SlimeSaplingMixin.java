@@ -7,6 +7,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.glektarssza.gtnh_customizer.config.Config;
+
 import tconstruct.blocks.slime.SlimeSapling;
 
 /**
@@ -16,6 +18,9 @@ import tconstruct.blocks.slime.SlimeSapling;
 public class SlimeSaplingMixin {
     @Redirect(method = "Ltconstruct/blocks/slime/SlimeSapling;boneFertilize(Lnet/minecraft/world/World;IIILjava/util/Random;Lnet/minecraft/entity/player/EntityPlayer;)Z", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/player/PlayerCapabilities;isCreativeMode:Z", opcode = Opcodes.GETFIELD))
     private boolean overwriteGetPlayerIsCreative(PlayerCapabilities self) {
-        return true;
+        if (Config.getTConstructSlimeSaplingBoneMealable()) {
+            return true;
+        }
+        return self.isCreativeMode;
     }
 }

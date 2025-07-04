@@ -903,7 +903,7 @@ public final class MigrationUtils {
         Property property = getPropertyByPath(instance, path, pathSeparators);
         ConfigCategory oldCategory = getPropertyParentCategoryByPath(instance,
             path, pathSeparators);
-        ConfigCategory newCategory = getPropertyParentCategoryByPath(instance,
+        ConfigCategory newCategory = getCategoryByPath(instance,
             newCategoryPath, pathSeparators);
         if (newCategory.containsKey(property.getName())) {
             throw new KeyAlreadyExistsException(String.format(
