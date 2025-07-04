@@ -6,6 +6,7 @@ attackable
 autobuild
 binpatched
 blowdryer
+bonemeal
 buildcraft
 chestplate
 cleanroom
@@ -32,6 +33,7 @@ gamemaster
 gasstation
 gradletoken
 gradlew
+greatwood
 gregtech
 gson
 gtnewhorizons
@@ -54,6 +56,9 @@ lxaero
 mcmeta
 mcmod
 mcversion
+mealable
+mealed
+mealing
 mixinbooter
 mixinbooterlegacy
 mixinextras
@@ -71,8 +76,11 @@ reobf
 reobfuscated
 retrofuturagradle
 rong
+scategory
+sconfig
 seps
 serverutilities
+silverwood
 specialmobs
 spongemixins
 spongepowered
