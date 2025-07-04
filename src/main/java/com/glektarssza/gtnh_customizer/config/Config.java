@@ -564,17 +564,20 @@ public class Config {
         throws NoSuchElementException {
         LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
         HashSet<String> alreadyMigratedVersions = new HashSet<String>();
-        while (MIGRATIONS.containsKey(fromVersion)
-            && !alreadyMigratedVersions.contains(fromVersion)
-            && !toVersion.equals(fromVersion)) {
-            migrators.push(MIGRATIONS.get(fromVersion));
-            alreadyMigratedVersions.add(fromVersion);
-            fromVersion = migrators.peekLast().getFirst();
+        String lastMigratedVersion = fromVersion;
+        while (MIGRATIONS.containsKey(lastMigratedVersion)
+            && !lastMigratedVersion.equals(toVersion)) {
+            migrators.push(MIGRATIONS.get(lastMigratedVersion));
+            migrators
+                .sort((a, b) -> Integer.parseInt(a.getFirst(), 10)
+                    - Integer.parseInt(b.getFirst(), 10));
+            alreadyMigratedVersions.add(lastMigratedVersion);
+            lastMigratedVersion = migrators.peekLast().getFirst();
+            if (alreadyMigratedVersions.contains(lastMigratedVersion)) {
+                throw new RuntimeException("Cyclic migration detected!");
+            }
         }
-        if (alreadyMigratedVersions.contains(fromVersion)) {
-            throw new RuntimeException("Cyclic migration detected!");
-        }
-        if (!toVersion.equals(fromVersion)) {
+        if (!lastMigratedVersion.equals(toVersion)) {
             throw new NoSuchElementException(String.format(
                 "No available migration route from configuration version '%s' to configuration version '%s'!",
                 fromVersion, toVersion));
@@ -599,10 +602,10 @@ public class Config {
      *         from the old configuration version to the new configuration
      *         version.
      */
-    private static void registerMigration(String fromVersion, String toVersion,
+    private static void registerMigration(String fromVersion,
+        String toVersion,
         Consumer<Configuration> migrator) throws KeyAlreadyExistsException {
-        if (MIGRATIONS.containsKey(
-            String.format("%s:%s", fromVersion, toVersion))) {
+        if (MIGRATIONS.containsKey(fromVersion)) {
             throw new KeyAlreadyExistsException(
                 String.format(
                     "Migration already exists from configuration '%s' version to configuration version '%s'",
