@@ -499,8 +499,9 @@ public class RepairCommand extends CommandBase {
                             look.yCoord * reach, look.zCoord * reach);
                         MovingObjectPosition pos = victim.worldObj
                             .func_147447_a(start, end,
-                                !Config.getRepairCommandIgnoresLiquids(),
-                                Config.getRepairCommandIgnoresLiquids(), false);
+                                !Config.getRepairCommandRaycastIgnoresLiquids(),
+                                Config.getRepairCommandRaycastIgnoresLiquids(),
+                                false);
                         if (pos == null
                             || pos.typeOfHit != MovingObjectType.BLOCK) {
                             throw new WrongUsageException(

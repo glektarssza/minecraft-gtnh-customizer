@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
@@ -34,9 +35,10 @@ public class ConfigGui extends GuiConfig {
                 .map((category) -> new ConfigElement<ConfigCategory>(category))
                 .collect(Collectors.toList()),
             Tags.MOD_ID,
+            Config.CONFIG_ID.toString(),
             false,
             false,
-            String.format("%s.cfg", Tags.MOD_ID));
+            I18n.format("gtnh_customizer.config.ui.title", Tags.MOD_ID));
     }
 
     @Override

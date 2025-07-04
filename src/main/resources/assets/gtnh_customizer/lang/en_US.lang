@@ -1,14 +1,27 @@
+# Configuration GUI
+gtnh_customizer.config.ui.title=Configuration - %s
+
 # Configuration Categories - General
 gtnh_customizer.config.category_general=General Settings
 gtnh_customizer.config.category_general.tooltip=Settings relating to general functionality.
-gtnh_customizer.config.category_general.globally_immune_players=Globally Immune Players
-gtnh_customizer.config.category_general.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
+
+# Configuration Categories - Gameplay Tweaks
+gtnh_customizer.config.category_gameplay=Gameplay Tweaks
+gtnh_customizer.config.category_gameplay.tooltip=Tweaks to gameplay.
+gtnh_customizer.config.category_gameplay.globally_immune_players=Globally Immune Players
+gtnh_customizer.config.category_gameplay.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
+
+# Configuration Categories - Gameplay Tweaks - Tinker's Construct
+gtnh_customizer.config.category_gameplay.category_tconstruct=Tinker's Construct
+gtnh_customizer.config.category_gameplay.category_tconstruct.tooltip=Tinker's Construct-related gameplay tweaks
+gtnh_customizer.config.category_gameplay.category_tconstruct.slime_sapling_bone_mealable=Slime Sapling Bone Mealable
+gtnh_customizer.config.category_gameplay.category_tconstruct.slime_sapling_bone_mealable.tooltip=Whether to allow Tinker's Construct Slime Saplings to be bone mealed.
 
 # Configuration Categories - Commands
 gtnh_customizer.config.category_command=Command Settings
 gtnh_customizer.config.category_command.tooltip=Settings relating to command functionality.
 gtnh_customizer.config.category_command.repair_ignores_liquids=Repair Command Ignores Liquids
-gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when looking for contains to repair items inside of.
+gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when raycasting to look for containers to repair items inside of.
 gtnh_customizer.config.category_command.extinguish_max_volume=Extinguish Max Volume
 gtnh_customizer.config.category_command.extinguish_max_volume.tooltip=The maximum number of blocks the 'extinguish' command will process.
 

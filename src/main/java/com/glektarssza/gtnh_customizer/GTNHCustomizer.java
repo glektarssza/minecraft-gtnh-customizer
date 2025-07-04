@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.util.ResourceLocation;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -102,6 +103,8 @@ public class GTNHCustomizer {
         LOGGER.info("Registering mod {} with the Forge event bus...",
             Tags.MOD_NAME);
         MinecraftForge.EVENT_BUS.register(this);
+        // -- OnConfigChangedEvent comes in through here
+        FMLCommonHandler.instance().bus().register(this);
         LOGGER.info("Done pre-initializing {}!", Tags.MOD_NAME);
     }
 
@@ -141,7 +144,7 @@ public class GTNHCustomizer {
      */
     @SubscribeEvent
     public void onConfigChange(OnConfigChangedEvent event) {
-        if (event.modID.equals(Tags.MOD_ID)) {
+        if (event.configID.equalsIgnoreCase(Config.CONFIG_ID.toString())) {
             LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
             Config.sync();
         }

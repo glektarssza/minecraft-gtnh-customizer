@@ -12,13 +12,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.config.v5.ConfigConstants;
+import com.glektarssza.gtnh_customizer.config.v6.ConfigConstants;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
@@ -26,7 +27,6 @@ import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsExceptio
  * The main configuration for the mod.
  */
 public class Config {
-
     /**
      * The configuration instance.
      */
@@ -46,9 +46,15 @@ public class Config {
     private static final List<String> globallyImmunePlayers = new ArrayList<String>();
 
     /**
-     * Whether the {@code repair} command ignores liquids.
+     * Whether the {@code repair} command ignores liquids when raycasting to
+     * look for containers to repair items inside of.
      */
     private static boolean repairCommandIgnoresLiquids = false;
+
+    /**
+     * Whether Tinker's Construct Slime Saplings can be bone mealed.
+     */
+    private static boolean tconstructSlimeSaplingsBoneMealable = true;
 
     /**
      * The maximum number of blocks the {@code extinguish} command should
@@ -60,6 +66,11 @@ public class Config {
      * Whether verbose logging is enabled.
      */
     private static boolean verboseLoggingEnabled = false;
+
+    /**
+     * A random UUID which uniquely IDs this run of Minecraft.
+     */
+    public static UUID CONFIG_ID = UUID.randomUUID();
 
     /**
      * Get the globally immune players.
@@ -90,35 +101,81 @@ public class Config {
     }
 
     /**
-     * Get whether the {@code repair} command ignores liquids.
+     * Get whether Tinker's Construct Slime Saplings should be able to be bone
+     * mealed.
      *
-     * @return Whether the {@code repair} command ignores liquids.
+     * @return Whether Tinker's Construct Slime Saplings should be able to be
+     *         bone mealed.
      */
-    public static boolean getRepairCommandIgnoresLiquids() {
+    public static boolean getTConstructSlimeSaplingBoneMealable() {
+        return tconstructSlimeSaplingsBoneMealable;
+    }
+
+    /**
+     * Set whether Tinker's Construct Slime Saplings should be able to be bone
+     * mealed.
+     *
+     * @param value Whether Tinker's Construct Slime Saplings should be able to
+     *        be bone mealed.
+     */
+    public static void setTConstructSlimeSaplingBoneMealable(boolean value) {
+        tconstructSlimeSaplingsBoneMealable = value;
+    }
+
+    /**
+     * Reset whether Tinker's Construct Slime Saplings should be able to be bone
+     * mealed.
+     */
+    public static void resetTConstructSlimeSaplingBoneMealable() {
+        setTConstructSlimeSaplingBoneMealable(false);
+    }
+
+    /**
+     * Toggle whether Tinker's Construct Slime Saplings should be able to be
+     * bone mealed.
+     */
+    public static void toggleTConstructSlimeSaplingBoneMealable() {
+        setTConstructSlimeSaplingBoneMealable(
+            !getTConstructSlimeSaplingBoneMealable());
+    }
+
+    /**
+     * Get whether the {@code repair} command raycast while looking for
+     * containers ignores liquids.
+     *
+     * @return Whether the {@code repair} command raycast while looking for
+     *         containers ignores liquids.
+     */
+    public static boolean getRepairCommandRaycastIgnoresLiquids() {
         return repairCommandIgnoresLiquids;
     }
 
     /**
-     * Set whether the {@code repair} command ignores liquids.
+     * Set whether the {@code repair} command raycast while looking for
+     * containers ignores liquids.
      *
-     * @param value Whether the {@code repair} command ignores liquids.
+     * @param value Whether the {@code repair} command raycast while looking for
+     *        containers ignores liquids.
      */
-    public static void setRepairCommandIgnoresLiquids(boolean value) {
+    public static void setRepairCommandRaycastIgnoresLiquids(boolean value) {
         repairCommandIgnoresLiquids = value;
     }
 
     /**
-     * Reset whether the {@code repair} command ignores liquids.
+     * Reset whether the {@code repair} command raycast while looking for
+     * containers ignores liquids.
      */
-    public static void resetRepairCommandIgnoresLiquids() {
-        setRepairCommandIgnoresLiquids(false);
+    public static void resetRepairCommandRaycastIgnoresLiquids() {
+        setRepairCommandRaycastIgnoresLiquids(false);
     }
 
     /**
-     * Toggle whether the {@code repair} command ignores liquids.
+     * Toggle whether the {@code repair} command raycast while looking for
+     * containers ignores liquids.
      */
-    public static void toggleRepairCommandIgnoresLiquids() {
-        setRepairCommandIgnoresLiquids(!getRepairCommandIgnoresLiquids());
+    public static void toggleRepairCommandRaycastIgnoresLiquids() {
+        setRepairCommandRaycastIgnoresLiquids(
+            !getRepairCommandRaycastIgnoresLiquids());
     }
 
     /**
@@ -238,15 +295,53 @@ public class Config {
             });
         registerMigration(
             com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.CONFIG_VERSION,
-            ConfigConstants.CONFIG_VERSION, (configInstance) -> {
+            com.glektarssza.gtnh_customizer.config.v3.ConfigConstants.CONFIG_VERSION,
+            (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
                     com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
                     MigrationUtils.renameProperty(configInstance,
                         com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
-                        ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
+                        com.glektarssza.gtnh_customizer.config.v3.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
                 }
             });
-
+        registerMigration(
+            com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.CONFIG_VERSION,
+            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CONFIG_VERSION,
+            (configInstance) -> {
+                if (MigrationUtils.hasPropertyByPath(configInstance,
+                    com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
+                    configInstance
+                        .setCategoryComment(
+                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
+                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_COMMENT)
+                        .setCategoryLanguageKey(
+                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
+                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_LANG_KEY)
+                        .setCategoryRequiresMcRestart(
+                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
+                            false)
+                        .setCategoryRequiresMcRestart(
+                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
+                            false);
+                    MigrationUtils.moveProperty(configInstance,
+                        com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
+                        com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH);
+                    // -- This SHOULD be `true` but let's be safe about things
+                    if (configInstance.getCategory(
+                        com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.CATEGORY_GENERAL_PATH)
+                        .isEmpty()) {
+                        configInstance
+                            .removeCategory(configInstance.getCategory(
+                                com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.CATEGORY_GENERAL_PATH));
+                    }
+                }
+                if (MigrationUtils.hasPropertyByPath(configInstance,
+                    com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_PATH)) {
+                    MigrationUtils.renameProperty(configInstance,
+                        com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_PATH,
+                        com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_NAME);
+                }
+            });
         if (CONFIG_INSTANCE != null) {
             return;
         }
@@ -331,20 +426,21 @@ public class Config {
             }
         }
         CONFIG_INSTANCE
-            .setCategoryComment(ConfigConstants.CATEGORY_GENERAL_NAME,
-                ConfigConstants.CATEGORY_GENERAL_COMMENT)
-            .setCategoryLanguageKey(ConfigConstants.CATEGORY_GENERAL_NAME,
-                ConfigConstants.CATEGORY_GENERAL_LANG_KEY)
-            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_GENERAL_NAME,
+            .setCategoryComment(ConfigConstants.CATEGORY_GAMEPLAY_PATH,
+                ConfigConstants.CATEGORY_GAMEPLAY_COMMENT)
+            .setCategoryLanguageKey(ConfigConstants.CATEGORY_GAMEPLAY_PATH,
+                ConfigConstants.CATEGORY_GAMEPLAY_LANG_KEY)
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_GAMEPLAY_PATH,
                 false)
-            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_GENERAL_NAME,
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_GAMEPLAY_PATH,
                 false);
 
         setImmunePlayers(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_GENERAL_PATH,
+            ConfigConstants.CATEGORY_GAMEPLAY_PATH,
             ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME,
-            globallyImmunePlayers
-                .toArray(new String[globallyImmunePlayers.size()]),
+            new String[0],
             ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_LANG_KEY)
@@ -352,29 +448,53 @@ public class Config {
             .getStringList());
 
         CONFIG_INSTANCE
-            .setCategoryComment(ConfigConstants.CATEGORY_COMMAND_NAME,
-                ConfigConstants.CATEGORY_COMMAND_COMMENT)
-            .setCategoryLanguageKey(ConfigConstants.CATEGORY_COMMAND_NAME,
-                ConfigConstants.CATEGORY_COMMAND_LANG_KEY)
-            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_NAME,
+            .setCategoryComment(
+                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
+                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_COMMENT)
+            .setCategoryLanguageKey(
+                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
+                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_LANG_KEY)
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
                 false)
-            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_NAME,
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
                 false);
 
-        setRepairCommandIgnoresLiquids(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_COMMAND_PATH,
-            ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_NAME,
-            repairCommandIgnoresLiquids,
-            ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_COMMENT)
+        setTConstructSlimeSaplingBoneMealable(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
+            ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_NAME,
+            true,
+            ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_COMMENT)
             .setLanguageKey(
-                ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_LANG_KEY)
+                ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_LANG_KEY)
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getBoolean());
+
+        CONFIG_INSTANCE
+            .setCategoryComment(ConfigConstants.CATEGORY_COMMAND_PATH,
+                ConfigConstants.CATEGORY_COMMAND_COMMENT)
+            .setCategoryLanguageKey(ConfigConstants.CATEGORY_COMMAND_PATH,
+                ConfigConstants.CATEGORY_COMMAND_LANG_KEY)
+            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_PATH,
+                false)
+            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_PATH,
+                false);
+
+        setRepairCommandRaycastIgnoresLiquids(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_COMMAND_PATH,
+            ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_NAME,
+            false,
+            ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_COMMENT)
+            .setLanguageKey(
+                ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_LANG_KEY)
             .setRequiresMcRestart(false).setRequiresWorldRestart(false)
             .getBoolean());
 
         setExtinguishCommandMaxVolume(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_COMMAND_PATH,
             ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_NAME,
-            extinguishCommandMaxVolume,
+            Integer.MAX_VALUE,
             ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_LANG_KEY)
@@ -396,7 +516,7 @@ public class Config {
         setVerboseLoggingEnabled(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_DEBUGGING_PATH,
             ConfigConstants.PROPERTY_DEBUG_LOGGING_NAME,
-            verboseLoggingEnabled,
+            false,
             ConfigConstants.PROPERTY_DEBUG_LOGGING_COMMENT)
             .setLanguageKey(ConfigConstants.PROPERTY_DEBUG_LOGGING_LANG_KEY)
             .setRequiresMcRestart(false).setRequiresWorldRestart(false)
@@ -420,13 +540,12 @@ public class Config {
 
     /**
      * Synchronize the mod configuration.
-     *
-     * @param configDir The directory the configuration file will live in.
-     * @param fileName The name of the file to save the configuration to.
      */
     public static void sync() {
-        load();
+        // -- Save the updated config to disk FIRST
         save();
+        // -- THEN reload it into ourselves
+        load();
     }
 
     /**
