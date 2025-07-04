@@ -440,7 +440,7 @@ public class Config {
         setImmunePlayers(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_GAMEPLAY_PATH,
             ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME,
-            getGloballyImmunePlayers(),
+            new String[0],
             ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_LANG_KEY)
@@ -464,7 +464,7 @@ public class Config {
         setTConstructSlimeSaplingBoneMealable(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
             ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_NAME,
-            getTConstructSlimeSaplingBoneMealable(),
+            true,
             ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_LANG_KEY)
@@ -484,7 +484,7 @@ public class Config {
         setRepairCommandRaycastIgnoresLiquids(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_COMMAND_PATH,
             ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_NAME,
-            getRepairCommandRaycastIgnoresLiquids(),
+            false,
             ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_LANG_KEY)
@@ -494,7 +494,7 @@ public class Config {
         setExtinguishCommandMaxVolume(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_COMMAND_PATH,
             ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_NAME,
-            getExtinguishCommandMaxVolume(),
+            Integer.MAX_VALUE,
             ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_COMMENT)
             .setLanguageKey(
                 ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_LANG_KEY)
@@ -516,7 +516,7 @@ public class Config {
         setVerboseLoggingEnabled(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_DEBUGGING_PATH,
             ConfigConstants.PROPERTY_DEBUG_LOGGING_NAME,
-            getVerboseLoggingEnabled(),
+            false,
             ConfigConstants.PROPERTY_DEBUG_LOGGING_COMMENT)
             .setLanguageKey(ConfigConstants.PROPERTY_DEBUG_LOGGING_LANG_KEY)
             .setRequiresMcRestart(false).setRequiresWorldRestart(false)
