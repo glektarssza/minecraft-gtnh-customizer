@@ -14,8 +14,16 @@ gtnh_customizer.config.category_gameplay.globally_immune_players.tooltip=A list 
 # Configuration Categories - Gameplay Tweaks - Tinker's Construct
 gtnh_customizer.config.category_gameplay.category_tconstruct=Tinker's Construct
 gtnh_customizer.config.category_gameplay.category_tconstruct.tooltip=Tinker's Construct-related gameplay tweaks
-gtnh_customizer.config.category_gameplay.category_tconstruct.slime_sapling_bone_mealable=Slime Sapling Bone Mealable
-gtnh_customizer.config.category_gameplay.category_tconstruct.slime_sapling_bone_mealable.tooltip=Whether to allow Tinker's Construct Slime Saplings to be bone mealed.
+gtnh_customizer.config.category_gameplay.category_tconstruct.can_bone_meal_slime_saplings=Slime Sapling Bone Mealable
+gtnh_customizer.config.category_gameplay.category_tconstruct.can_bone_meal_slime_saplings.tooltip=Whether to allow Tinker's Construct Slime Saplings to have bone meal applied.
+
+# Configuration Categories - Gameplay Tweaks - Thaumcraft
+gtnh_customizer.config.category_gameplay.category_thaumcraft=Thaumcraft
+gtnh_customizer.config.category_gameplay.category_thaumcraft.tooltip=Thaumcraft-related gameplay tweaks
+gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_greatwood_saplings=Can Bone Meal Greatwood Saplings
+gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_greatwood_saplings.tooltip=Whether to allow Thaumcraft Greatwood Saplings to have bone meal applied.
+gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_silverwood_saplings=Can Bone Meal Silverwood Saplings
+gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_silverwood_saplings.tooltip=Whether to allow Thaumcraft Silverwood Saplings to have bone meal applied.
 
 # Configuration Categories - Commands
 gtnh_customizer.config.category_command=Command Settings

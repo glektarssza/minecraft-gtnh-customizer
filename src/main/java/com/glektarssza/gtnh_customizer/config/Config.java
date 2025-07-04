@@ -19,7 +19,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.config.v6.ConfigConstants;
+import com.glektarssza.gtnh_customizer.config.v7.ConfigConstants;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
@@ -54,7 +54,17 @@ public class Config {
     /**
      * Whether Tinker's Construct Slime Saplings can be bone mealed.
      */
-    private static boolean tconstructSlimeSaplingsBoneMealable = true;
+    private static boolean tconstructCanBoneMealSlimeSaplings = true;
+
+    /**
+     * Whether Thaumcraft Greatwood Saplings can be bone mealed.
+     */
+    private static boolean thaumcraftCanBoneMealGreatwoodSaplings = true;
+
+    /**
+     * Whether Thaumcraft Silverwood Saplings can be bone mealed.
+     */
+    private static boolean thaumcraftCanBoneMealSilverwoodSaplings = true;
 
     /**
      * The maximum number of blocks the {@code extinguish} command should
@@ -101,42 +111,123 @@ public class Config {
     }
 
     /**
-     * Get whether Tinker's Construct Slime Saplings should be able to be bone
-     * mealed.
+     * Get whether Tinker's Construct Slime Saplings should be able to have bone
+     * meal applied.
      *
-     * @return Whether Tinker's Construct Slime Saplings should be able to be
-     *         bone mealed.
+     * @return Whether Tinker's Construct Slime Saplings should be able to have
+     *         bone meal applied.
      */
-    public static boolean getTConstructSlimeSaplingBoneMealable() {
-        return tconstructSlimeSaplingsBoneMealable;
+    public static boolean getTConstructCanBoneMealSlimeSaplings() {
+        return tconstructCanBoneMealSlimeSaplings;
     }
 
     /**
-     * Set whether Tinker's Construct Slime Saplings should be able to be bone
-     * mealed.
+     * Set whether Tinker's Construct Slime Saplings should be able to have bone
+     * meal applied.
      *
      * @param value Whether Tinker's Construct Slime Saplings should be able to
-     *        be bone mealed.
+     *        have bone meal applied.
      */
-    public static void setTConstructSlimeSaplingBoneMealable(boolean value) {
-        tconstructSlimeSaplingsBoneMealable = value;
+    public static void setTConstructCanBoneMealSlimeSaplings(
+        boolean value) {
+        tconstructCanBoneMealSlimeSaplings = value;
     }
 
     /**
-     * Reset whether Tinker's Construct Slime Saplings should be able to be bone
-     * mealed.
+     * Reset whether Tinker's Construct Slime Saplings should be able to have
+     * bone meal applied.
      */
-    public static void resetTConstructSlimeSaplingBoneMealable() {
-        setTConstructSlimeSaplingBoneMealable(false);
+    public static void resetTConstructCanBoneMealSlimeSaplings() {
+        setTConstructCanBoneMealSlimeSaplings(false);
     }
 
     /**
-     * Toggle whether Tinker's Construct Slime Saplings should be able to be
-     * bone mealed.
+     * Toggle whether Tinker's Construct Slime Saplings should be able to have
+     * bone meal applied.
      */
-    public static void toggleTConstructSlimeSaplingBoneMealable() {
-        setTConstructSlimeSaplingBoneMealable(
-            !getTConstructSlimeSaplingBoneMealable());
+    public static void toggleTConstructCanBoneMealSlimeSaplings() {
+        setTConstructCanBoneMealSlimeSaplings(
+            !getTConstructCanBoneMealSlimeSaplings());
+    }
+
+    /**
+     * Get whether Thaumcraft Greatwood Saplings should be able to have bone
+     * meal applied.
+     *
+     * @return Whether Thaumcraft Greatwood Saplings should be able to have bone
+     *         meal applied.
+     */
+    public static boolean getThaumcraftCanBoneMealGreatwoodSaplings() {
+        return thaumcraftCanBoneMealGreatwoodSaplings;
+    }
+
+    /**
+     * Set whether Thaumcraft Greatwood Saplings should be able to have bone
+     * meal applied.
+     *
+     * @param value Whether Thaumcraft Greatwood Saplings should be able to have
+     *        bone meal applied.
+     */
+    public static void setThaumcraftCanBoneMealGreatwoodSaplings(
+        boolean value) {
+        thaumcraftCanBoneMealGreatwoodSaplings = value;
+    }
+
+    /**
+     * Reset whether Thaumcraft Greatwood Saplings should be able to have bone
+     * meal applied.
+     */
+    public static void resetThaumcraftCanBoneMealGreatwoodSaplings() {
+        setThaumcraftCanBoneMealGreatwoodSaplings(false);
+    }
+
+    /**
+     * Toggle whether Thaumcraft Greatwood Saplings should be able to have bone
+     * meal applied.
+     */
+    public static void toggleThaumcraftCanBoneMealGreatwoodSaplings() {
+        setThaumcraftCanBoneMealGreatwoodSaplings(
+            !getThaumcraftCanBoneMealGreatwoodSaplings());
+    }
+
+    /**
+     * Get whether Thaumcraft Silverwood Saplings should be able to have bone
+     * meal applied.
+     *
+     * @return Whether Thaumcraft Silverwood Saplings should be able to have
+     *         bone meal applied.
+     */
+    public static boolean getThaumcraftCanBoneMealSilverwoodSaplings() {
+        return thaumcraftCanBoneMealSilverwoodSaplings;
+    }
+
+    /**
+     * Set whether Thaumcraft Silverwood Saplings should be able to have bone
+     * meal applied.
+     *
+     * @param value Whether Thaumcraft Silverwood Saplings should be able to
+     *        have bone meal applied.
+     */
+    public static void setThaumcraftCanBoneMealSilverwoodSaplings(
+        boolean value) {
+        thaumcraftCanBoneMealSilverwoodSaplings = value;
+    }
+
+    /**
+     * Reset whether Thaumcraft Silverwood Saplings should be able to have bone
+     * meal applied.
+     */
+    public static void resetThaumcraftCanBoneMealSilverwoodSaplings() {
+        setThaumcraftCanBoneMealSilverwoodSaplings(false);
+    }
+
+    /**
+     * Toggle whether Thaumcraft Silverwood Saplings should be able to have bone
+     * meal applied.
+     */
+    public static void toggleThaumcraftCanBoneMealSilverwoodSaplings() {
+        setThaumcraftCanBoneMealSilverwoodSaplings(
+            !getThaumcraftCanBoneMealSilverwoodSaplings());
     }
 
     /**
@@ -342,6 +433,17 @@ public class Config {
                         com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_NAME);
                 }
             });
+        registerMigration(
+            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CONFIG_VERSION,
+            com.glektarssza.gtnh_customizer.config.v7.ConfigConstants.CONFIG_VERSION,
+            (configInstance) -> {
+                if (MigrationUtils.hasPropertyByPath(configInstance,
+                    com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_PATH)) {
+                    MigrationUtils.renameProperty(configInstance,
+                        com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_PATH,
+                        com.glektarssza.gtnh_customizer.config.v7.ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME);
+                }
+            });
         if (CONFIG_INSTANCE != null) {
             return;
         }
@@ -461,13 +563,47 @@ public class Config {
                 ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
                 false);
 
-        setTConstructSlimeSaplingBoneMealable(CONFIG_INSTANCE.get(
+        setTConstructCanBoneMealSlimeSaplings(CONFIG_INSTANCE.get(
             ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
-            ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_NAME,
+            ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME,
             true,
-            ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_COMMENT)
+            ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_COMMENT)
             .setLanguageKey(
-                ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_LANG_KEY)
+                ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_LANG_KEY)
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getBoolean());
+
+        CONFIG_INSTANCE
+            .setCategoryComment(
+                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_COMMENT)
+            .setCategoryLanguageKey(
+                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_LANG_KEY)
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+                false)
+            .setCategoryRequiresMcRestart(
+                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+                false);
+
+        setThaumcraftCanBoneMealGreatwoodSaplings(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_NAME,
+            true,
+            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_COMMENT)
+            .setLanguageKey(
+                ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_LANG_KEY)
+            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
+            .getBoolean());
+
+        setThaumcraftCanBoneMealSilverwoodSaplings(CONFIG_INSTANCE.get(
+            ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_NAME,
+            true,
+            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_COMMENT)
+            .setLanguageKey(
+                ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_LANG_KEY)
             .setRequiresMcRestart(false).setRequiresWorldRestart(false)
             .getBoolean());
 

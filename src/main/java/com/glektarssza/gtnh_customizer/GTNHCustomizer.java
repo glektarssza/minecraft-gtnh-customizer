@@ -10,13 +10,16 @@ import net.minecraft.util.ResourceLocation;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.eventhandler.Event.Result;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
@@ -25,6 +28,7 @@ import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 
 import serverutils.events.ServerUtilitiesPreInitRegistryEvent;
+import thaumcraft.common.blocks.BlockCustomPlant;
 
 /**
  * The root mod class.
@@ -169,5 +173,55 @@ public class GTNHCustomizer {
                 }
                 return true;
             });
+    }
+
+    /**
+     * An event handler for when a player tries to use bone meal.
+     *
+     * @param event The event data.
+     */
+    @SubscribeEvent
+    public void onBoneMeal(BonemealEvent event) {
+        if (!Loader.isModLoaded("Thaumcraft")) {
+            return;
+        }
+        if (!(event.block instanceof BlockCustomPlant)) {
+            return;
+        }
+        if (event.world.getBlockLightValue(event.x, event.y, event.z) < 9) {
+            return;
+        }
+        switch (event.world.getBlockMetadata(event.x, event.y, event.z)) {
+            case 0:
+                if (!Config.getThaumcraftCanBoneMealGreatwoodSaplings()) {
+                    return;
+                }
+                // -- The bone meal is used at this point no matter what, but
+                // -- the growth is NOT guaranteed!
+                event.setResult(Result.ALLOW);
+                if (event.world.isRemote
+                    || event.world.rand.nextFloat() >= 0.45D) {
+                    return;
+                }
+                ((BlockCustomPlant) event.block).growGreatTree(event.world,
+                    event.x, event.y, event.z,
+                    event.world.rand);
+                break;
+            case 1:
+                if (!Config.getThaumcraftCanBoneMealSilverwoodSaplings()) {
+                    return;
+                }
+                // -- The bone meal is used at this point no matter what, but
+                // -- the growth is NOT guaranteed!
+                event.setResult(Result.ALLOW);
+                if (event.world.isRemote
+                    || event.world.rand.nextFloat() >= 0.45D) {
+                    return;
+                }
+                ((BlockCustomPlant) event.block).growSilverTree(event.world,
+                    event.x, event.y, event.z,
+                    event.world.rand);
+                break;
+        }
     }
 }

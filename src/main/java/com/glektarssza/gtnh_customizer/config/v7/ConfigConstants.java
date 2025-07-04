@@ -92,30 +92,115 @@ public class ConfigConstants {
     /**
      * The allow slime sapling bone mealing property name.
      */
-    public static final String PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_NAME = "slime_sapling_bone_mealable";
+    public static final String PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME = "can_bone_meal_slime_saplings";
 
     /**
      * The allow slime sapling bone mealing property path.
      */
-    public static final String PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_PATH = String
+    public static final String PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_PATH = String
         .format("%s%s%s",
             CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
             Configuration.CATEGORY_SPLITTER,
-            PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_NAME);
+            PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME);
 
     /**
      * The allow slime sapling bone mealing property comment.
      */
-    public static final String PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_COMMENT = "Whether to allow Tinker's Construct Slime Saplings to be bone mealed.";
+    public static final String PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_COMMENT = "Whether to allow Tinker's Construct Slime Saplings to have bone meal applied.";
 
     /**
      * The allow slime sapling bone mealing property language key.
      */
-    public static final String PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_LANG_KEY = String
+    public static final String PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_LANG_KEY = String
         .format("%s%s%s",
             CATEGORY_GAMEPLAY_TCONSTRUCT_LANG_KEY,
             Configuration.CATEGORY_SPLITTER,
-            PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_NAME);
+            PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME);
+
+    /**
+     * The Thaumcraft gameplay tweaks configuration category name.
+     */
+    public static final String CATEGORY_GAMEPLAY_THAUMCRAFT_NAME = "thaumcraft";
+
+    /**
+     * The Thaumcraft tweaks configuration category path.
+     */
+    public static final String CATEGORY_GAMEPLAY_THAUMCRAFT_PATH = String
+        .format(
+            "%s%s%s",
+            CATEGORY_GAMEPLAY_PATH,
+            Configuration.CATEGORY_SPLITTER,
+            CATEGORY_GAMEPLAY_THAUMCRAFT_NAME);
+
+    /**
+     * The Thaumcraft tweaks configuration category comment.
+     */
+    public static final String CATEGORY_GAMEPLAY_THAUMCRAFT_COMMENT = "Thaumcraft gameplay-related tweaks";
+
+    /**
+     * The Tinker's Construct tweaks configuration category language key.
+     */
+    public static final String CATEGORY_GAMEPLAY_THAUMCRAFT_LANG_KEY = String
+        .format("%s%scategory_%s",
+            CATEGORY_GAMEPLAY_LANG_KEY,
+            Configuration.CATEGORY_SPLITTER,
+            CATEGORY_GAMEPLAY_THAUMCRAFT_NAME);
+
+    /**
+     * The can bone meal Thaumcraft Greatwood saplings property name.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_NAME = "can_bone_meal_greatwood_saplings";
+
+    /**
+     * The can bone meal Thaumcraft Greatwood saplings property path.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_PATH = String
+        .format("%s%s%s",
+            CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+            Configuration.CATEGORY_SPLITTER,
+            PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_NAME);
+
+    /**
+     * The can bone meal Thaumcraft Greatwood saplings property comment.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_COMMENT = "Whether to allow Thaumcraft Greatwood Saplings to have bone meal applied.";
+
+    /**
+     * The can bone meal Thaumcraft Greatwood saplings property language key.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_LANG_KEY = String
+        .format("%s%s%s",
+            CATEGORY_GAMEPLAY_THAUMCRAFT_LANG_KEY,
+            Configuration.CATEGORY_SPLITTER,
+            PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_NAME);
+
+    /**
+     * The can bone meal Thaumcraft Silverwood saplings property name.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_NAME = "can_bone_meal_silverwood_saplings";
+
+    /**
+     * The can bone meal Thaumcraft Silverwood saplings property path.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_PATH = String
+        .format("%s%s%s",
+            CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
+            Configuration.CATEGORY_SPLITTER,
+            PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_NAME);
+
+    /**
+     * The can bone meal Thaumcraft Silverwood saplings property comment.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_COMMENT = "Whether to allow Thaumcraft Silverwood Saplings to have bone meal applied.";
+
+    /**
+     * The can bone meal Thaumcraft Silverwood saplings property language key.
+     */
+    public static final String PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_LANG_KEY = String
+        .format("%s%s%s",
+            CATEGORY_GAMEPLAY_THAUMCRAFT_LANG_KEY,
+            Configuration.CATEGORY_SPLITTER,
+            PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_NAME);
 
     /**
      * The command configuration category name.
