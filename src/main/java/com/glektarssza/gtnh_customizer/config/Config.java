@@ -540,13 +540,12 @@ public class Config {
 
     /**
      * Synchronize the mod configuration.
-     *
-     * @param configDir The directory the configuration file will live in.
-     * @param fileName The name of the file to save the configuration to.
      */
     public static void sync() {
-        load();
+        // -- Save the updated config to disk FIRST
         save();
+        // -- THEN reload it into ourselves
+        load();
     }
 
     /**
