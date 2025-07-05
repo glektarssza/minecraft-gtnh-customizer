@@ -15,12 +15,23 @@ import cpw.mods.fml.relauncher.Side;
  */
 @LateMixin
 public class LateMixinInitializer implements ILateMixinLoader {
-
+    /**
+     * Get the name of the mixin config file.
+     *
+     * @returns The name of the mixin config file.
+     */
     @Override
     public String getMixinConfig() {
         return "mixins.gtnh_customizer.late.json";
     }
 
+    /**
+     * Get the list of additional mixins to load based on the loaded mods.
+     *
+     * @param loadedMods - The list of mods current loaded.
+     *
+     * @returns The list of additional mixins to load based on the loaded mods.
+     */
     @Override
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
@@ -42,6 +53,8 @@ public class LateMixinInitializer implements ILateMixinLoader {
         }
         if (loadedMods.contains("serverutilities")) {
             mixins.add("serverutilities.MessageEditNBTRequestMixin");
+            mixins.add("serverutilities.GuiEditNBTMixin");
+            mixins.add("serverutilities.TextBoxMixin");
         }
         return mixins;
     }
