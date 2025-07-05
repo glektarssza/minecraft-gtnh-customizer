@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer;
+package com.glektarssza.gtnh_customizer.mixins;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,9 @@ public class LateMixinInitializer implements ILateMixinLoader {
         }
         if (loadedMods.contains("TConstruct")) {
             mixins.add("tconstruct.SlimeSaplingMixin");
+        }
+        if (loadedMods.contains("serverutilities")) {
+            mixins.add("serverutilities.MessageEditNBTRequestMixin");
         }
         return mixins;
     }
