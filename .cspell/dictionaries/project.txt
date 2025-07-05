@@ -69,6 +69,7 @@ modrinth
 mymodid
 nbtedit
 nevermine
+numpad
 pigman
 pigmen
 railcraft
