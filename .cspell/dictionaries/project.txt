@@ -50,6 +50,7 @@ jvmargs
 knockback
 ljava
 lnet
+lserverutils
 ltconstruct
 lthaumcraft
 lxaero
@@ -66,6 +67,7 @@ mkdirs
 modid
 modrinth
 mymodid
+nbtedit
 nevermine
 pigman
 pigmen
