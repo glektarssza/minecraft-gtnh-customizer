@@ -10,31 +10,31 @@ dependencies {
         //-- Support for other mods and local testing
         devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
         devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
-        devOnlyNonPublishable(rfg.deobf('com.github.GTNewHorizons:Backhand:1.6.17:dev'))
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
+        devOnlyNonPublishable(rfg.deobf('com.github.GTNewHorizons:Backhand:1.6.34:dev'))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.0:dev"))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.54:dev"));
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.40-GTNH:dev"))
         devOnlyNonPublishable(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
         //-- Required by Thaumcraft
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles:1.0.4")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.1.11-GTNH-pre:dev")
     } else {
         //-- Support for other mods
         compileOnly(deobfCurse("xaeros-minimap-263420:6012805"))
         compileOnly(deobfCurse("xaeros-world-map-317780:5987124"))
-        compileOnly(rfg.deobf('com.github.GTNewHorizons:Backhand:1.6.17:dev'))
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.6.2:dev"))
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.51-pre:dev"));
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.32-GTNH:dev"))
+        compileOnly(rfg.deobf('com.github.GTNewHorizons:Backhand:1.6.34:dev'))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.0:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.54:dev"));
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.40-GTNH:dev"))
         compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
         //-- Required by Thaumcraft
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles:1.0.4")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.1.11-GTNH-pre:dev")
     }
 
     //-- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta46")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.44-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.4")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta48")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.60-GTNH")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.10")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Random-Things:2.6.5")
     }
 }
