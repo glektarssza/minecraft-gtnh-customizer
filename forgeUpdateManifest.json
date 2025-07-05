@@ -1,6 +1,7 @@
 {
     "homepage": "https://github.com/glektarssza/minecraft-gtnh-customizer",
     "1.7.10": {
+        "0.9.0": "* Patch ServerUtilities' '/nbtedit' command to edit the in-hand item (if present) if the in-world ray cast doesn't hit anything.",
         "0.8.0": "* Added the ability to bone meal Thaumcraft saplings.",
         "0.7.0": "* Fixed changing configs while single player world is running not taking.\nBig config overhaul, moved gameplay-related configs into their own sections.\nMoved Tinker's Construct-related config items into a sub-section of gameplay config items.\nTinker's Construct Slime Sapling bone mealing can now be toggled on/off in the settings.",
         "0.6.3": "* Fixed repair command not applying to Tinker's and Gregtech tools.",
@@ -24,7 +25,7 @@
         "0.0.0": "Initial release."
     },
     "promos": {
-        "1.7.10-latest": "0.8.0",
-        "1.7.10-recommended": "0.8.0"
+        "1.7.10-latest": "0.9.0",
+        "1.7.10-recommended": "0.9.0"
     }
 }
