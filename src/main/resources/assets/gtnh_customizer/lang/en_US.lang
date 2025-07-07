@@ -71,3 +71,13 @@ gtnh_customizer.commands.extinguish.error.volume_too_large=Cannot process that m
 gtnh_customizer.commands.extinguish.info.success=Successfully extinguished flame(s)!
 gtnh_customizer.commands.extinguish.info.admin_notify.radius=Player '%s' extinguished flames in a '%s' block radius.
 gtnh_customizer.commands.extinguish.info.admin_notify.zone=Player '%s' extinguished flames from '%s %s %s' to '%s %s %s'.
+
+# Keybinds
+key.categories.gtnh_customizer=GTNH Customizer
+gtnh_customizer.keybindings.serverutilities.delete_nbt_tag=Delete NBT Tag
+gtnh_customizer.keybindings.serverutilities.accept_nbt_edits=Accept NBT Edits
+gtnh_customizer.keybindings.serverutilities.accept_nbt_edits_alt=Accept NBT Edits (Alt)
+gtnh_customizer.keybindings.serverutilities.cancel_nbt_edits=Cancel NBT Edits
+gtnh_customizer.keybindings.serverutilities.accept_nbt_value_change=Accept NBT Value Change
+gtnh_customizer.keybindings.serverutilities.accept_nbt_value_change_alt=Accept NBT Value Change (Alt)
+gtnh_customizer.keybindings.serverutilities.cancel_nbt_value_change=Cancel NBT Value Change

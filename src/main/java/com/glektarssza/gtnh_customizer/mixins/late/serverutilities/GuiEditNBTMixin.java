@@ -1,14 +1,17 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import com.glektarssza.gtnh_customizer.KeyBindings;
+
 import serverutils.client.gui.GuiEditNBT;
+import serverutils.client.gui.GuiEditNBT.ButtonNBT;
+import serverutils.client.gui.GuiEditNBT.ButtonNBTMap;
 import serverutils.lib.gui.GuiBase;
 import serverutils.lib.gui.GuiWrapper;
 
@@ -24,10 +27,36 @@ public abstract class GuiEditNBTMixin extends GuiBase {
     private int shouldClose;
 
     /**
+     * A shadow of the {@code selected} private field.
+     */
+    @Shadow(remap = false)
+    private ButtonNBT selected;
+
+    /**
+     * A shadow of the {@code buttonNBTRoot} private field.
+     */
+    @Shadow(remap = false)
+    @Final
+    private ButtonNBTMap buttonNBTRoot;
+
+    /**
      * Make Java happy again.
      */
     private GuiEditNBTMixin() {
         super();
+    }
+
+    /**
+     * Check whether this screen is the currently focused screen.
+     *
+     * @return {@code true} if this screen is the currently focused screen;
+     *         {@code} false otherwise.
+     */
+    public boolean isFocused() {
+        GuiEditNBT self = (GuiEditNBT) (Object) this;
+        GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
+        return currentScreen != null && currentScreen instanceof GuiWrapper &&
+            ((GuiWrapper) currentScreen).getGui() == self;
     }
 
     /**
@@ -43,14 +72,29 @@ public abstract class GuiEditNBTMixin extends GuiBase {
         if (super.keyPressed(keyCode, keyChar)) {
             return true;
         }
+        if (!isFocused()) {
+            return false;
+        }
         GuiEditNBT self = (GuiEditNBT) (Object) this;
         GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
-        if ((keyCode == Keyboard.KEY_RETURN
-            || keyCode == Keyboard.KEY_NUMPADENTER)
-            && currentScreen != null && currentScreen instanceof GuiWrapper &&
-            ((GuiWrapper) currentScreen).getGui() == self) {
+        if (keyCode == KeyBindings.ACCEPT_NBT_EDITS.getKeyCode()
+            || keyCode == KeyBindings.ACCEPT_NBT_EDITS_ALT.getKeyCode()) {
             shouldClose = 1;
             ((GuiWrapper) currentScreen).getGui().closeGui();
+            return true;
+        }
+        if (keyCode == KeyBindings.CANCEL_NBT_EDITS.getKeyCode()) {
+            shouldClose = 2;
+            ((GuiWrapper) currentScreen).getGui().closeGui();
+            return true;
+        }
+        if (keyCode == KeyBindings.DELETE_NBT_TAG.getKeyCode() &&
+            this.selected != this.buttonNBTRoot) {
+            this.selected.parent.setTag(selected.key, null);
+            this.selected.parent.updateChildren(false);
+            this.selected = selected.parent;
+            self.panelNbt.refreshWidgets();
+            self.panelTopLeft.refreshWidgets();
             return true;
         }
         return false;

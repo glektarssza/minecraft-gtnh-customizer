@@ -1,10 +1,11 @@
 {
     "homepage": "https://github.com/glektarssza/minecraft-gtnh-customizer",
     "1.7.10": {
+        "0.11.0": "* Fall back to in-hand item if block has no tile entity when calling '/nbtedit'.\n * Support a shortcut key to delete the selected NBT tag inside the '/nbtedit' command'.\n * Add key bindings.",
         "0.10.0": "* Patch ServerUtilities' '/nbtedit' command to let you use 'numpad enter' to submit your changes.",
         "0.9.0": "* Patch ServerUtilities' '/nbtedit' command to edit the in-hand item (if present) if the in-world ray cast doesn't hit anything.",
         "0.8.0": "* Added the ability to bone meal Thaumcraft saplings.",
-        "0.7.0": "* Fixed changing configs while single player world is running not taking.\nBig config overhaul, moved gameplay-related configs into their own sections.\nMoved Tinker's Construct-related config items into a sub-section of gameplay config items.\nTinker's Construct Slime Sapling bone mealing can now be toggled on/off in the settings.",
+        "0.7.0": "* Fixed changing configs while single player world is running not taking.\n * Big config overhaul, moved gameplay-related configs into their own sections.\n * Moved Tinker's Construct-related config items into a sub-section of gameplay config items.\n * Tinker's Construct Slime Sapling bone mealing can now be toggled on/off in the settings.",
         "0.6.3": "* Fixed repair command not applying to Tinker's and Gregtech tools.",
         "0.6.2": "* Fixed reload command not working properly on servers.",
         "0.6.1": "* Fixed a bad render distance access on servers in the extinguish command.",
@@ -22,7 +23,7 @@
         "0.2.0": "* Added ability to customize Xaero's teleport command.",
         "0.1.2": "* Fixed teleport command not respecting coordinates.",
         "0.1.1": "* Fixed config migrations.",
-        "0.1.0": "* Updated several dependencies.\n* Added a cross-dimension teleport command.\n* Changed logo.\n* Ported existing code from old repository.",
+        "0.1.0": "* Updated several dependencies.\n * Added a cross-dimension teleport command.\n * Changed logo.\n * Ported existing code from old repository.",
         "0.0.0": "Initial release."
     },
     "promos": {
