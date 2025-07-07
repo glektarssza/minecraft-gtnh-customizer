@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -33,10 +32,23 @@ public class MessageEditNBTRequestMixin {
         if (ray.get() == null) {
             return;
         }
-        if (ray.get().typeOfHit == MovingObjectType.MISS
-            && Minecraft.getMinecraft().thePlayer.inventory
-                .getCurrentItem() != null) {
-            ClientUtils.execClientCommand("/nbtedit item");
+        switch (ray.get().typeOfHit) {
+            case BLOCK:
+                if (Minecraft
+                    .getMinecraft().theWorld.getTileEntity(ray.get().blockX,
+                        ray.get().blockY, ray.get().blockZ) != null) {
+                    // -- Block has a valid tile entity attached, do NOT fall
+                    // -- through to the "miss" case
+                    break;
+                }
+                // -- Block had no tile entity, treat it as a "miss"
+            case MISS:
+                if (Minecraft.getMinecraft().thePlayer.inventory
+                    .getCurrentItem() != null) {
+                    ClientUtils.execClientCommand("/nbtedit item");
+                }
+            default:
+                // -- Do nothing
         }
     }
 }
