@@ -44,7 +44,7 @@ public class GTNHCustomizer {
     /**
      * The logger to use for the mod.
      */
-    public static Logger LOGGER;
+    private static Logger logger;
 
     /**
      * The maximum number of times to emit a warning before silencing it.
@@ -61,6 +61,10 @@ public class GTNHCustomizer {
      */
     @Mod.Instance
     public static GTNHCustomizer instance;
+
+    public static Logger getLogger() {
+        return logger;
+    }
 
     /**
      * Check if a given warning category should be emitted.
@@ -84,7 +88,7 @@ public class GTNHCustomizer {
         WARNING_LIMIT_TRACKER.putIfAbsent(category, WARNING_EMIT_LIMIT);
         int limit = WARNING_LIMIT_TRACKER.compute(category, (_k, v) -> v - 1);
         if (limit <= 0) {
-            LOGGER.warn(
+            logger.warn(
                 String.format(
                     "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
                     category));
@@ -98,18 +102,18 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        LOGGER = event.getModLog();
-        LOGGER.info("Pre-initializing {}...", Tags.MOD_NAME);
+        logger = event.getModLog();
+        logger.info("Pre-initializing {}...", Tags.MOD_NAME);
         configDir = event.getModConfigurationDirectory();
         Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
-        LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
+        logger.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
         Config.sync();
-        LOGGER.info("Registering mod {} with the Forge event bus...",
+        logger.info("Registering mod {} with the Forge event bus...",
             Tags.MOD_NAME);
         MinecraftForge.EVENT_BUS.register(this);
         // -- OnConfigChangedEvent comes in through here
         FMLCommonHandler.instance().bus().register(this);
-        LOGGER.info("Done pre-initializing {}!", Tags.MOD_NAME);
+        logger.info("Done pre-initializing {}!", Tags.MOD_NAME);
     }
 
     /**
@@ -119,9 +123,10 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
-        LOGGER.info("Initializing {}...", Tags.MOD_NAME);
-        // -- No initialization code... Yet
-        LOGGER.info("Done initializing {}!", Tags.MOD_NAME);
+        logger.info("Initializing {}...", Tags.MOD_NAME);
+        logger.info("Registering key bindings for {}...", Tags.MOD_NAME);
+        KeyBindings.registerKeybinds();
+        logger.info("Done initializing {}!", Tags.MOD_NAME);
     }
 
     /**
@@ -131,14 +136,14 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        LOGGER.info("Handling server about to start...");
-        LOGGER.info("Registering custom commands...");
+        logger.info("Handling server about to start...");
+        logger.info("Registering custom commands...");
         event.registerServerCommand(new TeleportCrossDimensionCommand());
         event.registerServerCommand(new ListDimensionsCommand());
         event.registerServerCommand(new RepairCommand());
         event.registerServerCommand(new ExtinguishCommand());
-        LOGGER.info("Done registering custom commands!");
-        LOGGER.info("Done handling server about to start!");
+        logger.info("Done registering custom commands!");
+        logger.info("Done handling server about to start!");
     }
 
     /**
@@ -149,7 +154,7 @@ public class GTNHCustomizer {
     @SubscribeEvent
     public void onConfigChange(OnConfigChangedEvent event) {
         if (event.configID.equalsIgnoreCase(Config.CONFIG_ID.toString())) {
-            LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
+            logger.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
             Config.sync();
         }
     }

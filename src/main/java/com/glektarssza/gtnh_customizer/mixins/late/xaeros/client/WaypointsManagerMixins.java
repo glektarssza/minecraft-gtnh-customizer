@@ -57,7 +57,7 @@ public class WaypointsManagerMixins {
                 int dimId = Integer.parseInt(dimensionId.substring(4));
                 dimensionId = String.format("%d", dimId);
             } catch (NumberFormatException t) {
-                GTNHCustomizer.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Non-integer dimension ID '{}', teleport command is probably going to fail!",
                     dimensionId.substring(4));
             }
@@ -99,7 +99,8 @@ public class WaypointsManagerMixins {
         }
         matcher.appendTail(teleportCommandBuffer);
         if (Config.getVerboseLoggingEnabled()) {
-            GTNHCustomizer.LOGGER.debug("Final Xaero's teleport command: {}",
+            GTNHCustomizer.getLogger().debug(
+                "Final Xaero's teleport command: {}",
                 teleportCommandBuffer.toString());
         }
         player.sendChatMessage(teleportCommandBuffer.toString());

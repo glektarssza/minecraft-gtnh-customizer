@@ -457,48 +457,49 @@ public class Config {
      */
     public static void load() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.LOGGER.error("Cannot load configuration!");
-            GTNHCustomizer.LOGGER
+            GTNHCustomizer.getLogger().error("Cannot load configuration!");
+            GTNHCustomizer.getLogger()
                 .error("Configuration has not been initialized yet!");
             return;
         }
         CONFIG_INSTANCE.load();
         if (!CONFIG_INSTANCE.getLoadedConfigVersion()
             .equals(ConfigConstants.CONFIG_VERSION)) {
-            GTNHCustomizer.LOGGER.warn("Your configuration is out of date!");
-            GTNHCustomizer.LOGGER.warn(
+            GTNHCustomizer.getLogger()
+                .warn("Your configuration is out of date!");
+            GTNHCustomizer.getLogger().warn(
                 "We're running version '{}' but you have version '{}'",
                 ConfigConstants.CONFIG_VERSION,
                 CONFIG_INSTANCE.getLoadedConfigVersion());
-            GTNHCustomizer.LOGGER.warn("Attempting to migrate!");
+            GTNHCustomizer.getLogger().warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     ConfigConstants.CONFIG_VERSION, CONFIG_INSTANCE);
                 save();
             } catch (NoSuchElementException t) {
-                GTNHCustomizer.LOGGER
+                GTNHCustomizer.getLogger()
                     .info(
                         "No migrations available from version '{}' to version '{}', assuming migration is not required!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
                         ConfigConstants.CONFIG_VERSION);
             } catch (Throwable t) {
-                GTNHCustomizer.LOGGER
+                GTNHCustomizer.getLogger()
                     .warn(
                         "Could not migrate configuration from version '{}' to version '{}'!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
                         ConfigConstants.CONFIG_VERSION);
-                GTNHCustomizer.LOGGER
+                GTNHCustomizer.getLogger()
                     .warn(
                         "Here's a stack trace for you to use if you want to file a bug report about migrations failing:");
-                GTNHCustomizer.LOGGER
+                GTNHCustomizer.getLogger()
                     .warn(t);
-                GTNHCustomizer.LOGGER
+                GTNHCustomizer.getLogger()
                     .warn(
                         "Any customizations you've made are probably about to get nuked!");
                 File backupLocation = new File(String.format("%s.bak",
                     CONFIG_INSTANCE.getConfigFile()
                         .getAbsolutePath()));
-                GTNHCustomizer.LOGGER
+                GTNHCustomizer.getLogger()
                     .warn(
                         "Copying your current configuration into '{}' as a backup...",
                         backupLocation.getAbsolutePath());
@@ -507,18 +508,18 @@ public class Config {
                         backupLocation.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
                 } catch (Throwable tt) {
-                    GTNHCustomizer.LOGGER
+                    GTNHCustomizer.getLogger()
                         .warn(
                             "Failed to generate a backup of your current configuration!");
-                    GTNHCustomizer.LOGGER
+                    GTNHCustomizer.getLogger()
                         .warn(
                             "Here's a stack trace for you to use if you want to diagnose what happened:");
-                    GTNHCustomizer.LOGGER
+                    GTNHCustomizer.getLogger()
                         .warn(tt);
-                    GTNHCustomizer.LOGGER
+                    GTNHCustomizer.getLogger()
                         .warn(
                             "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                    GTNHCustomizer.LOGGER
+                    GTNHCustomizer.getLogger()
                         .warn(
                             "Proceeding anyway, sorry!");
                 }
@@ -664,8 +665,8 @@ public class Config {
      */
     public static void save() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.LOGGER.error("Cannot save configuration!");
-            GTNHCustomizer.LOGGER
+            GTNHCustomizer.getLogger().error("Cannot save configuration!");
+            GTNHCustomizer.getLogger()
                 .error("Configuration has not been initialized yet!");
             return;
         }
