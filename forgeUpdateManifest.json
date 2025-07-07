@@ -1,6 +1,7 @@
 {
     "homepage": "https://github.com/glektarssza/minecraft-gtnh-customizer",
     "1.7.10": {
+        "0.11.1": "* Fixed key bindings being loaded on the server side, causing a crash.",
         "0.11.0": "* Fall back to in-hand item if block has no tile entity when calling '/nbtedit'.\n * Support a shortcut key to delete the selected NBT tag inside the '/nbtedit' command'.\n * Add key bindings.",
         "0.10.0": "* Patch ServerUtilities' '/nbtedit' command to let you use 'numpad enter' to submit your changes.",
         "0.9.0": "* Patch ServerUtilities' '/nbtedit' command to edit the in-hand item (if present) if the in-world ray cast doesn't hit anything.",
