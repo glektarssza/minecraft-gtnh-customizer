@@ -6,45 +6,24 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.util.ResourceLocation;
-
-import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
-import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
-import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
-import com.glektarssza.gtnh_customizer.commands.RepairCommand;
-import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
-import com.glektarssza.gtnh_customizer.config.Config;
-
 import serverutils.events.ServerUtilitiesPreInitRegistryEvent;
-import thaumcraft.common.blocks.BlockCustomPlant;
 
 /**
  * The root mod class.
  */
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", guiFactory = "com.glektarssza.gtnh_customizer.config.GuiFactory")
 public class GTNHCustomizer {
-
-    /**
-     * The configuration directory.
-     */
-    private static File configDir;
-
-    /**
-     * The logger to use for the mod.
-     */
-    private static Logger logger;
+    @SidedProxy(modId = Tags.MOD_ID, serverSide = "com.glektarssza.gtnh_customizer.CommonProxy", clientSide = "com.glektarssza.gtnh_customizer.ClientProxy")
+    private static CommonProxy proxy;
 
     /**
      * The maximum number of times to emit a warning before silencing it.
@@ -62,8 +41,22 @@ public class GTNHCustomizer {
     @Mod.Instance
     public static GTNHCustomizer instance;
 
+    /**
+     * Get the main logger for the mod.
+     *
+     * @return The main logger for the mod.
+     */
     public static Logger getLogger() {
-        return logger;
+        return proxy.getLogger();
+    }
+
+    /**
+     * Get the configuration directory for the mod.
+     *
+     * @return The configuration directory for the mod.
+     */
+    public File getConfigDir() {
+        return proxy.getConfigDir();
     }
 
     /**
@@ -88,10 +81,9 @@ public class GTNHCustomizer {
         WARNING_LIMIT_TRACKER.putIfAbsent(category, WARNING_EMIT_LIMIT);
         int limit = WARNING_LIMIT_TRACKER.compute(category, (_k, v) -> v - 1);
         if (limit <= 0) {
-            logger.warn(
-                String.format(
-                    "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
-                    category));
+            getLogger().warn(String.format(
+                "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
+                category));
         }
     }
 
@@ -102,18 +94,7 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
-        logger = event.getModLog();
-        logger.info("Pre-initializing {}...", Tags.MOD_NAME);
-        configDir = event.getModConfigurationDirectory();
-        Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
-        logger.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
-        Config.sync();
-        logger.info("Registering mod {} with the Forge event bus...",
-            Tags.MOD_NAME);
-        MinecraftForge.EVENT_BUS.register(this);
-        // -- OnConfigChangedEvent comes in through here
-        FMLCommonHandler.instance().bus().register(this);
-        logger.info("Done pre-initializing {}!", Tags.MOD_NAME);
+        proxy.preInit(event);
     }
 
     /**
@@ -123,10 +104,7 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
-        logger.info("Initializing {}...", Tags.MOD_NAME);
-        logger.info("Registering key bindings for {}...", Tags.MOD_NAME);
-        KeyBindings.registerKeybinds();
-        logger.info("Done initializing {}!", Tags.MOD_NAME);
+        proxy.init(event);
     }
 
     /**
@@ -136,27 +114,7 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
-        logger.info("Handling server about to start...");
-        logger.info("Registering custom commands...");
-        event.registerServerCommand(new TeleportCrossDimensionCommand());
-        event.registerServerCommand(new ListDimensionsCommand());
-        event.registerServerCommand(new RepairCommand());
-        event.registerServerCommand(new ExtinguishCommand());
-        logger.info("Done registering custom commands!");
-        logger.info("Done handling server about to start!");
-    }
-
-    /**
-     * An event handler for when a configuration changes.
-     *
-     * @param event The event data.
-     */
-    @SubscribeEvent
-    public void onConfigChange(OnConfigChangedEvent event) {
-        if (event.configID.equalsIgnoreCase(Config.CONFIG_ID.toString())) {
-            logger.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
-            Config.sync();
-        }
+        proxy.serverStarting(event);
     }
 
     /**
@@ -168,16 +126,7 @@ public class GTNHCustomizer {
     @SubscribeEvent
     public void onServerUtilitiesPreInitRegistry(
         ServerUtilitiesPreInitRegistryEvent event) {
-        event.getRegistry().registerServerReloadHandler(
-            new ResourceLocation(Tags.MOD_ID, "config"),
-            reloadEvent -> {
-                try {
-                    Config.sync();
-                } catch (Throwable t) {
-                    return false;
-                }
-                return true;
-            });
+        proxy.serverUtilitiesPreInitRegistry(event);
     }
 
     /**
@@ -187,46 +136,6 @@ public class GTNHCustomizer {
      */
     @SubscribeEvent
     public void onBoneMeal(BonemealEvent event) {
-        if (!Loader.isModLoaded("Thaumcraft")) {
-            return;
-        }
-        if (!(event.block instanceof BlockCustomPlant)) {
-            return;
-        }
-        if (event.world.getBlockLightValue(event.x, event.y, event.z) < 9) {
-            return;
-        }
-        switch (event.world.getBlockMetadata(event.x, event.y, event.z)) {
-            case 0:
-                if (!Config.getThaumcraftCanBoneMealGreatwoodSaplings()) {
-                    return;
-                }
-                // -- The bone meal is used at this point no matter what, but
-                // -- the growth is NOT guaranteed!
-                event.setResult(Result.ALLOW);
-                if (event.world.isRemote
-                    || event.world.rand.nextFloat() >= 0.45D) {
-                    return;
-                }
-                ((BlockCustomPlant) event.block).growGreatTree(event.world,
-                    event.x, event.y, event.z,
-                    event.world.rand);
-                break;
-            case 1:
-                if (!Config.getThaumcraftCanBoneMealSilverwoodSaplings()) {
-                    return;
-                }
-                // -- The bone meal is used at this point no matter what, but
-                // -- the growth is NOT guaranteed!
-                event.setResult(Result.ALLOW);
-                if (event.world.isRemote
-                    || event.world.rand.nextFloat() >= 0.45D) {
-                    return;
-                }
-                ((BlockCustomPlant) event.block).growSilverTree(event.world,
-                    event.x, event.y, event.z,
-                    event.world.rand);
-                break;
-        }
+        proxy.boneMeal(event);
     }
 }
