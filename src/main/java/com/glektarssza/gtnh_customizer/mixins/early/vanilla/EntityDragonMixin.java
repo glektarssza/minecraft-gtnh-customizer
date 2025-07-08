@@ -3,10 +3,8 @@ package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 
@@ -16,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
-import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
@@ -25,12 +21,11 @@ import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
  */
 @Mixin(EntityDragon.class)
 public class EntityDragonMixin {
-
     /**
      * A shadow of the {@code target} field.
      */
     @Shadow()
-    Entity target;
+    private Entity target;
 
     /**
      * Mixin for the {@code attackEntitiesInList} method.
@@ -39,7 +34,6 @@ public class EntityDragonMixin {
     @Inject(method = "attackEntitiesInList", at = @At("HEAD"), cancellable = true)
     private void attackEntitiesInList(List targetEntities, CallbackInfo ci) {
         EntityDragon self = (EntityDragon) (Object) this;
-        EntityLiving attacker = (EntityLiving) self;
         for (int i = 0; i < targetEntities.size(); ++i) {
             Entity target = (Entity) targetEntities.get(i);
             EntityPlayer player = null;
@@ -48,11 +42,7 @@ public class EntityDragonMixin {
                     player = (EntityPlayer) target;
                 }
                 if (player != null) {
-                    List<ITargetingImmunity> immunities = PlayerUtils
-                        .getPlayerTargetingImmunities(player);
-                    if (ImmunityUtils
-                        .entityMatchesAnyTargetingImmunity(attacker, immunities)
-                        || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+                    if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
                         continue;
                     }
                 }
@@ -68,8 +58,6 @@ public class EntityDragonMixin {
      */
     @Inject(method = "setNewTarget", at = @At("TAIL"), cancellable = true)
     private void setNewTarget(CallbackInfo ci) {
-        EntityEnderman self = (EntityEnderman) (Object) this;
-        EntityLiving attacker = (EntityLiving) self;
         EntityPlayer player = null;
         if (this.target instanceof EntityPlayer) {
             player = (EntityPlayer) this.target;
@@ -77,11 +65,7 @@ public class EntityDragonMixin {
         if (player == null) {
             return;
         }
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.target = null;
         }
     }

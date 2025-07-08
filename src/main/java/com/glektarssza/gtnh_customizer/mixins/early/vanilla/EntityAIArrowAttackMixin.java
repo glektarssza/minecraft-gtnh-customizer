@@ -1,7 +1,5 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
-import java.util.List;
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
@@ -13,8 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
-import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
@@ -22,7 +18,6 @@ import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
  */
 @Mixin(EntityAIArrowAttack.class)
 public class EntityAIArrowAttackMixin {
-
     /**
      * A shadow of the {@code entityHost} field.
      */
@@ -42,11 +37,7 @@ public class EntityAIArrowAttackMixin {
             return;
         }
         EntityPlayer player = (EntityPlayer) target;
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }

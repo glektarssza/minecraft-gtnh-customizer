@@ -1,9 +1,6 @@
 package com.glektarssza.gtnh_customizer.mixins.late.specialmobs;
 
-import java.util.List;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -12,8 +9,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
-import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 import toast.specialMobs.entity.cavespider.Entity_SpecialCaveSpider;
@@ -23,14 +18,11 @@ import toast.specialMobs.entity.cavespider.Entity_SpecialCaveSpider;
  */
 @Mixin(value = Entity_SpecialCaveSpider.class, remap = false)
 public class Entity_SpecialCaveSpiderMixin {
-
     /**
      * Mixin for the {@code findPlayerToAttack} method.
      */
     @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true, remap = false)
     public void findPlayerToAttack(CallbackInfoReturnable<Entity> cir) {
-        Entity_SpecialCaveSpider self = (Entity_SpecialCaveSpider) (Object) this;
-        EntityLiving attacker = self;
         Entity returnValue = cir.getReturnValue();
         if (returnValue == null) {
             return;
@@ -43,11 +35,7 @@ public class Entity_SpecialCaveSpiderMixin {
             return;
         }
         EntityPlayer player = (EntityPlayer) target;
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(null);
         }
     }
