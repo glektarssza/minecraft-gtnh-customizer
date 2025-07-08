@@ -1,9 +1,6 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
-import java.util.List;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -12,8 +9,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
-import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
@@ -21,14 +16,11 @@ import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
  */
 @Mixin(EntityEnderman.class)
 public class EntityEndermanMixin {
-
     /**
      * Mixin for the {@code findPlayerToAttack} method.
      */
     @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
     public void findPlayerToAttack(CallbackInfoReturnable<Entity> cir) {
-        EntityEnderman self = (EntityEnderman) (Object) this;
-        EntityLiving attacker = (EntityLiving) self;
         Entity returnValue = cir.getReturnValue();
         EntityPlayer player = null;
         if (returnValue instanceof EntityPlayer) {
@@ -37,11 +29,7 @@ public class EntityEndermanMixin {
         if (player == null) {
             return;
         }
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(null);
         }
     }
@@ -52,16 +40,10 @@ public class EntityEndermanMixin {
     @Inject(method = "shouldAttackPlayer", at = @At("RETURN"), cancellable = true)
     public void shouldAttackPlayer(EntityPlayer player,
         CallbackInfoReturnable<Boolean> cir) {
-        EntityEnderman self = (EntityEnderman) (Object) this;
-        EntityLiving attacker = (EntityLiving) self;
         if (player == null) {
             return;
         }
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             cir.setReturnValue(false);
         }
     }

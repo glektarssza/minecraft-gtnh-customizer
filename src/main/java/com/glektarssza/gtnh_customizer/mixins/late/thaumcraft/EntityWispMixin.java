@@ -1,9 +1,6 @@
 package com.glektarssza.gtnh_customizer.mixins.late.thaumcraft;
 
-import java.util.List;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -17,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.glektarssza.gtnh_customizer.api.immunity.ITargetingImmunity;
-import com.glektarssza.gtnh_customizer.utils.ImmunityUtils;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 import thaumcraft.common.entities.monster.EntityWisp;
@@ -28,7 +23,6 @@ import thaumcraft.common.entities.monster.EntityWisp;
  */
 @Mixin(value = EntityWisp.class)
 public class EntityWispMixin {
-
     /**
      * A shadow of the {@code targetedEntity} field.
      */
@@ -41,8 +35,6 @@ public class EntityWispMixin {
     @Inject(method = "attackEntityFrom", at = @At(value = "FIELD", target = "Lthaumcraft/common/entities/monster/EntityWisp;targetedEntity:Lnet/minecraft/entity/Entity;", opcode = Opcodes.PUTFIELD, shift = Shift.AFTER, remap = false), cancellable = true)
     public void overrideTargetedEntity(DamageSource damageSource, float amount,
         CallbackInfoReturnable<Boolean> cir) {
-        EntityWisp self = (EntityWisp) (Object) this;
-        EntityLiving attacker = self;
         if (this.targetedEntity == null) {
             return;
         }
@@ -54,11 +46,7 @@ public class EntityWispMixin {
             return;
         }
         EntityPlayer player = (EntityPlayer) target;
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.targetedEntity = null;
         }
     }
@@ -68,8 +56,6 @@ public class EntityWispMixin {
      */
     @Inject(method = "updateEntityActionState", at = @At(value = "FIELD", target = "Lthaumcraft/common/entities/monster/EntityWisp;targetedEntity:Lnet/minecraft/entity/Entity;", opcode = Opcodes.PUTFIELD, shift = Shift.AFTER, remap = false), cancellable = true)
     public void overrideTargetedEntity(CallbackInfo ci) {
-        EntityWisp self = (EntityWisp) (Object) this;
-        EntityLiving attacker = self;
         if (this.targetedEntity == null) {
             return;
         }
@@ -81,11 +67,7 @@ public class EntityWispMixin {
             return;
         }
         EntityPlayer player = (EntityPlayer) target;
-        List<ITargetingImmunity> immunities = PlayerUtils
-            .getPlayerTargetingImmunities(player);
-        if (ImmunityUtils.entityMatchesAnyTargetingImmunity(attacker,
-            immunities)
-            || PlayerUtils.getIsPlayerGloballyImmune(player)) {
+        if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.targetedEntity = null;
         }
     }
