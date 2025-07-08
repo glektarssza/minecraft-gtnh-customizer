@@ -19,7 +19,6 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.config.v7.ConfigConstants;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
@@ -374,74 +373,59 @@ public class Config {
         throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration(
-            com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.CONFIG_VERSION,
-            com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.CONFIG_VERSION,
-            (configInstance) -> {
+            "1", "2", (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
-                    com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
+                    "general.immunePlayers")) {
                     MigrationUtils.renameProperty(configInstance,
-                        com.glektarssza.gtnh_customizer.config.v1.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
-                        com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
+                        "general.immunePlayers", "globallyImmunePlayers");
                 }
             });
         registerMigration(
-            com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.CONFIG_VERSION,
-            com.glektarssza.gtnh_customizer.config.v3.ConfigConstants.CONFIG_VERSION,
-            (configInstance) -> {
+            "2", "3", (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
-                    com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
+                    "general.globallyImmunePlayers")) {
                     MigrationUtils.renameProperty(configInstance,
-                        com.glektarssza.gtnh_customizer.config.v2.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
-                        com.glektarssza.gtnh_customizer.config.v3.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME);
+                        "general.globallyImmunePlayers",
+                        "globally_immune_players");
                 }
             });
         registerMigration(
-            com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.CONFIG_VERSION,
-            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CONFIG_VERSION,
-            (configInstance) -> {
+            "5", "6", (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
-                    com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH)) {
+                    "general.globally_immune_players")) {
                     configInstance
                         .setCategoryComment(
-                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_COMMENT)
+                            "gameplay", "Gameplay-related tweaks")
                         .setCategoryLanguageKey(
-                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_LANG_KEY)
+                            "gameplay",
+                            "gtnh_customizer.config.category_gameplay")
                         .setCategoryRequiresMcRestart(
-                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                            false)
+                            "gameplay", false)
                         .setCategoryRequiresMcRestart(
-                            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                            false);
+                            "gameplay", false);
                     MigrationUtils.moveProperty(configInstance,
-                        com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_PATH,
-                        com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CATEGORY_GAMEPLAY_PATH);
+                        "general.globally_immune_players", "gameplay");
                     // -- This SHOULD be `true` but let's be safe about things
-                    if (configInstance.getCategory(
-                        com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.CATEGORY_GENERAL_PATH)
-                        .isEmpty()) {
+                    if (configInstance.getCategory("general").isEmpty()) {
                         configInstance
-                            .removeCategory(configInstance.getCategory(
-                                com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.CATEGORY_GENERAL_PATH));
+                            .removeCategory(
+                                configInstance.getCategory("general"));
                     }
                 }
                 if (MigrationUtils.hasPropertyByPath(configInstance,
-                    com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_PATH)) {
+                    "command.repair_ignores_liquids")) {
                     MigrationUtils.renameProperty(configInstance,
-                        com.glektarssza.gtnh_customizer.config.v5.ConfigConstants.PROPERTY_REPAIR_COMMAND_IGNORES_LIQUIDS_PATH,
-                        com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_NAME);
+                        "command.repair_ignores_liquids",
+                        "repair_raycast_ignores_liquids");
                 }
             });
         registerMigration(
-            com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.CONFIG_VERSION,
-            com.glektarssza.gtnh_customizer.config.v7.ConfigConstants.CONFIG_VERSION,
-            (configInstance) -> {
+            "6", "7", (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
-                    com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_PATH)) {
+                    "gameplay.tconstruct.slime_sapling_bone_mealable")) {
                     MigrationUtils.renameProperty(configInstance,
-                        com.glektarssza.gtnh_customizer.config.v6.ConfigConstants.PROPERTY_TCONSTRUCT_SLIME_SAPLING_BONE_MEALABLE_PATH,
-                        com.glektarssza.gtnh_customizer.config.v7.ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME);
+                        "gameplay.tconstruct.slime_sapling_bone_mealable",
+                        "can_bone_meal_slime_saplings");
                 }
             });
         if (CONFIG_INSTANCE != null) {
