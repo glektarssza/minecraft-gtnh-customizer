@@ -449,7 +449,7 @@ public class Config {
         }
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
-            ConfigConstants.CONFIG_VERSION);
+            ConfigConstants.CONFIG_VERSION, false);
     }
 
     /**

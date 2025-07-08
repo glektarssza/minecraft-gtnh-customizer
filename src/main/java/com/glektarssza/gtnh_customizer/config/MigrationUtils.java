@@ -712,9 +712,8 @@ public final class MigrationUtils {
      * @return A clone of the configuration.
      */
     public static Configuration cloneConfiguration(Configuration instance) {
-        // TODO: Figure out how to access case sensitivity field...
         Configuration cloned = new Configuration(instance.getConfigFile(),
-            instance.getDefinedConfigVersion());
+            instance.getDefinedConfigVersion(), false);
         instance.getCategoryNames()
             .forEach((category) -> deepCopyCategory(instance, cloned, category,
                 true));
