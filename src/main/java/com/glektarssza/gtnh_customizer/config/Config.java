@@ -450,6 +450,15 @@ public class Config {
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
             CONFIG_VERSION, false);
+
+        // -- Register all our configurations
+        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+
+        if (CONFIG_INSTANCE.hasChanged()) {
+            save();
+        }
     }
 
     /**
@@ -474,7 +483,6 @@ public class Config {
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     CONFIG_VERSION, CONFIG_INSTANCE);
-                save();
             } catch (NoSuchElementException t) {
                 GTNHCustomizer.getLogger()
                     .info(
@@ -527,12 +535,11 @@ public class Config {
                         CONFIG_INSTANCE.getCategory(categoryName)));
             }
         }
-        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true)
-            .loadValues(CONFIG_INSTANCE);
-        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true)
-            .loadValues(CONFIG_INSTANCE);
-        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true)
-            .loadValues(CONFIG_INSTANCE);
+
+        // -- Load updated values
+        new Gameplay().loadValues(CONFIG_INSTANCE);
+        new Debugging().loadValues(CONFIG_INSTANCE);
+        new Commands().loadValues(CONFIG_INSTANCE);
     }
 
     /**
@@ -554,9 +561,13 @@ public class Config {
      * Synchronize the mod configuration.
      */
     public static void sync() {
-        // -- Save the updated config to disk FIRST
-        save();
-        // -- THEN reload it into ourselves
+        // -- If the internal configuration state has changed, make sure to save
+        // -- it to the disk before loading or we'll lose it!
+        // -- Internal state changes take precedence over on-disk state changes!
+        if (CONFIG_INSTANCE.hasChanged()) {
+            save();
+        }
+        // -- Load config off disk to ensure our internal state is updated
         load();
     }
 
@@ -600,6 +611,9 @@ public class Config {
             migrator.getSecond().accept(currentVersion);
         }
         CONFIG_INSTANCE = currentVersion;
+        if (CONFIG_INSTANCE.hasChanged()) {
+            save();
+        }
     }
 
     /**
