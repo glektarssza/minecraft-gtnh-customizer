@@ -25,6 +25,13 @@ import com.glektarssza.gtnh_customizer.utils.ExtendedWorld;
  */
 public class ExtinguishCommand extends CommandBase {
     /**
+     * Just a quick helper constant that can be fed to
+     * {@link World#playAuxSFXAtEntity} to play the {@code random.fizz} sound
+     * effect at the given world position.
+     */
+    public static final int RANDOM_FIZZ_AUX_SFX_COMMAND = 1004;
+
+    /**
      * Get the command name.
      *
      * @return The command name.
@@ -222,14 +229,12 @@ public class ExtinguishCommand extends CommandBase {
                     Block block = world.getBlock((int) x, (int) y, (int) z);
                     if (block == Blocks.fire) {
                         world.playAuxSFXAtEntity(null,
-                            // TODO: Figure out what the 1004 constant is...
-                            // -- It's clearly the "extinguish" sound effect but
-                            // -- how can we get that in a cleaner way?
-                            1004,
-                            (int) x, (int) y, (int) z,
-                            // TODO: Figure out what the 0 constant is...
-                            // -- It's probably the "master audio category"
-                            // -- how can we get that in a cleaner way?
+                            RANDOM_FIZZ_AUX_SFX_COMMAND, (int) x, (int) y,
+                            (int) z,
+                            // -- This is some kind of "extra data" parameter
+                            // -- whose meaning is unique to the exact command
+                            // -- being executed. In this case it does...
+                            // -- Nothing! :<
                             0);
                         world.setBlockToAir((int) x, (int) y, (int) z);
                     }
