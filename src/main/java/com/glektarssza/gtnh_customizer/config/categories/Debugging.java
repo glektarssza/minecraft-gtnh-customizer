@@ -67,12 +67,6 @@ public class Debugging implements Category {
     }
 
     @Override
-    @Nullable
-    public String getComment() {
-        return "Various settings related to debugging the mod.";
-    }
-
-    @Override
     public boolean getRequiresWorldRestart() {
         return false;
     }

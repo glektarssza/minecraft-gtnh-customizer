@@ -100,12 +100,6 @@ public class Thaumcraft implements Category {
     }
 
     @Override
-    @Nullable
-    public String getComment() {
-        return "Various tweaks related to Thaumcraft gameplay.";
-    }
-
-    @Override
     public boolean getRequiresWorldRestart() {
         return false;
     }

@@ -73,12 +73,6 @@ public class TConstruct implements Category {
     }
 
     @Override
-    @Nullable
-    public String getComment() {
-        return "Various tweaks related to Tinker's Construct gameplay.";
-    }
-
-    @Override
     public boolean getRequiresWorldRestart() {
         return false;
     }
