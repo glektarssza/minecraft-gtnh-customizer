@@ -456,7 +456,7 @@ public class Config {
         new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
         new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
 
-        if (CONFIG_INSTANCE.hasChanged()) {
+        if (hasChanged()) {
             save();
         }
     }
@@ -561,7 +561,7 @@ public class Config {
                 .error("Configuration has not been initialized yet!");
             return;
         }
-        if (CONFIG_INSTANCE.hasChanged()) {
+        if (hasChanged()) {
             CONFIG_INSTANCE.save();
         }
     }
@@ -620,7 +620,7 @@ public class Config {
             migrator.getSecond().accept(currentVersion);
         }
         CONFIG_INSTANCE = currentVersion;
-        if (CONFIG_INSTANCE.hasChanged()) {
+        if (hasChanged()) {
             save();
         }
     }
