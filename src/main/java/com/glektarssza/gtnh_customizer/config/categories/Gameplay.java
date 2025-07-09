@@ -66,6 +66,32 @@ public class Gameplay implements Category {
                         .setImmunePlayers(config.getCategory(cat.getFullPath())
                             .get(this.getID()).getStringList());
                 }
+            },
+            new Property<Boolean>(cat) {
+                @Override
+                @Nonnull
+                public String getID() {
+                    return "prevent_ender_mob_teleportation";
+                }
+
+                @Override
+                @Nonnull
+                public Type getValueType() {
+                    return Type.BOOLEAN;
+                }
+
+                @Override
+                @Nonnull
+                public Boolean getDefaultValue() {
+                    return true;
+                }
+
+                @Override
+                public void loadValue(Configuration config) {
+                    Config.setPreventEnderMobTeleportation(
+                        config.getCategory(cat.getFullPath())
+                            .get(this.getID()).getBoolean());
+                }
             }
         };
     }
