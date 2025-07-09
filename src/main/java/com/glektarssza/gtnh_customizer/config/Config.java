@@ -455,10 +455,6 @@ public class Config {
         new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
         new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
         new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-
-        if (hasChanged()) {
-            save();
-        }
     }
 
     /**
