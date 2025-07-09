@@ -30,32 +30,11 @@ public class Commands implements Category {
         Category cat = this;
         this.childCategories = new Category[] {};
         this.childProperties = new Property<?>[] {
-            new Property<Boolean>() {
+            new Property<Boolean>(cat) {
                 @Override
                 @Nonnull
                 public String getID() {
                     return "repair_raycast_ignores_liquids";
-                }
-
-                @Override
-                @Nullable
-                public String getComment() {
-                    return "Whether the '/repair' command ignores liquids when raycasting to look for containers to repair items inside of.";
-                }
-
-                @Override
-                public boolean getShowInGui() {
-                    return true;
-                }
-
-                @Override
-                public boolean getRequiresWorldRestart() {
-                    return false;
-                }
-
-                @Override
-                public boolean getRequiresGameRestart() {
-                    return false;
                 }
 
                 @Override
@@ -65,32 +44,9 @@ public class Commands implements Category {
                 }
 
                 @Override
-                public boolean isList() {
-                    return true;
-                }
-
-                @Override
                 @Nonnull
                 public Boolean getDefaultValue() {
                     return false;
-                }
-
-                @Override
-                @Nonnull
-                public Category getParent() {
-                    return cat;
-                }
-
-                @Override
-                public void registerForgeConfigCategory(Configuration config) {
-                    net.minecraftforge.common.config.Property prop = config.get(
-                        cat.getFullPath(), this.getID(),
-                        this.getDefaultValue(), this.getComment());
-                    prop.setLanguageKey(this.getLanguageKey());
-                    prop.setShowInGui(this.getShowInGui());
-                    prop.setRequiresWorldRestart(
-                        this.getRequiresWorldRestart());
-                    prop.setRequiresMcRestart(this.getRequiresGameRestart());
                 }
 
                 @Override
@@ -101,7 +57,7 @@ public class Commands implements Category {
                                 .get(this.getID()).getBoolean());
                 }
             },
-            new Property<Integer>() {
+            new Property<Integer>(cat) {
                 @Override
                 @Nonnull
                 public String getID() {
@@ -109,59 +65,15 @@ public class Commands implements Category {
                 }
 
                 @Override
-                @Nullable
-                public String getComment() {
-                    return "The maximum number of blocks the '/extinguish' command will process.";
-                }
-
-                @Override
-                public boolean getShowInGui() {
-                    return true;
-                }
-
-                @Override
-                public boolean getRequiresWorldRestart() {
-                    return false;
-                }
-
-                @Override
-                public boolean getRequiresGameRestart() {
-                    return false;
-                }
-
-                @Override
                 @Nonnull
                 public Type getValueType() {
-                    return Type.BOOLEAN;
-                }
-
-                @Override
-                public boolean isList() {
-                    return true;
+                    return Type.INTEGER;
                 }
 
                 @Override
                 @Nonnull
                 public Integer getDefaultValue() {
                     return Integer.MAX_VALUE;
-                }
-
-                @Override
-                @Nonnull
-                public Category getParent() {
-                    return cat;
-                }
-
-                @Override
-                public void registerForgeConfigCategory(Configuration config) {
-                    net.minecraftforge.common.config.Property prop = config.get(
-                        cat.getFullPath(), this.getID(),
-                        this.getDefaultValue(), this.getComment());
-                    prop.setLanguageKey(this.getLanguageKey());
-                    prop.setShowInGui(this.getShowInGui());
-                    prop.setRequiresWorldRestart(
-                        this.getRequiresWorldRestart());
-                    prop.setRequiresMcRestart(this.getRequiresGameRestart());
                 }
 
                 @Override
@@ -179,12 +91,6 @@ public class Commands implements Category {
     @Nonnull
     public String getID() {
         return "commands";
-    }
-
-    @Override
-    @Nullable
-    public String getComment() {
-        return "Various settings related to commands added by the mod.";
     }
 
     @Override

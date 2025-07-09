@@ -58,7 +58,9 @@ public interface Category {
      * @return The comment of the category.
      */
     @Nullable
-    public String getComment();
+    public default String getComment() {
+        return null;
+    }
 
     /**
      * Get whether to show this category in the GUI.

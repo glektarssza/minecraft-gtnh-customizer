@@ -35,28 +35,12 @@ public class Thaumcraft implements Category {
         this.parent = parent;
         Category cat = this;
         this.childCategories = new Category[] {};
-        this.childProperties = new Property[] {
-            new Property<Boolean>() {
+        this.childProperties = new Property<?>[] {
+            new Property<Boolean>(cat) {
                 @Override
                 @Nonnull
                 public String getID() {
                     return "can_bone_meal_greatwood_saplings";
-                }
-
-                @Override
-                @Nullable
-                public String getComment() {
-                    return "Whether to allow Thaumcraft Greatwood Saplings to have bone meal applied.";
-                }
-
-                @Override
-                public boolean getRequiresWorldRestart() {
-                    return false;
-                }
-
-                @Override
-                public boolean getRequiresGameRestart() {
-                    return false;
                 }
 
                 @Override
@@ -66,32 +50,9 @@ public class Thaumcraft implements Category {
                 }
 
                 @Override
-                public boolean isList() {
-                    return false;
-                }
-
-                @Override
                 @Nonnull
                 public Boolean getDefaultValue() {
                     return true;
-                }
-
-                @Override
-                @Nonnull
-                public Category getParent() {
-                    return cat;
-                }
-
-                @Override
-                public void registerForgeConfigCategory(Configuration config) {
-                    net.minecraftforge.common.config.Property prop = config.get(
-                        cat.getFullPath(), this.getID(),
-                        this.getDefaultValue(), this.getComment());
-                    prop.setLanguageKey(this.getLanguageKey());
-                    prop.setShowInGui(this.getShowInGui());
-                    prop.setRequiresWorldRestart(
-                        this.getRequiresWorldRestart());
-                    prop.setRequiresMcRestart(this.getRequiresGameRestart());
                 }
 
                 @Override
@@ -102,27 +63,11 @@ public class Thaumcraft implements Category {
                                 .get(this.getID()).getBoolean());
                 }
             },
-            new Property<Boolean>() {
+            new Property<Boolean>(cat) {
                 @Override
                 @Nonnull
                 public String getID() {
                     return "can_bone_meal_silverwood_saplings";
-                }
-
-                @Override
-                @Nullable
-                public String getComment() {
-                    return "Whether to allow Thaumcraft Silverwood Saplings to have bone meal applied.";
-                }
-
-                @Override
-                public boolean getRequiresWorldRestart() {
-                    return false;
-                }
-
-                @Override
-                public boolean getRequiresGameRestart() {
-                    return false;
                 }
 
                 @Override
@@ -132,32 +77,9 @@ public class Thaumcraft implements Category {
                 }
 
                 @Override
-                public boolean isList() {
-                    return false;
-                }
-
-                @Override
                 @Nonnull
                 public Boolean getDefaultValue() {
                     return true;
-                }
-
-                @Override
-                @Nonnull
-                public Category getParent() {
-                    return cat;
-                }
-
-                @Override
-                public void registerForgeConfigCategory(Configuration config) {
-                    net.minecraftforge.common.config.Property prop = config.get(
-                        cat.getFullPath(), this.getID(),
-                        this.getDefaultValue(), this.getComment());
-                    prop.setLanguageKey(this.getLanguageKey());
-                    prop.setShowInGui(this.getShowInGui());
-                    prop.setRequiresWorldRestart(
-                        this.getRequiresWorldRestart());
-                    prop.setRequiresMcRestart(this.getRequiresGameRestart());
                 }
 
                 @Override

@@ -35,39 +35,12 @@ public class Gameplay implements Category {
         this.childCategories = new Category[] {
             new TConstruct(cat)
         };
-        this.childProperties = new Property[] {
-            new Property<String[]>() {
+        this.childProperties = new Property<?>[] {
+            new Property<String[]>(cat) {
                 @Override
                 @Nonnull
                 public String getID() {
                     return "globally_immune_players";
-                }
-
-                @Override
-                @Nullable
-                public String getComment() {
-                    return "A list of players who are globally immune to being targeted.";
-                }
-
-                @Override
-                public boolean getShowInGui() {
-                    return true;
-                }
-
-                @Override
-                public boolean getRequiresWorldRestart() {
-                    return false;
-                }
-
-                @Override
-                public boolean getRequiresGameRestart() {
-                    return false;
-                }
-
-                @Override
-                @Nonnull
-                public Type getValueType() {
-                    return Type.STRING;
                 }
 
                 @Override
@@ -77,26 +50,14 @@ public class Gameplay implements Category {
 
                 @Override
                 @Nonnull
-                public String[] getDefaultValue() {
-                    return new String[0];
+                public Type getValueType() {
+                    return Type.STRING;
                 }
 
                 @Override
                 @Nonnull
-                public Category getParent() {
-                    return cat;
-                }
-
-                @Override
-                public void registerForgeConfigCategory(Configuration config) {
-                    net.minecraftforge.common.config.Property prop = config.get(
-                        cat.getFullPath(), this.getID(),
-                        this.getDefaultValue(), this.getComment());
-                    prop.setLanguageKey(this.getLanguageKey());
-                    prop.setShowInGui(this.getShowInGui());
-                    prop.setRequiresWorldRestart(
-                        this.getRequiresWorldRestart());
-                    prop.setRequiresMcRestart(this.getRequiresGameRestart());
+                public String[] getDefaultValue() {
+                    return new String[0];
                 }
 
                 @Override
@@ -113,12 +74,6 @@ public class Gameplay implements Category {
     @Nonnull
     public String getID() {
         return "gameplay";
-    }
-
-    @Override
-    @Nullable
-    public String getComment() {
-        return "Various tweaks related to gameplay.";
     }
 
     @Override

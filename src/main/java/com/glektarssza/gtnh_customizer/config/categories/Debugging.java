@@ -30,32 +30,11 @@ public class Debugging implements Category {
         Category cat = this;
         this.childCategories = new Category[] {};
         this.childProperties = new Property<?>[] {
-            new Property<Boolean>() {
+            new Property<Boolean>(cat) {
                 @Override
                 @Nonnull
                 public String getID() {
                     return "verbose_logging";
-                }
-
-                @Override
-                @Nullable
-                public String getComment() {
-                    return "Whether verbose logging is enabled.";
-                }
-
-                @Override
-                public boolean getShowInGui() {
-                    return true;
-                }
-
-                @Override
-                public boolean getRequiresWorldRestart() {
-                    return false;
-                }
-
-                @Override
-                public boolean getRequiresGameRestart() {
-                    return false;
                 }
 
                 @Override
@@ -65,32 +44,9 @@ public class Debugging implements Category {
                 }
 
                 @Override
-                public boolean isList() {
-                    return true;
-                }
-
-                @Override
                 @Nonnull
                 public Boolean getDefaultValue() {
                     return false;
-                }
-
-                @Override
-                @Nonnull
-                public Category getParent() {
-                    return cat;
-                }
-
-                @Override
-                public void registerForgeConfigCategory(Configuration config) {
-                    net.minecraftforge.common.config.Property prop = config.get(
-                        cat.getFullPath(), this.getID(),
-                        this.getDefaultValue(), this.getComment());
-                    prop.setLanguageKey(this.getLanguageKey());
-                    prop.setShowInGui(this.getShowInGui());
-                    prop.setRequiresWorldRestart(
-                        this.getRequiresWorldRestart());
-                    prop.setRequiresMcRestart(this.getRequiresGameRestart());
                 }
 
                 @Override
