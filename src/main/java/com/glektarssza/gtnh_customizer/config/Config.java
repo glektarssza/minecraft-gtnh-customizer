@@ -566,14 +566,10 @@ public class Config {
      * Synchronize the mod configuration.
      */
     public static void sync() {
-        // -- If the internal configuration state has changed, make sure to save
-        // -- it to the disk before loading or we'll lose it!
-        // -- Internal state changes take precedence over on-disk state changes!
-        if (CONFIG_INSTANCE.hasChanged()) {
+        load();
+        if (hasChanged()) {
             save();
         }
-        // -- Load config off disk to ensure our internal state is updated
-        load();
     }
 
     /**
