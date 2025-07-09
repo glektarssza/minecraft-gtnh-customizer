@@ -53,7 +53,7 @@ public class Config {
     private static final List<String> globallyImmunePlayers = new ArrayList<String>();
 
     /**
-     * Whether to prevent Ender mob teleportation.
+     * Whether to prevent Enderman and Enderman-like teleportation.
      */
     private static boolean preventEnderMobTeleport = true;
 
@@ -130,32 +130,32 @@ public class Config {
     }
 
     /**
-     * Get whether to prevent Ender mob teleportation.
+     * Get whether to prevent Enderman and Enderman-like teleportation.
      *
-     * @return Whether to prevent Ender mob teleportation.
+     * @return Whether to prevent Enderman and Enderman-like mob teleportation.
      */
     public static boolean getPreventEnderMobTeleportation() {
         return preventEnderMobTeleport;
     }
 
     /**
-     * Set whether to prevent Ender mob teleportation.
+     * Set whether to prevent Enderman and Enderman-like teleportation.
      *
-     * @param value Whether to prevent Ender mob teleportation.
+     * @param value Whether to prevent Enderman and Enderman-like teleportation.
      */
     public static void setPreventEnderMobTeleportation(boolean value) {
         preventEnderMobTeleport = value;
     }
 
     /**
-     * Reset whether to prevent Ender mob teleportation.
+     * Reset whether to prevent Enderman and Enderman-like teleportation.
      */
     public static void resetPreventEnderMobTeleportation() {
         setPreventEnderMobTeleportation(true);
     }
 
     /**
-     * Toggle whether to prevent Ender mob teleportation.
+     * Toggle whether to prevent Enderman and Enderman-like teleportation.
      */
     public static void togglePreventEnderMobTeleportation() {
         setPreventEnderMobTeleportation(!getPreventEnderMobTeleportation());
