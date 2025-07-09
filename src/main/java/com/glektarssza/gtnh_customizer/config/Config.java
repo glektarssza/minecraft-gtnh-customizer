@@ -543,6 +543,15 @@ public class Config {
     }
 
     /**
+     * Get whether the configuration has changed.
+     *
+     * @return Whether the configuration has changed.
+     */
+    public static boolean hasChanged() {
+        return CONFIG_INSTANCE == null ? false : CONFIG_INSTANCE.hasChanged();
+    }
+
+    /**
      * Save the configuration data to disk.
      */
     public static void save() {
