@@ -19,6 +19,9 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
+import com.glektarssza.gtnh_customizer.config.categories.Commands;
+import com.glektarssza.gtnh_customizer.config.categories.Debugging;
+import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
@@ -26,6 +29,11 @@ import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsExceptio
  * The main configuration for the mod.
  */
 public class Config {
+    /**
+     * The current version of the configuration.
+     */
+    public static String CONFIG_VERSION = "8";
+
     /**
      * The configuration instance.
      */
@@ -428,12 +436,25 @@ public class Config {
                         "can_bone_meal_slime_saplings");
                 }
             });
+        registerMigration(
+            "7", "8", (configInstance) -> {
+                if (MigrationUtils.hasCategoryByPath(configInstance,
+                    "command")) {
+                    MigrationUtils.renameCategory(configInstance, "command",
+                        "commands");
+                }
+            });
         if (CONFIG_INSTANCE != null) {
             return;
         }
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
-            ConfigConstants.CONFIG_VERSION, false);
+            CONFIG_VERSION, false);
+
+        // -- Register all our configurations
+        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
     }
 
     /**
@@ -448,30 +469,28 @@ public class Config {
         }
         CONFIG_INSTANCE.load();
         if (!CONFIG_INSTANCE.getLoadedConfigVersion()
-            .equals(ConfigConstants.CONFIG_VERSION)) {
+            .equals(CONFIG_VERSION)) {
             GTNHCustomizer.getLogger()
                 .warn("Your configuration is out of date!");
             GTNHCustomizer.getLogger().warn(
                 "We're running version '{}' but you have version '{}'",
-                ConfigConstants.CONFIG_VERSION,
-                CONFIG_INSTANCE.getLoadedConfigVersion());
+                CONFIG_VERSION, CONFIG_INSTANCE.getLoadedConfigVersion());
             GTNHCustomizer.getLogger().warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
-                    ConfigConstants.CONFIG_VERSION, CONFIG_INSTANCE);
-                save();
+                    CONFIG_VERSION, CONFIG_INSTANCE);
             } catch (NoSuchElementException t) {
                 GTNHCustomizer.getLogger()
                     .info(
                         "No migrations available from version '{}' to version '{}', assuming migration is not required!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
-                        ConfigConstants.CONFIG_VERSION);
+                        CONFIG_VERSION);
             } catch (Throwable t) {
                 GTNHCustomizer.getLogger()
                     .warn(
                         "Could not migrate configuration from version '{}' to version '{}'!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
-                        ConfigConstants.CONFIG_VERSION);
+                        CONFIG_VERSION);
                 GTNHCustomizer.getLogger()
                     .warn(
                         "Here's a stack trace for you to use if you want to file a bug report about migrations failing:");
@@ -512,136 +531,20 @@ public class Config {
                         CONFIG_INSTANCE.getCategory(categoryName)));
             }
         }
-        CONFIG_INSTANCE
-            .setCategoryComment(ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                ConfigConstants.CATEGORY_GAMEPLAY_COMMENT)
-            .setCategoryLanguageKey(ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                ConfigConstants.CATEGORY_GAMEPLAY_LANG_KEY)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                false)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-                false);
 
-        setImmunePlayers(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_GAMEPLAY_PATH,
-            ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_NAME,
-            new String[0],
-            ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_COMMENT)
-            .setLanguageKey(
-                ConfigConstants.PROPERTY_GLOBALLY_IMMUNE_PLAYERS_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getStringList());
+        // -- Load updated values
+        new Gameplay().loadValues(CONFIG_INSTANCE);
+        new Debugging().loadValues(CONFIG_INSTANCE);
+        new Commands().loadValues(CONFIG_INSTANCE);
+    }
 
-        CONFIG_INSTANCE
-            .setCategoryComment(
-                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
-                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_COMMENT)
-            .setCategoryLanguageKey(
-                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
-                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_LANG_KEY)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
-                false)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
-                false);
-
-        setTConstructCanBoneMealSlimeSaplings(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_GAMEPLAY_TCONSTRUCT_PATH,
-            ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_NAME,
-            true,
-            ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_COMMENT)
-            .setLanguageKey(
-                ConfigConstants.PROPERTY_TCONSTRUCT_CAN_BONE_MEAL_SLIME_SAPLINGS_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getBoolean());
-
-        CONFIG_INSTANCE
-            .setCategoryComment(
-                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
-                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_COMMENT)
-            .setCategoryLanguageKey(
-                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
-                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_LANG_KEY)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
-                false)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
-                false);
-
-        setThaumcraftCanBoneMealGreatwoodSaplings(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
-            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_NAME,
-            true,
-            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_COMMENT)
-            .setLanguageKey(
-                ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_GREATWOOD_SAPLINGS_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getBoolean());
-
-        setThaumcraftCanBoneMealSilverwoodSaplings(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_GAMEPLAY_THAUMCRAFT_PATH,
-            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_NAME,
-            true,
-            ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_COMMENT)
-            .setLanguageKey(
-                ConfigConstants.PROPERTY_THAUMCRAFT_CAN_BONE_MEAL_SILVERWOOD_SAPLINGS_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getBoolean());
-
-        CONFIG_INSTANCE
-            .setCategoryComment(ConfigConstants.CATEGORY_COMMAND_PATH,
-                ConfigConstants.CATEGORY_COMMAND_COMMENT)
-            .setCategoryLanguageKey(ConfigConstants.CATEGORY_COMMAND_PATH,
-                ConfigConstants.CATEGORY_COMMAND_LANG_KEY)
-            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_PATH,
-                false)
-            .setCategoryRequiresMcRestart(ConfigConstants.CATEGORY_COMMAND_PATH,
-                false);
-
-        setRepairCommandRaycastIgnoresLiquids(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_COMMAND_PATH,
-            ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_NAME,
-            false,
-            ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_COMMENT)
-            .setLanguageKey(
-                ConfigConstants.PROPERTY_REPAIR_COMMAND_RAYCAST_IGNORES_LIQUIDS_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getBoolean());
-
-        setExtinguishCommandMaxVolume(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_COMMAND_PATH,
-            ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_NAME,
-            Integer.MAX_VALUE,
-            ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_COMMENT)
-            .setLanguageKey(
-                ConfigConstants.PROPERTY_EXTINGUISH_COMMAND_MAX_VOLUME_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getInt());
-
-        CONFIG_INSTANCE
-            .setCategoryComment(ConfigConstants.CATEGORY_DEBUGGING_PATH,
-                ConfigConstants.CATEGORY_DEBUGGING_COMMENT)
-            .setCategoryLanguageKey(ConfigConstants.CATEGORY_DEBUGGING_PATH,
-                ConfigConstants.CATEGORY_DEBUGGING_LANG_KEY)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_DEBUGGING_PATH,
-                false)
-            .setCategoryRequiresMcRestart(
-                ConfigConstants.CATEGORY_DEBUGGING_PATH,
-                false);
-
-        setVerboseLoggingEnabled(CONFIG_INSTANCE.get(
-            ConfigConstants.CATEGORY_DEBUGGING_PATH,
-            ConfigConstants.PROPERTY_DEBUG_LOGGING_NAME,
-            false,
-            ConfigConstants.PROPERTY_DEBUG_LOGGING_COMMENT)
-            .setLanguageKey(ConfigConstants.PROPERTY_DEBUG_LOGGING_LANG_KEY)
-            .setRequiresMcRestart(false).setRequiresWorldRestart(false)
-            .getBoolean());
+    /**
+     * Get whether the configuration has changed.
+     *
+     * @return Whether the configuration has changed.
+     */
+    public static boolean hasChanged() {
+        return CONFIG_INSTANCE == null ? false : CONFIG_INSTANCE.hasChanged();
     }
 
     /**
@@ -654,7 +557,7 @@ public class Config {
                 .error("Configuration has not been initialized yet!");
             return;
         }
-        if (CONFIG_INSTANCE.hasChanged()) {
+        if (hasChanged()) {
             CONFIG_INSTANCE.save();
         }
     }
@@ -663,10 +566,10 @@ public class Config {
      * Synchronize the mod configuration.
      */
     public static void sync() {
-        // -- Save the updated config to disk FIRST
-        save();
-        // -- THEN reload it into ourselves
         load();
+        if (hasChanged()) {
+            save();
+        }
     }
 
     /**
@@ -709,6 +612,9 @@ public class Config {
             migrator.getSecond().accept(currentVersion);
         }
         CONFIG_INSTANCE = currentVersion;
+        if (hasChanged()) {
+            save();
+        }
     }
 
     /**

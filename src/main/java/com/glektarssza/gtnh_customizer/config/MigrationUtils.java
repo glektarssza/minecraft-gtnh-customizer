@@ -1048,7 +1048,11 @@ public final class MigrationUtils {
     public static void renameCategory(Configuration instance, String path,
         String newName)
         throws NoSuchElementException {
-
+        // -- Rename is just a fancy move to a new location at the same depth
+        String[] pathComps = splitPath(path, Configuration.CATEGORY_SPLITTER);
+        pathComps[pathComps.length - 1] = newName;
+        moveCategory(instance, path, String.join(
+            Configuration.CATEGORY_SPLITTER, pathComps));
     }
 
     public static boolean tryRenameCategory(Configuration instance,
@@ -1064,7 +1068,31 @@ public final class MigrationUtils {
     public static void moveCategory(Configuration instance, String path,
         String newPath)
         throws NoSuchElementException {
-
+        ConfigCategory category = getCategoryByPath(instance, path);
+        ConfigCategory newCategory = instance
+            .getCategory(newPath);
+        newCategory.setComment(category.getComment());
+        newCategory.setLanguageKey(category.getLanguagekey());
+        // -- This "complex" piece of code is required because
+        // -- 'getPropertyOrder' returns an immutable list but
+        // -- 'setPropertyOrder' takes the passed list and tries to mutate it...
+        newCategory
+            .setPropertyOrder(
+                Arrays.asList(category.getPropertyOrder()
+                    .toArray(new String[0])));
+        newCategory.setRequiresMcRestart(category.requiresMcRestart());
+        newCategory.setRequiresWorldRestart(category.requiresWorldRestart());
+        newCategory.setShowInGui(category.showInGui());
+        newCategory.setConfigEntryClass(category.getConfigEntryClass());
+        category.entrySet().forEach((entry) -> {
+            newCategory.put(entry.getKey(), entry.getValue());
+        });
+        category.getChildren().forEach((child) -> {
+            moveCategory(instance,
+                ConfigCategory.getQualifiedName(child.getName(), category),
+                ConfigCategory.getQualifiedName(child.getName(), newCategory));
+        });
+        instance.removeCategory(category);
     }
 
     public static boolean tryMoveCategory(Configuration instance,
