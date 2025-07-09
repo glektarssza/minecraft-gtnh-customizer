@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiScreen;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.glektarssza.gtnh_customizer.KeyBindings;
@@ -52,6 +53,7 @@ public abstract class GuiEditNBTMixin extends GuiBase {
      * @return {@code true} if this screen is the currently focused screen;
      *         {@code} false otherwise.
      */
+    @Overwrite
     public boolean isFocused() {
         GuiEditNBT self = (GuiEditNBT) (Object) this;
         GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;

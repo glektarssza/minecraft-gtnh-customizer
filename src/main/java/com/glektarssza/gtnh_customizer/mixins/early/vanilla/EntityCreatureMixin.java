@@ -45,7 +45,7 @@ public class EntityCreatureMixin {
      * Mixin for the {@link EntityCreature#updateEntityActionState} method.
      */
     @Inject(method = "updateEntityActionState", at = @At(value = "INVOKE_ASSIGN", target = "net.minecraft.entity.EntityCreature.findPlayerToAttack()Lnet/minecraft/entity/Entity;"))
-    public void overrideTargetedEntity(CallbackInfo ci) {
+    public void updateEntityActionState$disableIfConfigured(CallbackInfo ci) {
         Entity target = this.entityToAttack;
         if (target == null) {
             return;

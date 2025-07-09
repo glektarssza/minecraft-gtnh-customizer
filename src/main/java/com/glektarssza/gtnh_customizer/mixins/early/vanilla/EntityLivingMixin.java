@@ -20,7 +20,7 @@ public class EntityLivingMixin {
      * Mixin for the {@link EntityLiving#setAttackTarget} method.
      */
     @Inject(method = "setAttackTarget", at = @At(value = "HEAD"), cancellable = true)
-    public void overrideSetAttackTarget(EntityLivingBase target,
+    public void setAttackTarget$disableIfConfigured(EntityLivingBase target,
         CallbackInfo ci) {
         if (target == null) {
             return;

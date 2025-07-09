@@ -21,7 +21,8 @@ public abstract class WorldMixin {
      * Mixin for the {@code getClosestVulnerablePlayerToEntity} method.
      */
     @Inject(method = "getClosestVulnerablePlayerToEntity", at = @At("RETURN"), cancellable = true)
-    private void getClosestVulnerablePlayerToEntity(Entity entityIn,
+    private void getClosestVulnerablePlayerToEntity$disableIfConfigured(
+        Entity entityIn,
         double distance,
         CallbackInfoReturnable<EntityPlayer> cir) {
         if (!(entityIn instanceof EntityLiving)) {

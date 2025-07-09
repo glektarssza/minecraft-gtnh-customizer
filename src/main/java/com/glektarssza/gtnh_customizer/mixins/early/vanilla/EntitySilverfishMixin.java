@@ -20,7 +20,8 @@ public class EntitySilverfishMixin {
      * Mixin for the {@code findPlayerToAttack} method.
      */
     @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
-    public void findPlayerToAttack(CallbackInfoReturnable<Entity> cir) {
+    public void findPlayerToAttack$disableIfConfigured(
+        CallbackInfoReturnable<Entity> cir) {
         Entity target = cir.getReturnValue();
         if (target == null) {
             return;

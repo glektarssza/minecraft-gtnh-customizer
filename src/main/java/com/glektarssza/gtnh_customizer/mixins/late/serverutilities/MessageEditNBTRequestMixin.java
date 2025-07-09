@@ -27,7 +27,7 @@ public class MessageEditNBTRequestMixin {
      */
     @SideOnly(Side.CLIENT)
     @Inject(method = "editNBT", at = @At("TAIL"), remap = false)
-    private static void editNBT$handleRaycastNull(
+    private static void editNBT$handleRaycastMiss(
         CallbackInfo ci, @Local LocalRef<MovingObjectPosition> ray) {
         if (ray.get() == null) {
             return;

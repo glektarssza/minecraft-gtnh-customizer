@@ -32,7 +32,8 @@ public class EntityDragonMixin {
      */
     @SuppressWarnings("rawtypes")
     @Inject(method = "attackEntitiesInList", at = @At("HEAD"), cancellable = true)
-    private void attackEntitiesInList(List targetEntities, CallbackInfo ci) {
+    private void attackEntitiesInList$disableIfConfigured(List targetEntities,
+        CallbackInfo ci) {
         EntityDragon self = (EntityDragon) (Object) this;
         for (int i = 0; i < targetEntities.size(); ++i) {
             Entity target = (Entity) targetEntities.get(i);
@@ -57,7 +58,7 @@ public class EntityDragonMixin {
      * Mixin for the {@code setNewTarget} method.
      */
     @Inject(method = "setNewTarget", at = @At("TAIL"), cancellable = true)
-    private void setNewTarget(CallbackInfo ci) {
+    private void setNewTarget$disableIfConfigured(CallbackInfo ci) {
         EntityPlayer player = null;
         if (this.target instanceof EntityPlayer) {
             player = (EntityPlayer) this.target;

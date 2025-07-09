@@ -22,7 +22,8 @@ public class Entity_SpecialCaveSpiderMixin {
      * Mixin for the {@code findPlayerToAttack} method.
      */
     @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true, remap = false)
-    public void findPlayerToAttack(CallbackInfoReturnable<Entity> cir) {
+    public void findPlayerToAttack$disableIfConfigured(
+        CallbackInfoReturnable<Entity> cir) {
         Entity returnValue = cir.getReturnValue();
         if (returnValue == null) {
             return;

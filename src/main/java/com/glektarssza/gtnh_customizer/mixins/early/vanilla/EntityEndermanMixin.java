@@ -20,7 +20,8 @@ public class EntityEndermanMixin {
      * Mixin for the {@code findPlayerToAttack} method.
      */
     @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
-    public void findPlayerToAttack(CallbackInfoReturnable<Entity> cir) {
+    public void findPlayerToAttack$disableIfConfigured(
+        CallbackInfoReturnable<Entity> cir) {
         Entity returnValue = cir.getReturnValue();
         EntityPlayer player = null;
         if (returnValue instanceof EntityPlayer) {
@@ -38,7 +39,7 @@ public class EntityEndermanMixin {
      * Mixin for the {@code shouldAttackPlayer} method.
      */
     @Inject(method = "shouldAttackPlayer", at = @At("RETURN"), cancellable = true)
-    public void shouldAttackPlayer(EntityPlayer player,
+    public void shouldAttackPlayer$disableIfConfigured(EntityPlayer player,
         CallbackInfoReturnable<Boolean> cir) {
         if (player == null) {
             return;
