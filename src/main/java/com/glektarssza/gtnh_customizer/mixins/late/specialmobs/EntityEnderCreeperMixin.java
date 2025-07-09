@@ -30,4 +30,15 @@ public class EntityEnderCreeperMixin {
             cir.setReturnValue(false);
         }
     }
+
+    /**
+     * Mixin for the {@code teleportTo} method.
+     */
+    @Inject(method = "teleportTo", at = @At("HEAD"), cancellable = true, remap = false)
+    public void teleportTo$disableIfConfigured(double x, double y, double z,
+        CallbackInfoReturnable<Boolean> cir) {
+        if (Config.getPreventEnderMobTeleportation()) {
+            cir.setReturnValue(false);
+        }
+    }
 }
