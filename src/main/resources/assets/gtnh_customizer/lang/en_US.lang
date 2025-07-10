@@ -1,45 +1,41 @@
 # Configuration GUI
 gtnh_customizer.config.ui.title=Configuration - %s
 
-# Configuration Categories - General
-gtnh_customizer.config.category_general=General Settings
-gtnh_customizer.config.category_general.tooltip=Settings relating to general functionality.
-
 # Configuration Categories - Gameplay Tweaks
-gtnh_customizer.config.category_gameplay=Gameplay Tweaks
-gtnh_customizer.config.category_gameplay.tooltip=Tweaks to gameplay.
-gtnh_customizer.config.category_gameplay.globally_immune_players=Globally Immune Players
-gtnh_customizer.config.category_gameplay.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
-gtnh_customizer.config.category_gameplay.prevent_ender_mob_teleportation=Prevent Ender Mob Teleportation
-gtnh_customizer.config.category_gameplay.prevent_ender_mob_teleportation.tooltip=Whether to prevent Enderman and Enderman-like mobs from teleporting.
+gtnh_customizer.config.categories.gameplay=Gameplay Tweaks
+gtnh_customizer.config.categories.gameplay.tooltip=Tweaks to gameplay.
+gtnh_customizer.config.categories.gameplay.globally_immune_players=Globally Immune Players
+gtnh_customizer.config.categories.gameplay.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
+gtnh_customizer.config.categories.gameplay.prevent_ender_mob_teleportation=Prevent Ender Mob Teleportation
+gtnh_customizer.config.categories.gameplay.prevent_ender_mob_teleportation.tooltip=Whether to prevent Enderman and Enderman-like mobs from teleporting.
 
 # Configuration Categories - Gameplay Tweaks - Tinker's Construct
-gtnh_customizer.config.category_gameplay.category_tconstruct=Tinker's Construct
-gtnh_customizer.config.category_gameplay.category_tconstruct.tooltip=Tinker's Construct-related gameplay tweaks
-gtnh_customizer.config.category_gameplay.category_tconstruct.can_bone_meal_slime_saplings=Slime Sapling Bone Mealable
-gtnh_customizer.config.category_gameplay.category_tconstruct.can_bone_meal_slime_saplings.tooltip=Whether to allow Tinker's Construct Slime Saplings to have bone meal applied.
+gtnh_customizer.config.categories.gameplay.tconstruct=Tinker's Construct
+gtnh_customizer.config.categories.gameplay.tconstruct.tooltip=Tinker's Construct-related gameplay tweaks
+gtnh_customizer.config.categories.gameplay.tconstruct.can_bone_meal_slime_saplings=Slime Sapling Bone Mealable
+gtnh_customizer.config.categories.gameplay.tconstruct.can_bone_meal_slime_saplings.tooltip=Whether to allow Tinker's Construct Slime Saplings to have bone meal applied.
 
 # Configuration Categories - Gameplay Tweaks - Thaumcraft
-gtnh_customizer.config.category_gameplay.category_thaumcraft=Thaumcraft
-gtnh_customizer.config.category_gameplay.category_thaumcraft.tooltip=Thaumcraft-related gameplay tweaks
-gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_greatwood_saplings=Can Bone Meal Greatwood Saplings
-gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_greatwood_saplings.tooltip=Whether to allow Thaumcraft Greatwood Saplings to have bone meal applied.
-gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_silverwood_saplings=Can Bone Meal Silverwood Saplings
-gtnh_customizer.config.category_gameplay.category_thaumcraft.can_bone_meal_silverwood_saplings.tooltip=Whether to allow Thaumcraft Silverwood Saplings to have bone meal applied.
+gtnh_customizer.config.categories.gameplay.thaumcraft=Thaumcraft
+gtnh_customizer.config.categories.gameplay.thaumcraft.tooltip=Thaumcraft-related gameplay tweaks
+gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_greatwood_saplings=Can Bone Meal Greatwood Saplings
+gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_greatwood_saplings.tooltip=Whether to allow Thaumcraft Greatwood Saplings to have bone meal applied.
+gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_silverwood_saplings=Can Bone Meal Silverwood Saplings
+gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_silverwood_saplings.tooltip=Whether to allow Thaumcraft Silverwood Saplings to have bone meal applied.
 
 # Configuration Categories - Commands
-gtnh_customizer.config.category_command=Command Settings
-gtnh_customizer.config.category_command.tooltip=Settings relating to command functionality.
-gtnh_customizer.config.category_command.repair_ignores_liquids=Repair Command Ignores Liquids
-gtnh_customizer.config.category_command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when raycasting to look for containers to repair items inside of.
-gtnh_customizer.config.category_command.extinguish_max_volume=Extinguish Max Volume
-gtnh_customizer.config.category_command.extinguish_max_volume.tooltip=The maximum number of blocks the 'extinguish' command will process.
+gtnh_customizer.config.categories.command=Command Settings
+gtnh_customizer.config.categories.command.tooltip=Settings relating to command functionality.
+gtnh_customizer.config.categories.command.repair_ignores_liquids=Repair Command Ignores Liquids
+gtnh_customizer.config.categories.command.repair_ignores_liquids.tooltip=Whether the 'repair' command ignores liquids when raycasting to look for containers to repair items inside of.
+gtnh_customizer.config.categories.command.extinguish_max_volume=Extinguish Max Volume
+gtnh_customizer.config.categories.command.extinguish_max_volume.tooltip=The maximum number of blocks the 'extinguish' command will process.
 
 # Configuration Categories - Debugging
-gtnh_customizer.config.category_debugging=Debugging Settings
-gtnh_customizer.config.category_debugging.tooltip=Settings relating to debugging.
-gtnh_customizer.config.category_debugging.verbose_logging=Verbose Logging
-gtnh_customizer.config.category_debugging.verbose_logging.tooltip=Whether verbose logging is enabled.
+gtnh_customizer.config.categories.debugging=Debugging Settings
+gtnh_customizer.config.categories.debugging.tooltip=Settings relating to debugging.
+gtnh_customizer.config.categories.debugging.verbose_logging=Verbose Logging
+gtnh_customizer.config.categories.debugging.verbose_logging.tooltip=Whether verbose logging is enabled.
 
 # Commands - Cross-dimension teleportation
 gtnh_customizer.commands.teleport_cross_dimension.usage=/teleport-cross-dimension [victim player] (<target player> [yaw override] | <x position> <y position> <z position> [dimension id | dimension name] [yaw])

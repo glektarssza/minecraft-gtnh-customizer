@@ -35,6 +35,17 @@ public class Config {
     public static String CONFIG_VERSION = "9";
 
     /**
+     * The base localization language key.
+     */
+    public static String LANG_KEY_BASE = "gtnh_customizer.config";
+
+    /**
+     * The base localization language key for categories.
+     */
+    public static String LANG_KEY_CATEGORY_BASE = String
+        .join(Configuration.CATEGORY_SPLITTER, LANG_KEY_BASE, "categories");
+
+    /**
      * The configuration instance.
      */
     private static Configuration CONFIG_INSTANCE;
@@ -494,11 +505,6 @@ public class Config {
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
             CONFIG_VERSION, false);
-
-        // -- Register all our configurations
-        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
     }
 
     /**
@@ -576,6 +582,11 @@ public class Config {
             }
         }
 
+        // -- Register all our configurations
+        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+
         // -- Load updated values
         new Gameplay().loadValues(CONFIG_INSTANCE);
         new Debugging().loadValues(CONFIG_INSTANCE);
@@ -601,9 +612,7 @@ public class Config {
                 .error("Configuration has not been initialized yet!");
             return;
         }
-        if (hasChanged()) {
-            CONFIG_INSTANCE.save();
-        }
+        CONFIG_INSTANCE.save();
     }
 
     /**
@@ -611,9 +620,7 @@ public class Config {
      */
     public static void sync() {
         load();
-        if (hasChanged()) {
-            save();
-        }
+        save();
     }
 
     /**

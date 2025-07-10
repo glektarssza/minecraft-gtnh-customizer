@@ -1,9 +1,6 @@
 package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 
-import java.util.Arrays;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
@@ -12,31 +9,19 @@ import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
 
-public class TConstruct implements Category {
-    /**
-     * The child categories of this category.
-     */
-    private final Category[] childCategories;
-
-    /**
-     * The child properties of this category.
-     */
-    private final Property<?>[] childProperties;
-
-    /**
-     * The parent category.
-     */
-    private final Category parent;
-
+/**
+ * The Tinker's Construct gameplay-related configuration category.
+ */
+public class TConstruct extends Category {
     /**
      * Create a new instance.
+     *
+     * @param parent The parent of this category.
      */
     public TConstruct(Category parent) {
-        this.parent = parent;
-        Category cat = this;
-        this.childCategories = new Category[] {};
-        this.childProperties = new Property<?>[] {
-            new Property<Boolean>(cat) {
+        super(parent);
+        this.childProperties.add(
+            new Property<Boolean>(this) {
                 @Override
                 @Nonnull
                 public String getID() {
@@ -59,11 +44,10 @@ public class TConstruct implements Category {
                 public void loadValue(Configuration config) {
                     Config
                         .setTConstructCanBoneMealSlimeSaplings(
-                            config.getCategory(cat.getFullPath())
+                            config.getCategory(this.getParent().getFullPath())
                                 .get(this.getID()).getBoolean());
                 }
-            }
-        };
+            });
     }
 
     @Override
@@ -80,33 +64,5 @@ public class TConstruct implements Category {
     @Override
     public boolean getRequiresGameRestart() {
         return false;
-    }
-
-    @Override
-    @Nullable
-    public Category getParent() {
-        return this.parent;
-    }
-
-    @Override
-    public boolean hasChildCategories() {
-        return childCategories.length <= 0;
-    }
-
-    @Override
-    public boolean hasChildProperties() {
-        return childProperties.length <= 0;
-    }
-
-    @Override
-    @Nonnull
-    public Category[] getChildrenCategories() {
-        return Arrays.copyOf(childCategories, childCategories.length);
-    }
-
-    @Override
-    @Nonnull
-    public Property<?>[] getChildrenProperties() {
-        return Arrays.copyOf(childProperties, childProperties.length);
     }
 }
