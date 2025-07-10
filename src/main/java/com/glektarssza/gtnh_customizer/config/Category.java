@@ -46,7 +46,7 @@ public interface Category {
         Category parent = this.getParent();
         if (parent == null) {
             return String.join(Configuration.CATEGORY_SPLITTER,
-                "gtnh_customizer.config.categories", this.getID());
+                Config.LANG_KEY_CATEGORY_BASE, this.getID());
         }
         return String.join(Configuration.CATEGORY_SPLITTER,
             parent.getLanguageKey(), this.getID());
