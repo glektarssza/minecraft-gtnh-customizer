@@ -1,9 +1,6 @@
 package com.glektarssza.gtnh_customizer.config.categories;
 
-import java.util.Arrays;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
@@ -12,31 +9,20 @@ import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
 import com.glektarssza.gtnh_customizer.config.categories.gameplay.TConstruct;
+import com.glektarssza.gtnh_customizer.config.categories.gameplay.Thaumcraft;
 
 /**
- * The general configuration category.
+ * The gameplay-related configuration category.
  */
-public class Gameplay implements Category {
-    /**
-     * The child categories of this category.
-     */
-    private final Category[] childCategories;
-
-    /**
-     * The child properties of this category.
-     */
-    private final Property<?>[] childProperties;
-
+public class Gameplay extends Category {
     /**
      * Create a new instance.
      */
     public Gameplay() {
-        Category cat = this;
-        this.childCategories = new Category[] {
-            new TConstruct(cat)
-        };
-        this.childProperties = new Property<?>[] {
-            new Property<String[]>(cat) {
+        this.childCategories.add(new TConstruct(this));
+        this.childCategories.add(new Thaumcraft(this));
+        this.childProperties.add(
+            new Property<String[]>(this) {
                 @Override
                 @Nonnull
                 public String getID() {
@@ -63,37 +49,37 @@ public class Gameplay implements Category {
                 @Override
                 public void loadValue(Configuration config) {
                     Config
-                        .setImmunePlayers(config.getCategory(cat.getFullPath())
-                            .get(this.getID()).getStringList());
+                        .setImmunePlayers(
+                            config.getCategory(this.getParent().getFullPath())
+                                .get(this.getID()).getStringList());
                 }
-            },
-            new Property<Boolean>(cat) {
-                @Override
-                @Nonnull
-                public String getID() {
-                    return "prevent_ender_mob_teleportation";
-                }
-
-                @Override
-                @Nonnull
-                public Type getValueType() {
-                    return Type.BOOLEAN;
-                }
-
-                @Override
-                @Nonnull
-                public Boolean getDefaultValue() {
-                    return true;
-                }
-
-                @Override
-                public void loadValue(Configuration config) {
-                    Config.setPreventEnderMobTeleportation(
-                        config.getCategory(cat.getFullPath())
-                            .get(this.getID()).getBoolean());
-                }
+            });
+        this.childProperties.add(new Property<Boolean>(this) {
+            @Override
+            @Nonnull
+            public String getID() {
+                return "prevent_ender_mob_teleportation";
             }
-        };
+
+            @Override
+            @Nonnull
+            public Type getValueType() {
+                return Type.BOOLEAN;
+            }
+
+            @Override
+            @Nonnull
+            public Boolean getDefaultValue() {
+                return true;
+            }
+
+            @Override
+            public void loadValue(Configuration config) {
+                Config.setPreventEnderMobTeleportation(
+                    config.getCategory(this.getParent().getFullPath())
+                        .get(this.getID()).getBoolean());
+            }
+        });
     }
 
     @Override
@@ -110,23 +96,5 @@ public class Gameplay implements Category {
     @Override
     public boolean getRequiresGameRestart() {
         return false;
-    }
-
-    @Override
-    @Nullable
-    public Category getParent() {
-        return null;
-    }
-
-    @Override
-    @Nonnull
-    public Category[] getChildrenCategories() {
-        return Arrays.copyOf(childCategories, childCategories.length);
-    }
-
-    @Override
-    @Nonnull
-    public Property<?>[] getChildrenProperties() {
-        return Arrays.copyOf(childProperties, childProperties.length);
     }
 }

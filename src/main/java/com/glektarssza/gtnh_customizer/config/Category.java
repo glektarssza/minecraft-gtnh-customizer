@@ -1,5 +1,6 @@
 package com.glektarssza.gtnh_customizer.config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,14 +13,46 @@ import net.minecraftforge.common.config.Configuration;
 /**
  * An interface which describes a configuration category.
  */
-public interface Category {
+public abstract class Category {
+    /**
+     * The list of child categories of this category.
+     */
+    protected final List<Category> childCategories = new ArrayList<Category>();
+
+    /**
+     * The list of child properties of this category.
+     */
+    protected final List<Property<?>> childProperties = new ArrayList<Property<?>>();
+
+    /**
+     * The parent of this category.
+     */
+    @Nullable
+    protected final Category parent;
+
+    /**
+     * Create a new instance.
+     */
+    public Category() {
+        this(null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param parent The parent of this category.
+     */
+    public Category(@Nullable Category parent) {
+        this.parent = parent;
+    }
+
     /**
      * Get the ID of the category.
      *
      * @return The ID of the category.
      */
     @Nonnull
-    public String getID();
+    public abstract String getID();
 
     /**
      * Get the full path of the category.
@@ -27,7 +60,7 @@ public interface Category {
      * @return The full path of the category.
      */
     @Nonnull
-    public default String getFullPath() {
+    public String getFullPath() {
         Category parent = this.getParent();
         if (parent == null) {
             return this.getID();
@@ -42,7 +75,7 @@ public interface Category {
      * @return The language key of the category.
      */
     @Nonnull
-    public default String getLanguageKey() {
+    public String getLanguageKey() {
         Category parent = this.getParent();
         if (parent == null) {
             return String.join(Configuration.CATEGORY_SPLITTER,
@@ -58,7 +91,7 @@ public interface Category {
      * @return The comment of the category.
      */
     @Nullable
-    public default String getComment() {
+    public String getComment() {
         return null;
     }
 
@@ -67,7 +100,7 @@ public interface Category {
      *
      * @return Whether to show this category in the GUI.
      */
-    public default boolean getShowInGui() {
+    public boolean getShowInGui() {
         return true;
     }
 
@@ -76,14 +109,14 @@ public interface Category {
      *
      * @return Whether changes to this category require a world restart.
      */
-    public boolean getRequiresWorldRestart();
+    public abstract boolean getRequiresWorldRestart();
 
     /**
      * Get whether changes to this category require a game restart.
      *
      * @return Whether changes to this category require a game restart.
      */
-    public boolean getRequiresGameRestart();
+    public abstract boolean getRequiresGameRestart();
 
     /**
      * Get the order to show properties in, if any.
@@ -92,7 +125,7 @@ public interface Category {
      *         no specific order.
      */
     @Nullable
-    public default List<String> getPropertyOrder() {
+    public List<String> getPropertyOrder() {
         return null;
     }
 
@@ -103,7 +136,9 @@ public interface Category {
      *         category; {@code null} otherwise.
      */
     @Nullable
-    public Category getParent();
+    public Category getParent() {
+        return this.parent;
+    }
 
     /**
      * Check whether this category does not have any children categories and
@@ -113,7 +148,7 @@ public interface Category {
      *         categories and does not have any children properties;
      *         {@code false} otherwise.
      */
-    public default boolean isEmpty() {
+    public boolean isEmpty() {
         return !this.hasChildCategories() && !this.hasChildProperties();
     }
 
@@ -123,8 +158,8 @@ public interface Category {
      * @return {@code true} if this category has any children categories;
      *         {@code false} otherwise.
      */
-    public default boolean hasChildCategories() {
-        return this.getChildrenCategories().length <= 0;
+    public boolean hasChildCategories() {
+        return !this.childCategories.isEmpty();
     }
 
     /**
@@ -133,8 +168,8 @@ public interface Category {
      * @return {@code true} if this category has any children properties;
      *         {@code false} otherwise.
      */
-    public default boolean hasChildProperties() {
-        return this.getChildrenProperties().length <= 0;
+    public boolean hasChildProperties() {
+        return !this.childProperties.isEmpty();
     }
 
     /**
@@ -143,7 +178,9 @@ public interface Category {
      * @return The children categories of this category.
      */
     @Nonnull
-    public Category[] getChildrenCategories();
+    public Category[] getChildrenCategories() {
+        return this.childCategories.toArray(new Category[0]);
+    }
 
     /**
      * Get the children properties of this category.
@@ -151,7 +188,9 @@ public interface Category {
      * @return The children properties of this category.
      */
     @Nonnull
-    public Property<?>[] getChildrenProperties();
+    public Property<?>[] getChildrenProperties() {
+        return this.childProperties.toArray(new Property<?>[0]);
+    }
 
     /**
      * Register this category and its children onto the given Forge
@@ -159,7 +198,7 @@ public interface Category {
      *
      * @param config The Forge configuration to register this category on to.
      */
-    public default void registerForgeConfigCategory(Configuration config) {
+    public void registerForgeConfigCategory(Configuration config) {
         this.registerForgeConfigCategory(config, true);
     }
 
@@ -173,7 +212,7 @@ public interface Category {
      *
      * @return This instance for chaining.
      */
-    public default Category registerForgeConfigCategory(Configuration config,
+    public Category registerForgeConfigCategory(Configuration config,
         boolean recurse) {
         ConfigCategory cat = config.getCategory(this.getFullPath());
         cat.setComment(this.getComment());
@@ -203,7 +242,7 @@ public interface Category {
      *
      * @return This instance for chaining.
      */
-    public default Category loadValues(Configuration config) {
+    public Category loadValues(Configuration config) {
         Arrays.stream(this.getChildrenProperties())
             .forEach((prop) -> prop.loadValue(config));
         Arrays.stream(this.getChildrenCategories())
