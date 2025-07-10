@@ -1,10 +1,6 @@
 # Configuration GUI
 gtnh_customizer.config.ui.title=Configuration - %s
 
-# Configuration Categories - General
-gtnh_customizer.config.categories.general=General Settings
-gtnh_customizer.config.categories.general.tooltip=Settings relating to general functionality.
-
 # Configuration Categories - Gameplay Tweaks
 gtnh_customizer.config.categories.gameplay=Gameplay Tweaks
 gtnh_customizer.config.categories.gameplay.tooltip=Tweaks to gameplay.
