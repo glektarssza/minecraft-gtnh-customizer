@@ -612,9 +612,7 @@ public class Config {
                 .error("Configuration has not been initialized yet!");
             return;
         }
-        if (hasChanged()) {
-            CONFIG_INSTANCE.save();
-        }
+        CONFIG_INSTANCE.save();
     }
 
     /**
@@ -622,9 +620,7 @@ public class Config {
      */
     public static void sync() {
         load();
-        if (hasChanged()) {
-            save();
-        }
+        save();
     }
 
     /**
