@@ -1,13 +1,10 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -20,21 +17,12 @@ import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 @Mixin(EntityAITarget.class)
 public class EntityAITargetMixin {
     /**
-     * A shadow of the {@code taskOwner} field.
-     */
-    @Shadow
-    private EntityCreature taskOwner;
-
-    /**
      * Mixin for the {@code isSuitableTarget} method.
      */
-    @SuppressWarnings("unused")
     @Inject(method = "isSuitableTarget", at = @At("RETURN"), cancellable = true)
-    private void isSuitableTarget(EntityLivingBase target,
+    private void isSuitableTarget$disableIfConfigured(EntityLivingBase target,
         boolean includeInvincibles,
         CallbackInfoReturnable<Boolean> cir) {
-        EntityAITarget self = (EntityAITarget) (Object) this;
-        EntityLiving attacker = taskOwner;
         if (!(target instanceof EntityPlayer)) {
             return;
         }

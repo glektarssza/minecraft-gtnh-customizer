@@ -21,7 +21,7 @@ public class Entity_SpecialGhastMixin {
      * Mixin for the {@code updateEntityTarget} method.
      */
     @Inject(method = "updateEntityTarget", at = @At("TAIL"), cancellable = true, remap = false)
-    public void updateEntityTarget(CallbackInfo ci) {
+    public void updateEntityTarget$disableIfConfigured(CallbackInfo ci) {
         Entity_SpecialGhast self = (Entity_SpecialGhast) (Object) this;
         EntityLivingBase target = null;
         if (self.targetedEntity == null) {

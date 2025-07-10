@@ -10,6 +10,8 @@ gtnh_customizer.config.category_gameplay=Gameplay Tweaks
 gtnh_customizer.config.category_gameplay.tooltip=Tweaks to gameplay.
 gtnh_customizer.config.category_gameplay.globally_immune_players=Globally Immune Players
 gtnh_customizer.config.category_gameplay.globally_immune_players.tooltip=A list of players who are globally immune to being targeted.
+gtnh_customizer.config.category_gameplay.prevent_ender_mob_teleportation=Prevent Ender Mob Teleportation
+gtnh_customizer.config.category_gameplay.prevent_ender_mob_teleportation.tooltip=Whether to prevent Enderman and Enderman-like mobs from teleporting.
 
 # Configuration Categories - Gameplay Tweaks - Tinker's Construct
 gtnh_customizer.config.category_gameplay.category_tconstruct=Tinker's Construct

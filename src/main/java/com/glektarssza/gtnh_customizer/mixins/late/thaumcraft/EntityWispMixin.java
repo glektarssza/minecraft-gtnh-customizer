@@ -33,7 +33,8 @@ public class EntityWispMixin {
      * Mixin for the {@code attackEntityFrom} method.
      */
     @Inject(method = "attackEntityFrom", at = @At(value = "FIELD", target = "Lthaumcraft/common/entities/monster/EntityWisp;targetedEntity:Lnet/minecraft/entity/Entity;", opcode = Opcodes.PUTFIELD, shift = Shift.AFTER, remap = false), cancellable = true)
-    public void overrideTargetedEntity(DamageSource damageSource, float amount,
+    public void attackEntityFrom$disableIfConfigured(DamageSource damageSource,
+        float amount,
         CallbackInfoReturnable<Boolean> cir) {
         if (this.targetedEntity == null) {
             return;
@@ -55,7 +56,7 @@ public class EntityWispMixin {
      * Mixin for the {@code updateEntityActionState} method.
      */
     @Inject(method = "updateEntityActionState", at = @At(value = "FIELD", target = "Lthaumcraft/common/entities/monster/EntityWisp;targetedEntity:Lnet/minecraft/entity/Entity;", opcode = Opcodes.PUTFIELD, shift = Shift.AFTER, remap = false), cancellable = true)
-    public void overrideTargetedEntity(CallbackInfo ci) {
+    public void updateEntityActionState$disableIfConfigured(CallbackInfo ci) {
         if (this.targetedEntity == null) {
             return;
         }

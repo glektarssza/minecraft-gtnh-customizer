@@ -25,7 +25,7 @@ public class TextBoxMixin {
      * The injection for the {@code keyPressed} method.
      */
     @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true, remap = false)
-    public void keyPressed$handleNumpadEnter(int keyCode, char keyChar,
+    public void keyPressed$handleKeyBindings(int keyCode, char keyChar,
         CallbackInfoReturnable<Boolean> cir) {
         TextBox self = (TextBox) (Object) this;
         if (!self.isFocused()) {

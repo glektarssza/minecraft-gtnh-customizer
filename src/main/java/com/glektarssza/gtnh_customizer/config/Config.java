@@ -32,7 +32,7 @@ public class Config {
     /**
      * The current version of the configuration.
      */
-    public static String CONFIG_VERSION = "8";
+    public static String CONFIG_VERSION = "9";
 
     /**
      * The configuration instance.
@@ -51,6 +51,11 @@ public class Config {
      * A list of players who are globally immune.
      */
     private static final List<String> globallyImmunePlayers = new ArrayList<String>();
+
+    /**
+     * Whether to prevent Enderman and Enderman-like teleportation.
+     */
+    private static boolean preventEnderMobTeleport = true;
 
     /**
      * Whether the {@code repair} command ignores liquids when raycasting to
@@ -118,6 +123,45 @@ public class Config {
     }
 
     /**
+     * Reset the globally immune players.
+     */
+    public static void resetImmunePlayers() {
+        clearImmunePlayers();
+    }
+
+    /**
+     * Get whether to prevent Enderman and Enderman-like teleportation.
+     *
+     * @return Whether to prevent Enderman and Enderman-like mob teleportation.
+     */
+    public static boolean getPreventEnderMobTeleportation() {
+        return preventEnderMobTeleport;
+    }
+
+    /**
+     * Set whether to prevent Enderman and Enderman-like teleportation.
+     *
+     * @param value Whether to prevent Enderman and Enderman-like teleportation.
+     */
+    public static void setPreventEnderMobTeleportation(boolean value) {
+        preventEnderMobTeleport = value;
+    }
+
+    /**
+     * Reset whether to prevent Enderman and Enderman-like teleportation.
+     */
+    public static void resetPreventEnderMobTeleportation() {
+        setPreventEnderMobTeleportation(true);
+    }
+
+    /**
+     * Toggle whether to prevent Enderman and Enderman-like teleportation.
+     */
+    public static void togglePreventEnderMobTeleportation() {
+        setPreventEnderMobTeleportation(!getPreventEnderMobTeleportation());
+    }
+
+    /**
      * Get whether Tinker's Construct Slime Saplings should be able to have bone
      * meal applied.
      *
@@ -145,7 +189,7 @@ public class Config {
      * bone meal applied.
      */
     public static void resetTConstructCanBoneMealSlimeSaplings() {
-        setTConstructCanBoneMealSlimeSaplings(false);
+        setTConstructCanBoneMealSlimeSaplings(true);
     }
 
     /**
@@ -185,7 +229,7 @@ public class Config {
      * meal applied.
      */
     public static void resetThaumcraftCanBoneMealGreatwoodSaplings() {
-        setThaumcraftCanBoneMealGreatwoodSaplings(false);
+        setThaumcraftCanBoneMealGreatwoodSaplings(true);
     }
 
     /**
@@ -225,7 +269,7 @@ public class Config {
      * meal applied.
      */
     public static void resetThaumcraftCanBoneMealSilverwoodSaplings() {
-        setThaumcraftCanBoneMealSilverwoodSaplings(false);
+        setThaumcraftCanBoneMealSilverwoodSaplings(true);
     }
 
     /**

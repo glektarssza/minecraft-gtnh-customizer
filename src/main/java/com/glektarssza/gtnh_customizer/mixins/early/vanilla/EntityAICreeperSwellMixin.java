@@ -30,7 +30,8 @@ public class EntityAICreeperSwellMixin {
      */
     @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
-    private void shouldExecute(CallbackInfoReturnable<Boolean> cir) {
+    private void shouldExecute$disableIfConfigured(
+        CallbackInfoReturnable<Boolean> cir) {
         EntityAICreeperSwell self = (EntityAICreeperSwell) (Object) this;
         EntityLiving attacker = this.swellingCreeper;
         EntityLivingBase target = this.swellingCreeper.getAttackTarget();

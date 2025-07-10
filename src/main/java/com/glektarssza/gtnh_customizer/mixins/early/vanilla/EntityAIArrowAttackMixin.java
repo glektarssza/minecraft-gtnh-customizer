@@ -29,7 +29,8 @@ public class EntityAIArrowAttackMixin {
      */
     @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
-    private void shouldExecute(CallbackInfoReturnable<Boolean> cir) {
+    private void shouldExecute$disableIfConfigured(
+        CallbackInfoReturnable<Boolean> cir) {
         EntityAIArrowAttack self = (EntityAIArrowAttack) (Object) this;
         EntityLiving attacker = entityHost;
         EntityLivingBase target = this.entityHost.getAttackTarget();

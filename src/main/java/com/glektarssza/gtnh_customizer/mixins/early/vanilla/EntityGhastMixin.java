@@ -27,7 +27,7 @@ public class EntityGhastMixin {
      * Mixin for the {@code updateEntityActionState} method.
      */
     @Inject(method = "updateEntityActionState", at = @At(value = "INVOKE_ASSIGN", target = "net.minecraft.world.World.getClosestVulnerablePlayerToEntity(Lnet/minecraft/entity/Entity;D)Lnet/minecraft/entity/player/EntityPlayer;"), cancellable = false)
-    public void overrideTargetedEntity(CallbackInfo ci) {
+    public void updateEntityActionState$disableIfConfigured(CallbackInfo ci) {
         Entity target = this.targetedEntity;
         if (target == null) {
             return;

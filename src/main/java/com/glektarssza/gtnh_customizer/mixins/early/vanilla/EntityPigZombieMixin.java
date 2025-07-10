@@ -36,7 +36,8 @@ public class EntityPigZombieMixin {
      * Mixin for the {@code becomeAngryAt} method.
      */
     @Inject(method = "becomeAngryAt", at = @At("HEAD"), cancellable = true)
-    public void becomeAngryAt(Entity target, CallbackInfo ci) {
+    public void becomeAngryAt$disableIfConfigured(Entity target,
+        CallbackInfo ci) {
         if (target == null) {
             return;
         }

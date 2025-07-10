@@ -20,7 +20,8 @@ public class EntityWitherMixin {
      * Mixin for the {@code attackEntityWithRangedAttack} method.
      */
     @Inject(method = "attackEntityWithRangedAttack", at = @At("TAIL"), cancellable = true)
-    private void attackEntityWithRangedAttack(EntityLivingBase target,
+    private void attackEntityWithRangedAttack$disableIfConfigured(
+        EntityLivingBase target,
         float p_82196_2_, CallbackInfo ci) {
         if (!(target instanceof EntityPlayer)) {
             return;

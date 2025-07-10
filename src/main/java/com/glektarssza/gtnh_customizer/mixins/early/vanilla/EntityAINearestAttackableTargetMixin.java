@@ -1,10 +1,7 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.player.EntityPlayer;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,27 +16,7 @@ import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
  * Mixin for the {@code EntityAINearestAttackableTarget} class.
  */
 @Mixin(EntityAINearestAttackableTarget.class)
-public abstract class EntityAINearestAttackableTargetMixin
-    extends EntityAITarget {
-    /**
-     * Constructor to shut Java up.
-     */
-    public EntityAINearestAttackableTargetMixin(EntityCreature taskOwner,
-        boolean shouldCheckSight) {
-        super(taskOwner, shouldCheckSight);
-
-    }
-
-    /**
-     * Constructor to shut Java up.
-     */
-    public EntityAINearestAttackableTargetMixin(EntityCreature taskOwner,
-        boolean shouldCheckSight,
-        boolean nearbyOnly) {
-        super(taskOwner, shouldCheckSight, nearbyOnly);
-
-    }
-
+public abstract class EntityAINearestAttackableTargetMixin {
     /**
      * A shadow of the {@code targetEntity} field.
      */
@@ -51,9 +28,9 @@ public abstract class EntityAINearestAttackableTargetMixin
      */
     @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
-    private void shouldExecute(CallbackInfoReturnable<Boolean> cir) {
-        EntityAINearestAttackableTargetMixin self = (EntityAINearestAttackableTargetMixin) (Object) this;
-        EntityLiving attacker = this.taskOwner;
+    private void shouldExecute$disableIfConfigured(
+        CallbackInfoReturnable<Boolean> cir) {
+        EntityAINearestAttackableTarget self = (EntityAINearestAttackableTarget) (Object) this;
         EntityLivingBase target = this.targetEntity;
         if (!(target instanceof EntityPlayer)) {
             return;
