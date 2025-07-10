@@ -505,11 +505,6 @@ public class Config {
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
             CONFIG_VERSION, false);
-
-        // -- Register all our configurations
-        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
     }
 
     /**
@@ -586,6 +581,11 @@ public class Config {
                         CONFIG_INSTANCE.getCategory(categoryName)));
             }
         }
+
+        // -- Register all our configurations
+        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
 
         // -- Load updated values
         new Gameplay().loadValues(CONFIG_INSTANCE);
