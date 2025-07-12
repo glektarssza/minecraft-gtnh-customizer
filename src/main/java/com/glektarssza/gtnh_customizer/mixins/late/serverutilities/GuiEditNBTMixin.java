@@ -1,19 +1,16 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.glektarssza.gtnh_customizer.KeyBindings;
+import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
 
 import serverutils.client.gui.GuiEditNBT;
 import serverutils.client.gui.GuiEditNBT.ButtonNBT;
 import serverutils.client.gui.GuiEditNBT.ButtonNBTMap;
 import serverutils.lib.gui.GuiBase;
-import serverutils.lib.gui.GuiWrapper;
 
 /**
  * Mixin for the {@link GuiEditNBT} class.
@@ -47,19 +44,6 @@ public abstract class GuiEditNBTMixin extends GuiBase {
     }
 
     /**
-     * Check whether this screen is the currently focused screen.
-     *
-     * @return {@code true} if this screen is the currently focused screen;
-     *         {@code} false otherwise.
-     */
-    public boolean isFocused() {
-        GuiEditNBT self = (GuiEditNBT) (Object) this;
-        GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
-        return currentScreen != null && currentScreen instanceof GuiWrapper &&
-            ((GuiWrapper) currentScreen).getGui() == self;
-    }
-
-    /**
      * The injection for the {@code keyPressed} method.
      *
      * @param keyCode - The key code pressed.
@@ -69,23 +53,19 @@ public abstract class GuiEditNBTMixin extends GuiBase {
      */
     @Override
     public boolean keyPressed(int keyCode, char keyChar) {
-        if (super.keyPressed(keyCode, keyChar)) {
-            return true;
-        }
-        if (!isFocused()) {
+        GuiEditNBT self = (GuiEditNBT) (Object) this;
+        if (!((IGuiBaseExtensions) self).isFocused()) {
             return false;
         }
-        GuiEditNBT self = (GuiEditNBT) (Object) this;
-        GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
         if (keyCode == KeyBindings.ACCEPT_NBT_EDITS.getKeyCode()
             || keyCode == KeyBindings.ACCEPT_NBT_EDITS_ALT.getKeyCode()) {
             shouldClose = 1;
-            ((GuiWrapper) currentScreen).getGui().closeGui();
+            self.closeGui();
             return true;
         }
         if (keyCode == KeyBindings.CANCEL_NBT_EDITS.getKeyCode()) {
             shouldClose = 2;
-            ((GuiWrapper) currentScreen).getGui().closeGui();
+            self.closeGui();
             return true;
         }
         if (keyCode == KeyBindings.DELETE_NBT_TAG.getKeyCode() &&
@@ -95,6 +75,9 @@ public abstract class GuiEditNBTMixin extends GuiBase {
             this.selected = selected.parent;
             self.panelNbt.refreshWidgets();
             self.panelTopLeft.refreshWidgets();
+            return true;
+        }
+        if (super.keyPressed(keyCode, keyChar)) {
             return true;
         }
         return false;

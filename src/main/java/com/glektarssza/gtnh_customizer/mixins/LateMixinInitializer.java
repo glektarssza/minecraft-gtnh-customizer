@@ -36,8 +36,8 @@ public class LateMixinInitializer implements ILateMixinLoader {
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
         if (loadedMods.contains("SpecialMobs")) {
-            mixins.add("specialmobs.Entity_SpecialGhastMixin");
             mixins.add("specialmobs.Entity_SpecialCaveSpiderMixin");
+            mixins.add("specialmobs.Entity_SpecialGhastMixin");
             mixins.add("specialmobs.Entity_SpecialSpiderMixin");
             mixins.add("specialmobs.EntityEnderCreeperMixin");
         }
@@ -45,7 +45,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
             mixins.add("thaumcraft.EntityWispMixin");
         }
         if (loadedMods.contains("XaeroMinimap")
-            && FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+            && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             mixins.add("xaeros.client.WaypointsManagerMixins");
         }
         if (loadedMods.contains("TConstruct")) {
@@ -53,6 +53,11 @@ public class LateMixinInitializer implements ILateMixinLoader {
         }
         if (loadedMods.contains("serverutilities")) {
             mixins.add("serverutilities.MessageEditNBTRequestMixin");
+        }
+        if (loadedMods.contains("serverutilities")
+            && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            mixins.add("serverutilities.GuiBaseMixin");
+            mixins.add("serverutilities.GuiEditConfigValueMixin");
             mixins.add("serverutilities.GuiEditNBTMixin");
             mixins.add("serverutilities.TextBoxMixin");
         }
