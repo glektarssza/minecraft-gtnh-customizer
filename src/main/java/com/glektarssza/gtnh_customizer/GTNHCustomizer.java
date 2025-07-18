@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.Mod;
@@ -33,6 +35,7 @@ public class GTNHCustomizer {
     /**
      * A map for tracking how many times a particular warning has been emitted.
      */
+    @Nonnull
     public static final Map<String, Integer> WARNING_LIMIT_TRACKER = new HashMap<>();
 
     /**
@@ -55,8 +58,19 @@ public class GTNHCustomizer {
      *
      * @return The configuration directory for the mod.
      */
+    @Nonnull
     public File getConfigDir() {
         return proxy.getConfigDir();
+    }
+
+    /**
+     * Get the mod proxy object.
+     *
+     * @return The mod proxy object.
+     */
+    @Nonnull
+    public static CommonProxy getProxy() {
+        return proxy;
     }
 
     /**

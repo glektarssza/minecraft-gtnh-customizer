@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -38,6 +39,28 @@ public class CommonProxy {
      * The configuration directory.
      */
     private File configDir;
+
+    /**
+     * Get the currently configured view distance, in chunks.
+     *
+     * @return The currently configured view distance, in chunks.
+     */
+    public int getViewDistanceChunks() {
+        return MinecraftServer.getServer().getConfigurationManager()
+            .getViewDistance();
+    }
+
+    /**
+     * Get the currently configured view distance, in blocks.
+     *
+     * This is just {@link #getViewDistanceChunks()} multiplied by the size of a
+     * chunk which <b>should</b> be <code>16</code>.
+     *
+     * @return The currently configured view distance, in blocks.
+     */
+    public int getViewDistanceBlocks() {
+        return this.getViewDistanceChunks() * 16;
+    }
 
     /**
      * Get the main logger for the mod.
