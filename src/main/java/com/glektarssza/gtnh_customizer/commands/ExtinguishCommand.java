@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -16,6 +15,7 @@ import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.ExtendedWorld;
@@ -63,8 +63,7 @@ public class ExtinguishCommand extends CommandBase {
         return new ChatComponentTranslation(
             "gtnh_customizer.commands.extinguish.usage", new Object[] {
                 String.format("%d",
-                    Minecraft.getMinecraft().gameSettings.renderDistanceChunks
-                        * 16)
+                    GTNHCustomizer.getProxy().getViewDistanceBlocks())
             }).getFormattedText();
     }
 
