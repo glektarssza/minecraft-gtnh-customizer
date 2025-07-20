@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -61,11 +60,11 @@ public class ExtinguishCommand extends CommandBase {
      */
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return I18n.format(
+        return new ChatComponentTranslation(
             "gtnh_customizer.commands.extinguish.usage", new Object[] {
                 String.format("%d",
                     GTNHCustomizer.getProxy().getViewDistanceBlocks())
-            });
+            }).getUnformattedTextForChat();
     }
 
     /**
