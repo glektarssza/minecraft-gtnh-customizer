@@ -1,6 +1,7 @@
 {
     "homepage": "https://github.com/glektarssza/minecraft-gtnh-customizer",
     "1.7.10": {
+        "0.12.2": "* Fixed the '/extinguish' command causing an error when using the '/help' command.",
         "0.12.1": "* Fixed the '/extinguish' command causing an error on server consoles.",
         "0.12.0": "* Fixed the '/nbtedit' UI closing when you used the 'accept' hotkey.\n* Added a setting to disable Enderman and Enderman-like mobs from teleporting.",
         "0.11.1": "* Fixed key bindings being loaded on the server side, causing a crash.",
@@ -30,7 +31,7 @@
         "0.0.0": "Initial release."
     },
     "promos": {
-        "1.7.10-latest": "0.12.1",
-        "1.7.10-recommended": "0.12.1"
+        "1.7.10-latest": "0.12.2",
+        "1.7.10-recommended": "0.12.2"
     }
 }
