@@ -56,8 +56,10 @@ public class LateMixinInitializer implements ILateMixinLoader {
         }
         if (loadedMods.contains("serverutilities")
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            mixins.add("serverutilities.ButtonNBTListMixin");
             mixins.add("serverutilities.GuiBaseMixin");
             mixins.add("serverutilities.GuiEditConfigValueMixin");
+            mixins.add("serverutilities.GuiEditNBTLeftPanelMixin");
             mixins.add("serverutilities.GuiEditNBTMixin");
             mixins.add("serverutilities.TextBoxMixin");
         }

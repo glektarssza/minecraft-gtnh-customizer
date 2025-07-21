@@ -3,9 +3,11 @@ package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 import com.glektarssza.gtnh_customizer.KeyBindings;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
+import com.glektarssza.gtnh_customizer.utils.extensions.IGuiEditNBTExtensions;
 
 import serverutils.client.gui.GuiEditNBT;
 import serverutils.client.gui.GuiEditNBT.ButtonNBT;
@@ -16,7 +18,8 @@ import serverutils.lib.gui.GuiBase;
  * Mixin for the {@link GuiEditNBT} class.
  */
 @Mixin(GuiEditNBT.class)
-public abstract class GuiEditNBTMixin extends GuiBase {
+public abstract class GuiEditNBTMixin extends GuiBase
+    implements IGuiEditNBTExtensions {
     /**
      * A shadow of the {@code shouldClose} private field.
      */
@@ -41,6 +44,16 @@ public abstract class GuiEditNBTMixin extends GuiBase {
      */
     private GuiEditNBTMixin() {
         super();
+    }
+
+    /**
+     * Get the currently selected NBT element.
+     *
+     * @return The currently selected NBT element.
+     */
+    @Unique
+    public ButtonNBT getSelected() {
+        return this.selected;
     }
 
     /**
