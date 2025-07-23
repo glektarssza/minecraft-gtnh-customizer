@@ -13,4 +13,12 @@ public interface IButtonNBTListExtensions {
      *         an empty list, {@code false} otherwise.
      */
     public boolean isListOf(int nbtType);
+
+    /**
+     * Check if this contains any elements.
+     *
+     * @return {@code true} if this does not contain any elements, {@code false}
+     *         otherwise.
+     */
+    public boolean isEmpty();
 }
