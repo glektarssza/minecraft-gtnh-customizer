@@ -28,6 +28,17 @@ public abstract class ButtonNBTListMixin implements IButtonNBTListExtensions {
     @Unique
     public boolean isListOf(int nbtType) {
         return NBTUtils.isListOfNBTType(this.list, nbtType)
-            || NBTUtils.isNBTListEmpty(this.list);
+            || this.isEmpty();
+    }
+
+    /**
+     * Check if this contains any elements.
+     *
+     * @return {@code true} if this does not contain any elements, {@code false}
+     *         otherwise.
+     */
+    @Unique
+    public boolean isEmpty() {
+        return NBTUtils.isNBTListEmpty(this.list);
     }
 }
