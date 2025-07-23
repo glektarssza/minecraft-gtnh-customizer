@@ -1,20 +1,4 @@
 {
-    "[json]": {
-        "editor.formatOnPaste": false,
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[jsonc]": {
-        "editor.formatOnPaste": false,
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[jsonl]": {
-        "editor.formatOnPaste": false,
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[java]": {
-        "editor.formatOnPaste": false,
-        "editor.defaultFormatter": "redhat.java"
-    },
     "cSpell.ignorePaths": [
         "vscode-extension",
         ".git/{info,lfs,logs,refs,objects}/**",
@@ -28,8 +12,27 @@
         "mcmod.info": "json",
         "pack.mcmeta": "json"
     },
-    "java.autobuild.enabled": false,
-    "java.configuration.updateBuildConfiguration": "disabled",
+    "java.cleanup.actions": [
+        "renameFileToType",
+        "addOverride",
+        "organizeImports"
+    ],
+    "java.codeAction.sortMembers.avoidVolatileChanges": true,
+    "java.codeGeneration.generateComments": false,
+    "java.codeGeneration.hashCodeEquals.useInstanceof": true,
+    "java.codeGeneration.hashCodeEquals.useJava7Objects": true,
+    "java.codeGeneration.toString.codeStyle": "STRING_FORMAT",
+    "java.codeGeneration.useBlocks": true,
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.compile.nullAnalysis.nonnull": [
+        "javax.annotation.Nonnull"
+    ],
+    "java.compile.nullAnalysis.nonnullbydefault": [
+        "javax.annotation.ParametersAreNonnullByDefault"
+    ],
+    "java.compile.nullAnalysis.nullable": [
+        "javax.annotation.Nullable"
+    ],
     "java.completion.enabled": true,
     "java.completion.importOrder": [
         "#",
@@ -46,32 +49,25 @@
         "com.glektarssza"
     ],
     "java.completion.matchCase": "firstLetter",
-    "java.codeGeneration.generateComments": false,
-    "java.codeGeneration.hashCodeEquals.useInstanceof": true,
-    "java.codeGeneration.hashCodeEquals.useJava7Objects": true,
-    "java.codeGeneration.toString.codeStyle": "STRING_FORMAT",
-    "java.codeGeneration.useBlocks": true,
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.compile.nullAnalysis.nonnull": [
-        "javax.annotation.Nonnull"
-    ],
-    "java.compile.nullAnalysis.nullable": [
-        "javax.annotation.Nullable"
-    ],
     "java.diagnostic.filter": [
         "**/build/**"
     ],
-    "java.format.enabled": true,
+    "java.edit.validateAllOpenBuffersOnChanges": true,
     "java.format.comments.enabled": true,
+    "java.format.enabled": true,
     "java.format.onType.enabled": false,
     "java.format.settings.profile": "Spotless",
     "java.format.settings.url": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/formatter.xml",
+    "java.gradle.buildServer.enabled": "on",
     "java.import.generatesMetadataFilesAtProjectRoot": true,
+    "java.import.gradle.java.home": "/lib/jvm/temurin-21-jdk-amd64/",
+    "java.inlayHints.parameterNames.enabled": "none",
     "java.jdt.ls.java.home": "/lib/jvm/temurin-21-jdk-amd64/",
     "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable",
-    "java.inlayHints.parameterNames.enabled": "none",
+    "java.references.includeDecompiledSources": true,
     "java.saveActions.cleanup": true,
     "java.saveActions.organizeImports": true,
+    "java.server.launchMode": "Standard",
     "java.silentNotification": true,
-    "java.server.launchMode": "Standard"
+    "java.symbols.includeSourceMethodDeclarations": true
 }
