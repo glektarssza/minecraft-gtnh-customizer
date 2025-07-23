@@ -7,11 +7,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import com.glektarssza.gtnh_customizer.utils.NBTUtils;
+import com.glektarssza.gtnh_customizer.utils.extensions.IButtonNBTListExtensions;
 
 import serverutils.client.gui.GuiEditNBT.ButtonNBTList;
 
 @Mixin(ButtonNBTList.class)
-public class ButtonNBTListMixin {
+public abstract class ButtonNBTListMixin implements IButtonNBTListExtensions {
     /**
      * A shadow of the {@code list} private field.
      */
