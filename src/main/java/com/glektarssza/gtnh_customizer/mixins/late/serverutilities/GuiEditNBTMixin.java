@@ -44,13 +44,6 @@ public abstract class GuiEditNBTMixin extends GuiBase
     private ButtonNBTMap buttonNBTRoot;
 
     /**
-     * Make Java happy again.
-     */
-    private GuiEditNBTMixin() {
-        super();
-    }
-
-    /**
      * Get the currently selected NBT element.
      *
      * @return The currently selected NBT element.
