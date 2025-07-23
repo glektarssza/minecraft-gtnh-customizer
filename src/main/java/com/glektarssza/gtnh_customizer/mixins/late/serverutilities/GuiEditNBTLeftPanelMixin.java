@@ -17,6 +17,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.glektarssza.gtnh_customizer.utils.extensions.IButtonNBTListExtensions;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiEditNBTExtensions;
@@ -43,9 +44,11 @@ public abstract class GuiEditNBTLeftPanelMixin extends Panel {
 
     /**
      * Inject into the {@code addWidgets} method.
+     *
+     * @param ci The callback info.
      */
     @Inject(method = "addWidgets", at = @At("TAIL"), remap = false)
-    public void addWidgets$injectExtraButtons() {
+    public void addWidgets$injectExtraButtons(CallbackInfo ci) {
         GuiEditNBT guiEditNBT = (GuiEditNBT) this.parent;
         ButtonNBT selected = ((IGuiEditNBTExtensions) guiEditNBT).getSelected();
         if (selected instanceof ButtonNBTList) {
