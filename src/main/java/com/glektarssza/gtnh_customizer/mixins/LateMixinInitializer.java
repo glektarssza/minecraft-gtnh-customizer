@@ -59,7 +59,6 @@ public class LateMixinInitializer implements ILateMixinLoader {
             mixins.add("serverutilities.ButtonNBTListMixin");
             mixins.add("serverutilities.GuiBaseMixin");
             mixins.add("serverutilities.GuiEditConfigValueMixin");
-            mixins.add("serverutilities.GuiEditNBTLeftPanelMixin");
             mixins.add("serverutilities.GuiEditNBTMixin");
             mixins.add("serverutilities.TextBoxMixin");
         }
