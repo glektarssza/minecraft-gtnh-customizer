@@ -4,6 +4,10 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.glektarssza.gtnh_customizer.KeyBindings;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
@@ -51,6 +55,7 @@ public abstract class GuiEditNBTMixin extends GuiBase
      *
      * @return The currently selected NBT element.
      */
+    @Override
     @Unique
     public ButtonNBT getSelected() {
         return this.selected;
@@ -88,11 +93,37 @@ public abstract class GuiEditNBTMixin extends GuiBase
             this.selected = selected.parent;
             self.panelNbt.refreshWidgets();
             self.panelTopLeft.refreshWidgets();
+            self.panelTopRight.refreshWidgets();
             return true;
         }
         if (super.keyPressed(keyCode, keyChar)) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * The injection for the inner inner lambda inside the {@code newTag}
+     * method.
+     *
+     * @param ci - The callback information.
+     */
+    @Inject(method = "lambda$newTag$0(Lserverutils/client/gui/GuiEditNBT$ButtonNBTMap;Ljava/util/function/Supplier;Lserverutils/lib/config/ConfigValue;Z)V", at = @At(value = "INVOKE", target = "Lserverutils/lib/gui/Panel;refreshWidgets()V", shift = Shift.AFTER), cancellable = false, remap = false)
+    public void newTag$lambda$0$refreshTopLeftPanel(CallbackInfo ci) {
+        GuiEditNBT self = (GuiEditNBT) (Object) this;
+        self.panelTopLeft.refreshWidgets();
+        self.panelTopRight.refreshWidgets();
+    }
+
+    /**
+     * The injection for the inner lambda inside the {@code newTag} method.
+     *
+     * @param ci - The callback information.
+     */
+    @Inject(method = "lambda$newTag$1(Ljava/util/function/Supplier;Lserverutils/lib/gui/SimpleButton;Lserverutils/lib/util/misc/MouseButton;)V", at = @At(value = "INVOKE", target = "Lserverutils/lib/gui/Panel;refreshWidgets()V", shift = Shift.AFTER), cancellable = false, remap = false)
+    public void newTag$lambda$1$refreshTopLeftPanel(CallbackInfo ci) {
+        GuiEditNBT self = (GuiEditNBT) (Object) this;
+        self.panelTopLeft.refreshWidgets();
+        self.panelTopRight.refreshWidgets();
     }
 }
