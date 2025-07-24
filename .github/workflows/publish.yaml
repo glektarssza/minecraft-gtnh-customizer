@@ -104,6 +104,12 @@ jobs:
           shasum -a 1 ./build/libs/* > checksums_sha1.txt
           shasum -a 256 ./build/libs/* > checksums_sha256.txt
           mv *.txt ./build/libs/
+      - id: gradle-publish
+        name: Gradle publish
+        env:
+          GHPR_USERNAME: ${{github.actor}}
+          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+        run: ./gradlew publish
       - id: attach-to-release
         name: Attach artifacts to release
         uses: actions/github-script@v7
