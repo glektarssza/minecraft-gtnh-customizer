@@ -17,10 +17,10 @@ on:
 
           Useful when testing other parts of the publish workflow.
 
-          Defaults to `true`.
+          Defaults to `false`.
         type: boolean
         required: false
-        default: true
+        default: false
       java-vendor:
         description: |
           The Java vendor to use.
