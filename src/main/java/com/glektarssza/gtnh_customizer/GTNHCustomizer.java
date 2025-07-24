@@ -9,8 +9,10 @@ import javax.annotation.Nonnull;
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -42,7 +44,31 @@ public class GTNHCustomizer {
      * The mod singleton instance.
      */
     @Mod.Instance
-    public static GTNHCustomizer instance;
+    private static GTNHCustomizer instance;
+
+    /**
+     * The mod metadata singleton instance.
+     */
+    @Mod.Metadata
+    private static ModMetadata metadata;
+
+    /**
+     * Get the mod singleton instance.
+     *
+     * @return The mod singleton instance.
+     */
+    public static GTNHCustomizer getInstance() {
+        return instance;
+    }
+
+    /**
+     * Get the mod metadata singleton instance.
+     *
+     * @return The mod metadata singleton instance.
+     */
+    public static ModMetadata getMetadata() {
+        return metadata;
+    }
 
     /**
      * Get the main logger for the mod.
@@ -112,13 +138,23 @@ public class GTNHCustomizer {
     }
 
     /**
-     * Handle the Forge Mod Loader pre-initialization event.
+     * Handle the Forge Mod Loader initialization event.
      *
      * @param event The event to handle.
      */
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         proxy.init(event);
+    }
+
+    /**
+     * Handle the Forge Mod Loader pre-initialization event.
+     *
+     * @param event The event to handle.
+     */
+    @Mod.EventHandler
+    public void onPostInit(FMLPostInitializationEvent event) {
+        proxy.postInit(event);
     }
 
     /**
