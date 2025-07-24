@@ -1,4 +1,7 @@
 java {
+    //-- We need to be compatible with Java 8 for Minecraft 1.7.10
+    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_8
     toolchain {
         //-- We'd like the Temurin JDK please
         vendor.set(JvmVendorSpec.ADOPTIUM)
@@ -9,5 +12,5 @@ minecraft {
     injectedTags.put("MOD_ID", modId)
     injectedTags.put("MOD_NAME", modName)
     injectedTags.put("MOD_VERSION", modVersion)
-    injectedTags.put("MOD_DEPENDENCIES", "")
+    injectedTags.put("MOD_DEPENDENCIES", "after:serverutilities;after:TConstruct;after:XaeroMinimap;after:Thaumcraft;after:SpecialMobs")
 }

@@ -6,11 +6,17 @@
         "version": "${modVersion}",
         "mcversion": "${minecraftVersion}",
         "url": "https://github.com/glektarssza/minecraft-gtnh-customizer",
-        "updateJSON": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/forgeUpdateManifest.json",
-        "authorList": [
-            "G'lek Tarssza"
-        ],
+        "updateUrl": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/forgeUpdateManifest.json",
+        "authorList": ["G'lek Tarssza"],
         "credits": "G'lek Tarssza for this mod, the GTNH team for their Gradle build tools, the RetroFuturaGradle team for their build tools.",
-        "logoFile": "assets/gtnh_customizer/textures/logo.png"
+        "logoFile": "assets/gtnh_customizer/textures/logo.png",
+        "dependencies": [
+            "after:serverutilities",
+            "after:TConstruct",
+            "after:XaeroMinimap",
+            "after:Thaumcraft",
+            "after:SpecialMobs"
+        ],
+        "screenshots": []
     }
 ]
