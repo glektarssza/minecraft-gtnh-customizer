@@ -83,7 +83,7 @@ jobs:
       contents: read
       #-- To uploads packages
       packages: write
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/build-and-publish.yaml
     with:
       ref: ${{inputs.ref}}
       java-version: ${{inputs.java-version}}
