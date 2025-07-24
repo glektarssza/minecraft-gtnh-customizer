@@ -9,6 +9,8 @@ jobs:
       #-- To clone repository
       contents: read
     uses: ./.github/workflows/build.yaml
+    with:
+      ref: ${{github.sha}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
   lint:
@@ -17,5 +19,7 @@ jobs:
       #-- To clone repository
       contents: read
     uses: ./.github/workflows/lint.yaml
+    with:
+      ref: ${{github.sha}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
