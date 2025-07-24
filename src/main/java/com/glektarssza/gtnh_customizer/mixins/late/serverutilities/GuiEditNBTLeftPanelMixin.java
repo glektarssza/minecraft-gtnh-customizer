@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagString;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
+import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,6 +31,7 @@ import serverutils.lib.gui.Panel;
  * Mixin for the anonymous inner class that provides the upper left panel of the
  * {@link GuiEditNBT} class.
  */
+@Mixin(targets = "serverutils.client.gui.GuiEditNBT$2", remap = false)
 public abstract class GuiEditNBTLeftPanelMixin extends Panel {
     /**
      * Make Java happy again.
