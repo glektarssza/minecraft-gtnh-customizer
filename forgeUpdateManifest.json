@@ -1,6 +1,7 @@
 {
     "homepage": "https://github.com/glektarssza/minecraft-gtnh-customizer",
     "1.7.10": {
+        "0.13.1": "* Added a version checker \"script\" that runs during startup.\nRemoved some unneeded logs.",
         "0.13.0": "* Changed the ServerUtilities '/nbtedit' command so it can now add things to lists that are not empty.",
         "0.12.3": "* Fixed the '/extinguish' command causing an error when using the '/help' command the proper way...",
         "0.12.2": "* Fixed the '/extinguish' command causing an error when using the '/help' command.",
