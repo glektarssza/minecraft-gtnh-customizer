@@ -96,6 +96,8 @@ jobs:
     permissions:
       #-- To clone repository and write release artifacts
       contents: write
+      #-- To uploads packages
+      packages: write
     needs:
       - build
     steps:
