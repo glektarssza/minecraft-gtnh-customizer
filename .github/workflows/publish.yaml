@@ -81,6 +81,8 @@ jobs:
     permissions:
       #-- To clone repository
       contents: read
+      #-- To uploads packages
+      packages: write
     uses: ./.github/workflows/build.yaml
     with:
       ref: ${{inputs.ref}}
@@ -95,9 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       #-- To clone repository and write release artifacts
-      contents: write
-      #-- To uploads packages
-      packages: write
+      contents: read
     needs:
       - build
     steps:

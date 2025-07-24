@@ -16,10 +16,10 @@ jobs:
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
   release:
-    name: Release
+    name: Publish
     permissions:
-      #-- To clone repository and write release artifacts
-      contents: write
+      #-- To clone repository
+      contents: read
       #-- To uploads packages
       packages: write
     needs:
