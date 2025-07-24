@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
 import com.gtnewhorizon.gtnhmixins.LateMixin;
 
@@ -33,6 +35,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
      * @returns The list of additional mixins to load based on the loaded mods.
      */
     @Override
+    @Nonnull
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
         if (loadedMods.contains("SpecialMobs")) {
