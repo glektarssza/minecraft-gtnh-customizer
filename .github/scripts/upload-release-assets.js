@@ -1,5 +1,5 @@
-const fs = require("node:fs/promises");
-const path = require("node:path");
+const fs = require('node:fs/promises');
+const path = require('node:path');
 
 /**
  * Get all items in a directory recursively.
@@ -12,7 +12,7 @@ const path = require("node:path");
 async function getItemsRecursive(directory) {
     const items = await fs.readdir(directory, {
         withFileTypes: true,
-        encoding: "utf-8",
+        encoding: 'utf-8'
     });
     const results = [];
     for (const item of items) {
@@ -34,17 +34,20 @@ async function getItemsRecursive(directory) {
  * @param {object} param0 The GitHub context object.
  * @param {string} artifactDirectory The path to the directory containing the
  * artifacts to upload.
+ * @param {string} releaseId The ID of the release to upload artifacts to.
  *
  * @returns {Promise<void>} A promise that resolves when all assets have been
  * uploaded.
  */
-module.exports = async ({ github, context, core }, artifactDirectory) => {
-    const { owner, repo } = context.repo;
+module.exports = async (
+    {github, context, core},
+    artifactDirectory,
+    releaseId
+) => {
+    const {owner, repo} = context.repo;
     const items = await getItemsRecursive(artifactDirectory);
     const assets = items.filter((item) => item.isFile());
-    core.info(
-        `Uploading ${assets.length} assets to release ${context.payload.release.id}...`
-    );
+    core.info(`Uploading ${assets.length} assets to release ${releaseId}...`);
     for (const artifact of assets) {
         const artifactPath = path.join(artifact.path, artifact.name);
         let artifactName = path.basename(artifactPath);
@@ -54,10 +57,10 @@ module.exports = async ({ github, context, core }, artifactDirectory) => {
         await github.rest.repos.uploadReleaseAsset({
             owner,
             repo,
-            release_id: context.payload.release.id,
+            release_id: releaseId,
             name: artifactName,
-            data,
+            data
         });
     }
-    core.info("All release assets uploaded!");
+    core.info('All release assets uploaded!');
 };

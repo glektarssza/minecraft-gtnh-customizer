@@ -5,13 +5,61 @@ on:
     inputs:
       ref:
         description: |
-          The Git reference from which to build the project.
+          The Git reference from which to clone the project.
 
-          Defaults to the reference that caused the workflow to be invoked or
-          the default branch if no reference is available.
+          This can be any valid Git commit-ish (e.g. a SHA, a ref, a tag, and so
+          on).
+
+          Defaults to the SHA that caused the workflow to be triggered. If that
+          is unavailable the fully formed reference of the branch or tag that
+          triggered the workflow is used. If that is unavailable the repository
+          default branch is used.
         type: string
         required: false
-        default: ${{github.ref || github.event.repository.default_branch}}
+        default: ${{github.sha || github.ref || github.event.repository.default_branch}}
+      java-vendor:
+        description: |
+          The Java vendor to use.
+
+          Defaults to `temurin`.
+        type: string
+        required: false
+        default: temurin
+      java-version:
+        description: |
+          The Java version to use.
+
+          Defaults to `version-file` to use the version found in the
+          `.java-version` file present in the project.
+        type: string
+        required: false
+        default: version-file
+      gradle-version:
+        description: |
+          The Gradle version to use.
+
+          Defaults to `wrapper` to use version of the Gradle wrapper present in
+          the project.
+        type: string
+        required: false
+        default: wrapper
+      upload-artifacts:
+        description: |
+          Whether to upload artifacts.
+
+          Defaults to `true`.
+        type: boolean
+        required: false
+        default: true
+      artifact-retention-days:
+        description: |
+          The duration, in days, to retain artifacts for.
+
+          Defaults to `0` which defaults to the value configured for the
+          repository.
+        type: number
+        required: false
+        default: 0
     outputs:
       artifacts-id:
         description: |
@@ -48,19 +96,39 @@ jobs:
         with:
           ref: ${{inputs.ref}}
           lfs: true
+          submodules: recursive
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+      - id: read-java-version
+        name: Read Java version
+        shell: bash
+        run: |
+          if [[ "${{inputs.java-version}}" -eq "version-file" ]]; then
+            if [[ -f ".java-version" ]]; then
+              echo "Will be using Java version $(cat .java-version)";
+              echo "java-version=$(cat .java-version)" >> "$GITHUB_OUTPUT";
+            else
+              echo "::error file=.github\workflows\build.yaml,line=96,endLine=96,title=Missing ``.java-version`` file::No ``.java-version`` file found in the repository but workflow action requested to use it as the source of a Java version to use!";
+              exit 1;
+            fi
+          elif [[ -z "${{inputs.java-version}}" ]]; then
+              echo "::error file=.github\workflows\build.yaml,line=100,endLine=100,title=Missing Java version::No Java version given to build workflow!";
+              exit 1;
+          else
+            echo "java-version=${{inputs.java-version}}" >> "$GITHUB_OUTPUT"
+          fi
       - id: setup-java
         name: Setup Java
         uses: actions/setup-java@v4
         with:
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-          distribution: temurin
-          java-version-file: .java-version
+          distribution: ${{inputs.java-vendor}}
+          java-version: ${{steps.read-java-version.outputs.java-version}}
       - id: setup-gradle
         name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: wrapper
+          github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          gradle-version: ${{inputs.gradle-version}}
       - id: setup-ci-workspace
         name: Setup CI Workspace
         run: ./gradlew setupCIWorkspace
@@ -69,9 +137,11 @@ jobs:
         run: ./gradlew build
       - id: upload-artifacts
         name: Upload artifacts
+        if: inputs.upload-artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: build/libs/
           compression-level: 0
           if-no-files-found: error
+          retention-days: ${{inputs.artifact-retention-days}}

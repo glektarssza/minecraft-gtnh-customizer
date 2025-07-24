@@ -1,8 +1,26 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Lint
+name: Publish
 on:
   workflow_call:
     inputs:
+      github-release-id:
+        description: |
+          The GitHub release ID to attach the artifacts to.
+
+          Only required when `attach-to-github-release` is `true`.
+        type: string
+        required: false
+        default: ""
+      attach-to-github-release:
+        description: |
+          Whether to attach the released assets to a GitHub release.
+
+          Useful when testing other parts of the publish workflow.
+
+          Defaults to `true`.
+        type: boolean
+        required: false
+        default: true
       ref:
         description: |
           The Git reference from which to clone the project.
@@ -49,55 +67,54 @@ on:
           The token to use when making authenticated calls to the GitHub API.
         required: true
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
+  build:
+    name: Build
     permissions:
       #-- To clone repository
       contents: read
+    uses: ./.github/workflows/build.yaml
+    with:
+      ref: ${{inputs.ref}}
+      java-version: ${{inputs.java-version}}
+      java-vendor: ${{inputs.java-vendor}}
+      gradle-version: ${{inputs.gradle-version}}
+      upload-artifacts: false
+    secrets:
+      github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    permissions:
+      #-- To clone repository and write release artifacts
+      contents: write
+    needs:
+      - build
     steps:
       - id: checkout-repository
         name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{inputs.ref}}
           lfs: true
           submodules: recursive
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-      - id: read-java-version
-        name: Read Java version
-        shell: bash
+      - id: generate-checksums
+        name: Generate checksums
         run: |
-          if [[ "${{inputs.java-version}}" -eq "version-file" ]]; then
-            if [[ -f ".java-version" ]]; then
-              echo "Will be using Java version $(cat .java-version)";
-              echo "java-version=$(cat .java-version)" >> "$GITHUB_OUTPUT";
-            else
-              echo "::error file=.github\workflows\build.yaml,line=96,endLine=96,title=Missing ``.java-version`` file::No ``.java-version`` file found in the repository but workflow action requested to use it as the source of a Java version to use!";
-              exit 1;
-            fi
-          elif [[ -z "${{inputs.java-version}}" ]]; then
-              echo "::error file=.github\workflows\build.yaml,line=100,endLine=100,title=Missing Java version::No Java version given to build workflow!";
-              exit 1;
-          else
-            echo "java-version=${{inputs.java-version}}" >> "$GITHUB_OUTPUT"
-          fi
-      - id: setup-java
-        name: Setup Java
-        uses: actions/setup-java@v4
+          md5sum ./build/libs/* > checksums_md5.txt
+          shasum -a 1 ./build/libs/* > checksums_sha1.txt
+          shasum -a 256 ./build/libs/* > checksums_sha256.txt
+          mv *.txt ./build/libs/
+      - id: gradle-publish
+        name: Gradle publish
+        env:
+          GHPR_USERNAME: ${{github.actor}}
+          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+        run: ./gradlew publish
+      - id: attach-to-release
+        name: Attach artifacts to release
+        uses: actions/github-script@v7
+        if: inputs.attach-to-github-release
         with:
-          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-          distribution: ${{inputs.java-vendor}}
-          java-version: ${{steps.read-java-version.outputs.java-version}}
-      - id: setup-gradle
-        name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-          gradle-version: ${{inputs.gradle-version}}
-      - id: setup-ci-workspace
-        name: Setup CI Workspace
-        run: ./gradlew setupCIWorkspace
-      - id: lint
-        name: Lint
-        run: ./gradlew spotlessJavaCheck
+          script: |
+            const script = require('./.github/scripts/upload-release-assets.js');
+            await script({github, context, core}, "./build/libs", ${{toJson(inputs.github-release-id)}});

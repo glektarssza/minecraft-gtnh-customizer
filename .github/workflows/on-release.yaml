@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: On Release
+on:
+  release:
+    types:
+      - published
+jobs:
+  lint:
+    name: Lint
+    permissions:
+      #-- To clone repository
+      contents: read
+    uses: ./.github/workflows/lint.yaml
+    with:
+      ref: ${{github.event.release.tag_name}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
+  release:
+    name: Release
+    permissions:
+      #-- To clone repository and write release artifacts
+      contents: write
+      #-- To uploads packages
+      packages: write
+    needs:
+      - lint
+    uses: ./.github/workflows/publish.yaml
+    with:
+      ref: ${{github.event.release.tag_name}}
+      github-release-id: ${{github.event.release.id}}
+      attach-to-github-release: true
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}

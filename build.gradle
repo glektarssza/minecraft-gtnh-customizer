@@ -1,5 +1,7 @@
 plugins {
+    id("maven-publish")
     id("com.gtnewhorizons.gtnhconvention")
 }
 
 apply from: "spotless.gradle"
+apply from: "publishing.gradle"
