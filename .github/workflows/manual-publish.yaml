@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Manual Lint
+name: Manual Publish
 on:
   workflow_dispatch:
     inputs:
