@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -87,6 +88,56 @@ public class CommonProxy {
      */
     public void preInit(FMLPreInitializationEvent event) {
         this.logger = event.getModLog();
+        VersionChecker.registerCallback((result) -> {
+            switch (result.status) {
+                case FAILED:
+                    this.logger.error("Failed to check for version updates!");
+                    break;
+                case UNKNOWN:
+                    this.logger.error("Failed to check for version updates!");
+                    break;
+                case UP_TO_DATE:
+                    this.logger.info("Mod is up to date!");
+                    break;
+                case AHEAD_OF_BETA:
+                    this.logger
+                        .info(
+                            "Mod is ahead of the latest version! Latest version is '{}' but you are running '{}'",
+                            result.recommendedVersion,
+                            GTNHCustomizer.getMetadata().version);
+                    break;
+                case AHEAD_OF_RECOMMENDED:
+                    this.logger
+                        .info(
+                            "Mod is ahead of the recommended version! Recommend version is '{}' but you are running '{}'",
+                            result.recommendedVersion,
+                            GTNHCustomizer.getMetadata().version);
+                    break;
+                case BEHIND_BETA:
+                    this.logger
+                        .info(
+                            "Mod is behind the latest version! Latest version is '{}' but you are running '{}'",
+                            result.recommendedVersion,
+                            GTNHCustomizer.getMetadata().version);
+                    break;
+                case BEHIND_RECOMMENDED:
+                    this.logger
+                        .info(
+                            "Mod is behind the recommended version! Recommend version is '{}' but you are running '{}'",
+                            result.recommendedVersion,
+                            GTNHCustomizer.getMetadata().version);
+                    break;
+                case NOT_STARTED:
+                    this.logger.error(
+                        "Uhhhhhhh... Check is not started? That's wrong...");
+                    break;
+                case IN_PROGRESS:
+                    this.logger.error(
+                        "Uhhhhhhh... Check is in progress? That's wrong...");
+                    break;
+            }
+        });
+        new VersionChecker().start();
         GTNHCustomizer.getLogger().info(
             "Pre-initializing server/common-side for {}...",
             Tags.MOD_NAME);
@@ -116,6 +167,19 @@ public class CommonProxy {
             Tags.MOD_NAME);
         // -- Does nothing yet!
         getLogger().info("Done initializing server/common-side for {}!",
+            Tags.MOD_NAME);
+    }
+
+    /**
+     * Handle the mod post-initialization event.
+     *
+     * @param event The incoming event.
+     */
+    public void postInit(FMLPostInitializationEvent event) {
+        getLogger().info("Post-initializing server/common-side for {}...",
+            Tags.MOD_NAME);
+        // -- Does nothing yet!
+        getLogger().info("Done post-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
