@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.KeyBindings;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
 
@@ -64,12 +63,8 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
      */
     @Override
     public boolean keyPressed(int keyCode, char keyChar) {
-        GTNHCustomizer.getLogger()
-            .info("Hit mixin 'keyPressed' for 'GuiEditConfigValueMixin'");
         GuiEditConfigValue self = (GuiEditConfigValue) (Object) this;
         if (!((IGuiBaseExtensions) self).isFocused()) {
-            GTNHCustomizer.getLogger()
-                .warn("Not focused!");
             return false;
         }
         if (keyCode == KeyBindings.ACCEPT_NBT_VALUE_CHANGE.getKeyCode()
@@ -90,8 +85,6 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
             return true;
         }
         if (super.keyPressed(keyCode, keyChar)) {
-            GTNHCustomizer.getLogger()
-                .warn("'super' implementation handled keyPressed!");
             return true;
         }
         return false;
