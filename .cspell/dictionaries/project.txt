@@ -83,6 +83,7 @@ scategory
 sconfig
 seps
 serverutilities
+serverutils
 silverwood
 specialmobs
 spongemixins
