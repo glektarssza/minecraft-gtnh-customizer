@@ -61,6 +61,15 @@ on:
         type: string
         required: false
         default: wrapper
+      gradle-publish:
+        description: |
+          Whether to run the Gradle `publish` task in the `build` job after
+          uploading artifacts.
+
+          Defaults to `true`.
+        type: boolean
+        required: false
+        default: true
     secrets:
       github-token:
         description: |
@@ -78,7 +87,7 @@ jobs:
       java-version: ${{inputs.java-version}}
       java-vendor: ${{inputs.java-vendor}}
       gradle-version: ${{inputs.gradle-version}}
-      upload-artifacts: false
+      gradle-publish: ${{inputs.gradle-publish}}
     secrets:
       github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
   publish:
@@ -97,19 +106,19 @@ jobs:
           lfs: true
           submodules: recursive
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+      - id: download-artifacts
+        name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{needs.build.outputs.artifact-id}}
+          path: artifacts
       - id: generate-checksums
         name: Generate checksums
         run: |
-          md5sum ./build/libs/* > checksums_md5.txt
-          shasum -a 1 ./build/libs/* > checksums_sha1.txt
-          shasum -a 256 ./build/libs/* > checksums_sha256.txt
-          mv *.txt ./build/libs/
-      - id: gradle-publish
-        name: Gradle publish
-        env:
-          GHPR_USERNAME: ${{github.actor}}
-          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-        run: ./gradlew publish
+          md5sum ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}* > checksums_md5.txt
+          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}* > checksums_sha1.txt
+          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}* > checksums_sha256.txt
+          mv *.txt ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}
       - id: attach-to-release
         name: Attach artifacts to release
         uses: actions/github-script@v7
@@ -117,4 +126,4 @@ jobs:
         with:
           script: |
             const script = require('./.github/scripts/upload-release-assets.js');
-            await script({github, context, core}, "./build/libs", ${{toJson(inputs.github-release-id)}});
+            await script({github, context, core}, ${{toJson(steps.download-artifacts.outputs.download-path)}}, ${{toJson(inputs.github-release-id)}});

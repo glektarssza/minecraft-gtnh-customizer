@@ -43,6 +43,14 @@ on:
         type: string
         required: false
         default: wrapper
+      gradle-publish:
+        description: |
+          Whether to run the Gradle `publish` task after uploading artifacts.
+
+          Defaults to `false`.
+        type: boolean
+        required: false
+        default: false
       upload-artifacts:
         description: |
           Whether to upload artifacts.
@@ -61,18 +69,18 @@ on:
         required: false
         default: 0
     outputs:
-      artifacts-id:
+      artifact-id:
         description: |
           The ID of the generated artifacts.
-        value: ${{jobs.build.outputs.artifacts-id}}
-      artifacts-name:
+        value: ${{jobs.build.outputs.artifact-id}}
+      artifact-name:
         description: |
           The name of the generated artifacts.
-        value: ${{jobs.build.outputs.artifacts-name}}
-      artifacts-url:
+        value: ${{jobs.build.outputs.artifact-name}}
+      artifact-url:
         description: |
           The URL from which the generated artifacts can be downloaded.
-        value: ${{jobs.build.outputs.artifacts-url}}
+        value: ${{jobs.build.outputs.artifact-url}}
     secrets:
       github-token:
         description: |
@@ -86,9 +94,9 @@ jobs:
       #-- To clone repository
       contents: read
     outputs:
-      artifacts-id: ${{steps.upload-artifacts.outputs.artifact-id}}
-      artifacts-name: dist
-      artifacts-url: ${{steps.upload-artifacts.outputs.artifact-url}}
+      artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}
+      artifact-name: dist
+      artifact-url: ${{steps.upload-artifacts.outputs.artifact-url}}
     steps:
       - id: checkout-repository
         name: Checkout repository
@@ -145,3 +153,10 @@ jobs:
           compression-level: 0
           if-no-files-found: error
           retention-days: ${{inputs.artifact-retention-days}}
+      - id: gradle-publish
+        name: Gradle publish
+        if: inputs.gradle-publish
+        env:
+          GHPR_USERNAME: ${{github.actor}}
+          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+        run: ./gradlew publish
