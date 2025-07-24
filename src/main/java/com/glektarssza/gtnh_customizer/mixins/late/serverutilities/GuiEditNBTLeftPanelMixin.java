@@ -26,6 +26,10 @@ import serverutils.client.gui.GuiEditNBT.ButtonNBT;
 import serverutils.client.gui.GuiEditNBT.ButtonNBTList;
 import serverutils.lib.gui.Panel;
 
+/**
+ * Mixin for the anonymous inner class that provides the upper left panel of the
+ * {@link GuiEditNBT} class.
+ */
 public abstract class GuiEditNBTLeftPanelMixin extends Panel {
     /**
      * Make Java happy again.
