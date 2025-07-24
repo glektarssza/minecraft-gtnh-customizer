@@ -4,4 +4,3 @@ plugins {
 }
 
 apply from: "spotless.gradle"
-apply from: "publishing.gradle"
