@@ -32,7 +32,7 @@
         "0.0.0": "Initial release."
     },
     "promos": {
-        "1.7.10-latest": "0.12.3",
-        "1.7.10-recommended": "0.12.3"
+        "1.7.10-latest": "0.13.0",
+        "1.7.10-recommended": "0.13.0"
     }
 }
