@@ -47,7 +47,7 @@ public abstract class GuiEditNBTLeftPanelMixin extends Panel {
      *
      * @param ci The callback info.
      */
-    @Inject(method = "addWidgets", at = @At("TAIL"), remap = false)
+    @Inject(method = "addWidgets", at = @At("TAIL"))
     public void addWidgets$injectExtraButtons(CallbackInfo ci) {
         GuiEditNBT guiEditNBT = (GuiEditNBT) this.parent;
         Panel self = guiEditNBT.panelTopLeft;
