@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Build
+name: Build and Publish
 on:
   workflow_call:
     inputs:
@@ -43,6 +43,14 @@ on:
         type: string
         required: false
         default: wrapper
+      gradle-publish:
+        description: |
+          Whether to run the Gradle `publish` task after uploading artifacts.
+
+          Defaults to `false`.
+        type: boolean
+        required: false
+        default: false
       upload-artifacts:
         description: |
           Whether to upload artifacts.
@@ -85,6 +93,8 @@ jobs:
     permissions:
       #-- To clone repository
       contents: read
+      #-- To uploads packages
+      packages: write
     outputs:
       artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}
       artifact-name: dist
@@ -145,3 +155,10 @@ jobs:
           compression-level: 0
           if-no-files-found: error
           retention-days: ${{inputs.artifact-retention-days}}
+      - id: gradle-publish
+        name: Gradle publish
+        if: inputs.gradle-publish
+        env:
+          GHPR_USERNAME: ${{github.actor}}
+          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+        run: ./gradlew publish
