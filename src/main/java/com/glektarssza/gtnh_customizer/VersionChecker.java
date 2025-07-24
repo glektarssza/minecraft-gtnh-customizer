@@ -3,8 +3,7 @@ package com.glektarssza.gtnh_customizer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -254,11 +253,11 @@ public class VersionChecker extends Thread {
             setStatus(Status.FAILED);
             return;
         }
-        URL url = null;
+        URI uri = null;
         try {
-            url = new URL(updateUrlString);
-        } catch (MalformedURLException ex) {
-            LOGGER.error("Malformed update URL: {}", ex);
+            uri = new URI(updateUrlString);
+        } catch (Exception ex) {
+            LOGGER.error("Malformed update URI: {}", ex);
             setStatus(Status.FAILED);
             return;
         }
@@ -267,7 +266,7 @@ public class VersionChecker extends Thread {
         InputStream urlConnection = null;
         String rawUpdateData = null;
         try {
-            urlConnection = openUrlStream(url);
+            urlConnection = openUrlStream(uri);
         } catch (IOException ex) {
             LOGGER.error("Failed to open connection to update URL: {}", ex);
             setStatus(Status.FAILED);
@@ -346,11 +345,11 @@ public class VersionChecker extends Thread {
      * @throws IOException
      *
      */
-    private InputStream openUrlStream(URL url) throws IOException {
-        URL currentUrl = url;
+    private InputStream openUrlStream(URI uri) throws IOException {
+        URI currentUri = uri;
         int redirectCount = 0;
         for (; redirectCount < MAX_HTTP_REDIRECTS; redirectCount += 1) {
-            URLConnection connection = currentUrl.openConnection();
+            URLConnection connection = currentUri.toURL().openConnection();
             if (connection instanceof HttpURLConnection) {
                 HttpURLConnection httpConnection = (HttpURLConnection) connection;
                 httpConnection.setInstanceFollowRedirects(false);
@@ -359,7 +358,7 @@ public class VersionChecker extends Thread {
                     try {
                         String newLocation = httpConnection
                             .getHeaderField("Location");
-                        currentUrl = new URL(currentUrl, newLocation);
+                        currentUri = currentUri.resolve(newLocation);
                         continue;
                     } finally {
                         httpConnection.disconnect();
@@ -369,7 +368,7 @@ public class VersionChecker extends Thread {
             return connection.getInputStream();
         }
         throw new IOException(String.format(
-            "Too many redirects while fetching URL '%s' (%d redirects)", url,
+            "Too many redirects while fetching URL '%s' (%d redirects)", uri,
             redirectCount));
     }
 }
