@@ -30,4 +30,5 @@ jobs:
       github-release-id: ${{github.event.release.id}}
       attach-to-github-release: true
     secrets:
+      modrinth-token: ${{secrets.MODRINTH_API_TOKEN}}
       github-token: ${{secrets.GITHUB_TOKEN}}
