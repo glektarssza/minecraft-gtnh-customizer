@@ -72,23 +72,23 @@ on:
       artifact-id:
         description: |
           The ID of the generated artifacts.
-        value: ${{jobs.build.outputs.artifact-id}}
+        value: ${{jobs.build-and-publish.outputs.artifact-id}}
       artifact-name:
         description: |
           The name of the generated artifacts.
-        value: ${{jobs.build.outputs.artifact-name}}
+        value: ${{jobs.build-and-publish.outputs.artifact-name}}
       artifact-url:
         description: |
           The URL from which the generated artifacts can be downloaded.
-        value: ${{jobs.build.outputs.artifact-url}}
+        value: ${{jobs.build-and-publish.outputs.artifact-url}}
     secrets:
       github-token:
         description: |
           The token to use when making authenticated calls to the GitHub API.
         required: true
 jobs:
-  build:
-    name: Build
+  build-and-publish:
+    name: Build and Publish
     runs-on: ubuntu-latest
     permissions:
       #-- To clone repository
