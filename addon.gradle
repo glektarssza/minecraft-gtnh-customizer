@@ -11,3 +11,21 @@ minecraft {
     injectedTags.put("MOD_VERSION", modVersion)
     injectedTags.put("MOD_DEPENDENCIES", "after:serverutilities;after:TConstruct;after:XaeroMinimap;after:Thaumcraft;after:SpecialMobs")
 }
+
+publishing {
+    repositories {
+        ghpr {
+            name = "GitHub-Packages"
+            url = uri("https://maven.pkg.github.com/glektarssza/minecraft-gtnh-customizer")
+            credentials {
+                username = project.findProperty("ghpr.user") ?: System.getenv("GHPR_USERNAME")
+                password = project.findProperty("ghpr.key") ?: System.getenv("GHPR_TOKEN")
+            }
+        }
+    }
+    publications {
+        ghpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
