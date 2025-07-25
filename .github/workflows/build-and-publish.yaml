@@ -159,6 +159,6 @@ jobs:
         name: Gradle publish
         if: inputs.gradle-publish
         env:
-          GHPR_USERNAME: ${{github.actor}}
-          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          MAVEN_USERNAME: ${{github.actor}}
+          MAVEN_PASSWORD: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
         run: ./gradlew publish
