@@ -100,4 +100,4 @@ jobs:
         run: ./gradlew setupCIWorkspace
       - id: lint
         name: Lint
-        run: ./gradlew spotlessJavaCheck
+        run: ./gradlew check
