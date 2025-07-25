@@ -4,6 +4,8 @@
 ## Table of Contents ##
 
 * [Changelog](#changelog)
+    * [0.14.0](#0140)
+        * [Misc.](#misc)
     * [0.13.1](#0131)
         * [Technical](#technical)
     * [0.13.0](#0130)
@@ -40,7 +42,7 @@
     * [0.6.0](#060)
         * [Features](#features-7)
     * [0.5.3](#053)
-        * [Misc.](#misc)
+        * [Misc.](#misc-1)
     * [0.5.2](#052)
         * [Bug Fixes](#bug-fixes-9)
     * [0.5.1](#051)
@@ -70,6 +72,13 @@
         * [Technical](#technical-2)
     * [0.0.0](#000)
         * [Features](#features-13)
+
+## 0.14.0 ##
+
+### Misc. ###
+
+* Removed refreshing of top panel widgets in the ServerUtilities `/nbtedit`
+  command now that it's been formally accepted into GTNH.
 
 ## 0.13.1 ##
 
