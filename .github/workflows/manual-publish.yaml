@@ -87,7 +87,5 @@ jobs:
       java-version: ${{inputs.java-version}}
       java-vendor: ${{inputs.java-vendor}}
       gradle-version: ${{inputs.gradle-version}}
-      publish-github-packages: false
-      publish-modrinth: false
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
