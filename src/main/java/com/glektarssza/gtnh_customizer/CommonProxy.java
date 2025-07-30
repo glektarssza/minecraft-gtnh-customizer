@@ -14,6 +14,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -208,6 +209,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
+    @SubscribeEvent
     public void serverUtilitiesPreInitRegistry(
         ServerUtilitiesPreInitRegistryEvent event) {
         GTNHCustomizer.getLogger().info(
