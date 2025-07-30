@@ -10,7 +10,7 @@ dependencies {
         //-- Support for other mods and local testing
         devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
         devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
-        devOnlyNonPublishable(rfg.deobf('com.github.GTNewHorizons:Backhand:1.6.34:dev'))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.6.34:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.0:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.54:dev"));
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.40-GTNH:dev"))
@@ -21,7 +21,7 @@ dependencies {
         //-- Support for other mods
         compileOnly(deobfCurse("xaeros-minimap-263420:6012805"))
         compileOnly(deobfCurse("xaeros-world-map-317780:5987124"))
-        compileOnly(rfg.deobf('com.github.GTNewHorizons:Backhand:1.6.34:dev'))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.6.34:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.0:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.54:dev"));
         compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.13.40-GTNH:dev"))
