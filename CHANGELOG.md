@@ -86,6 +86,7 @@
 
 * Fixed ServerUtilities `/reload` command no longer showing the `gtnh_customzer`
   namespace anymore.
+* Fixed config changes not applying in a running game.
 
 ### Misc. ###
 
