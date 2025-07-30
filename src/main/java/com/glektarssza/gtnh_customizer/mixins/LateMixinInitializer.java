@@ -66,6 +66,9 @@ public class LateMixinInitializer implements ILateMixinLoader {
             mixins.add("serverutilities.GuiEditNBTMixin");
             mixins.add("serverutilities.TextBoxMixin");
         }
+        if (loadedMods.contains("EnderZoo")) {
+            mixins.add("enderzoo.EntityEnderminyMixin");
+        }
         return mixins;
     }
 }
