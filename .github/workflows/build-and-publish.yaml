@@ -85,8 +85,6 @@ jobs:
     permissions:
       #-- To clone repository
       contents: read
-      #-- To uploads packages
-      packages: write
     outputs:
       artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}
       artifact-name: dist

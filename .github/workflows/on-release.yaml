@@ -18,10 +18,8 @@ jobs:
   release:
     name: Publish
     permissions:
-      #-- To clone repository
-      contents: read
-      #-- To uploads packages
-      packages: write
+      #-- To clone repository write release artifacts
+      contents: write
     needs:
       - lint
     uses: ./.github/workflows/publish.yaml
