@@ -69,23 +69,11 @@ on:
         type: boolean
         required: false
         default: true
-      publish-modrinth:
-        description: |
-          Whether to publish to Modrinth.
-
-          Defaults to `true`.
-        type: boolean
-        required: false
-        default: true
     secrets:
       github-token:
         description: |
           The token to use when making authenticated calls to the GitHub API.
         required: true
-      modrinth-token:
-        description: |
-          The token to use when making authenticated calls to the Modrinth API.
-        required: false
 jobs:
   build:
     name: Build
@@ -100,10 +88,7 @@ jobs:
       java-version: ${{inputs.java-version}}
       java-vendor: ${{inputs.java-vendor}}
       gradle-version: ${{inputs.gradle-version}}
-      publish-github-packages: ${{inputs.publish-github-packages}}
-      publish-modrinth: ${{inputs.publish-modrinth}}
     secrets:
-      modrinth-token: ${{secrets.modrinth-token}}
       github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
   publish:
     name: Publish

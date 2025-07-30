@@ -43,22 +43,6 @@ on:
         type: string
         required: false
         default: wrapper
-      publish-github-packages:
-        description: |
-          Whether to publish to GitHub Packages.
-
-          Defaults to `true`.
-        type: boolean
-        required: false
-        default: true
-      publish-modrinth:
-        description: |
-          Whether to publish to Modrinth.
-
-          Defaults to `true`.
-        type: boolean
-        required: false
-        default: true
       upload-artifacts:
         description: |
           Whether to upload artifacts.
@@ -94,10 +78,6 @@ on:
         description: |
           The token to use when making authenticated calls to the GitHub API.
         required: true
-      modrinth-token:
-        description: |
-          The token to use when making authenticated calls to the Modrinth API.
-        required: false
 jobs:
   build-and-publish:
     name: Build and Publish
@@ -167,21 +147,3 @@ jobs:
           compression-level: 0
           if-no-files-found: error
           retention-days: ${{inputs.artifact-retention-days}}
-      - id: publish-github-packages
-        name: Publish to GitHub Packages
-        if: inputs.publish-github-packages
-        env:
-          GHPR_USERNAME: ${{github.actor}}
-          GHPR_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-        run: ./gradlew publish
-      - id: publish-modrinth
-        name: Publish to Modrinth
-        if: inputs.publish-modrinth
-        env:
-          MODRINTH_TOKEN: ${{secrets.modrinth-token}}
-        run: |
-          if [[ -z "${MODRINTH_TOKEN}" ]]; then
-            echo "::error file=.github\workflows\build-and-publish.yaml,line=184,endLine=184,title=No Modrinth API Token::Modrinth publishing requested but no Modrinth API token supplied!";
-            exit 1;
-          fi
-          ./gradlew publish
