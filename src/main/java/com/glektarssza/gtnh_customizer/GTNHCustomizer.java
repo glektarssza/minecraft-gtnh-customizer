@@ -19,8 +19,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
-import serverutils.events.ServerUtilitiesPreInitRegistryEvent;
-
 /**
  * The root mod class.
  */
@@ -165,18 +163,6 @@ public class GTNHCustomizer {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         proxy.serverStarting(event);
-    }
-
-    /**
-     * An event handler for when the {@code ServerUtilities} mod triggers a
-     * server reload.
-     *
-     * @param event The event data.
-     */
-    @SubscribeEvent
-    public void onServerUtilitiesPreInitRegistry(
-        ServerUtilitiesPreInitRegistryEvent event) {
-        proxy.serverUtilitiesPreInitRegistry(event);
     }
 
     /**

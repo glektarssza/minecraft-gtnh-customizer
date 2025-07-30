@@ -6,6 +6,7 @@
 * [Changelog](#changelog)
     * [0.14.0](#0140)
         * [Features](#features)
+        * [Bug Fix](#bug-fix)
         * [Misc.](#misc)
     * [0.13.1](#0131)
         * [Technical](#technical)
@@ -80,6 +81,11 @@
 
 * Added support for EnderZoo so that Enderminy's will no longer attack immune
   players.
+
+### Bug Fix ###
+
+* Fixed ServerUtilities `/reload` command no longer showing the `gtnh_customzer`
+  namespace anymore.
 
 ### Misc. ###
 
