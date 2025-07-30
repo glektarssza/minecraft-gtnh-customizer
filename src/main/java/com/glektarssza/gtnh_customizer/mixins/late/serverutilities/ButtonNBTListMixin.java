@@ -11,6 +11,9 @@ import com.glektarssza.gtnh_customizer.utils.extensions.IButtonNBTListExtensions
 
 import serverutils.client.gui.GuiEditNBT.ButtonNBTList;
 
+/**
+ * A mixin for the {@link ButtonNBTList} class.
+ */
 @Mixin(ButtonNBTList.class)
 public abstract class ButtonNBTListMixin implements IButtonNBTListExtensions {
     /**
@@ -25,6 +28,7 @@ public abstract class ButtonNBTListMixin implements IButtonNBTListExtensions {
      * @return {@code true} if this list is a list of the given NBT tag type or
      *         an empty list, {@code false} otherwise.
      */
+    @Override
     @Unique
     public boolean isListOf(int nbtType) {
         return NBTUtils.isListOfNBTType(this.list, nbtType)
@@ -37,6 +41,7 @@ public abstract class ButtonNBTListMixin implements IButtonNBTListExtensions {
      * @return {@code true} if this does not contain any elements, {@code false}
      *         otherwise.
      */
+    @Override
     @Unique
     public boolean isEmpty() {
         return NBTUtils.isNBTListEmpty(this.list);
