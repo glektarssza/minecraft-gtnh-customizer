@@ -15,9 +15,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-
-import net.minecraftforge.event.entity.player.BonemealEvent;
 
 /**
  * The root mod class.
@@ -163,15 +160,5 @@ public class GTNHCustomizer {
     @Mod.EventHandler
     public void onServerStarting(FMLServerStartingEvent event) {
         proxy.serverStarting(event);
-    }
-
-    /**
-     * An event handler for when a player tries to use bone meal.
-     *
-     * @param event The event data.
-     */
-    @SubscribeEvent
-    public void onBoneMeal(BonemealEvent event) {
-        proxy.boneMeal(event);
     }
 }
