@@ -4,9 +4,11 @@
 ## Table of Contents ##
 
 * [Changelog](#changelog)
+    * [0.14.1](#0141)
+        * [Bug Fix](#bug-fix)
     * [0.14.0](#0140)
         * [Features](#features)
-        * [Bug Fix](#bug-fix)
+        * [Bug Fix](#bug-fix-1)
         * [Misc.](#misc)
     * [0.13.1](#0131)
         * [Technical](#technical)
@@ -74,6 +76,12 @@
         * [Technical](#technical-2)
     * [0.0.0](#000)
         * [Features](#features-14)
+
+## 0.14.1 ##
+
+### Bug Fix ###
+
+* Fixed bad world cast in `/extinguish` command that caused it to not work.
 
 ## 0.14.0 ##
 
