@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -235,6 +236,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
+    @SubscribeEvent
     public void boneMeal(BonemealEvent event) {
         if (!Loader.isModLoaded("Thaumcraft")) {
             return;
@@ -277,5 +279,14 @@ public class CommonProxy {
                     event.world.rand);
                 break;
         }
+    }
+
+    @SubscribeEvent
+    public void configChanged(ConfigChangedEvent event) {
+        if (event.modID != Tags.MOD_ID) {
+            return;
+        }
+        Config.refresh();
+        Config.save();
     }
 }

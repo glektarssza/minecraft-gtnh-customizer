@@ -508,6 +508,29 @@ public class Config {
     }
 
     /**
+     * Refresh the configuration data from the in-memory data.
+     */
+    public static void refresh() {
+        if (CONFIG_INSTANCE == null) {
+            GTNHCustomizer.getLogger().error("Cannot load configuration!");
+            GTNHCustomizer.getLogger()
+                .error("Configuration has not been initialized yet!");
+            return;
+        }
+        if (!CONFIG_INSTANCE.getLoadedConfigVersion().equals(CONFIG_VERSION)) {
+            GTNHCustomizer.getLogger().error("Cannot load configuration!");
+            GTNHCustomizer.getLogger().error(
+                "In-memory configuration version of '{}' does not equal expected configuration version of '{}'!",
+                CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
+            return;
+        }
+        // -- Load updated values
+        new Gameplay().loadValues(CONFIG_INSTANCE);
+        new Debugging().loadValues(CONFIG_INSTANCE);
+        new Commands().loadValues(CONFIG_INSTANCE);
+    }
+
+    /**
      * Load the configuration data from disk.
      */
     public static void load() {
