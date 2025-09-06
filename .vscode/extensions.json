@@ -8,7 +8,6 @@
         "vscjava.vscode-java-dependency",
         "vscjava.vscode-java-debug",
         "vscjava.vscode-java-test",
-        "vscjava.vscode-maven",
         "vscjava.vscode-gradle"
     ]
 }
