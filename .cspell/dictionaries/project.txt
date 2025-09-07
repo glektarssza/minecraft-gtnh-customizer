@@ -24,6 +24,7 @@ dfml
 divinerpg
 dmixin
 enderman
+enderminy
 factorypath
 fmlat
 foojay
