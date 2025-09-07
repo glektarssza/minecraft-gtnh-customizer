@@ -1,81 +1,10 @@
 # Changelog #
 
-<!-- omit in toc -->
-## Table of Contents ##
+## 0.15.0 ##
 
-* [Changelog](#changelog)
-    * [0.14.1](#0141)
-        * [Bug Fix](#bug-fix)
-    * [0.14.0](#0140)
-        * [Features](#features)
-        * [Bug Fix](#bug-fix-1)
-        * [Misc.](#misc)
-    * [0.13.1](#0131)
-        * [Technical](#technical)
-    * [0.13.0](#0130)
-        * [Features](#features-1)
-    * [0.12.3](#0123)
-        * [Bug Fixes](#bug-fixes)
-    * [0.12.2](#0122)
-        * [Bug Fixes](#bug-fixes-1)
-    * [0.12.1](#0121)
-        * [Bug Fixes](#bug-fixes-2)
-    * [0.12.0](#0120)
-        * [Features](#features-2)
-        * [Bug Fixes](#bug-fixes-3)
-    * [0.11.1](#0111)
-        * [Bug Fixes](#bug-fixes-4)
-    * [0.11.0](#0110)
-        * [Features](#features-3)
-    * [0.10.0](#0100)
-        * [Features](#features-4)
-    * [0.9.0](#090)
-        * [Features](#features-5)
-    * [0.8.0](#080)
-        * [Features](#features-6)
-    * [0.7.0](#070)
-        * [Features](#features-7)
-        * [Bug Fixes](#bug-fixes-5)
-        * [Technical](#technical-1)
-    * [0.6.3](#063)
-        * [Bug Fixes](#bug-fixes-6)
-    * [0.6.2](#062)
-        * [Bug Fixes](#bug-fixes-7)
-    * [0.6.1](#061)
-        * [Bug Fixes](#bug-fixes-8)
-    * [0.6.0](#060)
-        * [Features](#features-8)
-    * [0.5.3](#053)
-        * [Misc.](#misc-1)
-    * [0.5.2](#052)
-        * [Bug Fixes](#bug-fixes-9)
-    * [0.5.1](#051)
-        * [Bug Fixes](#bug-fixes-10)
-    * [0.5.0](#050)
-        * [Features](#features-9)
-    * [0.4.0](#040)
-        * [Features](#features-10)
-    * [0.3.1](#031)
-        * [Bug Fixes](#bug-fixes-11)
-    * [0.3.0](#030)
-        * [Features](#features-11)
-    * [0.2.3](#023)
-        * [Bug Fixes](#bug-fixes-12)
-    * [0.2.2](#022)
-        * [Bug Fixes](#bug-fixes-13)
-    * [0.2.1](#021)
-        * [Bug Fixes](#bug-fixes-14)
-    * [0.2.0](#020)
-        * [Features](#features-12)
-    * [0.1.2](#012)
-        * [Bug Fixes](#bug-fixes-15)
-    * [0.1.1](#011)
-        * [Bug Fixes](#bug-fixes-16)
-    * [0.1.0](#010)
-        * [Features](#features-13)
-        * [Technical](#technical-2)
-    * [0.0.0](#000)
-        * [Features](#features-14)
+### Technical ###
+
+* Removed the version checker.
 
 ## 0.14.1 ##
 
@@ -92,8 +21,8 @@
 
 ### Bug Fix ###
 
-* Fixed ServerUtilities `/reload` command no longer showing the `gtnh_customzer`
-  namespace anymore.
+* Fixed ServerUtilities `/reload` command no longer showing the
+  `gtnh_customizer` namespace anymore.
 * Fixed config changes not applying in a running game.
 
 ### Misc. ###
