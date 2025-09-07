@@ -90,56 +90,6 @@ public class CommonProxy {
      */
     public void preInit(FMLPreInitializationEvent event) {
         this.logger = event.getModLog();
-        VersionChecker.registerCallback((result) -> {
-            switch (result.status) {
-                case FAILED:
-                    this.logger.error("Failed to check for version updates!");
-                    break;
-                case UNKNOWN:
-                    this.logger.error("Failed to check for version updates!");
-                    break;
-                case UP_TO_DATE:
-                    this.logger.info("Mod is up to date!");
-                    break;
-                case AHEAD_OF_BETA:
-                    this.logger
-                        .info(
-                            "Mod is ahead of the latest version! Latest version is '{}' but you are running '{}'",
-                            result.recommendedVersion,
-                            GTNHCustomizer.getMetadata().version);
-                    break;
-                case AHEAD_OF_RECOMMENDED:
-                    this.logger
-                        .info(
-                            "Mod is ahead of the recommended version! Recommend version is '{}' but you are running '{}'",
-                            result.recommendedVersion,
-                            GTNHCustomizer.getMetadata().version);
-                    break;
-                case BEHIND_BETA:
-                    this.logger
-                        .info(
-                            "Mod is behind the latest version! Latest version is '{}' but you are running '{}'",
-                            result.recommendedVersion,
-                            GTNHCustomizer.getMetadata().version);
-                    break;
-                case BEHIND_RECOMMENDED:
-                    this.logger
-                        .info(
-                            "Mod is behind the recommended version! Recommend version is '{}' but you are running '{}'",
-                            result.recommendedVersion,
-                            GTNHCustomizer.getMetadata().version);
-                    break;
-                case NOT_STARTED:
-                    this.logger.error(
-                        "Uhhhhhhh... Check is not started? That's wrong...");
-                    break;
-                case IN_PROGRESS:
-                    this.logger.error(
-                        "Uhhhhhhh... Check is in progress? That's wrong...");
-                    break;
-            }
-        });
-        new VersionChecker().start();
         GTNHCustomizer.getLogger().info(
             "Pre-initializing server/common-side for {}...",
             Tags.MOD_NAME);
