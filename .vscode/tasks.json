@@ -17,9 +17,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "spotlessCheck"
-            ],
+            "args": ["spotlessCheck"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -37,9 +35,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:lint:fix",
@@ -57,9 +53,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "spotlessApply"
-            ],
+            "args": ["spotlessApply"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -77,9 +71,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:build",
@@ -98,9 +90,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "build"
-            ],
+            "args": ["build"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -118,9 +108,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:clean",
@@ -139,9 +127,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "build"
-            ],
+            "args": ["build"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -159,9 +145,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:rebuild",
@@ -180,10 +164,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "clean",
-                "build"
-            ],
+            "args": ["clean", "build"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -201,9 +182,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:setupDecompWorkspace",
@@ -221,9 +200,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "setupDecompWorkspace"
-            ],
+            "args": ["setupDecompWorkspace"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -241,9 +218,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:runClient",
@@ -261,9 +236,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient"
-            ],
+            "args": ["runClient"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -308,10 +281,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient",
-                "--debug-jvm"
-            ],
+            "args": ["runClient", "--debug-jvm"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -356,9 +326,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient17"
-            ],
+            "args": ["runClient17"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -403,10 +371,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient17",
-                "--debug-jvm"
-            ],
+            "args": ["runClient17", "--debug-jvm"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -449,9 +414,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient21"
-            ],
+            "args": ["runClient21"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -496,10 +459,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "runClient21",
-                "--debug-jvm"
-            ],
+            "args": ["runClient21", "--debug-jvm"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -542,9 +502,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "eclipse"
-            ],
+            "args": ["eclipse"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -562,9 +520,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:cleanEclipse",
@@ -582,9 +538,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "eclipse"
-            ],
+            "args": ["eclipse"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -602,9 +556,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "rebuildEclipse",
@@ -622,10 +574,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "cleanEclipse",
-                "eclipse"
-            ],
+            "args": ["cleanEclipse", "eclipse"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -643,9 +592,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         },
         {
             "label": "gradle:prepareWorkspace",
@@ -667,7 +614,7 @@
                 "clean",
                 "cleanEclipse",
                 "setupDecompWorkspace",
-                "injectTags",
+                "build",
                 "eclipse"
             ],
             "windows": {
@@ -687,9 +634,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "problemMatcher": [
-                "$gradle"
-            ]
+            "problemMatcher": ["$gradle"]
         }
     ]
 }

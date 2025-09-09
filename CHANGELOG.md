@@ -5,6 +5,8 @@
 ### Technical ###
 
 * Removed the version checker.
+* Reworked CSpell configuration on the repository side.
+* Fixed `prepareWorkspace` VSCode task.
 
 ## 0.14.1 ##
 
