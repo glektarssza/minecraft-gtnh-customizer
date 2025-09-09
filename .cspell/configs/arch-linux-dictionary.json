@@ -1,0 +1,19 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "id": "arch-linux-dictionary",
+    "version": "0.2",
+    "name": "Arch Linux Custom Dictionary Configuration",
+    "description": "Custom dictionary definition configuration for Arch Linux.",
+    "readonly": true,
+    "dictionaryDefinitions": [
+        {
+            "name": "arch-linux-dictionary",
+            "description": "Arch-linux Dictionary",
+            "type": "S",
+            "useCompounds": false,
+            "noSuggest": true,
+            "path": "../dictionaries/arch-linux.txt"
+        }
+    ],
+    "dictionaries": ["arch-linux-dictionary"]
+}

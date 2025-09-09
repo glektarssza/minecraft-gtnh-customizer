@@ -1,0 +1,27 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "id": "java-dictionary",
+    "version": "0.2",
+    "name": "Java Custom Dictionary Configuration",
+    "description": "Custom dictionary definition configuration for Java.",
+    "readonly": true,
+    "ignoreRegExpList": ["FullyQualifiedJavaClassSpecifier"],
+    "patterns": [
+        {
+            "name": "FullyQualifiedJavaClassSpecifier",
+            "description": "A fully qualified specifier for a Java class.",
+            "pattern": ["(!?[\";:\\(\\)])L[^.]+\\."]
+        }
+    ],
+    "dictionaryDefinitions": [
+        {
+            "name": "java-dictionary",
+            "description": "Java Dictionary",
+            "type": "S",
+            "useCompounds": false,
+            "noSuggest": true,
+            "path": "../dictionaries/java.txt"
+        }
+    ],
+    "dictionaries": ["java-dictionary"]
+}
