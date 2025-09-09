@@ -6,12 +6,15 @@
     "description": "Root configuration for the project.",
     "enabled": true,
     "import": [
-        "./.cspell/configs/dictionary-project.json"
+        "./.cspell/configs/arch-linux-dictionary.json",
+        "./.cspell/configs/python-dictionary.json",
+        "./.cspell/configs/java-dictionary.json",
+        "./.cspell/configs/minecraft-dictionary.json",
+        "./.cspell/configs/project-dictionary.json"
     ],
+    "ignorePaths": ["./gradlew*", "./spotless.importorder", "./formatter.xml"],
     "useGitignore": true,
-    "gitignoreRoot": [
-        "."
-    ],
+    "gitignoreRoot": ["."],
     "caseSensitive": false,
     "loadDefaultConfiguration": true,
     "unknownWords": "report-all",

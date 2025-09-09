@@ -1,0 +1,19 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "id": "minecraft-dictionary",
+    "version": "0.2",
+    "name": "Minecraft Custom Dictionary Configuration",
+    "description": "Custom dictionary definition configuration for Minecraft.",
+    "readonly": true,
+    "dictionaryDefinitions": [
+        {
+            "name": "minecraft-dictionary",
+            "description": "Minecraft Dictionary",
+            "type": "S",
+            "useCompounds": false,
+            "noSuggest": true,
+            "path": "../dictionaries/minecraft.txt"
+        }
+    ],
+    "dictionaries": ["minecraft-dictionary"]
+}

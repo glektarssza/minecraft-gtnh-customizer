@@ -1,13 +1,13 @@
 {
     "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
-    "id": "dictionary-project",
+    "id": "project-dictionary",
     "version": "0.2",
     "name": "Project Dictionary Configuration",
     "description": "Custom dictionary definition configuration for this project.",
     "readonly": true,
     "dictionaryDefinitions": [
         {
-            "name": "dictionary-project",
+            "name": "project-dictionary",
             "description": "Project Dictionary",
             "type": "S",
             "useCompounds": false,
@@ -15,7 +15,5 @@
             "path": "../dictionaries/project.txt"
         }
     ],
-    "dictionaries": [
-        "dictionary-project"
-    ]
+    "dictionaries": ["project-dictionary"]
 }

@@ -1,0 +1,19 @@
+{
+    "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+    "id": "python-dictionary",
+    "version": "0.2",
+    "name": "Python Custom Dictionary Configuration",
+    "description": "Custom dictionary definition configuration for Python.",
+    "readonly": true,
+    "dictionaryDefinitions": [
+        {
+            "name": "python-dictionary",
+            "description": "Python Dictionary",
+            "type": "S",
+            "useCompounds": false,
+            "noSuggest": true,
+            "path": "../dictionaries/python.txt"
+        }
+    ],
+    "dictionaries": ["python-dictionary"]
+}
