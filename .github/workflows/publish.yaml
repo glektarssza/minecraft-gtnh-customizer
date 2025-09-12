@@ -119,7 +119,7 @@ jobs:
           mv *.txt ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/
       - id: attach-to-release
         name: Attach artifacts to release
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         if: inputs.attach-to-github-release
         with:
           script: |
