@@ -91,7 +91,7 @@ jobs:
           java-version: ${{steps.read-java-version.outputs.java-version}}
       - id: setup-gradle
         name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
         with:
           github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
           gradle-version: ${{inputs.gradle-version}}
