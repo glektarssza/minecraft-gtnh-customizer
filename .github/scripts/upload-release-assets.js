@@ -25,7 +25,7 @@ module.exports = async (
     core.info(`Uploading ${assets.length} assets to release ${releaseId}...`);
     for (const artifactPath of assets) {
         core.info(`Uploading ${artifactPath}...`);
-        let artifactName = path.basename(artifact);
+        let artifactName = path.basename(artifactPath);
         core.info(`Reading ${artifactName} from ${artifactPath}...`);
         const data = await fs.readFile(artifactPath);
         core.info(`Uploading to release as ${artifactName}...`);
