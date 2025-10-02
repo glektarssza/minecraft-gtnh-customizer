@@ -83,7 +83,7 @@ jobs:
     name: Build and Publish
     runs-on: ubuntu-latest
     permissions:
-      #-- To clone repository
+      # -- To clone repository
       contents: read
     outputs:
       artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}

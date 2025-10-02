@@ -10,7 +10,7 @@ on:
           Only required when `attach-to-github-release` is `true`.
         type: string
         required: false
-        default: ""
+        default: ''
       attach-to-github-release:
         description: |
           Whether to attach the released assets to a GitHub release.
@@ -75,9 +75,9 @@ jobs:
   publish:
     name: Publish
     permissions:
-      #-- To clone repository
+      # -- To clone repository
       contents: read
-      #-- To uploads packages
+      # -- To uploads packages
       packages: write
     uses: ./.github/workflows/publish.yaml
     with:
