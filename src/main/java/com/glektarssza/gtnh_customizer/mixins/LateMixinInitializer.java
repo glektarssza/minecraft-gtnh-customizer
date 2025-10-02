@@ -54,9 +54,6 @@ public class LateMixinInitializer implements ILateMixinLoader {
         if (loadedMods.contains("TConstruct")) {
             mixins.add("tconstruct.SlimeSaplingMixin");
         }
-        if (loadedMods.contains("serverutilities")) {
-            mixins.add("serverutilities.MessageEditNBTRequestMixin");
-        }
         if (loadedMods.contains("serverutilities")
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             mixins.add("serverutilities.ButtonNBTListMixin");
