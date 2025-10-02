@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-issue-forms.json
 name: Release
 description: Prepare a new release for the project.
-title: "[Release] Prepare v<VERSION> release"
+title: '[Release] Prepare v<VERSION> release'
 labels:
   - Release
 assignees:
@@ -18,7 +18,10 @@ body:
         projects too.
 
         You have been warned!
-  - type: textarea
+  - id: body
+    type: textarea
+    validations:
+      required: true
     attributes:
       label: Body
       description: The body of the issue.
@@ -27,11 +30,10 @@ body:
 
         Perform the following steps (in order):
 
-        * [ ] Update the Forge update manifest with change log.
-        * [ ] Update the Forge update manifest to point to v0.12.0 as the latest version.
-        * [ ] Mark the GitHub milestone as completed.
+        * [ ] Update the Forge update manifest to point to v<VERSION> as the latest version.
         * [ ] Tag the release.
         * [ ] Release on GitHub.
+        * [ ] Mark the GitHub milestone as completed.
 
         After the above is completed, perform the following steps (in any order):
 
