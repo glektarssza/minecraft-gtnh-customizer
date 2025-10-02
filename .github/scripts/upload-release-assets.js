@@ -18,11 +18,10 @@ module.exports = async (
     releaseId
 ) => {
     const {owner, repo} = context.repo;
-    const items = await fs.readdir(artifactDirectory, {
+    const assets = await fs.readdir(artifactDirectory, {
         encoding: 'utf-8',
         recursive: true
     });
-    const assets = items.filter((item) => item.isFile());
     core.info(`Uploading ${assets.length} assets to release ${releaseId}...`);
     for (const artifactPath of assets) {
         core.info(`Uploading ${artifactPath}...`);
