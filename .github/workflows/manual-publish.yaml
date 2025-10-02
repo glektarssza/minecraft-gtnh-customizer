@@ -75,8 +75,8 @@ jobs:
   publish:
     name: Publish
     permissions:
-      #-- To clone repository
-      contents: read
+      #-- To clone repository and write release artifacts
+      contents: write
       #-- To uploads packages
       packages: write
     uses: ./.github/workflows/publish.yaml
