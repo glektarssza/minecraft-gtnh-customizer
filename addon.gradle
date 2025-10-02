@@ -1,6 +1,6 @@
 java {
     toolchain {
-        //-- We'd like the Temurin JDK please
+        // -- We'd like the Temurin JDK please
         vendor.set(JvmVendorSpec.ADOPTIUM)
     }
 }

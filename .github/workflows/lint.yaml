@@ -53,7 +53,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     permissions:
-      #-- To clone repository
+      # -- To clone repository
       contents: read
     steps:
       - id: checkout-repository

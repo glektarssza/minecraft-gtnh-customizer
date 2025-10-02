@@ -57,7 +57,7 @@ jobs:
   lint:
     name: Lint
     permissions:
-      #-- To clone repository
+      # -- To clone repository
       contents: read
     uses: ./.github/workflows/lint.yaml
     with:
