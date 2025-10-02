@@ -9,18 +9,7 @@ on:
 
           Only required when `attach-to-github-release` is `true`.
         type: string
-        required: false
-        default: ''
-      attach-to-github-release:
-        description: |
-          Whether to attach the released assets to a GitHub release.
-
-          Useful when testing other parts of the publish workflow.
-
-          Defaults to `false`.
-        type: boolean
-        required: false
-        default: false
+        required: true
       java-vendor:
         description: |
           The Java vendor to use.
@@ -75,15 +64,15 @@ jobs:
   publish:
     name: Publish
     permissions:
-      # -- To clone repository
-      contents: read
+      # -- To clone repository and write release artifacts
+      contents: write
       # -- To uploads packages
       packages: write
     uses: ./.github/workflows/publish.yaml
     with:
       ref: ${{github.sha}}
       github-release-id: ${{inputs.github-release-id}}
-      attach-to-github-release: ${{inputs.attach-to-github-release}}
+      attach-to-github-release: true
       java-version: ${{inputs.java-version}}
       java-vendor: ${{inputs.java-vendor}}
       gradle-version: ${{inputs.gradle-version}}
