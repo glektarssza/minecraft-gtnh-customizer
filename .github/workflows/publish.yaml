@@ -10,7 +10,7 @@ on:
           Only required when `attach-to-github-release` is `true`.
         type: string
         required: false
-        default: ""
+        default: ''
       attach-to-github-release:
         description: |
           Whether to attach the released assets to a GitHub release.
@@ -113,10 +113,10 @@ jobs:
       - id: generate-checksums
         name: Generate checksums
         run: |
-          md5sum ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/* > checksums_md5.txt
-          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/* > checksums_sha1.txt
-          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/* > checksums_sha256.txt
-          mv *.txt ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/
+          md5sum ${{steps.download-artifacts.outputs.download-path}}/* > checksums_md5.txt
+          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/* > checksums_sha1.txt
+          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/* > checksums_sha256.txt
+          mv *.txt ${{steps.download-artifacts.outputs.download-path}}/
       - id: attach-to-release
         name: Attach artifacts to release
         uses: actions/github-script@v8
