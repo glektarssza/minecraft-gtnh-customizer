@@ -80,7 +80,7 @@ jobs:
     permissions:
       # -- To clone repository
       contents: read
-    uses: ./.github/workflows/build-and-publish.yaml
+    uses: ./.github/workflows/build.yaml
     with:
       ref: ${{inputs.ref}}
       java-version: ${{inputs.java-version}}

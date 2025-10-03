@@ -18,17 +18,19 @@ module.exports = async (
     releaseId
 ) => {
     const {owner, repo} = context.repo;
-    const assets = await fs.readdir(artifactDirectory, {
+    const allDirItems = await fs.readdir(artifactDirectory, {
+        withFileTypes: true,
         encoding: 'utf-8',
         recursive: true
     });
+    const assets = allDirItems.filter((item) => item.isFile());
     core.info(`Uploading ${assets.length} assets to release ${releaseId}...`);
-    for (const artifactPath of assets) {
-        const artifactFullPath = path.join(artifactDirectory, artifactPath);
+    for (const asset of assets) {
+        const artifactFullPath = path.join(asset.parentPath, asset.name);
+        const artifactName = asset.name;
         core.info(`Uploading ${artifactFullPath}...`);
-        let artifactName = path.basename(artifactFullPath);
-        core.info(`Reading ${artifactName} from ${artifactDirectory}...`);
-        const data = await fs.readFile(artifactDirectory);
+        core.info(`Reading ${artifactName} from ${artifactFullPath}...`);
+        const data = await fs.readFile(artifactFullPath);
         core.info(`Uploading to release as ${artifactName}...`);
         await github.rest.repos.uploadReleaseAsset({
             owner,
