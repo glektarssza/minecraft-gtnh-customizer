@@ -7,7 +7,10 @@ on:
         description: |
           The GitHub release ID to attach the artifacts to.
 
-          Only required when `attach-to-github-release` is `true`.
+          Must be the value used in "databaseId" for the release to attach
+          assets to.
+
+          Only required when "attach-to-github-release" is "true".
         type: string
         required: false
         default: ''
@@ -17,7 +20,7 @@ on:
 
           Useful when testing other parts of the publish workflow.
 
-          Defaults to `true`.
+          Defaults to "true".
         type: boolean
         required: false
         default: true
@@ -39,7 +42,7 @@ on:
         description: |
           The Java vendor to use.
 
-          Defaults to `temurin`.
+          Defaults to "temurin".
         type: string
         required: false
         default: temurin
@@ -47,8 +50,8 @@ on:
         description: |
           The Java version to use.
 
-          Defaults to `version-file` to use the version found in the
-          `.java-version` file present in the project.
+          Defaults to "version-file" to use the version found in the
+          ".java-version" file present in the project.
         type: string
         required: false
         default: version-file
@@ -56,19 +59,11 @@ on:
         description: |
           The Gradle version to use.
 
-          Defaults to `wrapper` to use version of the Gradle wrapper present in
+          Defaults to "wrapper" to use version of the Gradle wrapper present in
           the project.
         type: string
         required: false
         default: wrapper
-      publish-github-packages:
-        description: |
-          Whether to publish to GitHub Packages.
-
-          Defaults to `true`.
-        type: boolean
-        required: false
-        default: true
     secrets:
       github-token:
         description: |
