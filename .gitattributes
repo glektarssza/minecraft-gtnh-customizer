@@ -13,6 +13,36 @@
 # Run all .png files through Git LFS
 *.png filter=lfs diff=lfs merge=lfs -text
 
+# All .jpeg files are treated as binary by default
+*.jpeg binary
+
+# Run .jpeg files through Git LFS
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+
+# All .jpg files are treated as binary by default
+*.jpg binary
+
+# Run .jpg files through Git LFS
+*.jpg filter=lfs diff=lfs merge=lfs -text
+
+# All .bmp files are treated as binary by default
+*.bmp binary
+
+# Run .bmp files through Git LFS
+*.bmp filter=lfs diff=lfs merge=lfs -text
+
+# All .gif files are treated as binary by default
+*.gif binary
+
+# Run .gif files through Git LFS
+*.gif filter=lfs diff=lfs merge=lfs -text
+
+# All .ttf files are treated as binary by default
+*.ttf binary
+
+# Run .ttf files through Git LFS
+*.ttf filter=lfs diff=lfs merge=lfs -text
+
 # All .jar files are treated as binary files
 *.jar binary
 
