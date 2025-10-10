@@ -52,10 +52,40 @@ jobs:
         with:
           languages: java
           queries: security-and-quality
-          config: |
-            paths:
-              - src
-              - dist
       - id: analyze
         name: Analyze
         uses: github/codeql-action/analyze@v3
+        with:
+          category: '/language:java /queries:security-and-quality'
+          output: sarif-results
+          upload: failure-only
+      - id: filter-sarif-file
+        name: Filter SARIF file
+        uses: advanced-security/filter-sarif@v1
+        with:
+          patterns: |
+            +**/*.java
+            -**/.gradle/**/*.java
+            -**/.gradle/*.java
+            -**/.settings/**/*.java
+            -**/.settings/*.java
+            -**/bin/**/*.java
+            -**/bin/*.java
+            -**/build/**/*.java
+            -**/build/*.java
+            -**/run/**/*.java
+            -**/run/*.java
+          input: sarif-results/java.sarif
+          output: sarif-results/java.sarif
+      - id: upload-sarif-file
+        name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: sarif-results/java.sarif
+      - id: upload-loc-build-artifact
+        name: Upload loc build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sarif-results
+          path: sarif-results
+          retention-days: 1
