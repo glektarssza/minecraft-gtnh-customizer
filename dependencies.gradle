@@ -7,7 +7,7 @@ def isPropEnabled(String id) {
 
 dependencies {
     if (isPropEnabled("enableDependenciesForLocalTesting")) {
-        //-- Support for other mods and local testing
+        // -- Support for other mods and local testing
         devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
         devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
@@ -16,10 +16,10 @@ dependencies {
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.2-GTNH:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:EnderZoo:1.3.3:dev"))
         devOnlyNonPublishable(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
-        //-- Required by Thaumcraft
+        // -- Required by Thaumcraft
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.0-GTNH:dev")
     } else {
-        //-- Support for other mods
+        // -- Support for other mods
         compileOnly(deobfCurse("xaeros-minimap-263420:6012805"))
         compileOnly(deobfCurse("xaeros-world-map-317780:5987124"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
@@ -28,11 +28,11 @@ dependencies {
         compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.2-GTNH:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:EnderZoo:1.3.3:dev"))
         compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
-        //-- Required by Thaumcraft
+        // -- Required by Thaumcraft
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.0-GTNH:dev")
     }
 
-    //-- Local testing only
+    // -- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta57")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:CoreTweaks:0.3.3.6-GTNH")

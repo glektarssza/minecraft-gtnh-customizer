@@ -6,7 +6,7 @@
     "description": "Root configuration for the project.",
     "enabled": true,
     "import": [
-        "./.cspell/configs/arch-linux-dictionary.json",
+        "./.cspell/configs/linux-dictionary.json",
         "./.cspell/configs/python-dictionary.json",
         "./.cspell/configs/java-dictionary.json",
         "./.cspell/configs/minecraft-dictionary.json",

@@ -1,6 +1,17 @@
 # Changelog #
 
-## 0.15.0 ##
+## 0.14.2 ##
+
+### Features Removed ###
+
+* Removed the change added in `v0.13.0` to `/nbtedit` that let you add things to
+  empty NBT lists.
+  * It has officially been added to GTNH in 2.8.0. See
+    [GTNewHorizons/ServerUtilities#232](https://github.com/GTNewHorizons/ServerUtilities/pull/232).
+* Removed the change added in `v0.9.0` to `/nbtedit` that better handled how the
+  hotkey behaved when looking at nothing in the game world.
+  * It has officially been added to GTNH in 2.8.0. See
+    [GTNewHorizons/ServerUtilities#231](https://github.com/GTNewHorizons/ServerUtilities/pull/231).
 
 ### Technical ###
 

@@ -2,33 +2,6 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 /**
- * Get all items in a directory recursively.
- *
- * @param {string} directory The path to the directory to scan.
- *
- * @returns {Promise<fs.Dirent[]>} A promise that resolves to an array of
- * `fs.Dirent` objects.
- */
-async function getItemsRecursive(directory) {
-    const items = await fs.readdir(directory, {
-        withFileTypes: true,
-        encoding: 'utf-8'
-    });
-    const results = [];
-    for (const item of items) {
-        if (item.isDirectory()) {
-            const subItems = await getItemsRecursive(
-                path.join(item.path, item.name)
-            );
-            results.push(...subItems);
-        } else {
-            results.push(item);
-        }
-    }
-    return results;
-}
-
-/**
  * Upload all files in a directory to a release.
  *
  * @param {object} param0 The GitHub context object.
@@ -45,14 +18,19 @@ module.exports = async (
     releaseId
 ) => {
     const {owner, repo} = context.repo;
-    const items = await getItemsRecursive(artifactDirectory);
-    const assets = items.filter((item) => item.isFile());
+    const allDirItems = await fs.readdir(artifactDirectory, {
+        withFileTypes: true,
+        encoding: 'utf-8',
+        recursive: true
+    });
+    const assets = allDirItems.filter((item) => item.isFile());
     core.info(`Uploading ${assets.length} assets to release ${releaseId}...`);
-    for (const artifact of assets) {
-        const artifactPath = path.join(artifact.path, artifact.name);
-        let artifactName = path.basename(artifactPath);
-        core.info(`Reading ${artifact.name} from ${artifactPath}...`);
-        const data = await fs.readFile(artifactPath);
+    for (const asset of assets) {
+        const artifactFullPath = path.join(asset.parentPath, asset.name);
+        const artifactName = asset.name;
+        core.info(`Uploading ${artifactFullPath}...`);
+        core.info(`Reading ${artifactName} from ${artifactFullPath}...`);
+        const data = await fs.readFile(artifactFullPath);
         core.info(`Uploading to release as ${artifactName}...`);
         await github.rest.repos.uploadReleaseAsset({
             owner,

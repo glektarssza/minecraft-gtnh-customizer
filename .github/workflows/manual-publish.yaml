@@ -7,25 +7,15 @@ on:
         description: |
           The GitHub release ID to attach the artifacts to.
 
-          Only required when `attach-to-github-release` is `true`.
+          Must be the value used in "databaseId" for the release to attach
+          assets to.
         type: string
-        required: false
-        default: ""
-      attach-to-github-release:
-        description: |
-          Whether to attach the released assets to a GitHub release.
-
-          Useful when testing other parts of the publish workflow.
-
-          Defaults to `false`.
-        type: boolean
-        required: false
-        default: false
+        required: true
       java-vendor:
         description: |
           The Java vendor to use.
 
-          Defaults to `temurin`.
+          Defaults to "temurin".
         type: choice
         required: false
         options:
@@ -48,8 +38,8 @@ on:
         description: |
           The Java version to use.
 
-          Defaults to `version-file` to use the version found in the
-          `.java-version` file present in the project.
+          Defaults to "version-file" to use the version found in the
+          ".java-version" file present in the project.
         type: string
         required: false
         default: version-file
@@ -57,7 +47,7 @@ on:
         description: |
           The Gradle version to use.
 
-          Defaults to `wrapper` to use version of the Gradle wrapper present in
+          Defaults to "wrapper" to use version of the Gradle wrapper present in
           the project.
         type: string
         required: false
@@ -66,7 +56,7 @@ on:
         description: |
           The duration, in days, to retain artifacts for.
 
-          Defaults to `0` which defaults to the value configured for the
+          Defaults to "0" which defaults to the value configured for the
           repository.
         type: number
         required: false
@@ -75,15 +65,15 @@ jobs:
   publish:
     name: Publish
     permissions:
-      #-- To clone repository
-      contents: read
-      #-- To uploads packages
+      # -- To clone repository and write release artifacts
+      contents: write
+      # -- To uploads packages
       packages: write
     uses: ./.github/workflows/publish.yaml
     with:
       ref: ${{github.sha}}
       github-release-id: ${{inputs.github-release-id}}
-      attach-to-github-release: ${{inputs.attach-to-github-release}}
+      attach-to-github-release: true
       java-version: ${{inputs.java-version}}
       java-vendor: ${{inputs.java-vendor}}
       gradle-version: ${{inputs.gradle-version}}

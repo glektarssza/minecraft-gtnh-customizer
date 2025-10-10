@@ -7,17 +7,20 @@ on:
         description: |
           The GitHub release ID to attach the artifacts to.
 
-          Only required when `attach-to-github-release` is `true`.
+          Must be the value used in "databaseId" for the release to attach
+          assets to.
+
+          Only required when "attach-to-github-release" is "true".
         type: string
         required: false
-        default: ""
+        default: ''
       attach-to-github-release:
         description: |
           Whether to attach the released assets to a GitHub release.
 
           Useful when testing other parts of the publish workflow.
 
-          Defaults to `true`.
+          Defaults to "true".
         type: boolean
         required: false
         default: true
@@ -39,7 +42,7 @@ on:
         description: |
           The Java vendor to use.
 
-          Defaults to `temurin`.
+          Defaults to "temurin".
         type: string
         required: false
         default: temurin
@@ -47,8 +50,8 @@ on:
         description: |
           The Java version to use.
 
-          Defaults to `version-file` to use the version found in the
-          `.java-version` file present in the project.
+          Defaults to "version-file" to use the version found in the
+          ".java-version" file present in the project.
         type: string
         required: false
         default: version-file
@@ -56,19 +59,11 @@ on:
         description: |
           The Gradle version to use.
 
-          Defaults to `wrapper` to use version of the Gradle wrapper present in
+          Defaults to "wrapper" to use version of the Gradle wrapper present in
           the project.
         type: string
         required: false
         default: wrapper
-      publish-github-packages:
-        description: |
-          Whether to publish to GitHub Packages.
-
-          Defaults to `true`.
-        type: boolean
-        required: false
-        default: true
     secrets:
       github-token:
         description: |
@@ -78,9 +73,9 @@ jobs:
   build:
     name: Build
     permissions:
-      #-- To clone repository
+      # -- To clone repository
       contents: read
-    uses: ./.github/workflows/build-and-publish.yaml
+    uses: ./.github/workflows/build.yaml
     with:
       ref: ${{inputs.ref}}
       java-version: ${{inputs.java-version}}
@@ -92,7 +87,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     permissions:
-      #-- To clone repository and write release artifacts
+      # -- To clone repository and write release artifacts
       contents: write
     needs:
       - build
@@ -113,10 +108,10 @@ jobs:
       - id: generate-checksums
         name: Generate checksums
         run: |
-          md5sum ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/* > checksums_md5.txt
-          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/* > checksums_sha1.txt
-          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/* > checksums_sha256.txt
-          mv *.txt ${{steps.download-artifacts.outputs.download-path}}/${{needs.build.outputs.artifact-name}}/
+          md5sum ${{steps.download-artifacts.outputs.download-path}}/* > checksums_md5.txt
+          shasum -a 1 ${{steps.download-artifacts.outputs.download-path}}/* > checksums_sha1.txt
+          shasum -a 256 ${{steps.download-artifacts.outputs.download-path}}/* > checksums_sha256.txt
+          mv *.txt ${{steps.download-artifacts.outputs.download-path}}/
       - id: attach-to-release
         name: Attach artifacts to release
         uses: actions/github-script@v8
