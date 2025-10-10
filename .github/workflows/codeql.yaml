@@ -9,20 +9,6 @@ on:
     - cron: '0 12 * * 3'
   workflow_call:
 jobs:
-  build:
-    name: Build
-    permissions:
-      # -- To clone repository
-      contents: read
-    uses: ./.github/workflows/build.yaml
-    with:
-      ref: ${{github.sha}}
-      java-version: version-file
-      java-vendor: temurin
-      gradle-version: wrapper
-      artifact-retention-days: 1
-    secrets:
-      github-token: ${{secrets.GITHUB_TOKEN}}
   codeql:
     name: CodeQL
     runs-on: ubuntu-latest
@@ -31,8 +17,6 @@ jobs:
       contents: read
       # -- Needed to write security events
       security-events: write
-    needs:
-      - build
     steps:
       - id: checkout-repository
         name: Checkout repository
@@ -40,18 +24,29 @@ jobs:
         with:
           lfs: true
           submodules: recursive
-      - id: download-artifacts
-        name: Download artifacts
-        uses: actions/download-artifact@v5
+      - id: setup-java
+        name: Setup Java
+        uses: actions/setup-java@v5
         with:
-          artifact-ids: ${{needs.build.outputs.artifact-id}}
-          path: ./dist/
+          distribution: temurin
+          java-version: version-file
+      - id: setup-gradle
+        name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: wrapper
       - id: initialize-codeql
         name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: java
           queries: security-and-quality
+      - id: setup-ci-workspace
+        name: Setup CI Workspace
+        run: ./gradlew setupCIWorkspace
+      - id: build
+        name: Build
+        run: ./gradlew build
       - id: analyze
         name: Analyze
         uses: github/codeql-action/analyze@v3
