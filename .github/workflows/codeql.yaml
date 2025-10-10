@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: CodeQL
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 12 * * 3'
+  workflow_call:
+jobs:
+  build:
+    name: Build
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/build.yaml
+    with:
+      ref: ${{github.sha}}
+      java-version: version-file
+      java-vendor: temurin
+      gradle-version: wrapper
+      artifact-retention-days: 1
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      # -- Needed to checkout the repository
+      contents: read
+      # -- Needed to write security events
+      security-events: write
+    needs:
+      - build
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          lfs: true
+          submodules: recursive
+      - id: download-artifacts
+        name: Download artifacts
+        uses: actions/download-artifact@v5
+        with:
+          artifact-ids: ${{needs.build.outputs.artifact-id}}
+          path: ./dist/
+      - id: initialize-codeql
+        name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: java
+          queries: security-and-quality
+          config: |
+            paths:
+              - src
+              - dist
+      - id: autobuild
+        name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+      - id: analyze
+        name: Analyze
+        uses: github/codeql-action/analyze@v3
