@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-issue-forms.json
 name: Bug Report
 description: Report a bug in the project.
-title: "[Bug] "
+title: '[Bug] '
 labels:
   - Bug
 body:
@@ -19,17 +19,17 @@ body:
       description: Please provide a set of steps to reproduce the issue.
     validations:
       required: true
-  - id: expected
+  - id: expected-behaviour
     type: textarea
     attributes:
-      label: Expected Behavior
+      label: Expected Behaviour
       description: A clear and concise description of what you expected to happen.
     validations:
       required: true
-  - id: actual
+  - id: actual-behaviour
     type: textarea
     attributes:
-      label: Actual Behavior
+      label: Actual Behaviour
       description: A clear and concise description of what actually happened.
     validations:
       required: true
@@ -42,6 +42,7 @@ body:
         - Windows
         - macOS
         - Linux
+        - Other (Please state in "Additional Details")
     validations:
       required: true
   - id: java-version
@@ -57,15 +58,16 @@ body:
       label: Mod Loader
       description: The mod loader you are using.
       options:
-        - Fabric
         - Forge
+      default: 0
     validations:
       required: true
-  - id: mc-version
+  - id: minecraft-version
     type: input
     attributes:
       label: Minecraft Version
       description: The version of Minecraft you are using.
+      value: 1.7.10
     validations:
       required: true
   - id: mod-version
@@ -93,18 +95,18 @@ body:
         - GitHub
     validations:
       required: true
-  - id: additional
+  - id: additional-details
     type: textarea
     attributes:
-      label: Additional Information
+      label: Additional Details
       description: Any additional information that may be helpful in solving the issue.
     validations:
       required: false
-  - id: disclaimer
+  - id: disclaimers
     type: checkboxes
     attributes:
       label: Disclaimer
-      description: "By submitting this issue, you state the following:"
+      description: 'By submitting this issue, you state the following:'
       options:
         - label: I have searched for existing issues and this is not a duplicate.
           required: true
