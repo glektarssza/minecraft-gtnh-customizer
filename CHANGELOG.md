@@ -1,5 +1,12 @@
 # Changelog #
 
+## 0.14.3 ##
+
+### Bug Fixes ###
+
+* Fixed Tinker's tools not properly repairing via the `/repair` command when
+  they had reached `0%` durability beforehand.
+
 ## 0.14.2 ##
 
 ### Features Removed ###
