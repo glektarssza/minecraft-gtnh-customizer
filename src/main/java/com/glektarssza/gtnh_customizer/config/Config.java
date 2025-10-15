@@ -666,9 +666,14 @@ public class Config {
         while (MIGRATIONS.containsKey(lastMigratedVersion)
             && !lastMigratedVersion.equals(toVersion)) {
             migrators.push(MIGRATIONS.get(lastMigratedVersion));
-            migrators
-                .sort((a, b) -> Integer.parseInt(a.getFirst(), 10)
-                    - Integer.parseInt(b.getFirst(), 10));
+            try {
+                migrators
+                    .sort((a, b) -> Integer.parseInt(a.getFirst(), 10)
+                        - Integer.parseInt(b.getFirst(), 10));
+            } catch (NumberFormatException ex) {
+                throw new RuntimeException("Invalid config version number!",
+                    ex);
+            }
             alreadyMigratedVersions.add(lastMigratedVersion);
             lastMigratedVersion = migrators.peekLast().getFirst();
             if (alreadyMigratedVersions.contains(lastMigratedVersion)) {
