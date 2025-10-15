@@ -30,7 +30,6 @@ public abstract class EntityAINearestAttackableTargetMixin {
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
     private void shouldExecute$disableIfConfigured(
         CallbackInfoReturnable<Boolean> cir) {
-        EntityAINearestAttackableTarget self = (EntityAINearestAttackableTarget) (Object) this;
         EntityLivingBase target = this.targetEntity;
         if (!(target instanceof EntityPlayer)) {
             return;
