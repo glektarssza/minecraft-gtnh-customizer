@@ -656,6 +656,8 @@ public class Config {
      *
      * @throws NoSuchElementException Thrown if no migration route exists from
      *         the old configuration version to the new configuration version.
+     * @throws NumberFormatException Thrown if any configuration versions are
+     *         not valid numbers.
      */
     private static void applyConfigMigrations(String fromVersion,
         String toVersion, Configuration configInstance)
