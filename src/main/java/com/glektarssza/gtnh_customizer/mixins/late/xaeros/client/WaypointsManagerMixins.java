@@ -37,7 +37,6 @@ public class WaypointsManagerMixins {
      *
      * @param player The player on which the method was invoked.
      * @param originalTeleportCommand The teleport command being invoked.
-     * @param
      */
     @Redirect(method = "teleportToWaypoint(Lxaero/common/minimap/waypoints/Waypoint;Lxaero/common/minimap/waypoints/WaypointWorld;Lnet/minecraft/client/gui/GuiScreen;Z)V", at = @At(value = "INVOKE", target = "net.minecraft.client.entity.EntityClientPlayerMP.sendChatMessage(Ljava/lang/String;)V"))
     private void teleportToWaypoint$overrideSendTeleportCommand(
