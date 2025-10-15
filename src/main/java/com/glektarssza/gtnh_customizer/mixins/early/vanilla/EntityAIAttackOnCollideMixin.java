@@ -32,7 +32,6 @@ public class EntityAIAttackOnCollideMixin {
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
     private void shouldExecute$disableIfConfigured(
         CallbackInfoReturnable<Boolean> cir) {
-        EntityAIAttackOnCollide self = (EntityAIAttackOnCollide) (Object) this;
         EntityLiving attacker = this.attacker;
         EntityLivingBase target = this.attacker.getAttackTarget();
         if (!(target instanceof EntityPlayer)) {
