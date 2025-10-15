@@ -26,16 +26,13 @@ public abstract class EntityAINearestAttackableTargetMixin {
     /**
      * Mixin for the {@code shouldExecute} method.
      */
-    @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
     private void shouldExecute$disableIfConfigured(
         CallbackInfoReturnable<Boolean> cir) {
-        EntityAINearestAttackableTarget self = (EntityAINearestAttackableTarget) (Object) this;
-        EntityLivingBase target = this.targetEntity;
-        if (!(target instanceof EntityPlayer)) {
+        if (!(this.targetEntity instanceof EntityPlayer)) {
             return;
         }
-        EntityPlayer player = (EntityPlayer) target;
+        EntityPlayer player = (EntityPlayer) this.targetEntity;
         if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
             this.targetEntity = null;
             cir.setReturnValue(false);

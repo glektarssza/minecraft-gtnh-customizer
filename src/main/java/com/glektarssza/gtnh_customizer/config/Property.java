@@ -7,6 +7,8 @@ import net.minecraftforge.common.config.Property.Type;
 
 /**
  * A configuration property.
+ *
+ * @param <T> The type of the value held in the property.
  */
 public abstract class Property<T> {
     /**
@@ -185,8 +187,6 @@ public abstract class Property<T> {
 
     /**
      * Get the default value of the property.
-     *
-     * @param <T> The type of the default value.
      *
      * @return The default value of the property.
      */
