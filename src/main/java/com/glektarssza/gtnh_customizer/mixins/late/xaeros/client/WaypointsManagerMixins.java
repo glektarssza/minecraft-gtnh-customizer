@@ -38,7 +38,6 @@ public class WaypointsManagerMixins {
      * @param player The player on which the method was invoked.
      * @param originalTeleportCommand The teleport command being invoked.
      * @param x The X coordinate local parameter.
-     * @param y The X coordinate local parameter.
      * @param z The X coordinate local parameter.
      * @param selected The selected waypoint local parameter.
      * @param displayedWorld The displayed world local parameter.
