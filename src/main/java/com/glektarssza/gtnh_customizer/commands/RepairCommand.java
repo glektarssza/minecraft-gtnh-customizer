@@ -538,17 +538,20 @@ public class RepairCommand extends CommandBase {
                     NBTTagCompound stackTag = itemStack.hasTagCompound()
                         ? itemStack.stackTagCompound
                         : new NBTTagCompound();
-                    if (stackTag.hasKey("InfiTool", NBT.TAG_COMPOUND)
-                        && stackTag
+                    if (stackTag.hasKey("InfiTool", NBT.TAG_COMPOUND)) {
+                        // -- Tinker's Construct Tools
+                        if (stackTag
                             .getCompoundTag("InfiTool")
                             .getInteger("Damage") > 0) {
-                        // -- Tinker's Construct Tools
-                        itemStack.setItemDamage(0);
-                        if (stackTag.hasKey("RepairCost")) {
-                            stackTag.removeTag("RepairCost");
+                            stackTag.getCompoundTag("InfiTool")
+                                .setInteger("Damage", 0);
+                            itemStack.setItemDamage(0);
                         }
-                        stackTag.getCompoundTag("InfiTool")
-                            .setInteger("Damage", 0);
+                        if (stackTag.getCompoundTag("InfiTool")
+                            .getBoolean("Broken")) {
+                            stackTag.getCompoundTag("InfiTool")
+                                .setBoolean("Broken", false);
+                        }
                     } else if (stackTag.hasKey("GT.ToolStats",
                         NBT.TAG_COMPOUND)
                         && stackTag
@@ -561,9 +564,9 @@ public class RepairCommand extends CommandBase {
                         && itemStack.getItemDamage() > 0) {
                         // -- Vanilla Tools
                         itemStack.setItemDamage(0);
-                        if (stackTag.hasKey("RepairCost")) {
-                            stackTag.removeTag("RepairCost");
-                        }
+                    }
+                    if (stackTag.hasKey("RepairCost")) {
+                        stackTag.removeTag("RepairCost");
                     }
                     itemStack.setTagCompound(stackTag);
                 });
