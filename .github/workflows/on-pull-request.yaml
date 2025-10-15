@@ -23,3 +23,13 @@ jobs:
       ref: ${{github.sha}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
+  dependency-submission:
+    name: Dependency Submission
+    permissions:
+      # -- Needed to clone the repository and submit dependency reports
+      contents: write
+    uses: ./.github/workflows/dependency-submission.yaml
+    with:
+      ref: ${{github.sha}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}

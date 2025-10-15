@@ -83,7 +83,6 @@ jobs:
       github-token: ${{secrets.GITHUB_TOKEN}}
   dependency-submission:
     name: Dependency Submission
-    if: github.ref == 'refs/heads/main'
     permissions:
       # -- Needed to clone the repository and submit dependency reports
       contents: write
