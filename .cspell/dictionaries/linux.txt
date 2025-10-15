@@ -1,2 +1,5 @@
+envrc
 mkdirs
+netrwhist
+sessionx
 pacman
