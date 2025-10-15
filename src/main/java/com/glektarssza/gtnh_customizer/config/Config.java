@@ -659,21 +659,16 @@ public class Config {
      */
     private static void applyConfigMigrations(String fromVersion,
         String toVersion, Configuration configInstance)
-        throws NoSuchElementException {
+        throws NoSuchElementException, NumberFormatException {
         LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
         HashSet<String> alreadyMigratedVersions = new HashSet<String>();
         String lastMigratedVersion = fromVersion;
         while (MIGRATIONS.containsKey(lastMigratedVersion)
             && !lastMigratedVersion.equals(toVersion)) {
             migrators.push(MIGRATIONS.get(lastMigratedVersion));
-            try {
-                migrators
-                    .sort((a, b) -> Integer.parseInt(a.getFirst(), 10)
-                        - Integer.parseInt(b.getFirst(), 10));
-            } catch (NumberFormatException ex) {
-                throw new RuntimeException("Invalid config version number!",
-                    ex);
-            }
+            migrators
+                .sort((a, b) -> Integer.parseInt(a.getFirst(), 10)
+                    - Integer.parseInt(b.getFirst(), 10));
             alreadyMigratedVersions.add(lastMigratedVersion);
             lastMigratedVersion = migrators.peekLast().getFirst();
             if (alreadyMigratedVersions.contains(lastMigratedVersion)) {
