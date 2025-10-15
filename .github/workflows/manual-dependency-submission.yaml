@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Manual Workflow
+name: Manual Dependency Submission
 on:
   workflow_dispatch:
     inputs:
@@ -54,40 +54,17 @@ on:
         required: false
         default: 0
 jobs:
-  build:
-    name: Build
-    permissions:
-      # -- To clone repository
-      contents: read
-    uses: ./.github/workflows/build.yaml
-    with:
-      ref: ${{github.sha}}
-      java-version: ${{inputs.java-version}}
-      java-vendor: ${{inputs.java-vendor}}
-      gradle-version: ${{inputs.gradle-version}}
-      artifact-retention-days: ${{inputs.artifact-retention-days}}
-    secrets:
-      github-token: ${{secrets.GITHUB_TOKEN}}
-  lint:
-    name: Lint
-    permissions:
-      # -- To clone repository
-      contents: read
-    uses: ./.github/workflows/lint.yaml
-    with:
-      ref: ${{github.sha}}
-      java-version: ${{inputs.java-version}}
-      java-vendor: ${{inputs.java-vendor}}
-      gradle-version: ${{inputs.gradle-version}}
-    secrets:
-      github-token: ${{secrets.GITHUB_TOKEN}}
-  dependency-submission:
-    name: Dependency Submission
+  manual-dependency-submission:
+    name: Manual Dependency Submission
     permissions:
       # -- Needed to clone the repository and submit dependency reports
       contents: write
     uses: ./.github/workflows/dependency-submission.yaml
     with:
       ref: ${{github.sha}}
+      java-version: ${{inputs.java-version}}
+      java-vendor: ${{inputs.java-vendor}}
+      gradle-version: ${{inputs.gradle-version}}
+      artifact-retention-days: ${{inputs.artifact-retention-days}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
