@@ -233,7 +233,7 @@ public class CommonProxy {
 
     @SubscribeEvent
     public void configChanged(ConfigChangedEvent event) {
-        if (event.modID != Tags.MOD_ID) {
+        if (!event.modID.equals(Tags.MOD_ID)) {
             return;
         }
         Config.refresh();

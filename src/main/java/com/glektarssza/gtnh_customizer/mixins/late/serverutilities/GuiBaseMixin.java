@@ -23,6 +23,7 @@ public abstract class GuiBaseMixin implements IGuiBaseExtensions {
      *         {@code} false otherwise.
      */
     @Unique
+    @Override
     public boolean isFocused() {
         GuiBase self = (GuiBase) (Object) this;
         GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;

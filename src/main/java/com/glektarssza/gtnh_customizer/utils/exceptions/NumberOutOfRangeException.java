@@ -126,9 +126,9 @@ public class NumberOutOfRangeException extends RuntimeException {
      * @param enableSuppression
      * @param writeableStackTrace
      */
-    public NumberOutOfRangeException(String m, Throwable t,
+    public NumberOutOfRangeException(String message, Throwable cause,
         boolean enableSuppression,
         boolean writeableStackTrace) {
-        super(m, t, enableSuppression, writeableStackTrace);
+        super(message, cause, enableSuppression, writeableStackTrace);
     }
 }
