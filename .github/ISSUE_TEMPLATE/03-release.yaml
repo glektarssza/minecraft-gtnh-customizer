@@ -26,16 +26,21 @@ body:
       label: Body
       description: The body of the issue.
       value: |
-        Prepare to release the v<VERSION> release.
+        Prepare to release this version.
 
         Perform the following steps (in order):
 
-        * [ ] Update the Forge update manifest to point to v<VERSION> as the latest version.
+        * [ ] Update the changelog.
+        * [ ] Update the Forge update manifest to point to this release as the latest version.
         * [ ] Tag the release.
         * [ ] Release on GitHub.
-        * [ ] Mark the GitHub milestone as completed.
 
         After the above is completed, perform the following steps (in any order):
 
         * [ ] Release on CurseForge.
         * [ ] Release on Modrinth.
+
+        Finally, do the following (in order):
+
+        * [ ] Mark the GitHub milestone as completed.
+        * [ ] Close this ticket.
