@@ -99,7 +99,7 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
-     * @param category The category to clone.
+     * @param path The path to the category to clone.
      *
      * @return A clone of the category.
      */
@@ -111,7 +111,8 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
-     * @param category The category to clone.
+     * @param path The path to the category to clone.
+     * @param parent The category make the parent of the cloned category.
      *
      * @return A clone of the category.
      */
@@ -124,7 +125,9 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
-     * @param category The category to clone.
+     * @param path The path to the category to clone.
+     * @param parentPath The path to the category make the parent of the cloned
+     *        category.
      *
      * @return A clone of the category.
      */
@@ -137,7 +140,7 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
-     * @param category The category to clone.
+     * @param path The path to the category to clone.
      * @param parent The category make the parent of the cloned category.
      *
      * @return A clone of the category.
@@ -151,8 +154,9 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
-     * @param category The category to clone.
-     * @param parent The category make the parent of the cloned category.
+     * @param path The path to the category to clone.
+     * @param parentPath The path to the category make the parent of the cloned
+     *        category.
      *
      * @return A clone of the category.
      */
