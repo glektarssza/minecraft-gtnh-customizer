@@ -27,11 +27,9 @@ public class EntityAIArrowAttackMixin {
     /**
      * Mixin for the {@code shouldExecute} method.
      */
-    @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
     private void shouldExecute$disableIfConfigured(
         CallbackInfoReturnable<Boolean> cir) {
-        EntityLiving attacker = entityHost;
         EntityLivingBase target = this.entityHost.getAttackTarget();
         if (!(target instanceof EntityPlayer)) {
             return;
