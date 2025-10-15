@@ -23,7 +23,7 @@ public abstract class WorldMixin implements IWorldExtensions {
      * A shadow of the {@code func_152379_p} method.
      */
     @Shadow
-    private int func_152379_p() {
+    protected int func_152379_p() {
         throw new UnsupportedOperationException();
     }
 
