@@ -15,6 +15,16 @@ jobs:
       ref: ${{github.event.release.tag_name}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
+  dependency-submission:
+    name: Dependency Submission
+    permissions:
+      # -- Needed to clone the repository and submit dependency reports
+      contents: write
+    uses: ./.github/workflows/dependency-submission.yaml
+    with:
+      ref: ${{github.sha}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
   release:
     name: Publish
     permissions:
@@ -22,6 +32,7 @@ jobs:
       contents: write
     needs:
       - lint
+      - dependency-submission
     uses: ./.github/workflows/publish.yaml
     with:
       ref: ${{github.event.release.tag_name}}

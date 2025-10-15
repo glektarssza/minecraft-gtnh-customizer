@@ -1,5 +1,4 @@
-# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Build
+name: Dependency Submission
 on:
   workflow_call:
     inputs:
@@ -43,14 +42,6 @@ on:
         type: string
         required: false
         default: wrapper
-      upload-artifacts:
-        description: |
-          Whether to upload artifacts.
-
-          Defaults to `true`.
-        type: boolean
-        required: false
-        default: true
       artifact-retention-days:
         description: |
           The duration, in days, to retain artifacts for.
@@ -60,35 +51,18 @@ on:
         type: number
         required: false
         default: 0
-    outputs:
-      artifact-id:
-        description: |
-          The ID of the generated artifacts.
-        value: ${{jobs.build.outputs.artifact-id}}
-      artifact-name:
-        description: |
-          The name of the generated artifacts.
-        value: ${{jobs.build.outputs.artifact-name}}
-      artifact-url:
-        description: |
-          The URL from which the generated artifacts can be downloaded.
-        value: ${{jobs.build.outputs.artifact-url}}
     secrets:
       github-token:
         description: |
           The token to use when making authenticated calls to the GitHub API.
-        required: true
+        required: false
 jobs:
-  build:
-    name: Build
+  dependency-submission:
+    name: Dependency Submission
     runs-on: ubuntu-latest
     permissions:
-      # -- Needed to clone the repository
-      contents: read
-    outputs:
-      artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}
-      artifact-name: dist
-      artifact-url: ${{steps.upload-artifacts.outputs.artifact-url}}
+      # -- Needed to clone the repository and submit dependency reports
+      contents: write
     steps:
       - id: checkout-repository
         name: Checkout repository
@@ -132,16 +106,8 @@ jobs:
       - id: setup-ci-workspace
         name: Setup CI Workspace
         run: ./gradlew setupCIWorkspace
-      - id: build
-        name: Build
-        run: ./gradlew build
-      - id: upload-artifacts
-        name: Upload artifacts
-        if: inputs.upload-artifacts
-        uses: actions/upload-artifact@v4
+      - id: dependency-graph
+        name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@v5
         with:
-          name: dist
-          path: build/libs/
-          compression-level: 0
-          if-no-files-found: error
-          retention-days: ${{inputs.artifact-retention-days}}
+          artifact-retention-days: ${{inputs.artifact-retention-days}}
