@@ -30,7 +30,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
     /**
      * Get the list of additional mixins to load based on the loaded mods.
      *
-     * @param loadedMods - The list of mods current loaded.
+     * @param loadedMods The list of mods currently loaded.
      *
      * @returns The list of additional mixins to load based on the loaded mods.
      */
