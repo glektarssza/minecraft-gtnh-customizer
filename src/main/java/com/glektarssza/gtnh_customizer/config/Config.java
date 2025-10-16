@@ -656,10 +656,12 @@ public class Config {
      *
      * @throws NoSuchElementException Thrown if no migration route exists from
      *         the old configuration version to the new configuration version.
+     * @throws NumberFormatException Thrown if any configuration versions are
+     *         not valid numbers.
      */
     private static void applyConfigMigrations(String fromVersion,
         String toVersion, Configuration configInstance)
-        throws NoSuchElementException {
+        throws NoSuchElementException, NumberFormatException {
         LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
         HashSet<String> alreadyMigratedVersions = new HashSet<String>();
         String lastMigratedVersion = fromVersion;

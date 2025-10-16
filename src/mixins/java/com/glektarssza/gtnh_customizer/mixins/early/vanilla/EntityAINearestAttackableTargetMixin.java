@@ -1,9 +1,7 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAICreeperSwell;
-import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.player.EntityPlayer;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,31 +13,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
- * Mixin for the {@code EntityAICreeperSwell} class.
+ * Mixin for the {@code EntityAINearestAttackableTarget} class.
  */
-@Mixin(EntityAICreeperSwell.class)
-public class EntityAICreeperSwellMixin {
+@Mixin(EntityAINearestAttackableTarget.class)
+public abstract class EntityAINearestAttackableTargetMixin {
     /**
-     * A shadow of the {@code swellingCreeper} field.
+     * A shadow of the {@code targetEntity} field.
      */
     @Shadow
-    private EntityCreeper swellingCreeper;
+    private EntityLivingBase targetEntity;
 
     /**
      * Mixin for the {@code shouldExecute} method.
      */
-    @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
     private void shouldExecute$disableIfConfigured(
         CallbackInfoReturnable<Boolean> cir) {
-        EntityAICreeperSwell self = (EntityAICreeperSwell) (Object) this;
-        EntityLiving attacker = this.swellingCreeper;
-        EntityLivingBase target = this.swellingCreeper.getAttackTarget();
-        if (!(target instanceof EntityPlayer)) {
+        if (!(this.targetEntity instanceof EntityPlayer)) {
             return;
         }
-        EntityPlayer player = (EntityPlayer) target;
+        EntityPlayer player = (EntityPlayer) this.targetEntity;
         if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
+            this.targetEntity = null;
             cir.setReturnValue(false);
         }
     }

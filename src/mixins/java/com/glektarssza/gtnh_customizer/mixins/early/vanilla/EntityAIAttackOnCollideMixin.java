@@ -1,7 +1,8 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.player.EntityPlayer;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,31 +14,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.glektarssza.gtnh_customizer.utils.PlayerUtils;
 
 /**
- * Mixin for the {@code EntityAINearestAttackableTarget} class.
+ * Mixin for the {@code EntityAIAttackOnCollide} class.
  */
-@Mixin(EntityAINearestAttackableTarget.class)
-public abstract class EntityAINearestAttackableTargetMixin {
+@Mixin(EntityAIAttackOnCollide.class)
+public class EntityAIAttackOnCollideMixin {
     /**
-     * A shadow of the {@code targetEntity} field.
+     * A shadow of the {@code attacker} field.
      */
     @Shadow
-    private EntityLivingBase targetEntity;
+    private EntityCreature attacker;
 
     /**
      * Mixin for the {@code shouldExecute} method.
      */
-    @SuppressWarnings("unused")
     @Inject(method = "shouldExecute", at = @At("RETURN"), cancellable = true)
     private void shouldExecute$disableIfConfigured(
         CallbackInfoReturnable<Boolean> cir) {
-        EntityAINearestAttackableTarget self = (EntityAINearestAttackableTarget) (Object) this;
-        EntityLivingBase target = this.targetEntity;
+        EntityLivingBase target = this.attacker.getAttackTarget();
         if (!(target instanceof EntityPlayer)) {
             return;
         }
         EntityPlayer player = (EntityPlayer) target;
         if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
-            this.targetEntity = null;
             cir.setReturnValue(false);
         }
     }

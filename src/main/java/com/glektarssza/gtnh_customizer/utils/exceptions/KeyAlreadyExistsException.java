@@ -48,9 +48,9 @@ public class KeyAlreadyExistsException extends RuntimeException {
      * @param enableSuppression
      * @param writeableStackTrace
      */
-    public KeyAlreadyExistsException(String m, Throwable t,
+    public KeyAlreadyExistsException(String message, Throwable cause,
         boolean enableSuppression,
         boolean writeableStackTrace) {
-        super(m, t, enableSuppression, writeableStackTrace);
+        super(message, cause, enableSuppression, writeableStackTrace);
     }
 }
