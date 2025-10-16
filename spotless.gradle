@@ -6,14 +6,15 @@ spotless {
     format("misc") {
         target(".gitignore", ".gitattributes", "*.gradle")
         trimTrailingWhitespace()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         endWithNewline()
     }
     java {
         target("src/*/java/**/*.java")
         toggleOffOn()
+        forbidWildcardImports()
         trimTrailingWhitespace()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         endWithNewline()
         removeUnusedImports()
         importOrderFile("spotless.importorder")
