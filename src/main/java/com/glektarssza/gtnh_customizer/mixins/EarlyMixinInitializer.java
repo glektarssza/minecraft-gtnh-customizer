@@ -1,54 +1,37 @@
-package com.glektarssza.gtnh_customizer.core;
+package com.glektarssza.gtnh_customizer.mixins;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+
+import javax.annotation.Nonnull;
 
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
-import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
-import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
-
 /**
- * The core mod plugin for the mod.
+ * The early-stage mixin initializer.
  */
-@MCVersion("1.7.10")
-public class GTNHCustomizerCoreModPlugin
-    implements IFMLLoadingPlugin, IEarlyMixinLoader {
-
-    @Override
-    public String getAccessTransformerClass() {
-        return null;
-    }
-
-    @Override
-    public String[] getASMTransformerClass() {
-        return new String[0];
-    }
-
-    @Override
-    public String getModContainerClass() {
-        return null;
-    }
-
-    @Override
-    public String getSetupClass() {
-        return null;
-    }
-
-    @Override
-    public void injectData(Map<String, Object> data) {
-        // -- No operation
-    }
-
+public class EarlyMixinInitializer implements IEarlyMixinLoader {
+    /**
+     * Get the name of the mixin config file.
+     *
+     * @returns The name of the mixin config file.
+     */
     @Override
     public String getMixinConfig() {
         return "mixins.gtnh_customizer.early.json";
     }
 
+    /**
+     * Get the list of additional mixins to load based on the loaded mods.
+     *
+     * @param loadedMods The list of mods currently loaded.
+     *
+     * @returns The list of additional mixins to load based on the loaded mods.
+     */
     @Override
-    public List<String> getMixins(Set<String> loadedCoreMods) {
+    @Nonnull
+    public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
         // -- Vanilla mixins
         mixins.add("vanilla.EntityAIArrowAttackMixin");
