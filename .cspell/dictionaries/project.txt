@@ -21,6 +21,7 @@ gtnh
 gtnhconvention
 gtnhmixins
 gtnhsettingsconvention
+harvestability
 importorder
 infi
 invincibles
