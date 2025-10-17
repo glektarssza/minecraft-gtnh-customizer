@@ -1,6 +1,7 @@
 # Minecraft - GTNH Customizer  #
 
-A mod that customizes GTNH.
+A mod that customizes Gregtech: New Horizons to my personal preferences. Fully
+customizable!
 
 <!-- omit in toc -->
 ## Table of Contents ##
@@ -10,7 +11,7 @@ A mod that customizes GTNH.
 
 ## License ##
 
-Copyright (c) 2025 G'lek Tarssza
+Copyright (c) 2024-present G'lek Tarssza
 
 All rights reserved.
 
