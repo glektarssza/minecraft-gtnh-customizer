@@ -40,7 +40,6 @@ dependencies {
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.4-GTNH")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughIds:2.1.10")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughCharacters:1.7.10-1.5.4-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:WDMla:2.7.3")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.9.0")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:WailaHarvestability:1.3.4-GTNH")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:WAILAPlugins:0.6.0")
