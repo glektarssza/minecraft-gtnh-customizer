@@ -34,19 +34,19 @@ dependencies {
 
     // -- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
-        runtimeOnlyNonPublishable("curse.maven:smooth-font-285742:2614474")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta62")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Controlling:2.1.2")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:CoreTweaks:0.3.3.6-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Hodgepodge:2.7.3")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:IguanaTweaksTConstruct:2.6.6")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughCharacters:1.7.10-1.5.4-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughIds:2.1.10")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.19-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Random-Things:2.6.6")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:TiC-Tooltips:1.4.0")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.9.4-pre")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:WailaHarvestability:1.3.4-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:WAILAPlugins:0.6.0")
+        runtimeOnlyNonPublishable(rfg.deobf("curse.maven:smooth-font-285742:2614474"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Angelica:1.0.0-beta62:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Controlling:2.1.2:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:CoreTweaks:0.3.3.6-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Hodgepodge:2.7.3:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:IguanaTweaksTConstruct:2.6.6:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:NotEnoughCharacters:1.7.10-1.5.4-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:NotEnoughIds:2.1.10:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:NotEnoughItems:2.8.19-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Random-Things:2.6.6:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TiC-Tooltips:1.4.0:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:waila:1.9.4-pre:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:WailaHarvestability:1.3.4-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:WAILAPlugins:0.6.0:dev"))
     }
 }
