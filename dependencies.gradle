@@ -8,8 +8,8 @@ def isPropEnabled(String id) {
 dependencies {
     if (isPropEnabled("enableDependenciesForLocalTesting")) {
         // -- Support for other mods and local testing
-        devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
-        devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
+        devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
+        devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.1:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.2:dev"));
@@ -20,8 +20,8 @@ dependencies {
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.2-GTNH:dev")
     } else {
         // -- Support for other mods
-        compileOnly(deobfCurse("xaeros-minimap-263420:6012805"))
-        compileOnly(deobfCurse("xaeros-world-map-317780:5987124"))
+        compileOnly(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
+        compileOnly(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.1:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.2:dev"));
