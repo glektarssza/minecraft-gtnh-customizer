@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
+import com.glektarssza.gtnh_customizer.extensions.IGuiBaseExtensions;
 
 import serverutils.lib.gui.GuiBase;
 import serverutils.lib.gui.IGuiWrapper;

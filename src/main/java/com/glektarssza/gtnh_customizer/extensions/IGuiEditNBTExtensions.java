@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.utils.extensions;
+package com.glektarssza.gtnh_customizer.extensions;
 
 import serverutils.client.gui.GuiEditNBT;
 import serverutils.client.gui.GuiEditNBT.ButtonNBT;

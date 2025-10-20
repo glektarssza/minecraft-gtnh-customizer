@@ -29,7 +29,6 @@ public class ClientProxy extends CommonProxy {
         getLogger().info("Initializing client-side for {}...", Tags.MOD_NAME);
         getLogger().info("Registering key bindings for {}...",
             Tags.MOD_NAME);
-        KeyBindings.registerKeybinds();
         getLogger().info("Done initializing client-side for {}!",
             Tags.MOD_NAME);
     }
