@@ -34,6 +34,7 @@ dependencies {
 
     // -- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
+        runtimeOnlyNonPublishable("curse.maven:smooth-font-285742:2614474")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta62")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Controlling:2.1.2")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:CoreTweaks:0.3.3.6-GTNH")
