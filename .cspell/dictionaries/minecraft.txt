@@ -13,6 +13,7 @@ ifml
 keybind
 keybinds
 knockback
+lwjgl
 mcmeta
 mcmod
 mcversion
