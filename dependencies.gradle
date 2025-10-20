@@ -35,6 +35,7 @@ dependencies {
     // -- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta62")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Controlling:2.1.2")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:CoreTweaks:0.3.3.6-GTNH")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Hodgepodge:2.7.3")
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:IguanaTweaksTConstruct:2.6.6")
