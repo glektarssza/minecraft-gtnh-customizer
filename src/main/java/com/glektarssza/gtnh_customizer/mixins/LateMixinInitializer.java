@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer;
+package com.glektarssza.gtnh_customizer.mixins;
 
 import java.util.ArrayList;
 import java.util.List;

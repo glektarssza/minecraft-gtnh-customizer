@@ -65,9 +65,11 @@ public class PlayerUtils {
         return Arrays.asList(Config.getGloballyImmunePlayers())
             .stream()
             .anyMatch(
-                (item) -> playerUUID == null
-                    ? item.equalsIgnoreCase(nameFallback)
-                    : item.equalsIgnoreCase(playerUUID.toString()));
+                // -- Check player UUID or player name if UUID does not exist or
+                // -- UUID check fails
+                (item) -> playerUUID != null
+                    && item.equalsIgnoreCase(playerUUID.toString())
+                    || item.equalsIgnoreCase(nameFallback));
     }
 
     /**
