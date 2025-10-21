@@ -1,5 +1,11 @@
 # Changelog #
 
+## 0.14.4 ##
+
+### Technical ###
+
+* Updated dependencies.
+
 ## 0.14.3 ##
 
 ### Bug Fixes ###
