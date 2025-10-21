@@ -1,6 +1,7 @@
 package com.glektarssza.gtnh_customizer.utils;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
@@ -10,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.config.Config;
 
@@ -17,6 +19,35 @@ import com.glektarssza.gtnh_customizer.config.Config;
  * A collection of player-related utility methods.
  */
 public class PlayerUtils {
+    /**
+     * Get the name of a player.
+     *
+     * @param player The player to get the name of.
+     *
+     * @return The name of a player.
+     */
+    public static String getName(EntityPlayer player) {
+        int i = GTNHCustomizer.getProxy().getWorld().playerEntities
+            .indexOf(player);
+        return getName(player, Optional.of(String.format("Player %d", i)));
+    }
+
+    /**
+     * Get the name of a player.
+     *
+     * @param player The player to get the name of.
+     * @param fallback The fallback name of the player.
+     *
+     * @return The name of a player.
+     */
+    public static String getName(EntityPlayer player,
+        Optional<String> fallback) {
+        GameProfile playerProfile = player.getGameProfile();
+        if (playerProfile != null) {
+            return playerProfile.getName();
+        }
+        return fallback.orElse("Player");
+    }
 
     /**
      * Check if a player is globally immune to being targeted.
@@ -30,12 +61,15 @@ public class PlayerUtils {
         GameProfile playerProfile = player.getGameProfile();
         UUID playerUUID = playerProfile == null ? null
             : EntityPlayer.func_146094_a(playerProfile);
+        String nameFallback = getName(player);
         return Arrays.asList(Config.getGloballyImmunePlayers())
             .stream()
             .anyMatch(
+                // -- Check player UUID or player name if UUID does not exist or
+                // -- UUID check fails
                 (item) -> playerUUID != null
                     && item.equalsIgnoreCase(playerUUID.toString())
-                    || item.equalsIgnoreCase(player.getDisplayName()));
+                    || item.equalsIgnoreCase(nameFallback));
     }
 
     /**
