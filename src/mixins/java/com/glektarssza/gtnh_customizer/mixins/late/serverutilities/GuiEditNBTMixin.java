@@ -1,5 +1,9 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 
 import org.spongepowered.asm.mixin.Final;
@@ -12,8 +16,10 @@ import com.glektarssza.gtnh_customizer.extensions.IGuiEditNBTExtensions;
 
 import serverutils.client.gui.GuiEditNBT;
 import serverutils.client.gui.GuiEditNBT.ButtonNBT;
+import serverutils.client.gui.GuiEditNBT.ButtonNBTCollection;
 import serverutils.client.gui.GuiEditNBT.ButtonNBTMap;
 import serverutils.lib.gui.GuiBase;
+import serverutils.lib.util.StringUtils;
 
 /**
  * Mixin for the {@link GuiEditNBT} class.
@@ -81,6 +87,118 @@ public abstract class GuiEditNBTMixin extends GuiBase
             this.selected.parent.setTag(selected.key, null);
             this.selected.parent.updateChildren(false);
             this.selected = selected.parent;
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_UP) {
+            ButtonNBTCollection parent = this.selected.parent;
+            List<ButtonNBT> parentChildren = new LinkedList<ButtonNBT>();
+            if (parent != null) {
+                List<String> parentKeys = new ArrayList<String>(
+                    (parent.children
+                        .keySet()));
+                parentKeys.sort(StringUtils.IGNORE_CASE_COMPARATOR);
+                for (String k : parentKeys) {
+                    parentChildren.add(parent.children.get(k));
+                }
+            }
+            int parentIndex = parentChildren.indexOf(this.selected);
+            if (this.selected instanceof ButtonNBTCollection) {
+                ButtonNBTCollection collection = (ButtonNBTCollection) this.selected;
+                List<ButtonNBT> children = new LinkedList<ButtonNBT>();
+                List<String> keys = new ArrayList<String>(
+                    (collection.children
+                        .keySet()));
+                keys.sort(StringUtils.IGNORE_CASE_COMPARATOR);
+                for (String k : keys) {
+                    children.add(collection.children.get(k));
+                }
+                int childIndex = children.indexOf(this.selected);
+                if (parent instanceof ButtonNBTCollection
+                    && ((ButtonNBTCollection) parent).collapsed
+                    && parentIndex > 0) {
+                    selected = parentChildren.get(parentIndex - 1);
+                } else if (parent instanceof ButtonNBTCollection
+                    && !((ButtonNBTCollection) parent).collapsed
+                    && childIndex > 0) {
+                    selected = children.get(parentIndex - 1);
+                } else if (parent instanceof ButtonNBTCollection
+                    && !((ButtonNBTCollection) parent).collapsed
+                    && childIndex == 0
+                    && parentIndex > 0) {
+                    selected = parentChildren.get(parentIndex - 1);
+                }
+            } else if (parentIndex > 0) {
+                selected = parentChildren.get(parentIndex - 1);
+            }
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_DOWN) {
+            ButtonNBTCollection parent = this.selected.parent;
+            List<ButtonNBT> parentChildren = new LinkedList<ButtonNBT>();
+            if (parent != null) {
+                List<String> parentKeys = new ArrayList<String>(
+                    (parent.children
+                        .keySet()));
+                parentKeys.sort(StringUtils.IGNORE_CASE_COMPARATOR);
+                for (String k : parentKeys) {
+                    parentChildren.add(parent.children.get(k));
+                }
+            }
+            int parentIndex = parentChildren.indexOf(this.selected);
+            if (this.selected instanceof ButtonNBTCollection) {
+                ButtonNBTCollection collection = (ButtonNBTCollection) this.selected;
+                List<ButtonNBT> children = new LinkedList<ButtonNBT>();
+                List<String> keys = new ArrayList<String>(
+                    (collection.children
+                        .keySet()));
+                keys.sort(StringUtils.IGNORE_CASE_COMPARATOR);
+                for (String k : keys) {
+                    children.add(collection.children.get(k));
+                }
+                int childIndex = children.indexOf(this.selected);
+                if (!collection.collapsed && children.size() > 0) {
+                    selected = children.get(0);
+                } else if (parent instanceof ButtonNBTCollection
+                    && parent.collapsed
+                    && parentIndex < parentChildren.size() - 1) {
+                    selected = parentChildren.get(parentIndex + 1);
+                } else if (parent instanceof ButtonNBTCollection
+                    && !parent.collapsed && childIndex < children.size() - 1) {
+                    selected = children.get(parentIndex + 1);
+                } else if (parent instanceof ButtonNBTCollection
+                    && !parent.collapsed && childIndex == children.size() - 1
+                    && parentIndex < parentChildren.size() - 1) {
+                    selected = parentChildren.get(parentIndex + 1);
+                }
+            } else if (parentIndex < parentChildren.size() - 1) {
+                selected = parentChildren.get(parentIndex + 1);
+            }
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_LEFT) {
+            if (this.selected instanceof ButtonNBTCollection) {
+                ButtonNBTCollection collection = (ButtonNBTCollection) this.selected;
+                if (!collection.collapsed) {
+                    if (isCtrlKeyDown()) {
+                        collection.setCollapsedTree(false);
+                    } else {
+                        collection.setCollapsed(false);
+                    }
+                }
+            }
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_RIGHT) {
+            if (this.selected instanceof ButtonNBTCollection) {
+                ButtonNBTCollection collection = (ButtonNBTCollection) this.selected;
+                if (!collection.collapsed) {
+                    if (isCtrlKeyDown()) {
+                        collection.setCollapsedTree(true);
+                    } else {
+                        collection.setCollapsed(true);
+                    }
+                }
+            }
             return true;
         }
         if (super.keyPressed(keyCode, keyChar)) {
