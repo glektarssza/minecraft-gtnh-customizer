@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -42,6 +43,15 @@ public class CommonProxy {
      * The configuration directory.
      */
     private File configDir;
+
+    /**
+     * Get the Minecraft world.
+     *
+     * @return The Minecraft world.
+     */
+    public World getWorld() {
+        return MinecraftServer.getServer().getEntityWorld();
+    }
 
     /**
      * Get the currently configured view distance, in chunks.

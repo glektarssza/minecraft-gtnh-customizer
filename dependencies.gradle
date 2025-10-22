@@ -8,35 +8,45 @@ def isPropEnabled(String id) {
 dependencies {
     if (isPropEnabled("enableDependenciesForLocalTesting")) {
         // -- Support for other mods and local testing
-        devOnlyNonPublishable(deobfCurse("xaeros-minimap-263420:6012805"))
-        devOnlyNonPublishable(deobfCurse("xaeros-world-map-317780:5987124"))
+        devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
+        devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.0:dev"))
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.61:dev"));
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.2-GTNH:dev"))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.1:dev"))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.2:dev"));
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.7-GTNH-pre:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:EnderZoo:1.3.3:dev"))
         devOnlyNonPublishable(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
         // -- Required by Thaumcraft
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.0-GTNH:dev")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.2-GTNH:dev")
     } else {
         // -- Support for other mods
-        compileOnly(deobfCurse("xaeros-minimap-263420:6012805"))
-        compileOnly(deobfCurse("xaeros-world-map-317780:5987124"))
+        compileOnly(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
+        compileOnly(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.0:dev"))
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.1.61:dev"));
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.2-GTNH:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.1:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.2:dev"));
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.7-GTNH-pre:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:EnderZoo:1.3.3:dev"))
         compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
         // -- Required by Thaumcraft
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.0-GTNH:dev")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.2-GTNH:dev")
     }
 
     // -- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Angelica:1.0.0-beta48")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.7.60-GTNH")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:waila:1.8.10")
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Random-Things:2.6.5")
+        runtimeOnlyNonPublishable(rfg.deobf("curse.maven:smooth-font-285742:2614474"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Angelica:1.0.0-beta62:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Controlling:2.1.2:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:CoreTweaks:0.3.3.6-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Hodgepodge:2.7.3:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:IguanaTweaksTConstruct:2.6.6:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:NotEnoughCharacters:1.7.10-1.5.4-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:NotEnoughIds:2.1.10:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:NotEnoughItems:2.8.19-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Random-Things:2.6.6:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TiC-Tooltips:1.4.0:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:waila:1.9.4-pre:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:WailaHarvestability:1.3.4-GTNH:dev"))
+        runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:WAILAPlugins:0.6.0:dev"))
     }
 }
