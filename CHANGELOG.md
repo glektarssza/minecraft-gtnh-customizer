@@ -1,5 +1,12 @@
 # Changelog #
 
+## 0.14.5 ##
+
+### Bug Fixes ###
+
+* Fixed a bad world access on the client side that would cause a random crash
+  when attacking hostile mobs.
+
 ## 0.14.4 ##
 
 ### Technical ###
