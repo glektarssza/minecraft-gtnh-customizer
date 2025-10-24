@@ -46,7 +46,11 @@ public class PlayerUtils {
         if (playerProfile != null) {
             return playerProfile.getName();
         }
-        return fallback.orElse("Player");
+        return fallback.orElseGet(() -> {
+            int i = GTNHCustomizer.getProxy().getWorld().playerEntities
+                .indexOf(player);
+            return String.format("Player %d", i);
+        });
     }
 
     /**
@@ -61,7 +65,8 @@ public class PlayerUtils {
         GameProfile playerProfile = player.getGameProfile();
         UUID playerUUID = playerProfile == null ? null
             : EntityPlayer.func_146094_a(playerProfile);
-        String nameFallback = getName(player);
+        String nameFallback = getName(player,
+            Optional.of(player.getDisplayName()));
         return Arrays.asList(Config.getGloballyImmunePlayers())
             .stream()
             .anyMatch(
