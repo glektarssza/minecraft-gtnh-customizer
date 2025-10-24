@@ -1,6 +1,7 @@
 package com.glektarssza.gtnh_customizer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.World;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 
@@ -8,6 +9,16 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
  * The client-side proxy.
  */
 public class ClientProxy extends CommonProxy {
+    /**
+     * Get the Minecraft world.
+     *
+     * @return The Minecraft world.
+     */
+    @Override
+    public World getWorld() {
+        return Minecraft.getMinecraft().theWorld;
+    }
+
     /**
      * Get the currently configured view distance, in chunks.
      *
