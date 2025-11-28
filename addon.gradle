@@ -1,3 +1,4 @@
+compileJava.options.encoding = "UTF-8"
 
 minecraft {
     injectedTags.put("MOD_ID", modId)
