@@ -24,6 +24,10 @@ project.ext.setEclipsePreference = { File preferencesFile, String key, String va
     setProperty(preferencesFile, key, value)
 }
 
+checkstyle {
+    toolVersion = "12.1.2"
+}
+
 minecraft {
     injectedTags.put("MOD_ID", modId)
     injectedTags.put("MOD_NAME", modName)
