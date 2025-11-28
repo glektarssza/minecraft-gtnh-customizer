@@ -1,9 +1,3 @@
-java {
-    toolchain {
-        // -- We'd like the Temurin JDK please
-        vendor.set(JvmVendorSpec.ADOPTIUM)
-    }
-}
 
 minecraft {
     injectedTags.put("MOD_ID", modId)
