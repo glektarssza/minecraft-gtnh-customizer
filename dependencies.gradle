@@ -10,26 +10,26 @@ dependencies {
         // -- Support for other mods and local testing
         devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
         devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.2:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.1:dev"))
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.2:dev"));
-        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.7-GTNH-pre:dev"))
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.6:dev"));
+        devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.15-GTNH:dev"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:EnderZoo:1.3.3:dev"))
         devOnlyNonPublishable(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
         // -- Required by Thaumcraft
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.2-GTNH:dev")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.4-GTNH:dev")
     } else {
         // -- Support for other mods
         compileOnly(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
         compileOnly(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.0:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.2:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:SpecialMobs:3.7.1:dev"))
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.2:dev"));
-        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.7-GTNH-pre:dev"))
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:ServerUtilities:2.2.6:dev"));
+        compileOnly(rfg.deobf("com.github.GTNewHorizons:TinkersConstruct:1.14.15-GTNH-pre:dev"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:EnderZoo:1.3.3:dev"))
         compileOnly(rfg.deobf("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev"))
         // -- Required by Thaumcraft
-        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.2-GTNH:dev")
+        runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.4-GTNH:dev")
     }
 
     // -- Local testing only
