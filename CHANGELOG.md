@@ -1,5 +1,11 @@
 # Changelog #
 
+## 0.14.7 ##
+
+### Bug Fixes ###
+
+* Fixed bad mod dependency string.
+
 ## 0.14.6 ##
 
 ### Technical ###
