@@ -83,6 +83,22 @@ public abstract class GuiEditNBTMixin extends GuiBase
             this.selected = selected.parent;
             return true;
         }
+        if (keyCode == Keyboard.KEY_LEFT) {
+            // TODO: Collapse inner thing
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_RIGHT) {
+            // TODO: Open inner thing
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_UP) {
+            // TODO: Previous element
+            return true;
+        }
+        if (keyCode == Keyboard.KEY_DOWN) {
+            // TODO: Next element
+            return true;
+        }
         if (super.keyPressed(keyCode, keyChar)) {
             return true;
         }
