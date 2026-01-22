@@ -11,8 +11,8 @@ customizable!
 
 ## License ##
 
-Copyright (c) 2024-present G'lek Tarssza
+Copyright (c) 2024 to present G'lek Tarssza
 
-All rights reserved.
+Licensed under a customized MIT license.
 
 See [LICENSE.md](LICENSE.md) for the full license.
