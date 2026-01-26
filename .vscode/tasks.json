@@ -732,12 +732,45 @@
             "isBackground": false,
             "dependsOrder": "sequence",
             "dependsOn": [
-                "gradle:clean",
-                "gradle:cleanEclipse",
-                "gradle:setupDecompWorkspace",
-                "gradle:build",
+                "gradle:prepareWorkspace:cleanAndBuild",
                 "gradle:eclipse"
             ],
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "gradle:prepareWorkspace:cleanAndBuild",
+            "detail": "Prepare the project workspace by cleaning and building it.",
+            "hide": false,
+            "icon": {
+                "id": "tools",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": true
+            },
+            "isBackground": false,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["clean", "cleanEclipse", "setupDecompWorkspace", "build"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
             "runOptions": {
                 "instanceLimit": 1,
                 "instancePolicy": "silent",
