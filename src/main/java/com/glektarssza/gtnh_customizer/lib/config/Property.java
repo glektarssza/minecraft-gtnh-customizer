@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiListExtended;
 /**
  * A base configuration property type.
  */
-public abstract class Property<T> {
+public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
     // #region Protected Fields
 
     /**
@@ -66,7 +66,7 @@ public abstract class Property<T> {
      * represented by this instance in the game.
      */
     @Nullable
-    protected Class<? extends GuiListExtended.IGuiListEntry> uiDisplayClass;
+    protected Class<U> uiDisplayClass;
 
     // #endregion Protected Fields
 
@@ -564,7 +564,7 @@ public abstract class Property<T> {
      *         represented by this instance in the game.
      */
     @Nullable
-    public Class<? extends GuiListExtended.IGuiListEntry> getUIDisplayClass() {
+    public Class<U> getUIDisplayClass() {
         return this.uiDisplayClass;
     }
 
@@ -576,7 +576,7 @@ public abstract class Property<T> {
      *        configuration property represented by this instance in the game.
      */
     public void setUiDisplayClass(
-        @Nullable Class<? extends GuiListExtended.IGuiListEntry> uiDisplayClass) {
+        @Nullable Class<U> uiDisplayClass) {
         this.uiDisplayClass = uiDisplayClass;
     }
 
@@ -619,7 +619,7 @@ public abstract class Property<T> {
         if (!(obj instanceof Property)) {
             return false;
         }
-        Property<?> lhs = (Property<?>) obj;
+        Property<?, ?> lhs = (Property<?, ?>) obj;
         return this.name.equals(lhs.name)
             && this.type.equals(lhs.type)
             && (this.comment == null ? lhs.comment == null
