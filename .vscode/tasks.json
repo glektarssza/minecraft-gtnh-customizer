@@ -102,11 +102,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -127,7 +127,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": ["build"],
+            "args": ["clean"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -139,11 +139,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -176,11 +176,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -212,11 +212,47 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
+            },
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "gradle:injectTags",
+            "detail": "Inject/Update the \"Tags.java\" auto-generated file.",
+            "hide": false,
+            "icon": {
+                "id": "symbol-constructor",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": true
+            },
+            "isBackground": false,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["injectTags"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -487,6 +523,94 @@
             }
         },
         {
+            "label": "gradle:runClient25",
+            "detail": "Run the game client.",
+            "hide": false,
+            "icon": {
+                "id": "run",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["runClient25"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "base": "$gradle",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Configure project",
+                        "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "gradle:runClient25:debug",
+            "detail": "Run the game client in debug mode.",
+            "hide": false,
+            "icon": {
+                "id": "debug",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["runClient25", "--debug-jvm"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": {
+                "base": "$gradle",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Configure project",
+                    "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                }
+            }
+        },
+        {
             "label": "gradle:eclipse",
             "detail": "Generate the Eclipse files for the project.",
             "hide": false,
@@ -514,11 +638,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -550,11 +674,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -586,11 +710,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -607,16 +731,43 @@
             },
             "isBackground": false,
             "dependsOrder": "sequence",
+            "dependsOn": [
+                "gradle:prepareWorkspace:cleanAndBuild",
+                "gradle:eclipse"
+            ],
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "problemMatcher": ["$gradle"]
+        },
+        {
+            "label": "gradle:prepareWorkspace:cleanAndBuild",
+            "detail": "Prepare the project workspace by cleaning and building it.",
+            "hide": false,
+            "icon": {
+                "id": "tools",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": true
+            },
+            "isBackground": false,
+            "dependsOrder": "sequence",
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "clean",
-                "cleanEclipse",
-                "setupDecompWorkspace",
-                "build",
-                "eclipse"
-            ],
+            "args": ["clean", "cleanEclipse", "setupDecompWorkspace", "build"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
@@ -628,11 +779,11 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         }
