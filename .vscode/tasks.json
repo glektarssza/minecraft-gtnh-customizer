@@ -127,7 +127,7 @@
             "dependsOn": [],
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
-            "args": ["build"],
+            "args": ["clean"],
             "windows": {
                 "command": "${workspaceFolder}/gradlew.bat"
             },
