@@ -27,6 +27,15 @@
             "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
             "preLaunchTask": "gradle:runClient21:debug"
+        },
+        {
+            "type": "java",
+            "name": "Debug Client (Java 25)",
+            "request": "attach",
+            "hostName": "localhost",
+            "projectName": "minecraft-gtnh-customizer",
+            "port": "5005",
+            "preLaunchTask": "gradle:runClient25:debug"
         }
     ]
 }
