@@ -735,7 +735,7 @@
                 "gradle:clean",
                 "gradle:cleanEclipse",
                 "gradle:setupDecompWorkspace",
-                "gradle:injectTags",
+                "gradle:build",
                 "gradle:eclipse"
             ],
             "runOptions": {
