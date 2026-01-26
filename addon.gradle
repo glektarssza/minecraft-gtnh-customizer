@@ -28,6 +28,13 @@ checkstyle {
     toolVersion = "12.1.2"
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
 minecraft {
     injectedTags.put("MOD_ID", modId)
     injectedTags.put("MOD_NAME", modName)
