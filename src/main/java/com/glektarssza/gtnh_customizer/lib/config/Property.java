@@ -98,7 +98,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      * @param value The value of the configuration property represented by the
      *        new instance.
      */
-    protected Property(@Nonnull String name, @Nonnull PropertyType type,
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T value) {
         this(name, type, value, null, null, null, false, false);
     }
