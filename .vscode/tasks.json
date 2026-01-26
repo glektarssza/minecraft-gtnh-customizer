@@ -102,7 +102,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -139,7 +139,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -176,7 +176,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -212,7 +212,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -248,7 +248,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -638,7 +638,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -674,7 +674,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -710,7 +710,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
@@ -746,7 +746,7 @@
             },
             "presentation": {
                 "echo": false,
-                "reveal": "always",
+                "reveal": "silent",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": false,
