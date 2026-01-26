@@ -731,19 +731,13 @@
             },
             "isBackground": false,
             "dependsOrder": "sequence",
-            "dependsOn": [],
-            "type": "shell",
-            "command": "${workspaceFolder}/gradlew",
-            "args": [
-                "clean",
-                "cleanEclipse",
-                "setupDecompWorkspace",
-                "build",
-                "eclipse"
+            "dependsOn": [
+                "gradle:clean",
+                "gradle:cleanEclipse",
+                "gradle:setupDecompWorkspace",
+                "gradle:injectTags",
+                "gradle:eclipse"
             ],
-            "windows": {
-                "command": "${workspaceFolder}/gradlew.bat"
-            },
             "runOptions": {
                 "instanceLimit": 1,
                 "instancePolicy": "silent",
