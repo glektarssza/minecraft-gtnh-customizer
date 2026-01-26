@@ -3,6 +3,8 @@ package com.glektarssza.gtnh_customizer.lib.config;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.client.gui.GuiListExtended;
+
 /**
  * A base configuration property type.
  */
@@ -58,6 +60,13 @@ public abstract class Property<T> {
      */
     @Nullable
     protected T defaultValue;
+
+    /**
+     * Get the class that will be used to display the configuration property
+     * represented by this instance in the game.
+     */
+    @Nullable
+    protected Class<? extends GuiListExtended.IGuiListEntry> uiDisplayClass;
 
     // #endregion Protected Fields
 
@@ -516,6 +525,59 @@ public abstract class Property<T> {
      */
     public void setDefaultValue(@Nullable T defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    /**
+     * Check if the value of the configuration property represented by this
+     * instance is set to the default value.
+     *
+     * @return {@code true} if the value of the configuration property
+     *         represented by this instance is set to the default value,
+     *         {@code false} otherwise.
+     */
+    public boolean isDefaultValue() {
+        return this.defaultValue != null ? this.value.equals(this.defaultValue)
+            : false;
+    }
+
+    /**
+     * Reset the value of the configuration property represented by this
+     * instance to the default value.
+     *
+     * @implNote If this instance has no default value configured (the return
+     *           value of {@link Property#getDefaultValue() getDefaultValue()}
+     *           is {@code null}), this method performs no operation when
+     *           called.
+     */
+    public void resetToDefaultValue() {
+        T defaultValue = this.getDefaultValue();
+        if (defaultValue != null) {
+            this.setValue(defaultValue);
+        }
+    }
+
+    /**
+     * Get the class that will be used to display the configuration property
+     * represented by this instance in the game.
+     *
+     * @return The class that will be used to display the configuration property
+     *         represented by this instance in the game.
+     */
+    @Nullable
+    public Class<? extends GuiListExtended.IGuiListEntry> getUIDisplayClass() {
+        return this.uiDisplayClass;
+    }
+
+    /**
+     * Set the class that will be used to display the configuration property
+     * represented by this instance in the game.
+     *
+     * @param uiDisplayClass The new class that will be used to display the
+     *        configuration property represented by this instance in the game.
+     */
+    public void setUiDisplayClass(
+        @Nullable Class<? extends GuiListExtended.IGuiListEntry> uiDisplayClass) {
+        this.uiDisplayClass = uiDisplayClass;
     }
 
     // #endregion Public Methods
