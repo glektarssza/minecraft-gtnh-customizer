@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
         maven {
-            name "GTNH Maven"
-            url "https://nexus.gtnewhorizons.com/repository/public/"
+            name = "GTNH Maven"
+            url = "https://nexus.gtnewhorizons.com/repository/public/"
             mavenContent {
                 includeGroup("com.gtnewhorizons")
                 includeGroupByRegex("com\\.gtnewhorizons\\..+")
