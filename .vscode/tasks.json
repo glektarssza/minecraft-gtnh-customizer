@@ -221,6 +221,42 @@
             "problemMatcher": ["$gradle"]
         },
         {
+            "label": "gradle:injectTags",
+            "detail": "Inject/Update the \"Tags.java\" auto-generated file.",
+            "hide": false,
+            "icon": {
+                "id": "symbol-constructor",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": true
+            },
+            "isBackground": false,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["injectTags"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": ["$gradle"]
+        },
+        {
             "label": "gradle:runClient",
             "detail": "Run the game client.",
             "hide": false,
