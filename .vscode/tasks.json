@@ -104,9 +104,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -141,9 +141,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -178,9 +178,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -214,9 +214,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -250,9 +250,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -640,9 +640,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -676,9 +676,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -712,9 +712,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         },
@@ -748,9 +748,9 @@
                 "echo": false,
                 "reveal": "always",
                 "focus": false,
-                "panel": "dedicated",
+                "panel": "shared",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": ["$gradle"]
         }
