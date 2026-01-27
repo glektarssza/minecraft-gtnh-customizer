@@ -62,7 +62,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
     protected T defaultValue;
 
     /**
-     * Get the class that will be used to display the configuration property
+     * The class that will be used to display the configuration property
      * represented by this instance in the game.
      */
     @Nullable
@@ -100,7 +100,26 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      */
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue) {
-        this(name, type, initialValue, null, null, null, false, false);
+        this(name, type, initialValue, null, null, null, false, false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, null, null, null, false, false,
+            uiDisplayClass);
     }
 
     /**
@@ -117,7 +136,30 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      */
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable T defaultValue) {
-        this(name, type, initialValue, defaultValue, null, null, false, false);
+        this(name, type, initialValue, defaultValue, null, null, false, false,
+            null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param defaultValue The default value of the configuration property
+     *        represented by the new instance.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable T defaultValue,
+        @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, defaultValue, null, null, false, false,
+            uiDisplayClass);
     }
 
     /**
@@ -135,7 +177,31 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      */
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable String languageKey) {
-        this(name, type, initialValue, null, languageKey, null, false, false);
+        this(name, type, initialValue, null, languageKey, null, false, false,
+            null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable String languageKey,
+        @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, null, languageKey, null, false, false,
+            uiDisplayClass);
     }
 
     /**
@@ -157,7 +223,32 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey) {
         this(name, type, initialValue, defaultValue, languageKey, null, false,
-            false);
+            false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param defaultValue The default value of the configuration property
+     *        represented by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable T defaultValue,
+        @Nullable String languageKey, @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, defaultValue, languageKey, null, false,
+            false, uiDisplayClass);
     }
 
     /**
@@ -179,7 +270,32 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable String languageKey,
         @Nullable String comment) {
         this(name, type, initialValue, null, languageKey, comment, false, false,
-            false);
+            false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable String languageKey,
+        @Nullable String comment, @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, null, languageKey, comment, false, false,
+            false, uiDisplayClass);
     }
 
     /**
@@ -203,7 +319,35 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey, @Nullable String comment) {
         this(name, type, initialValue, defaultValue, languageKey, comment,
-            false, false, false);
+            false, false, false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param defaultValue The default value of the configuration property
+     *        represented by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable T defaultValue,
+        @Nullable String languageKey, @Nullable String comment,
+        @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, defaultValue, languageKey, comment,
+            false, false, false, uiDisplayClass);
     }
 
     /**
@@ -227,7 +371,35 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable String languageKey,
         @Nullable String comment, boolean hidden) {
         this(name, type, initialValue, null, languageKey, comment, hidden,
-            false, false);
+            false, false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param hidden Whether the configuration property represented by the new
+     *        instance will be hidden from the configuration GUI.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable String languageKey,
+        @Nullable String comment, boolean hidden,
+        @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, null, languageKey, comment, hidden,
+            false, false, uiDisplayClass);
     }
 
     /**
@@ -254,7 +426,37 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nullable String languageKey,
         @Nullable String comment, boolean hidden) {
         this(name, type, initialValue, defaultValue, languageKey, comment,
-            hidden, false, false);
+            hidden, false, false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param defaultValue The default value of the configuration property
+     *        represented by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param hidden Whether the configuration property represented by the new
+     *        instance will be hidden from the configuration GUI.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable T defaultValue,
+        @Nullable String languageKey, @Nullable String comment,
+        boolean hidden, @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, defaultValue, languageKey, comment,
+            hidden, false, false, uiDisplayClass);
     }
 
     /**
@@ -282,7 +484,38 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nullable String comment, boolean hidden,
         boolean requiresWorldRestart) {
         this(name, type, initialValue, null, languageKey, comment, hidden,
-            requiresWorldRestart, false);
+            requiresWorldRestart, false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param hidden Whether the configuration property represented by the new
+     *        instance will be hidden from the configuration GUI.
+     * @param requiresWorldRestart Whether the configuration property
+     *        represented by the new instance will be require the world to be
+     *        restarted when changed.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable String languageKey,
+        @Nullable String comment, boolean hidden,
+        boolean requiresWorldRestart, @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, null, languageKey, comment, hidden,
+            requiresWorldRestart, false, uiDisplayClass);
     }
 
     /**
@@ -312,8 +545,40 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nullable String languageKey, @Nullable String comment, boolean hidden,
         boolean requiresWorldRestart) {
         this(name, type, initialValue, defaultValue, languageKey, comment,
-            hidden,
-            requiresWorldRestart, false);
+            hidden, requiresWorldRestart, false, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param defaultValue The default value of the configuration property
+     *        represented by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param hidden Whether the configuration property represented by the new
+     *        instance will be hidden from the configuration GUI.
+     * @param requiresWorldRestart Whether the configuration property
+     *        represented by the new instance will be require the world to be
+     *        restarted when changed.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable T defaultValue,
+        @Nullable String languageKey, @Nullable String comment, boolean hidden,
+        boolean requiresWorldRestart, @Nullable Class<U> uiDisplayClass) {
+        this(name, type, initialValue, defaultValue, languageKey, comment,
+            hidden, requiresWorldRestart, false, uiDisplayClass);
     }
 
     /**
@@ -345,6 +610,43 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey, @Nullable String comment, boolean hidden,
         boolean requiresWorldRestart, boolean requiresGameRestart) {
+        this(name, type, initialValue, defaultValue, languageKey, comment,
+            hidden, requiresWorldRestart, requiresGameRestart, null);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param name The name of the configuration property represented by the new
+     *        instance.
+     * @param type The type of the configuration property represented by the new
+     *        instance.
+     * @param initialValue The value of the configuration property represented
+     *        by the new instance.
+     * @param defaultValue The default value of the configuration property
+     *        represented by the new instance.
+     * @param languageKey The translation key to be used when showing the new
+     *        configuration property represented by the new instance in the
+     *        game.
+     * @param comment The comment of the configuration property represented by
+     *        the new instance.
+     * @param hidden Whether the configuration property represented by the new
+     *        instance will be hidden from the configuration GUI.
+     * @param requiresWorldRestart Whether the configuration property
+     *        represented by the new instance will be require the world to be
+     *        restarted when changed.
+     * @param requiresWorldRestart Whether the configuration property
+     *        represented by the new instance will be require the game to be
+     *        restarted when changed.
+     * @param uiDisplayClass The class that will be used to display the
+     *        configuration property represented by the new instance in the
+     *        game.
+     */
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
+        @Nonnull T initialValue, @Nullable T defaultValue,
+        @Nullable String languageKey, @Nullable String comment, boolean hidden,
+        boolean requiresWorldRestart, boolean requiresGameRestart,
+        @Nullable Class<U> uiDisplayClass) {
         this.name = name;
         this.type = type;
         this.comment = comment;
@@ -355,6 +657,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         this.isDirty = false;
         this.value = initialValue;
         this.defaultValue = defaultValue;
+        this.uiDisplayClass = uiDisplayClass;
     }
 
     // #endregion Constructors
