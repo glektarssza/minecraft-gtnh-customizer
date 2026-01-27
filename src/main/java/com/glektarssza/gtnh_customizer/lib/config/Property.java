@@ -100,7 +100,8 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      */
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue) {
-        this(name, type, initialValue, null, null, null, false, false, null);
+        this(name, type, initialValue, null, null, null, false, false, false,
+            null);
     }
 
     /**
@@ -118,7 +119,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      */
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable Class<U> uiDisplayClass) {
-        this(name, type, initialValue, null, null, null, false, false,
+        this(name, type, initialValue, null, null, null, false, false, false,
             uiDisplayClass);
     }
 
@@ -137,7 +138,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable T defaultValue) {
         this(name, type, initialValue, defaultValue, null, null, false, false,
-            null);
+            false, null);
     }
 
     /**
@@ -159,7 +160,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable Class<U> uiDisplayClass) {
         this(name, type, initialValue, defaultValue, null, null, false, false,
-            uiDisplayClass);
+            false, uiDisplayClass);
     }
 
     /**
@@ -178,7 +179,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
     public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable String languageKey) {
         this(name, type, initialValue, null, languageKey, null, false, false,
-            null);
+            false, null);
     }
 
     /**
@@ -201,7 +202,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable String languageKey,
         @Nullable Class<U> uiDisplayClass) {
         this(name, type, initialValue, null, languageKey, null, false, false,
-            uiDisplayClass);
+            false, uiDisplayClass);
     }
 
     /**
@@ -223,7 +224,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey) {
         this(name, type, initialValue, defaultValue, languageKey, null, false,
-            false, null);
+            false, false, null);
     }
 
     /**
@@ -248,7 +249,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey, @Nullable Class<U> uiDisplayClass) {
         this(name, type, initialValue, defaultValue, languageKey, null, false,
-            false, uiDisplayClass);
+            false, false, uiDisplayClass);
     }
 
     /**
