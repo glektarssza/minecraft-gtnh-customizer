@@ -133,7 +133,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      *        configuration property represented by the new instance in the
      *        game.
      */
-    Property(@Nonnull String name, @Nonnull PropertyType type,
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable String languageKey) {
         this(name, type, initialValue, null, languageKey, null, false, false);
     }
@@ -199,12 +199,11 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      * @param comment The comment of the configuration property represented by
      *        the new instance.
      */
-    Property(@Nonnull String name, @Nonnull PropertyType type,
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey, @Nullable String comment) {
         this(name, type, initialValue, defaultValue, languageKey, comment,
-            false,
-            false, false);
+            false, false, false);
     }
 
     /**
@@ -228,8 +227,7 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
         @Nonnull T initialValue, @Nullable String languageKey,
         @Nullable String comment, boolean hidden) {
         this(name, type, initialValue, null, languageKey, comment, hidden,
-            false,
-            false);
+            false, false);
     }
 
     /**
@@ -251,13 +249,12 @@ public abstract class Property<T, U extends GuiListExtended.IGuiListEntry> {
      * @param hidden Whether the configuration property represented by the new
      *        instance will be hidden from the configuration GUI.
      */
-    Property(@Nonnull String name, @Nonnull PropertyType type,
+    public Property(@Nonnull String name, @Nonnull PropertyType type,
         @Nonnull T initialValue, @Nullable T defaultValue,
         @Nullable String languageKey,
         @Nullable String comment, boolean hidden) {
         this(name, type, initialValue, defaultValue, languageKey, comment,
-            hidden,
-            false, false);
+            hidden, false, false);
     }
 
     /**
