@@ -1291,4 +1291,215 @@ public class NumberProperty<U extends GuiListExtended.IGuiListEntry>
     }
 
     // #endregion Constructors
+
+    // #region Public Methods
+
+    /**
+     * Get whether the configuration property represented by this instance has a
+     * minimum value.
+     *
+     * @return Whether the configuration property represented by this instance
+     *         has a minimum value.
+     */
+    public boolean hasMinimumValue() {
+        return this.hasMinimumValue;
+    }
+
+    /**
+     * Get the minimum allowed value of the configuration property represented
+     * by the new instance, if any.
+     *
+     * @return The minimum allowed value of the configuration property
+     *         represented by this instance, if any.
+     */
+    @Nullable
+    public Number getMinimumValue() {
+        return this.minimumValue;
+    }
+
+    /**
+     * Get the minimum allowed value of the configuration property represented
+     * by this instance, if any.
+     *
+     * @param minimumValue The minimum allowed value of the configuration
+     *        property represented by this instance, if any.
+     */
+    public void setMinimumValue(@Nullable Number minimumValue) {
+        this.minimumValue = minimumValue;
+    }
+
+    /**
+     * Get the maximum allowed value of the configuration property represented
+     * by this instance, if any.
+     *
+     * @return The maximum allowed value of the configuration property
+     *         represented by this instance, if any.
+     */
+    @Nullable
+    public Number getMaximumValue() {
+        return this.maximumValue;
+    }
+
+    /**
+     * Get the maximum allowed value of the configuration property represented
+     * by this instance, if any.
+     *
+     * @param maximumValue The maximum allowed value of the configuration
+     *        property represented by this instance, if any.
+     */
+    public void setMaximumValue(@Nullable Number maximumValue) {
+        this.maximumValue = maximumValue;
+    }
+
+    /**
+     * Get the byte value of the configuration property represented by this
+     * instance.
+     *
+     * @return The byte value of the configuration property represented by this
+     *         instance.
+     */
+    public byte getByteValue() {
+        return this.value.byteValue();
+    }
+
+    /**
+     * Get the default byte value of the configuration property represented by
+     * this instance.
+     *
+     * @return The default byte value of the configuration property represented
+     *         by this instance.
+     */
+    public byte getDefaultByteValue() {
+        if (this.defaultValue == null) {
+            return 0;
+        }
+        return this.defaultValue.byteValue();
+    }
+
+    /**
+     * Get the half precision integer value of the configuration property
+     * represented by this instance.
+     *
+     * @return The half precision integer value of the configuration property
+     *         represented by this instance.
+     */
+    public short getShortValue() {
+        return this.value.shortValue();
+    }
+
+    /**
+     * Get the default half prevision integer value of the configuration
+     * property represented by this instance.
+     *
+     * @return The default half prevision integer value of the configuration
+     *         property represented by this instance.
+     */
+    public short getDefaultShortValue() {
+        if (this.defaultValue == null) {
+            return 0;
+        }
+        return this.defaultValue.shortValue();
+    }
+
+    /**
+     * Get the integer value of the configuration property represented by this
+     * instance.
+     *
+     * @return The integer value of the configuration property represented by
+     *         this instance.
+     */
+    public int getIntValue() {
+        return this.value.intValue();
+    }
+
+    /**
+     * Get the default integer value of the configuration property represented
+     * by this instance.
+     *
+     * @return The default integer value of the configuration property
+     *         represented by this instance.
+     */
+    public int getIntDefaultValue() {
+        if (this.defaultValue == null) {
+            return 0;
+        }
+        return this.defaultValue.intValue();
+    }
+
+    /**
+     * Get the double precision integer value of the configuration property
+     * represented by this instance.
+     *
+     * @return The double precision integer value of the configuration property
+     *         represented by this instance.
+     */
+    public long getLongValue() {
+        return this.value.longValue();
+    }
+
+    /**
+     * Get the double precision default integer value of the configuration
+     * property represented by this instance.
+     *
+     * @return The double precision default integer value of the configuration
+     *         property represented by this instance.
+     */
+    public long getLongDefaultValue() {
+        if (this.defaultValue == null) {
+            return 0;
+        }
+        return this.defaultValue.longValue();
+    }
+
+    /**
+     * Get the floating point value of the configuration property represented by
+     * this instance.
+     *
+     * @return The floating point value of the configuration property
+     *         represented by this instance.
+     */
+    public float getFloatValue() {
+        return this.value.floatValue();
+    }
+
+    /**
+     * Get the default floating point value of the configuration property
+     * represented by this instance.
+     *
+     * @return The default floating point value of the configuration property
+     *         represented by this instance.
+     */
+    public float getFloatDefaultValue() {
+        if (this.defaultValue == null) {
+            return 0;
+        }
+        return this.value.floatValue();
+    }
+
+    /**
+     * Get the double precision floating point value of the configuration
+     * property represented by this instance.
+     *
+     * @return The double precision floating point value of the configuration
+     *         property represented by this instance.
+     */
+    public double getDoubleValue() {
+        return this.value.doubleValue();
+    }
+
+    /**
+     * Get the default double precision floating point value of the
+     * configuration property represented by this instance.
+     *
+     * @return The default double precision floating point value of the
+     *         configuration property represented by this instance.
+     */
+    public double getDoubleDefaultValue() {
+        if (this.defaultValue == null) {
+            return 0;
+        }
+        return this.value.doubleValue();
+    }
+
+    // #endregion Public Methods
 }
