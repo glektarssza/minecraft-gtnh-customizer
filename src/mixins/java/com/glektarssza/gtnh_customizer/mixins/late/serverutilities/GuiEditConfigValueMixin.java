@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import com.glektarssza.gtnh_customizer.KeyBindings;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
 
 import serverutils.lib.config.ConfigValue;
@@ -71,8 +72,8 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
             || keyCode == KeyBindings.ACCEPT_NBT_VALUE_CHANGE_ALT
                 .getKeyCode()) {
             if (value.setValueFromString(Minecraft.getMinecraft().thePlayer,
-                textBox.getText(), false)) {
-                callback.onCallback(value, true);
+                TypeHelpers.castToNonNull(textBox.getText()), false)) {
+                callback.onCallback(TypeHelpers.castToNonNull(value), true);
             }
 
             if (getGui().parent instanceof GuiBase) {
