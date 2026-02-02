@@ -23,6 +23,7 @@ import cpw.mods.fml.common.Loader;
 import net.minecraftforge.common.DimensionManager;
 
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 import serverutils.data.ServerUtilitiesPlayerData;
 import serverutils.data.TeleportType;
@@ -477,8 +478,10 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      */
     private void updatePlayerLastLocation(EntityPlayerMP victim) {
         if (Loader.isModLoaded("serverutilities")) {
-            ServerUtilitiesPlayerData.get(victim).setLastTeleport(
-                TeleportType.VANILLA_TP, new BlockDimPos(victim));;
+            ServerUtilitiesPlayerData.get(TypeHelpers.castToNonNull(victim))
+                .setLastTeleport(
+                    TeleportType.VANILLA_TP,
+                    new BlockDimPos(TypeHelpers.castToNonNull(victim)));
         }
     }
 
