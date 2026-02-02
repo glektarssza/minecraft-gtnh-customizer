@@ -82,7 +82,8 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
             return true;
         }
         if (keyCode == KeyBindings.CANCEL_NBT_EDITS.getKeyCode()) {
-            callback.onCallback(inst.getValue(), false);
+            callback.onCallback(TypeHelpers.castToNonNull(inst.getValue()),
+                false);
             return true;
         }
         if (super.keyPressed(keyCode, keyChar)) {
