@@ -2,6 +2,8 @@ package com.glektarssza.gtnh_customizer;
 
 import java.io.File;
 
+import javax.annotation.Nullable;
+
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.server.MinecraftServer;
@@ -42,6 +44,7 @@ public class CommonProxy {
     /**
      * The configuration directory.
      */
+    @Nullable
     private File configDir;
 
     /**
@@ -89,6 +92,7 @@ public class CommonProxy {
      *
      * @return The configuration directory for the mod.
      */
+    @Nullable
     public File getConfigDir() {
         return this.configDir;
     }
