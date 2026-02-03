@@ -72,6 +72,11 @@ jobs:
         name: Setup NodeJS Package Manager
         run: |
           npm install -g ${{inputs.package-manager}}@${{inputs.package-manager-version}}
+      - id: setup-pnpm-global-directory
+        name: Setup PNPM Global Directory
+        if: inputs.package-manager == 'pnpm'
+        run: |
+          pnpm setup
       - id: install-cspell
         name: Install CSpell
         run: |
