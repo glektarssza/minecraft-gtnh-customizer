@@ -19,12 +19,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
-
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.common.minimap.waypoints.WaypointWorld;
 import xaero.common.minimap.waypoints.WaypointsManager;
+
+import com.glektarssza.gtnh_customizer.config.Config;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * Mixin for the {@link WaypointsManager} class.
