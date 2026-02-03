@@ -50,6 +50,9 @@ public class LateMixinInitializer implements ILateMixinLoader {
         if (loadedMods.contains("XaeroMinimap")
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             mixins.add("xaeros.client.WaypointsManagerMixins");
+        }
+        if (loadedMods.contains("XaeroWorldMap")
+            && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             mixins.add("xaeros.client.GuiMapMixins");
         }
         if (loadedMods.contains("TConstruct")) {
