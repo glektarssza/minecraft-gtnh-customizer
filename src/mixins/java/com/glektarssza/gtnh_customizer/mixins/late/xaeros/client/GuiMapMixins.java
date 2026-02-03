@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import xaero.map.gui.GuiMap;
 import xaero.map.region.LeveledRegion;
@@ -26,6 +27,7 @@ public class GuiMapMixins {
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", remap = false), remap = false, cancellable = false)
     public void drawScreen$addMousedOverBiome(
+        CallbackInfo ci,
         @Local(name = "mc") Minecraft mc,
         @Local(name = "reg") LeveledRegion<?> reg) {
         GuiMap self = (GuiMap) (Object) this;
