@@ -73,6 +73,7 @@ jvmargs
 keybind
 keybinds
 knockback
+leveled
 liberica
 ljava
 lnet
