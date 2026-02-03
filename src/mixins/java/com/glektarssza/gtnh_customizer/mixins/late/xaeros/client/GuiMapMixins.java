@@ -50,9 +50,7 @@ public class GuiMapMixins {
     }
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), remap = false, cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z", remap = false)))
-    public void drawScreen$addMousedOverBiome(
-        CallbackInfo ci,
-        @Local(name = "mc") Minecraft mc,
+    public void drawScreen$addMousedOverBiome(CallbackInfo ci,
         @Local(name = "reg") LeveledRegion<?> reg) {
         if (!Config.getXaerosWorldMapShowHoveredBiome()) {
             return;
