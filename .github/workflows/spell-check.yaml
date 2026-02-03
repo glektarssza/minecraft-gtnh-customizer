@@ -62,21 +62,26 @@ jobs:
           lfs: true
           submodules: recursive
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+      - id: setup-pnpm-package-manager
+        name: Setup NodeJS Package Manager
+        if: inputs.package-manager == 'pnpm'
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{inputs.package-manager-version}}
+          run_install: false
+          standalone: false
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v6
         with:
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
           node-version: ${{inputs.node-version}}
-      - id: setup-node-package-manager
+          cache: ${{inputs.package-manager}}
+      - id: setup-non-pnpm-package-manager
         name: Setup NodeJS Package Manager
+        if: inputs.package-manager != 'pnpm'
         run: |
           npm install -g ${{inputs.package-manager}}@${{inputs.package-manager-version}}
-      - id: setup-pnpm-global-directory
-        name: Setup PNPM Global Directory
-        if: inputs.package-manager == 'pnpm'
-        run: |
-          pnpm setup
       - id: install-cspell
         name: Install CSpell
         run: |
