@@ -27,6 +27,12 @@
     "useGitignore": true,
     "gitignoreRoot": ["."],
     "caseSensitive": false,
+    "ignorePaths": [
+        ".git",
+        "./gradlew*",
+        "./spotless.importorder",
+        "./formatter.xml"
+    ],
     "loadDefaultConfiguration": true,
     "unknownWords": "report-all",
     "readonly": true
