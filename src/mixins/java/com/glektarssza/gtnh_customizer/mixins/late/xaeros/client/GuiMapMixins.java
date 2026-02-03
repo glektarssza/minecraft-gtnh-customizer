@@ -48,6 +48,6 @@ public class GuiMapMixins {
             return;
         }
         self.drawCenteredString(mc.fontRenderer, biomeString,
-            self.width / 2, 2 + mc.fontRenderer.FONT_HEIGHT, -1);
+            self.width / 2, mc.fontRenderer.FONT_HEIGHT + 4, -1);
     }
 }
