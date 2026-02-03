@@ -23,6 +23,19 @@ jobs:
       ref: ${{github.sha}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
+  spell-check:
+    name: Spell Check
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/spell-check.yaml
+    with:
+      ref: ${{github.sha}}
+      node-version: '25'
+      package-manager: pnpm
+      package-manager-version: latest
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
   dependency-submission:
     name: Dependency Submission
     permissions:

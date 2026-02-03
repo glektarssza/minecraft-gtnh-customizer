@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Lint
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: |
+          The Git reference from which to clone the project.
+
+          This can be any valid Git commit-ish (e.g. a SHA, a ref, a tag, and so
+          on).
+
+          Defaults to the SHA that caused the workflow to be triggered. If that
+          is unavailable the fully formed reference of the branch or tag that
+          triggered the workflow is used. If that is unavailable the repository
+          default branch is used.
+        type: string
+        required: false
+        default: ${{github.sha || github.ref || github.event.repository.default_branch}}
+      node-version:
+        description: |
+          The NodeJS version to use.
+
+          Defaults to "latest".
+        type: string
+        required: false
+        default: latest
+      package-manager:
+        description: |
+          The NodeJS package manager to use.
+
+          Defaults to "pnpm".
+        type: string
+        required: false
+        default: pnpm
+      package-manager-version:
+        description: |
+          The NodeJS package manager version to use.
+
+          Defaults to "latest".
+        type: string
+        required: false
+        default: latest
+    secrets:
+      github-token:
+        description: |
+          The token to use when making authenticated calls to the GitHub API.
+        required: true
+jobs:
+  spell-check:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    permissions:
+      # -- To clone repository
+      contents: read
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{inputs.ref}}
+          lfs: true
+          submodules: recursive
+          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+      - id: setup-pnpm-package-manager
+        name: Setup NodeJS Package Manager
+        if: inputs.package-manager == 'pnpm'
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{inputs.package-manager-version}}
+          run_install: false
+          standalone: false
+      - id: setup-nodejs
+        name: Setup NodeJS
+        uses: actions/setup-node@v6
+        with:
+          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          node-version: ${{inputs.node-version}}
+      - id: setup-non-pnpm-package-manager
+        name: Setup NodeJS Package Manager
+        if: inputs.package-manager != 'pnpm'
+        run: |
+          npm install -g ${{inputs.package-manager}}@${{inputs.package-manager-version}}
+      - id: install-cspell
+        name: Install CSpell
+        run: |
+          ${{inputs.package-manager}} install -g cspell \
+          @cspell/dict-cspell-bundle @cspell/dict-java @cspell/dict-fonts \
+          @cspell/dict-public-licenses @cspell/dict-gaming-terms \
+          @cspell/dict-companies @cspell/dict-git @cspell/dict-software-terms;
+      - id: check-spelling
+        name: Check Spelling
+        run: |
+          cspell lint --no-issues --root ${{github.workspace}} --no-color \
+            --stop-config-search-at ${{github.workspace}}  \
+            --no-must-find-files --no-progress --no-cache \
+            --gitignore-root ${{github.workspace}} .

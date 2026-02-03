@@ -1,5 +1,11 @@
 # Changelog #
 
+## 0.15.0 ##
+
+### Bug Fixes ###
+
+* Fixed a bad Gradle update.
+
 ## 0.14.7 ##
 
 ### Bug Fixes ###
