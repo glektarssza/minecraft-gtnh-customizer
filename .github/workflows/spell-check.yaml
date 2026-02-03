@@ -76,7 +76,6 @@ jobs:
         with:
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
           node-version: ${{inputs.node-version}}
-          cache: ${{inputs.package-manager}}
       - id: setup-non-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager != 'pnpm'
