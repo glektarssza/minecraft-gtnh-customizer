@@ -85,3 +85,6 @@ gtnh_customizer.keybindings.serverutilities.cancel_nbt_edits=Cancel NBT Edits
 gtnh_customizer.keybindings.serverutilities.accept_nbt_value_change=Accept NBT Value Change
 gtnh_customizer.keybindings.serverutilities.accept_nbt_value_change_alt=Accept NBT Value Change (Alt)
 gtnh_customizer.keybindings.serverutilities.cancel_nbt_value_change=Cancel NBT Value Change
+
+# Misc. Translations
+gtnh_customizer.xaeros_world_map.biome_unknown=Unknown Biome
