@@ -48,7 +48,7 @@ on:
         required: true
 jobs:
   spell-check:
-    name: spell-check
+    name: Spell Check
     runs-on: ubuntu-latest
     permissions:
       # -- To clone repository
