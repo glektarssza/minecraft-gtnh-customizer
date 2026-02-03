@@ -44,6 +44,34 @@ on:
         type: string
         required: false
         default: wrapper
+      node-version:
+        description: |
+          The NodeJS version to use.
+
+          Defaults to "latest".
+        type: string
+        required: false
+        default: latest
+      package-manager:
+        description: |
+          The NodeJS package manager to use.
+
+          Defaults to "pnpm".
+        type: choice
+        required: false
+        options:
+          - pnpm
+          - npm
+          - yarn
+        default: pnpm
+      package-manager-version:
+        description: |
+          The NodeJS package manager version to use.
+
+          Defaults to "latest".
+        type: string
+        required: false
+        default: latest
       artifact-retention-days:
         description: |
           The duration, in days, to retain artifacts for.
@@ -79,6 +107,19 @@ jobs:
       java-version: ${{inputs.java-version}}
       java-vendor: ${{inputs.java-vendor}}
       gradle-version: ${{inputs.gradle-version}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
+  spell-check:
+    name: Spell Check
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/spell-check.yaml
+    with:
+      ref: ${{github.sha}}
+      node-version: ${{inputs.node-version}}
+      package-manager: ${{inputs.package-manager}}
+      package-manager-version: ${{inputs.package-manager-version}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
   dependency-submission:
