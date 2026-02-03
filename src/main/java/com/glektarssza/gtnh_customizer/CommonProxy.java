@@ -1,10 +1,13 @@
 package com.glektarssza.gtnh_customizer;
 
 import java.io.File;
+import java.lang.invoke.MethodHandles;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -28,6 +31,7 @@ import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.RepairCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 import serverutils.events.ServerUtilitiesPreInitRegistryEvent;
 import thaumcraft.common.blocks.BlockCustomPlant;
@@ -37,9 +41,11 @@ import thaumcraft.common.blocks.BlockCustomPlant;
  */
 public class CommonProxy {
     /**
-     * The main logger for the mod.
+     * The logger for this class.
      */
-    private Logger logger;
+    @Nonnull
+    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
+        .getLogger(MethodHandles.lookup().lookupClass()));
 
     /**
      * The configuration directory.
@@ -79,15 +85,6 @@ public class CommonProxy {
     }
 
     /**
-     * Get the main logger for the mod.
-     *
-     * @return The main logger for the mod.
-     */
-    public Logger getLogger() {
-        return this.logger;
-    }
-
-    /**
      * Get the configuration directory for the mod.
      *
      * @return The configuration directory for the mod.
@@ -103,23 +100,18 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void preInit(FMLPreInitializationEvent event) {
-        this.logger = event.getModLog();
-        GTNHCustomizer.getLogger().info(
-            "Pre-initializing server/common-side for {}...",
+        LOGGER.info("Pre-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         this.configDir = event.getModConfigurationDirectory();
         Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
-        GTNHCustomizer.getLogger().info("Synchronizing configuration for {}...",
-            Tags.MOD_NAME);
+        LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
         Config.sync();
-        GTNHCustomizer.getLogger().info(
-            "Registering mod {} with the Forge event bus...",
+        LOGGER.info("Registering mod {} with the Forge event bus...",
             Tags.MOD_NAME);
         MinecraftForge.EVENT_BUS.register(this);
         // -- OnConfigChangedEvent comes in through here
         FMLCommonHandler.instance().bus().register(this);
-        GTNHCustomizer.getLogger().info(
-            "Done pre-initializing server/common-side for {}!",
+        LOGGER.info("Done pre-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -129,10 +121,9 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void init(FMLInitializationEvent event) {
-        getLogger().info("Initializing server/common-side for {}...",
-            Tags.MOD_NAME);
+        LOGGER.info("Initializing server/common-side for {}...", Tags.MOD_NAME);
         // -- Does nothing yet!
-        getLogger().info("Done initializing server/common-side for {}!",
+        LOGGER.info("Done initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -142,10 +133,10 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void postInit(FMLPostInitializationEvent event) {
-        getLogger().info("Post-initializing server/common-side for {}...",
+        LOGGER.info("Post-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         // -- Does nothing yet!
-        getLogger().info("Done post-initializing server/common-side for {}!",
+        LOGGER.info("Done post-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -155,17 +146,14 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void serverStarting(FMLServerStartingEvent event) {
-        getLogger().info("Handling server about to start for {}...",
-            Tags.MOD_NAME);
-        getLogger().info("Registering custom commands for {}...",
-            Tags.MOD_NAME);
+        LOGGER.info("Handling server about to start for {}...", Tags.MOD_NAME);
+        LOGGER.info("Registering custom commands for {}...", Tags.MOD_NAME);
         event.registerServerCommand(new TeleportCrossDimensionCommand());
         event.registerServerCommand(new ListDimensionsCommand());
         event.registerServerCommand(new RepairCommand());
         event.registerServerCommand(new ExtinguishCommand());
-        getLogger().info("Done registering custom commands for {}!",
-            Tags.MOD_NAME);
-        getLogger().info("Done handling server about to start for {}!",
+        LOGGER.info("Done registering custom commands for {}!", Tags.MOD_NAME);
+        LOGGER.info("Done handling server about to start for {}!",
             Tags.MOD_NAME);
     }
 
@@ -177,7 +165,7 @@ public class CommonProxy {
     @SubscribeEvent
     public void serverUtilitiesPreInitRegistry(
         ServerUtilitiesPreInitRegistryEvent event) {
-        GTNHCustomizer.getLogger().info(
+        LOGGER.info(
             "Pre-initializing server/common-side of Server Utilities stuff for {}...",
             Tags.MOD_NAME);
         event.getRegistry().registerServerReloadHandler(
@@ -190,7 +178,7 @@ public class CommonProxy {
                 }
                 return true;
             });
-        GTNHCustomizer.getLogger().info(
+        LOGGER.info(
             "Done pre-initializing server/common-side of Server Utilities stuff for {}!",
             Tags.MOD_NAME);
     }

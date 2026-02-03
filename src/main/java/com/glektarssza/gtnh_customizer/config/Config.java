@@ -18,8 +18,8 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
@@ -39,7 +39,7 @@ public class Config {
      * The logger for this class.
      */
     @Nonnull
-    private static final Logger LOGGER = TypeHelpers.castToNonNull(LogManager
+    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
         .getLogger(MethodHandles.lookup().lookupClass()));
 
     /**
@@ -565,8 +565,7 @@ public class Config {
     public static void refresh() {
         if (CONFIG_INSTANCE == null) {
             LOGGER.error("Cannot load configuration!");
-            LOGGER
-                .error("Configuration has not been initialized yet!");
+            LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
         if (!CONFIG_INSTANCE.getLoadedConfigVersion().equals(CONFIG_VERSION)) {
@@ -588,68 +587,50 @@ public class Config {
     public static void load() {
         if (CONFIG_INSTANCE == null) {
             LOGGER.error("Cannot load configuration!");
-            LOGGER
-                .error("Configuration has not been initialized yet!");
+            LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
         CONFIG_INSTANCE.load();
         if (!CONFIG_INSTANCE.getLoadedConfigVersion()
             .equals(CONFIG_VERSION)) {
-            LOGGER
-                .warn("Your configuration is out of date!");
-            LOGGER.warn(
-                "We're running version '{}' but you have version '{}'",
+            LOGGER.warn("Your configuration is out of date!");
+            LOGGER.warn("We're running version '{}' but you have version '{}'",
                 CONFIG_VERSION, CONFIG_INSTANCE.getLoadedConfigVersion());
             LOGGER.warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     CONFIG_VERSION, CONFIG_INSTANCE);
             } catch (NoSuchElementException t) {
-                LOGGER
-                    .info(
-                        "No migrations available from version '{}' to version '{}', assuming migration is not required!",
-                        CONFIG_INSTANCE.getLoadedConfigVersion(),
-                        CONFIG_VERSION);
+                LOGGER.info(
+                    "No migrations available from version '{}' to version '{}', assuming migration is not required!",
+                    CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
             } catch (Throwable t) {
-                LOGGER
-                    .warn(
-                        "Could not migrate configuration from version '{}' to version '{}'!",
-                        CONFIG_INSTANCE.getLoadedConfigVersion(),
-                        CONFIG_VERSION);
-                LOGGER
-                    .warn(
-                        "Here's a stack trace for you to use if you want to file a bug report about migrations failing:");
-                LOGGER
-                    .warn(t);
-                LOGGER
-                    .warn(
-                        "Any customizations you've made are probably about to get nuked!");
+                LOGGER.warn(
+                    "Could not migrate configuration from version '{}' to version '{}'!",
+                    CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
+                LOGGER.warn(
+                    "Here's a stack trace for you to use if you want to file a bug report about migrations failing:",
+                    t);
+                LOGGER.warn(
+                    "Any customizations you've made are probably about to get nuked!");
                 File backupLocation = new File(String.format("%s.bak",
-                    CONFIG_INSTANCE.getConfigFile()
-                        .getAbsolutePath()));
-                LOGGER
-                    .warn(
-                        "Copying your current configuration into '{}' as a backup...",
-                        backupLocation.getAbsolutePath());
+                    CONFIG_INSTANCE.getConfigFile().getAbsolutePath()));
+                LOGGER.warn(
+                    "Copying your current configuration into '{}' as a backup...",
+                    backupLocation.getAbsolutePath());
                 try {
                     Files.copy(CONFIG_INSTANCE.getConfigFile().toPath(),
                         backupLocation.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
                 } catch (Throwable tt) {
-                    LOGGER
-                        .warn(
-                            "Failed to generate a backup of your current configuration!");
-                    LOGGER
-                        .warn(
-                            "Here's a stack trace for you to use if you want to diagnose what happened:");
-                    LOGGER
-                        .warn(tt);
-                    LOGGER
-                        .warn(
-                            "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                    LOGGER
-                        .warn(
-                            "Proceeding anyway, sorry!");
+                    LOGGER.warn(
+                        "Failed to generate a backup of your current configuration!");
+                    LOGGER.warn(
+                        "Here's a stack trace for you to use if you want to diagnose what happened:",
+                        tt);
+                    LOGGER.warn(
+                        "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
+                    LOGGER.warn("Proceeding anyway, sorry!");
                 }
                 CONFIG_INSTANCE.getCategoryNames().stream()
                     .forEach((categoryName) -> CONFIG_INSTANCE.removeCategory(
@@ -683,8 +664,7 @@ public class Config {
     public static void save() {
         if (CONFIG_INSTANCE == null) {
             LOGGER.error("Cannot save configuration!");
-            LOGGER
-                .error("Configuration has not been initialized yet!");
+            LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
         CONFIG_INSTANCE.save();

@@ -1,13 +1,15 @@
 package com.glektarssza.gtnh_customizer;
 
 import java.io.File;
+import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.ModMetadata;
@@ -24,6 +26,16 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
  */
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.7.10]", modLanguage = "java", guiFactory = "com.glektarssza.gtnh_customizer.config.GuiFactory", canBeDeactivated = false, useMetadata = true)
 public class GTNHCustomizer {
+    /**
+     * The logger for this class.
+     */
+    @Nonnull
+    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
+        .getLogger(MethodHandles.lookup().lookupClass()));
+
+    /**
+     * The proxy class.
+     */
     @SidedProxy(modId = Tags.MOD_ID, serverSide = "com.glektarssza.gtnh_customizer.CommonProxy", clientSide = "com.glektarssza.gtnh_customizer.ClientProxy")
     private static CommonProxy proxy;
 
@@ -69,15 +81,6 @@ public class GTNHCustomizer {
     }
 
     /**
-     * Get the main logger for the mod.
-     *
-     * @return The main logger for the mod.
-     */
-    public static Logger getLogger() {
-        return proxy.getLogger();
-    }
-
-    /**
      * Get the configuration directory for the mod.
      *
      * @return The configuration directory for the mod.
@@ -116,10 +119,23 @@ public class GTNHCustomizer {
      * @param category The warning category to check.
      */
     public static void trackEmitWarning(String category) {
+        trackEmitWarning(category, LOGGER);
+    }
+
+    /**
+     * Track that a given warning category was emitted.
+     *
+     * @param category The warning category to check.
+     * @param logger The logger to emit to.
+     */
+    public static void trackEmitWarning(String category,
+        @Nonnull Logger logger) {
         WARNING_LIMIT_TRACKER.putIfAbsent(category, WARNING_EMIT_LIMIT);
-        int limit = WARNING_LIMIT_TRACKER.compute(category, (_k, v) -> v - 1);
+        int limit = WARNING_LIMIT_TRACKER.compute(
+            category + ";" + logger.getName(),
+            (_k, v) -> v - 1);
         if (limit <= 0) {
-            getLogger().warn(String.format(
+            logger.warn(String.format(
                 "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
                 category));
         }
