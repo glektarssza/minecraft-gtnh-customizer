@@ -92,7 +92,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
             LOGGER.debug("Found Ender Zoo, adding mixins!");
             mixins.add("enderzoo.EntityEnderminyMixin");
         }
-        LOGGER.debug("Final mixin list: ",
+        LOGGER.debug("Final mixin list: %s",
             mixins.stream().collect(Collectors.joining(", ")));
         return mixins;
     }
