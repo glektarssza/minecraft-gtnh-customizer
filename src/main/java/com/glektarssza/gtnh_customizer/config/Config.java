@@ -1,6 +1,7 @@
 package com.glektarssza.gtnh_customizer.config;
 
 import java.io.File;
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -15,14 +16,19 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import javax.annotation.Nonnull;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
 
 /**
@@ -30,9 +36,16 @@ import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsExceptio
  */
 public class Config {
     /**
+     * The logger for this class.
+     */
+    @Nonnull
+    private static final Logger LOGGER = TypeHelpers.castToNonNull(LogManager
+        .getLogger(MethodHandles.lookup().lookupClass()));
+
+    /**
      * The current version of the configuration.
      */
-    public static String CONFIG_VERSION = "9";
+    public static String CONFIG_VERSION = "10";
 
     /**
      * The base localization language key.
@@ -88,6 +101,11 @@ public class Config {
      * Whether Thaumcraft Silverwood Saplings can be bone mealed.
      */
     private static boolean thaumcraftCanBoneMealSilverwoodSaplings = true;
+
+    /**
+     * Whether to show the hovered biome in Xaero's World Map.
+     */
+    private static boolean xaerosWorldMapShowHoveredBiome = true;
 
     /**
      * The maximum number of blocks the {@code extinguish} command should
@@ -290,6 +308,40 @@ public class Config {
     public static void toggleThaumcraftCanBoneMealSilverwoodSaplings() {
         setThaumcraftCanBoneMealSilverwoodSaplings(
             !getThaumcraftCanBoneMealSilverwoodSaplings());
+    }
+
+    /**
+     * Get whether to show the hovered biome in Xaero's World Map.
+     *
+     * @return Whether to show the hovered biome in Xaero's World Map.
+     */
+    public static boolean getXaerosWorldMapShowHoveredBiome() {
+        return xaerosWorldMapShowHoveredBiome;
+    }
+
+    /**
+     * Set whether to show the hovered biome in Xaero's World Map.
+     *
+     * @param value Whether to show the hovered biome in Xaero's World Map.
+     */
+    public static void setXaerosWorldMapShowHoveredBiome(
+        boolean value) {
+        xaerosWorldMapShowHoveredBiome = value;
+    }
+
+    /**
+     * Reset whether to show the hovered biome in Xaero's World Map.
+     */
+    public static void resetXaerosWorldMapShowHoveredBiome() {
+        setXaerosWorldMapShowHoveredBiome(true);
+    }
+
+    /**
+     * Toggle whether to show the hovered biome in Xaero's World Map.
+     */
+    public static void toggleXaerosWorldMapShowHoveredBiome() {
+        setXaerosWorldMapShowHoveredBiome(
+            !getXaerosWorldMapShowHoveredBiome());
     }
 
     /**
@@ -512,14 +564,14 @@ public class Config {
      */
     public static void refresh() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.getLogger().error("Cannot load configuration!");
-            GTNHCustomizer.getLogger()
+            LOGGER.error("Cannot load configuration!");
+            LOGGER
                 .error("Configuration has not been initialized yet!");
             return;
         }
         if (!CONFIG_INSTANCE.getLoadedConfigVersion().equals(CONFIG_VERSION)) {
-            GTNHCustomizer.getLogger().error("Cannot load configuration!");
-            GTNHCustomizer.getLogger().error(
+            LOGGER.error("Cannot load configuration!");
+            LOGGER.error(
                 "In-memory configuration version of '{}' does not equal expected configuration version of '{}'!",
                 CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
             return;
@@ -535,47 +587,47 @@ public class Config {
      */
     public static void load() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.getLogger().error("Cannot load configuration!");
-            GTNHCustomizer.getLogger()
+            LOGGER.error("Cannot load configuration!");
+            LOGGER
                 .error("Configuration has not been initialized yet!");
             return;
         }
         CONFIG_INSTANCE.load();
         if (!CONFIG_INSTANCE.getLoadedConfigVersion()
             .equals(CONFIG_VERSION)) {
-            GTNHCustomizer.getLogger()
+            LOGGER
                 .warn("Your configuration is out of date!");
-            GTNHCustomizer.getLogger().warn(
+            LOGGER.warn(
                 "We're running version '{}' but you have version '{}'",
                 CONFIG_VERSION, CONFIG_INSTANCE.getLoadedConfigVersion());
-            GTNHCustomizer.getLogger().warn("Attempting to migrate!");
+            LOGGER.warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
                     CONFIG_VERSION, CONFIG_INSTANCE);
             } catch (NoSuchElementException t) {
-                GTNHCustomizer.getLogger()
+                LOGGER
                     .info(
                         "No migrations available from version '{}' to version '{}', assuming migration is not required!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
                         CONFIG_VERSION);
             } catch (Throwable t) {
-                GTNHCustomizer.getLogger()
+                LOGGER
                     .warn(
                         "Could not migrate configuration from version '{}' to version '{}'!",
                         CONFIG_INSTANCE.getLoadedConfigVersion(),
                         CONFIG_VERSION);
-                GTNHCustomizer.getLogger()
+                LOGGER
                     .warn(
                         "Here's a stack trace for you to use if you want to file a bug report about migrations failing:");
-                GTNHCustomizer.getLogger()
+                LOGGER
                     .warn(t);
-                GTNHCustomizer.getLogger()
+                LOGGER
                     .warn(
                         "Any customizations you've made are probably about to get nuked!");
                 File backupLocation = new File(String.format("%s.bak",
                     CONFIG_INSTANCE.getConfigFile()
                         .getAbsolutePath()));
-                GTNHCustomizer.getLogger()
+                LOGGER
                     .warn(
                         "Copying your current configuration into '{}' as a backup...",
                         backupLocation.getAbsolutePath());
@@ -584,18 +636,18 @@ public class Config {
                         backupLocation.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
                 } catch (Throwable tt) {
-                    GTNHCustomizer.getLogger()
+                    LOGGER
                         .warn(
                             "Failed to generate a backup of your current configuration!");
-                    GTNHCustomizer.getLogger()
+                    LOGGER
                         .warn(
                             "Here's a stack trace for you to use if you want to diagnose what happened:");
-                    GTNHCustomizer.getLogger()
+                    LOGGER
                         .warn(tt);
-                    GTNHCustomizer.getLogger()
+                    LOGGER
                         .warn(
                             "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                    GTNHCustomizer.getLogger()
+                    LOGGER
                         .warn(
                             "Proceeding anyway, sorry!");
                 }
@@ -630,8 +682,8 @@ public class Config {
      */
     public static void save() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.getLogger().error("Cannot save configuration!");
-            GTNHCustomizer.getLogger()
+            LOGGER.error("Cannot save configuration!");
+            LOGGER
                 .error("Configuration has not been initialized yet!");
             return;
         }
