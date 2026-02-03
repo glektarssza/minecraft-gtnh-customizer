@@ -16,7 +16,7 @@ project.ext.setProperty = { File file, String key, String value ->
 }
 
 project.ext.setEclipsePreference = { File preferencesFile, String key, String value ->
-    println("edit ${preferencesFile}:\t${key} := ${value}")
+    // println("edit ${preferencesFile}:\t${key} := ${value}")
     if (!preferencesFile.exists()) {
         preferencesFile.parentFile.mkdirs()
         preferencesFile.write("eclipse.preferences.version=1\n")
