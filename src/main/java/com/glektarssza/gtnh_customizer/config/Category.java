@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
+
 /**
  * An interface which describes a configuration category.
  */
@@ -65,8 +67,9 @@ public abstract class Category {
         if (parent == null) {
             return this.getID();
         }
-        return String.join(Configuration.CATEGORY_SPLITTER,
-            parent.getFullPath(), this.getID());
+        return TypeHelpers
+            .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
+                parent.getFullPath(), this.getID()));
     }
 
     /**
@@ -78,11 +81,13 @@ public abstract class Category {
     public String getLanguageKey() {
         Category parent = this.getParent();
         if (parent == null) {
-            return String.join(Configuration.CATEGORY_SPLITTER,
-                Config.LANG_KEY_CATEGORY_BASE, this.getID());
+            return TypeHelpers
+                .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
+                    Config.LANG_KEY_CATEGORY_BASE, this.getID()));
         }
-        return String.join(Configuration.CATEGORY_SPLITTER,
-            parent.getLanguageKey(), this.getID());
+        return TypeHelpers
+            .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
+                parent.getLanguageKey(), this.getID()));
     }
 
     /**
@@ -179,7 +184,8 @@ public abstract class Category {
      */
     @Nonnull
     public Category[] getChildrenCategories() {
-        return this.childCategories.toArray(new Category[0]);
+        return TypeHelpers
+            .castToNonNull(this.childCategories.toArray(new Category[0]));
     }
 
     /**
@@ -189,7 +195,8 @@ public abstract class Category {
      */
     @Nonnull
     public Property<?>[] getChildrenProperties() {
-        return this.childProperties.toArray(new Property<?>[0]);
+        return TypeHelpers
+            .castToNonNull(this.childProperties.toArray(new Property<?>[0]));
     }
 
     /**

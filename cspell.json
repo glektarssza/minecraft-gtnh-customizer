@@ -24,16 +24,26 @@
     ],
     "import": ["./.cspell/configs/project-dictionary.json"],
     "enableGlobDot": true,
+    "globRoot": ".",
+    "files": ["./**"],
     "useGitignore": true,
     "gitignoreRoot": ["."],
     "caseSensitive": false,
     "ignorePaths": [
-        ".git",
-        "./gradlew*",
+        "./.git/**",
+        "./gradle/**",
+        "./gradlew",
+        "./gradlew.bat",
         "./spotless.importorder",
         "./formatter.xml"
     ],
     "loadDefaultConfiguration": true,
     "unknownWords": "report-all",
-    "readonly": true
+    "readonly": true,
+    "cache": {
+        "useCache": true,
+        "cacheFormat": "universal",
+        "cacheStrategy": "content",
+        "cacheLocation": ".cspellcache"
+    }
 }

@@ -10,6 +10,7 @@ import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
 import com.glektarssza.gtnh_customizer.config.categories.gameplay.TConstruct;
 import com.glektarssza.gtnh_customizer.config.categories.gameplay.Thaumcraft;
+import com.glektarssza.gtnh_customizer.config.categories.gameplay.XaerosWorldMap;
 
 /**
  * The gameplay-related configuration category.
@@ -21,6 +22,7 @@ public class Gameplay extends Category {
     public Gameplay() {
         this.childCategories.add(new TConstruct(this));
         this.childCategories.add(new Thaumcraft(this));
+        this.childCategories.add(new XaerosWorldMap(this));
         this.childProperties.add(
             new Property<String[]>(this) {
                 @Override

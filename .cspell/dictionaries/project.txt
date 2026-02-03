@@ -73,11 +73,14 @@ jvmargs
 keybind
 keybinds
 knockback
+leveled
 liberica
 ljava
 lnet
+lorg
 ltconstruct
 lthaumcraft
+lwjgl
 lxaero
 mcmeta
 mcmod
@@ -85,6 +88,7 @@ mcversion
 mealable
 mealed
 mealing
+migrators
 minecraft
 minecraftforge
 mixinbooter

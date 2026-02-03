@@ -2,10 +2,12 @@ compileJava.options.encoding = "UTF-8"
 
 eclipse {
     project {
-        file { beforeMerged { gp ->
-            setEclipsePreference(file(".settings/org.eclipse.core.resources.prefs"), "encoding/<project>", compileJava.options.encoding)
-            setEclipsePreference(file(".settings/org.eclipse.jdt.core.prefs"), "org.eclipse.jdt.core.compiler.compliance", "1.8")
-        }}
+        file {
+            beforeMerged { gp ->
+                setEclipsePreference(file(".settings/org.eclipse.core.resources.prefs"), "encoding/<project>", compileJava.options.encoding)
+                setEclipsePreference(file(".settings/org.eclipse.jdt.core.prefs"), "org.eclipse.jdt.core.compiler.compliance", "1.8")
+            }
+        }
     }
 }
 
@@ -16,7 +18,7 @@ project.ext.setProperty = { File file, String key, String value ->
 }
 
 project.ext.setEclipsePreference = { File preferencesFile, String key, String value ->
-    println("edit ${preferencesFile}:\t${key} := ${value}")
+    // println("edit ${preferencesFile}:\t${key} := ${value}")
     if (!preferencesFile.exists()) {
         preferencesFile.parentFile.mkdirs()
         preferencesFile.write("eclipse.preferences.version=1\n")

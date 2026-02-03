@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import com.glektarssza.gtnh_customizer.KeyBindings;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiEditNBTExtensions;
 
@@ -77,7 +78,8 @@ public abstract class GuiEditNBTMixin extends GuiBase
         }
         if (keyCode == KeyBindings.DELETE_NBT_TAG.getKeyCode() &&
             this.selected != this.buttonNBTRoot) {
-            this.selected.parent.setTag(selected.key, null);
+            this.selected.parent.setTag(TypeHelpers.castToNonNull(selected.key),
+                null);
             this.selected.parent.updateChildren(false);
             this.selected = selected.parent;
             return true;
