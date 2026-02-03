@@ -8,7 +8,8 @@
 
 ## Technical ##
 
-* Updated GTNH build scripts to 2.0.19.
+* Updated GTNH build scripts to v2.0.19.
+* Updated dependencies.
 
 ## 0.14.7 ##
 
