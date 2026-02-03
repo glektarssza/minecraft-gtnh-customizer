@@ -44,7 +44,7 @@ public class KeyBindings {
         "key.categories.gtnh_customizer");
 
     /**
-     * The keybinding for accepting an editted NBT value inside the Server
+     * The keybinding for accepting an edited NBT value inside the Server
      * Utilities {@code /nbtedit} command.
      */
     public static final KeyBinding ACCEPT_NBT_VALUE_CHANGE = new KeyBinding(

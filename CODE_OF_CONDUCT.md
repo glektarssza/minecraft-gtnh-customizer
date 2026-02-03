@@ -21,7 +21,7 @@ Please see https://www.debian.org/code_of_conduct for the original version.
 
 Inevitably there will be people with whom you may disagree, or find it difficult
 to cooperate. Accept that, but even so, remain respectful. Disagreement is no
-excuse for poor behaviour or personal attacks, and a community in which people
+excuse for poor behavior or personal attacks, and a community in which people
 feel threatened is not a healthy community.
 
 ## 2. Assume good faith ##
@@ -75,7 +75,7 @@ point out this code of conduct. Such messages may be in public or in private,
 whatever is most appropriate. However, regardless of whether the message is
 public or not, it should still adhere to the relevant parts of this code of
 conduct; in particular, it should not be abusive or disrespectful. Assume good
-faith; it is more likely that participants are unaware of their bad behaviour
+faith; it is more likely that participants are unaware of their bad behavior
 than that they intentionally try to degrade the quality of the discussion.
 
 Serious or persistent offenders will be temporarily or permanently banned from

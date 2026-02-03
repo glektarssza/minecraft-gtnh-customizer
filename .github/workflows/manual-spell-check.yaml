@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Manual Spell Check
+on:
+  workflow_dispatch:
+    inputs:
+      node-version:
+        description: |
+          The NodeJS version to use.
+
+          Defaults to "latest".
+        type: string
+        required: false
+        default: latest
+      package-manager:
+        description: |
+          The NodeJS package manager to use.
+
+          Defaults to "pnpm".
+        type: choice
+        required: false
+        options:
+          - pnpm
+          - npm
+          - yarn
+        default: pnpm
+      package-manager-version:
+        description: |
+          The NodeJS package manager version to use.
+
+          Defaults to "latest".
+        type: string
+        required: false
+        default: latest
+jobs:
+  spell-check:
+    name: Spell Check
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/spell-check.yaml
+    with:
+      ref: ${{github.sha}}
+      node-version: ${{inputs.node-version}}
+      package-manager: ${{inputs.package-manager}}
+      package-manager-version: ${{inputs.package-manager-version}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
