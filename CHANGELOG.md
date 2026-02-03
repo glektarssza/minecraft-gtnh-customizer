@@ -2,6 +2,11 @@
 
 ## 0.15.0 ##
 
+### Features ###
+
+* Added a mixin to display the hovered biome in Xaero's World Map.
+  * Added relevant setting to control the new feature.
+
 ### Bug Fixes ###
 
 * Fixed a bad Gradle update.
@@ -10,6 +15,8 @@
 
 * Updated GTNH build scripts to v2.0.19.
 * Updated dependencies.
+* Switched to `slf4j` for logging.
+* Overhauled logging code.
 
 ## 0.14.7 ##
 
