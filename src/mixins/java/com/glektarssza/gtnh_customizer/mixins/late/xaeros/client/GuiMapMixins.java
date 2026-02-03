@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xaero.map.gui.GuiMap;
 import xaero.map.region.LeveledRegion;
 
+import com.glektarssza.gtnh_customizer.config.Config;
+
 @Mixin(GuiMap.class)
 public class GuiMapMixins {
     @Shadow(remap = false)
@@ -31,6 +33,9 @@ public class GuiMapMixins {
         CallbackInfo ci,
         @Local(name = "mc") Minecraft mc,
         @Local(name = "reg") LeveledRegion<?> reg) {
+        if (!Config.getXaerosWorldMapShowHoveredBiome()) {
+            return;
+        }
         GuiMap self = (GuiMap) (Object) this;
         String biomeString = null;
         int dimensionID = reg.getDim().getDimId();
