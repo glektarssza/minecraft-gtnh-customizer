@@ -76,8 +76,10 @@ knockback
 liberica
 ljava
 lnet
+lorg
 ltconstruct
 lthaumcraft
+lwjgl
 lxaero
 mcmeta
 mcmod
