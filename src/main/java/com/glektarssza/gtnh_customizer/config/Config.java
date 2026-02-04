@@ -613,7 +613,7 @@ public class Config {
             LOGGER.warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
-                    CONFIG_VERSION, CONFIG_INSTANCE);
+                    CONFIG_VERSION);
             } catch (NoSuchElementException t) {
                 LOGGER.info(
                     "No migrations available from version '{}' to version '{}', assuming migration is not required!",
@@ -706,7 +706,7 @@ public class Config {
      *         not valid numbers.
      */
     private static void applyConfigMigrations(@Nonnull String fromVersion,
-        @Nonnull String toVersion, @Nonnull Configuration configInstance)
+        @Nonnull String toVersion)
         throws NoSuchElementException, NumberFormatException {
         LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
         HashSet<String> alreadyMigratedVersions = new HashSet<String>();
