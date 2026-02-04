@@ -22,6 +22,7 @@
 * Updated dependencies.
 * Switched to `slf4j` for logging.
 * Overhauled logging code.
+* Overhauled internal exceptions.
 
 ## 0.14.7 ##
 
