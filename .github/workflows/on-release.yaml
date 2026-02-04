@@ -5,6 +5,16 @@ on:
     types:
       - published
 jobs:
+  test:
+    name: Test
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/test.yaml
+    with:
+      ref: ${{github.sha}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
   lint:
     name: Lint
     permissions:
@@ -31,6 +41,7 @@ jobs:
       # -- To clone repository write release artifacts
       contents: write
     needs:
+      - test
       - lint
       - dependency-submission
     uses: ./.github/workflows/publish.yaml

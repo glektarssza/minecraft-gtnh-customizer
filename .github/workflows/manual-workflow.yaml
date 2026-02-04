@@ -96,6 +96,20 @@ jobs:
       artifact-retention-days: ${{inputs.artifact-retention-days}}
     secrets:
       github-token: ${{secrets.GITHUB_TOKEN}}
+  test:
+    name: Test
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/test.yaml
+    with:
+      ref: ${{github.sha}}
+      java-version: ${{inputs.java-version}}
+      java-vendor: ${{inputs.java-vendor}}
+      gradle-version: ${{inputs.gradle-version}}
+      artifact-retention-days: ${{inputs.artifact-retention-days}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}
   lint:
     name: Lint
     permissions:
