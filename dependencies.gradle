@@ -6,7 +6,8 @@ def isPropEnabled(String id) {
 }
 
 dependencies {
-    implementation("org.slf4j:slf4j-api:2.0.17")
+    shadowImplementation("org.slf4j:slf4j-api:2.0.17")
+    shadowImplementation("org.slf4j:slf4j-reload4j:2.0.17")
     if (isPropEnabled("enableDependenciesForLocalTesting")) {
         // -- Support for other mods and local testing
         devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
