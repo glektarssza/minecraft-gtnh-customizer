@@ -11,19 +11,21 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
     // #region Public Fields
 
     /**
-     * The value of the argument that was invalid.
+     * The value of the argument that was outside of the allowed range.
      */
     @Nullable
     public final Number argumentValue;
 
     /**
-     * The minimum allowed value of the argument that was invalid.
+     * The minimum allowed value of the argument that was outside of the allowed
+     * range.
      */
     @Nullable
     public final Number argumentMinimumValue;
 
     /**
-     * The maximum allowed value of the argument that was invalid.
+     * The maximum allowed value of the argument that was outside of the allowed
+     * range.
      */
     @Nullable
     public final Number argumentMaximumValue;
@@ -157,8 +159,8 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
      */
     public ArgumentOutOfRangeException(@Nonnull String argumentName,
         @Nullable Number argumentValue, @Nullable Number argumentMinimumValue) {
@@ -173,8 +175,8 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
     public ArgumentOutOfRangeException(@Nonnull String argumentName,
@@ -191,8 +193,8 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
@@ -210,8 +212,8 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
@@ -230,10 +232,10 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
-     * @param argumentMaximumValue The maximum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
+     * @param argumentMaximumValue The maximum allowed value of the value that
+     *        was outside of the allowed range.
      */
     public ArgumentOutOfRangeException(@Nonnull String argumentName,
         @Nullable Number argumentValue, @Nullable Number argumentMinimumValue,
@@ -249,10 +251,10 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
-     * @param argumentMaximumValue The maximum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
+     * @param argumentMaximumValue The maximum allowed value of the value that
+     *        was outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
     public ArgumentOutOfRangeException(@Nonnull String argumentName,
@@ -269,10 +271,10 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
-     * @param argumentMaximumValue The maximum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
+     * @param argumentMaximumValue The maximum allowed value of the value that
+     *        was outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
@@ -290,10 +292,10 @@ public class ArgumentOutOfRangeException extends InvalidArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argumentValue The value of the argument that was invalid.
-     * @param argumentMinimumValue The minimum allowed value of the argument
-     *        that was invalid.
-     * @param argumentMaximumValue The maximum allowed value of the argument
-     *        that was invalid.
+     * @param argumentMinimumValue The minimum allowed value of the value that
+     *        was outside of the allowed range.
+     * @param argumentMaximumValue The maximum allowed value of the value that
+     *        was outside of the allowed range.
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
