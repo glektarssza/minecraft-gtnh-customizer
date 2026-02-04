@@ -11,7 +11,7 @@ import net.minecraft.server.MinecraftServer;
 
 import net.minecraftforge.common.DimensionManager;
 
-import com.glektarssza.gtnh_customizer.utils.exceptions.NumberOutOfRangeException;
+import com.glektarssza.gtnh_customizer.api.exceptions.ValueOutOfRangeException;
 
 /**
  * Utilities for commands.
@@ -411,16 +411,16 @@ public final class CommandUtils {
 
     public static byte parseByteArgument(ICommandSender sender,
         String arg, byte min, byte max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         return parseByteArgument(sender, arg, 10, min, max);
     }
 
     public static byte parseByteArgument(ICommandSender sender,
         String arg, int radix, byte min, byte max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         byte result = parseByteArgument(sender, arg, radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -455,7 +455,7 @@ public final class CommandUtils {
             return parseByteArgument(sender, arg, radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -492,7 +492,7 @@ public final class CommandUtils {
         byte result = parseBlockRelativeByteArgument(sender, arg, baseValue,
             radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -530,7 +530,7 @@ public final class CommandUtils {
                 radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -553,16 +553,16 @@ public final class CommandUtils {
 
     public static short parseShortArgument(ICommandSender sender,
         String arg, short min, short max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         return parseShortArgument(sender, arg, 10, min, max);
     }
 
     public static short parseShortArgument(ICommandSender sender,
         String arg, int radix, short min, short max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         short result = parseShortArgument(sender, arg, radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -597,7 +597,7 @@ public final class CommandUtils {
             return parseShortArgument(sender, arg, radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -634,7 +634,7 @@ public final class CommandUtils {
         short result = parseBlockRelativeShortArgument(sender, arg, baseValue,
             radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -672,7 +672,7 @@ public final class CommandUtils {
                 radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -694,16 +694,16 @@ public final class CommandUtils {
 
     public static int parseIntegerArgument(ICommandSender sender, String arg,
         int min, int max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         return parseIntegerArgument(sender, arg, 10, min, max);
     }
 
     public static int parseIntegerArgument(ICommandSender sender, String arg,
         int radix, int min, int max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         int result = parseIntegerArgument(sender, arg, radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -738,7 +738,7 @@ public final class CommandUtils {
             return parseIntegerArgument(sender, arg, radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -775,7 +775,7 @@ public final class CommandUtils {
         int result = parseBlockRelativeIntegerArgument(sender, arg, baseValue,
             radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -812,7 +812,7 @@ public final class CommandUtils {
                 radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -834,16 +834,16 @@ public final class CommandUtils {
 
     public static long parseLongArgument(ICommandSender sender, String arg,
         int min, int max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         return parseLongArgument(sender, arg, 10, min, max);
     }
 
     public static long parseLongArgument(ICommandSender sender, String arg,
         int radix, long min, long max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         long result = parseLongArgument(sender, arg, radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -878,7 +878,7 @@ public final class CommandUtils {
             return parseLongArgument(sender, arg, radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -915,7 +915,7 @@ public final class CommandUtils {
         long result = parseBlockRelativeLongArgument(sender, arg, baseValue,
             radix);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -952,7 +952,7 @@ public final class CommandUtils {
                 radix, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -974,16 +974,16 @@ public final class CommandUtils {
 
     public static float parseFloatArgument(ICommandSender sender, String arg,
         float min, float max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         return parseFloatArgument(sender, arg, false, min, max);
     }
 
     public static float parseFloatArgument(ICommandSender sender, String arg,
         boolean centerToBlock, float min, float max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         float result = parseFloatArgument(sender, arg, centerToBlock);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -1019,7 +1019,7 @@ public final class CommandUtils {
             return parseFloatArgument(sender, arg, centerToBlock, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -1058,7 +1058,7 @@ public final class CommandUtils {
         float result = parseBlockRelativeFloatArgument(sender, arg, baseValue,
             centerToBlock);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -1096,7 +1096,7 @@ public final class CommandUtils {
                 centerToBlock, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -1118,16 +1118,16 @@ public final class CommandUtils {
 
     public static double parseDoubleArgument(ICommandSender sender, String arg,
         double min, double max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         return parseDoubleArgument(sender, arg, false, min, max);
     }
 
     public static double parseDoubleArgument(ICommandSender sender, String arg,
         boolean centerToBlock, double min, double max)
-        throws NumberFormatException, NumberOutOfRangeException {
+        throws NumberFormatException, ValueOutOfRangeException {
         double result = parseDoubleArgument(sender, arg, centerToBlock);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -1163,7 +1163,7 @@ public final class CommandUtils {
             return parseDoubleArgument(sender, arg, centerToBlock, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
@@ -1202,7 +1202,7 @@ public final class CommandUtils {
         double result = parseBlockRelativeDoubleArgument(sender, arg, baseValue,
             centerToBlock);
         if (result < min || result > max) {
-            throw new NumberOutOfRangeException(result, min, max);
+            throw new ValueOutOfRangeException(result, min, max);
         }
         return result;
     }
@@ -1240,7 +1240,7 @@ public final class CommandUtils {
                 centerToBlock, min, max);
         } catch (NumberFormatException t) {
             return defaultValue;
-        } catch (NumberOutOfRangeException t) {
+        } catch (ValueOutOfRangeException t) {
             return defaultValue;
         }
     }
