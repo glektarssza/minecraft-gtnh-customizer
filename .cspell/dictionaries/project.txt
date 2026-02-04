@@ -1,6 +1,7 @@
 aabb
 adoptium
 appcds
+assertj
 assetmover
 attackable
 autobuild
@@ -18,6 +19,7 @@ coremod
 curseforge
 cursemaven
 customizer
+datafaker
 decomp
 decompiled
 deobf
