@@ -16,7 +16,7 @@
 
 * Fixed a bad Gradle update.
 
-## Technical ##
+### Technical ###
 
 * Updated GTNH build scripts to v2.0.19.
 * Updated dependencies.
