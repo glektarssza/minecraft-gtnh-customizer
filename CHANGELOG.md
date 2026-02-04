@@ -21,7 +21,9 @@
 * Updated GTNH build scripts to v2.0.19.
 * Updated dependencies.
 * Switched to `slf4j` for logging.
+* Moved to shadowed dependencies for `slf4j`.
 * Overhauled logging code.
+* Overhauled internal exceptions.
 
 ## 0.14.7 ##
 
