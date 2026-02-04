@@ -132,6 +132,9 @@ jobs:
       - id: setup-ci-workspace
         name: Setup CI Workspace
         run: ./gradlew setupCIWorkspace
+      - id: build
+        name: Build
+        run: ./gradlew build
       - id: test
         name: Test
         run: ./gradlew test
