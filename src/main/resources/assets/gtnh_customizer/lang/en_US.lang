@@ -23,6 +23,12 @@ gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_greatwood_sa
 gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_silverwood_saplings=Can Bone Meal Silverwood Saplings
 gtnh_customizer.config.categories.gameplay.thaumcraft.can_bone_meal_silverwood_saplings.tooltip=Whether to allow Thaumcraft Silverwood Saplings to have bone meal applied.
 
+# Configuration Categories - Gameplay Tweaks - Xaero's World Map
+gtnh_customizer.config.categories.gameplay.xaeros_world_map=Xaero's World Map
+gtnh_customizer.config.categories.gameplay.xaeros_world_map.tooltip=Xaero's World Map-related gameplay tweaks
+gtnh_customizer.config.categories.gameplay.xaeros_world_map.show_hovered_biome=Show Hovered Biome
+gtnh_customizer.config.categories.gameplay.xaeros_world_map.show_hovered_biome.tooltip=Whether to show the biome the mouse is hovering over in the world map.
+
 # Configuration Categories - Commands
 gtnh_customizer.config.categories.command=Command Settings
 gtnh_customizer.config.categories.command.tooltip=Settings relating to command functionality.
@@ -79,3 +85,6 @@ gtnh_customizer.keybindings.serverutilities.cancel_nbt_edits=Cancel NBT Edits
 gtnh_customizer.keybindings.serverutilities.accept_nbt_value_change=Accept NBT Value Change
 gtnh_customizer.keybindings.serverutilities.accept_nbt_value_change_alt=Accept NBT Value Change (Alt)
 gtnh_customizer.keybindings.serverutilities.cancel_nbt_value_change=Cancel NBT Value Change
+
+# Misc. Translations
+gtnh_customizer.xaeros_world_map.biome_unknown=Unknown Biome

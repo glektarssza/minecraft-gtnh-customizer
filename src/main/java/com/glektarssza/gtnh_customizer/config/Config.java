@@ -1,6 +1,7 @@
 package com.glektarssza.gtnh_customizer.config;
 
 import java.io.File;
+import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -15,40 +16,59 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.function.Consumer;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import com.glektarssza.gtnh_customizer.GTNHCustomizer;
+import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
-import com.glektarssza.gtnh_customizer.utils.exceptions.KeyAlreadyExistsException;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * The main configuration for the mod.
  */
 public class Config {
     /**
+     * The logger for this class.
+     */
+    @Nonnull
+    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
+        .getLogger(MethodHandles.lookup().lookupClass()));
+
+    /**
      * The current version of the configuration.
      */
-    public static String CONFIG_VERSION = "9";
+    @Nonnull
+    public static final String CONFIG_VERSION = "10";
 
     /**
      * The base localization language key.
      */
-    public static String LANG_KEY_BASE = "gtnh_customizer.config";
+    @Nonnull
+    public static final String LANG_KEY_BASE = "gtnh_customizer.config";
 
     /**
      * The base localization language key for categories.
      */
-    public static String LANG_KEY_CATEGORY_BASE = String
-        .join(Configuration.CATEGORY_SPLITTER, LANG_KEY_BASE, "categories");
+    @Nonnull
+    public static final String LANG_KEY_CATEGORY_BASE = TypeHelpers
+        .castToNonNull(String
+            .join(Configuration.CATEGORY_SPLITTER, LANG_KEY_BASE,
+                "categories"));
 
     /**
      * The configuration instance.
      */
-    private static Configuration CONFIG_INSTANCE;
+    @Nullable
+    private static Configuration CONFIG_INSTANCE = null;
 
     /**
      * A map of configuration migrations to apply to move between configuration
@@ -56,11 +76,13 @@ public class Config {
      *
      * Keys are in the format of {@code fromVersion:toVersion}.
      */
+    @Nonnull
     private static final Map<String, ImmutableTuple<String, Consumer<Configuration>>> MIGRATIONS = new HashMap<String, ImmutableTuple<String, Consumer<Configuration>>>();
 
     /**
      * A list of players who are globally immune.
      */
+    @Nonnull
     private static final List<String> globallyImmunePlayers = new ArrayList<String>();
 
     /**
@@ -90,6 +112,11 @@ public class Config {
     private static boolean thaumcraftCanBoneMealSilverwoodSaplings = true;
 
     /**
+     * Whether to show the hovered biome in Xaero's World Map.
+     */
+    private static boolean xaerosWorldMapShowHoveredBiome = true;
+
+    /**
      * The maximum number of blocks the {@code extinguish} command should
      * process.
      */
@@ -103,7 +130,9 @@ public class Config {
     /**
      * A random UUID which uniquely IDs this run of Minecraft.
      */
-    public static UUID CONFIG_ID = UUID.randomUUID();
+    @Nonnull
+    public static final UUID CONFIG_ID = TypeHelpers
+        .castToNonNull(UUID.randomUUID());
 
     /**
      * Get the globally immune players.
@@ -293,6 +322,40 @@ public class Config {
     }
 
     /**
+     * Get whether to show the hovered biome in Xaero's World Map.
+     *
+     * @return Whether to show the hovered biome in Xaero's World Map.
+     */
+    public static boolean getXaerosWorldMapShowHoveredBiome() {
+        return xaerosWorldMapShowHoveredBiome;
+    }
+
+    /**
+     * Set whether to show the hovered biome in Xaero's World Map.
+     *
+     * @param value Whether to show the hovered biome in Xaero's World Map.
+     */
+    public static void setXaerosWorldMapShowHoveredBiome(
+        boolean value) {
+        xaerosWorldMapShowHoveredBiome = value;
+    }
+
+    /**
+     * Reset whether to show the hovered biome in Xaero's World Map.
+     */
+    public static void resetXaerosWorldMapShowHoveredBiome() {
+        setXaerosWorldMapShowHoveredBiome(true);
+    }
+
+    /**
+     * Toggle whether to show the hovered biome in Xaero's World Map.
+     */
+    public static void toggleXaerosWorldMapShowHoveredBiome() {
+        setXaerosWorldMapShowHoveredBiome(
+            !getXaerosWorldMapShowHoveredBiome());
+    }
+
+    /**
      * Get whether the {@code repair} command raycast while looking for
      * containers ignores liquids.
      *
@@ -398,6 +461,7 @@ public class Config {
      *
      * @return A list of the main level configuration categories.
      */
+    @SuppressWarnings("null")
     public static List<ConfigCategory> getTopLevelCategories() {
         if (CONFIG_INSTANCE == null) {
             return Collections.emptyList();
@@ -426,14 +490,14 @@ public class Config {
      * @param configDir The directory the configuration file will live in.
      * @param fileName The name of the file to save the configuration to.
      *
-     * @throws KeyAlreadyExistsException Thrown if a duplicate configuration
+     * @throws MapKeyExistsException Thrown if a duplicate configuration
      *         migration is registered.
      * @throws NoSuchElementException Thrown if configuration migration is
      *         required and no migration route exists from the old configuration
      *         version to the new configuration version.
      */
     public static void init(File configDir, String fileName)
-        throws KeyAlreadyExistsException, NoSuchElementException {
+        throws MapKeyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration(
             "1", "2", (configInstance) -> {
@@ -510,16 +574,16 @@ public class Config {
     /**
      * Refresh the configuration data from the in-memory data.
      */
+    @SuppressWarnings("null")
     public static void refresh() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.getLogger().error("Cannot load configuration!");
-            GTNHCustomizer.getLogger()
-                .error("Configuration has not been initialized yet!");
+            LOGGER.error("Cannot load configuration!");
+            LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
         if (!CONFIG_INSTANCE.getLoadedConfigVersion().equals(CONFIG_VERSION)) {
-            GTNHCustomizer.getLogger().error("Cannot load configuration!");
-            GTNHCustomizer.getLogger().error(
+            LOGGER.error("Cannot load configuration!");
+            LOGGER.error(
                 "In-memory configuration version of '{}' does not equal expected configuration version of '{}'!",
                 CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
             return;
@@ -533,71 +597,54 @@ public class Config {
     /**
      * Load the configuration data from disk.
      */
+    @SuppressWarnings("null")
     public static void load() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.getLogger().error("Cannot load configuration!");
-            GTNHCustomizer.getLogger()
-                .error("Configuration has not been initialized yet!");
+            LOGGER.error("Cannot load configuration!");
+            LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
         CONFIG_INSTANCE.load();
         if (!CONFIG_INSTANCE.getLoadedConfigVersion()
             .equals(CONFIG_VERSION)) {
-            GTNHCustomizer.getLogger()
-                .warn("Your configuration is out of date!");
-            GTNHCustomizer.getLogger().warn(
-                "We're running version '{}' but you have version '{}'",
+            LOGGER.warn("Your configuration is out of date!");
+            LOGGER.warn("We're running version '{}' but you have version '{}'",
                 CONFIG_VERSION, CONFIG_INSTANCE.getLoadedConfigVersion());
-            GTNHCustomizer.getLogger().warn("Attempting to migrate!");
+            LOGGER.warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
-                    CONFIG_VERSION, CONFIG_INSTANCE);
+                    CONFIG_VERSION);
             } catch (NoSuchElementException t) {
-                GTNHCustomizer.getLogger()
-                    .info(
-                        "No migrations available from version '{}' to version '{}', assuming migration is not required!",
-                        CONFIG_INSTANCE.getLoadedConfigVersion(),
-                        CONFIG_VERSION);
+                LOGGER.info(
+                    "No migrations available from version '{}' to version '{}', assuming migration is not required!",
+                    CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
             } catch (Throwable t) {
-                GTNHCustomizer.getLogger()
-                    .warn(
-                        "Could not migrate configuration from version '{}' to version '{}'!",
-                        CONFIG_INSTANCE.getLoadedConfigVersion(),
-                        CONFIG_VERSION);
-                GTNHCustomizer.getLogger()
-                    .warn(
-                        "Here's a stack trace for you to use if you want to file a bug report about migrations failing:");
-                GTNHCustomizer.getLogger()
-                    .warn(t);
-                GTNHCustomizer.getLogger()
-                    .warn(
-                        "Any customizations you've made are probably about to get nuked!");
+                LOGGER.warn(
+                    "Could not migrate configuration from version '{}' to version '{}'!",
+                    CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
+                LOGGER.warn(
+                    "Here's a stack trace for you to use if you want to file a bug report about migrations failing:",
+                    t);
+                LOGGER.warn(
+                    "Any customizations you've made are probably about to get nuked!");
                 File backupLocation = new File(String.format("%s.bak",
-                    CONFIG_INSTANCE.getConfigFile()
-                        .getAbsolutePath()));
-                GTNHCustomizer.getLogger()
-                    .warn(
-                        "Copying your current configuration into '{}' as a backup...",
-                        backupLocation.getAbsolutePath());
+                    CONFIG_INSTANCE.getConfigFile().getAbsolutePath()));
+                LOGGER.warn(
+                    "Copying your current configuration into '{}' as a backup...",
+                    backupLocation.getAbsolutePath());
                 try {
                     Files.copy(CONFIG_INSTANCE.getConfigFile().toPath(),
                         backupLocation.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
                 } catch (Throwable tt) {
-                    GTNHCustomizer.getLogger()
-                        .warn(
-                            "Failed to generate a backup of your current configuration!");
-                    GTNHCustomizer.getLogger()
-                        .warn(
-                            "Here's a stack trace for you to use if you want to diagnose what happened:");
-                    GTNHCustomizer.getLogger()
-                        .warn(tt);
-                    GTNHCustomizer.getLogger()
-                        .warn(
-                            "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                    GTNHCustomizer.getLogger()
-                        .warn(
-                            "Proceeding anyway, sorry!");
+                    LOGGER.warn(
+                        "Failed to generate a backup of your current configuration!");
+                    LOGGER.warn(
+                        "Here's a stack trace for you to use if you want to diagnose what happened:",
+                        tt);
+                    LOGGER.warn(
+                        "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
+                    LOGGER.warn("Proceeding anyway, sorry!");
                 }
                 CONFIG_INSTANCE.getCategoryNames().stream()
                     .forEach((categoryName) -> CONFIG_INSTANCE.removeCategory(
@@ -630,9 +677,8 @@ public class Config {
      */
     public static void save() {
         if (CONFIG_INSTANCE == null) {
-            GTNHCustomizer.getLogger().error("Cannot save configuration!");
-            GTNHCustomizer.getLogger()
-                .error("Configuration has not been initialized yet!");
+            LOGGER.error("Cannot save configuration!");
+            LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
         CONFIG_INSTANCE.save();
@@ -659,8 +705,8 @@ public class Config {
      * @throws NumberFormatException Thrown if any configuration versions are
      *         not valid numbers.
      */
-    private static void applyConfigMigrations(String fromVersion,
-        String toVersion, Configuration configInstance)
+    private static void applyConfigMigrations(@Nonnull String fromVersion,
+        @Nonnull String toVersion)
         throws NoSuchElementException, NumberFormatException {
         LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
         HashSet<String> alreadyMigratedVersions = new HashSet<String>();
@@ -701,15 +747,14 @@ public class Config {
      * @param toVersion The version which will be migrated to.
      * @param migrator The function which will perform the migration.
      *
-     * @throws KeyAlreadyExistsException Thrown if a migration already exists
-     *         from the old configuration version to the new configuration
-     *         version.
+     * @throws MapKeyExistsException Thrown if a migration already exists from
+     *         the old configuration version to the new configuration version.
      */
-    private static void registerMigration(String fromVersion,
-        String toVersion,
-        Consumer<Configuration> migrator) throws KeyAlreadyExistsException {
+    private static void registerMigration(@Nonnull String fromVersion,
+        @Nonnull String toVersion, Consumer<Configuration> migrator)
+        throws MapKeyExistsException {
         if (MIGRATIONS.containsKey(fromVersion)) {
-            throw new KeyAlreadyExistsException(
+            throw new MapKeyExistsException(fromVersion,
                 String.format(
                     "Migration already exists from configuration '%s' version to configuration version '%s'",
                     fromVersion,

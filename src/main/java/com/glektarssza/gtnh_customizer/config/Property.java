@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
+
 /**
  * A configuration property.
  *
@@ -40,8 +42,9 @@ public abstract class Property<T> {
      */
     @Nonnull
     public String getFullPath() {
-        return String.join(Configuration.CATEGORY_SPLITTER,
-            this.getParent().getFullPath(), this.getID());
+        return TypeHelpers
+            .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
+                this.getParent().getFullPath(), this.getID()));
     }
 
     /**
@@ -51,8 +54,9 @@ public abstract class Property<T> {
      */
     @Nonnull
     public String getLanguageKey() {
-        return String.join(Configuration.CATEGORY_SPLITTER,
-            this.getParent().getLanguageKey(), this.getID());
+        return TypeHelpers
+            .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
+                this.getParent().getLanguageKey(), this.getID()));
     }
 
     /**
@@ -200,7 +204,7 @@ public abstract class Property<T> {
      */
     @Nonnull
     public Category getParent() {
-        return this.parent;
+        return TypeHelpers.castToNonNull(this.parent);
     }
 
     /**

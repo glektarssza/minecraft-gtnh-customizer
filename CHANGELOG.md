@@ -1,5 +1,30 @@
 # Changelog #
 
+## 0.15.0 ##
+
+### Features ###
+
+* Added a mixin to display the hovered biome in Xaero's World Map.
+  * Added relevant setting to control the new feature.
+
+### Minor ###
+
+* Moved to hard-coded NBT editing key bindings to avoid polluting the key
+  bindings pages.
+
+### Bug Fixes ###
+
+* Fixed a bad Gradle update.
+
+### Technical ###
+
+* Updated GTNH build scripts to v2.0.19.
+* Updated dependencies.
+* Switched to `slf4j` for logging.
+* Moved to shadowed dependencies for `slf4j`.
+* Overhauled logging code.
+* Overhauled internal exceptions.
+
 ## 0.14.7 ##
 
 ### Bug Fixes ###

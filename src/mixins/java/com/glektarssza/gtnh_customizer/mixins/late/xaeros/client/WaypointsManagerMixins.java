@@ -1,9 +1,15 @@
 package com.glektarssza.gtnh_customizer.mixins.late.xaeros.client;
 
+import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Nonnull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
@@ -13,18 +19,25 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import com.glektarssza.gtnh_customizer.GTNHCustomizer;
-import com.glektarssza.gtnh_customizer.config.Config;
-
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.common.minimap.waypoints.WaypointWorld;
 import xaero.common.minimap.waypoints.WaypointsManager;
+
+import com.glektarssza.gtnh_customizer.config.Config;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * Mixin for the {@link WaypointsManager} class.
  */
 @Mixin(WaypointsManager.class)
 public class WaypointsManagerMixins {
+    /**
+     * The logger for this class.
+     */
+    @Nonnull
+    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
+        .getLogger(MethodHandles.lookup().lookupClass()));
+
     /**
      * The regex pattern to use to match parameters for replacement in commands.
      */
@@ -61,7 +74,7 @@ public class WaypointsManagerMixins {
                 int dimId = Integer.parseInt(dimensionId.substring(4));
                 dimensionId = String.format("%d", dimId);
             } catch (NumberFormatException t) {
-                GTNHCustomizer.getLogger().warn(
+                LOGGER.warn(
                     "Non-integer dimension ID '{}', teleport command is probably going to fail!",
                     dimensionId.substring(4));
             }
@@ -103,7 +116,7 @@ public class WaypointsManagerMixins {
         }
         matcher.appendTail(teleportCommandBuffer);
         if (Config.getVerboseLoggingEnabled()) {
-            GTNHCustomizer.getLogger().debug(
+            LOGGER.debug(
                 "Final Xaero's teleport command: {}",
                 teleportCommandBuffer.toString());
         }

@@ -1,12 +1,14 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.glektarssza.gtnh_customizer.KeyBindings;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
 
 import serverutils.lib.config.ConfigValue;
@@ -67,12 +69,11 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
         if (!((IGuiBaseExtensions) self).isFocused()) {
             return false;
         }
-        if (keyCode == KeyBindings.ACCEPT_NBT_VALUE_CHANGE.getKeyCode()
-            || keyCode == KeyBindings.ACCEPT_NBT_VALUE_CHANGE_ALT
-                .getKeyCode()) {
+        if (keyCode == Keyboard.KEY_RETURN
+            || keyCode == Keyboard.KEY_NUMPADENTER) {
             if (value.setValueFromString(Minecraft.getMinecraft().thePlayer,
-                textBox.getText(), false)) {
-                callback.onCallback(value, true);
+                TypeHelpers.castToNonNull(textBox.getText()), false)) {
+                callback.onCallback(TypeHelpers.castToNonNull(value), true);
             }
 
             if (getGui().parent instanceof GuiBase) {
@@ -80,8 +81,9 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
             }
             return true;
         }
-        if (keyCode == KeyBindings.CANCEL_NBT_EDITS.getKeyCode()) {
-            callback.onCallback(inst.getValue(), false);
+        if (keyCode == Keyboard.KEY_ESCAPE) {
+            callback.onCallback(TypeHelpers.castToNonNull(inst.getValue()),
+                false);
             return true;
         }
         if (super.keyPressed(keyCode, keyChar)) {
