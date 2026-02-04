@@ -1,5 +1,7 @@
 package com.glektarssza.gtnh_customizer.api.exceptions;
 
+import javax.annotation.Nullable;
+
 /**
  * A base custom runtime exception from which other custom runtime exceptions
  * can extend from.
@@ -19,7 +21,7 @@ public class BaseRuntimeException extends RuntimeException {
      *
      * @param msg A string describing the error that occurred.
      */
-    public BaseRuntimeException(String msg) {
+    public BaseRuntimeException(@Nullable String msg) {
         super(msg);
     }
 
@@ -29,7 +31,7 @@ public class BaseRuntimeException extends RuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public BaseRuntimeException(Throwable cause) {
+    public BaseRuntimeException(@Nullable Throwable cause) {
         super(cause);
     }
 
@@ -40,7 +42,8 @@ public class BaseRuntimeException extends RuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public BaseRuntimeException(String msg, Throwable cause) {
+    public BaseRuntimeException(@Nullable String msg,
+        @Nullable Throwable cause) {
         super(msg, cause);
     }
 
