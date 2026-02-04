@@ -1,12 +1,12 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
+import org.lwjgl.input.Keyboard;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import com.glektarssza.gtnh_customizer.KeyBindings;
 
 import serverutils.lib.gui.TextBox;
 
@@ -31,16 +31,15 @@ public class TextBoxMixin {
         if (!self.isFocused()) {
             return;
         }
-        if (keyCode == KeyBindings.ACCEPT_NBT_VALUE_CHANGE.getKeyCode()
-            || keyCode == KeyBindings.ACCEPT_NBT_VALUE_CHANGE_ALT
-                .getKeyCode()) {
+        if (keyCode == Keyboard.KEY_RETURN
+            || keyCode == Keyboard.KEY_NUMPADENTER) {
             if (validText) {
                 self.setFocused(false);
                 self.onEnterPressed();
             }
             cir.setReturnValue(true);
         }
-        if (keyCode == KeyBindings.CANCEL_NBT_VALUE_CHANGE.getKeyCode()) {
+        if (keyCode == Keyboard.KEY_ESCAPE) {
             if (validText) {
                 self.closeGui(false);
             }
