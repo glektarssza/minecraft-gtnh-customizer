@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Manual Test
+on:
+  workflow_dispatch:
+    inputs:
+      java-vendor:
+        description: |
+          The Java vendor to use.
+
+          Defaults to `temurin`.
+        type: choice
+        required: false
+        options:
+          - temurin
+          - zulu
+          - adopt
+          - adopt-hotspot
+          - adopt-openj9
+          - liberica
+          - microsoft
+          - corretto
+          - semeru
+          - oracle
+          - dragonwell
+          - sapmachine
+          - graalvm
+          - jetbrains
+        default: temurin
+      java-version:
+        description: |
+          The Java version to use.
+
+          Defaults to `version-file` to use the version found in the
+          `.java-version` file present in the project.
+        type: string
+        required: false
+        default: version-file
+      gradle-version:
+        description: |
+          The Gradle version to use.
+
+          Defaults to `wrapper` to use version of the Gradle wrapper present in
+          the project.
+        type: string
+        required: false
+        default: wrapper
+      artifact-retention-days:
+        description: |
+          The duration, in days, to retain artifacts for.
+
+          Defaults to `0` which defaults to the value configured for the
+          repository.
+        type: number
+        required: false
+        default: 0
+jobs:
+  test:
+    name: Test
+    permissions:
+      # -- To clone repository
+      contents: read
+    uses: ./.github/workflows/test.yaml
+    with:
+      ref: ${{github.sha}}
+      java-version: ${{inputs.java-version}}
+      java-vendor: ${{inputs.java-vendor}}
+      gradle-version: ${{inputs.gradle-version}}
+      artifact-retention-days: ${{inputs.artifact-retention-days}}
+    secrets:
+      github-token: ${{secrets.GITHUB_TOKEN}}

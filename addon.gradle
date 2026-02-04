@@ -26,6 +26,13 @@ project.ext.setEclipsePreference = { File preferencesFile, String key, String va
     setProperty(preferencesFile, key, value)
 }
 
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
 checkstyle {
     toolVersion = "12.1.2"
 }
