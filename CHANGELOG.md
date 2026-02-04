@@ -7,6 +7,11 @@
 * Added a mixin to display the hovered biome in Xaero's World Map.
   * Added relevant setting to control the new feature.
 
+### Minor ###
+
+* Moved to hard-coded NBT editing key bindings to avoid polluting the key
+  bindings pages.
+
 ### Bug Fixes ###
 
 * Fixed a bad Gradle update.

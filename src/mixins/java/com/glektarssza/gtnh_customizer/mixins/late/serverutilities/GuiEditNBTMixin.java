@@ -1,11 +1,12 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
+import org.lwjgl.input.Keyboard;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-import com.glektarssza.gtnh_customizer.KeyBindings;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiBaseExtensions;
 import com.glektarssza.gtnh_customizer.utils.extensions.IGuiEditNBTExtensions;
@@ -65,19 +66,19 @@ public abstract class GuiEditNBTMixin extends GuiBase
         if (!((IGuiBaseExtensions) self).isFocused()) {
             return false;
         }
-        if (keyCode == KeyBindings.ACCEPT_NBT_EDITS.getKeyCode()
-            || keyCode == KeyBindings.ACCEPT_NBT_EDITS_ALT.getKeyCode()) {
+        if (keyCode == Keyboard.KEY_RETURN
+            || keyCode == Keyboard.KEY_NUMPADENTER) {
             shouldClose = 1;
             self.closeGui();
             return true;
         }
-        if (keyCode == KeyBindings.CANCEL_NBT_EDITS.getKeyCode()) {
+        if (keyCode == Keyboard.KEY_ESCAPE) {
             shouldClose = 2;
             self.closeGui();
             return true;
         }
-        if (keyCode == KeyBindings.DELETE_NBT_TAG.getKeyCode() &&
-            this.selected != this.buttonNBTRoot) {
+        if (keyCode == Keyboard.KEY_DELETE
+            && this.selected != this.buttonNBTRoot) {
             this.selected.parent.setTag(TypeHelpers.castToNonNull(selected.key),
                 null);
             this.selected.parent.updateChildren(false);
