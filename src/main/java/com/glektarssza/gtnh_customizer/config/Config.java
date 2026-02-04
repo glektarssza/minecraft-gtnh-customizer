@@ -25,12 +25,12 @@ import org.slf4j.LoggerFactory;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
+import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
-import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
 
 /**
  * The main configuration for the mod.
