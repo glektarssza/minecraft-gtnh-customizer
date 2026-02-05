@@ -1,15 +1,20 @@
 package com.glektarssza.gtnh_customizer.mixins.late.xaeros.client;
 
+import java.lang.invoke.MethodHandles;
+
 import javax.annotation.Nonnull;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import net.minecraftforge.common.DimensionManager;
+import cpw.mods.fml.relauncher.Side;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,20 +23,44 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import xaero.map.MapProcessor;
 import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
 import xaero.map.region.LeveledRegion;
 
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
+import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 @Mixin(GuiMap.class)
 public class GuiMapMixins {
-    @Shadow(remap = false)
+    /**
+     * The logger for this class.
+     */
+    @SuppressWarnings("unused")
+    @Nonnull
+    private static final Logger LOGGER = TypeHelpers
+        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
+            MethodHandles.lookup().lookupClass().getSimpleName())));
+
+    /**
+     * A shadow of the {@code mouseBlockPosX} field.
+     */
+    @Shadow
     private int mouseBlockPosX;
 
-    @Shadow(remap = false)
+    /**
+     * A shadow of the {@code mouseBlockPosZ} field.
+     */
+    @Shadow
     private int mouseBlockPosZ;
+
+    /**
+     *
+     */
+    @Shadow
+    private MapProcessor mapProcessor;
 
     /**
      * Draw the biome name hovered over by the mouse to the top of the display,
@@ -49,27 +78,26 @@ public class GuiMapMixins {
             -1);
     }
 
-    @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), remap = false, cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z", remap = false)))
+    @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z")))
     public void drawScreen$addMousedOverBiome(CallbackInfo ci,
         @Local(name = "reg") LeveledRegion<?> reg) {
+        if (GTNHCustomizer.getProxy().getSide() != Side.CLIENT) {
+            GTNHCustomizer.emitTrackedWarning(LOGGER,
+                "XAERO_WORLD_MAP_NOT_CLIENT_SIDE",
+                (logger) -> logger.warn(
+                    "Xaero's World Map mixin is being called from the server side!"));
+        }
         if (!Config.getXaerosWorldMapShowHoveredBiome()) {
             return;
         }
-        if (reg == null) {
+        WorldClient world = this.mapProcessor.getWorld();
+        if (world == null) {
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
-        int dimensionID = reg.getDim().getDimId();
-        WorldProvider dimensionProvider = DimensionManager
-            .getProvider(dimensionID);
-        if (dimensionProvider == null) {
-            this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
-                "gtnh_customizer.xaeros_world_map.biome_unknown")));
-            return;
-        }
-        BiomeGenBase biomeGen = dimensionProvider
-            .getBiomeGenForCoords(this.mouseBlockPosX, this.mouseBlockPosZ);
+        BiomeGenBase biomeGen = world.getBiomeGenForCoords(this.mouseBlockPosX,
+            this.mouseBlockPosZ);
         if (biomeGen == null) {
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
