@@ -4,6 +4,8 @@
 
 ### Bug Fixes ###
 
+* Fixed back port of showing the biome when hovering over things in Xaero's
+  World Map not working at all due to Xaero's World Map being obfuscated.
 * Fixed logging not working at all.
 
 ### Technical ###
