@@ -159,7 +159,8 @@ public class GTNHCustomizer {
         @Nonnull String category) {
         Map<Logger, Integer> map = WARNING_LIMIT_TRACKER
             .computeIfAbsent(category, (key) -> new HashMap<Logger, Integer>());
-        return map.putIfAbsent(logger, WARNING_EMIT_LIMIT) > 0;
+        map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        return map.get(logger) > 0;
     }
 
     /**
@@ -181,7 +182,8 @@ public class GTNHCustomizer {
         @Nonnull String category) {
         Map<Logger, Integer> map = WARNING_LIMIT_TRACKER
             .computeIfAbsent(category, (key) -> new HashMap<Logger, Integer>());
-        int currentValue = map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        int currentValue = map.get(logger);
         if (currentValue >= 0) {
             map.put(logger, currentValue - 1);
         }
