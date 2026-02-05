@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
 
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
@@ -34,6 +35,17 @@ public class ClientProxy extends CommonProxy {
     @Override
     public World getWorld() {
         return Minecraft.getMinecraft().theWorld;
+    }
+
+    /**
+     * Get the side the mod is running on.
+     *
+     * @return The side the mod is running on.
+     */
+    @Nonnull
+    @Override
+    public Side getSide() {
+        return Side.SERVER;
     }
 
     /**
