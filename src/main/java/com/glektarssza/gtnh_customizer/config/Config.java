@@ -663,6 +663,43 @@ public class Config {
         new Gameplay().loadValues(CONFIG_INSTANCE);
         new Debugging().loadValues(CONFIG_INSTANCE);
         new Commands().loadValues(CONFIG_INSTANCE);
+
+        if (getVerboseLoggingEnabled()) {
+            LOGGER.debug("Loaded mod configuration! Settings are:");
+            LOGGER.debug("=== Gameplay ===");
+            LOGGER.debug("Globally Immune Players:");
+            for (String player : getGloballyImmunePlayers()) {
+                LOGGER.debug(String.format("* %s", player));
+            }
+            LOGGER.debug(String.format("Prevent Ender Mob Teleportation: %s",
+                getPreventEnderMobTeleportation()));
+            LOGGER.debug("");
+            LOGGER.debug("=== Commands ===");
+            LOGGER.debug(String.format("Repair Raycast Ignores Liquids: %s",
+                getRepairCommandRaycastIgnoresLiquids()));
+            LOGGER.debug(String.format("Extinguish Max Block Volume: %s",
+                getExtinguishCommandMaxVolume()));
+            LOGGER.debug("");
+            LOGGER.debug("=== Debugging ===");
+            LOGGER.debug(String.format("Verbose Logging: %s",
+                getVerboseLoggingEnabled()));
+            LOGGER.debug("");
+            LOGGER.debug("=== Gameplay - Tinker's Construct ===");
+            LOGGER.debug(String.format("Can Bone Meal Slime Saplings: %s",
+                getTConstructCanBoneMealSlimeSaplings()));
+            LOGGER.debug("");
+            LOGGER.debug("=== Gameplay - Thaumcraft ===");
+            LOGGER.debug(String.format("Can Bone Meal Greatwood Saplings: %s",
+                getTConstructCanBoneMealSlimeSaplings()));
+            LOGGER.debug(String.format("Can Bone Meal Silverwood: %s",
+                getTConstructCanBoneMealSlimeSaplings()));
+            LOGGER.debug("");
+            LOGGER.debug("=== Gameplay - Xaero's World Map ===");
+            LOGGER
+                .debug(String.format("Show Hovered Over Biome in World Map: %s",
+                    getXaerosWorldMapShowHoveredBiome()));
+            LOGGER.debug("");
+        }
     }
 
     /**
