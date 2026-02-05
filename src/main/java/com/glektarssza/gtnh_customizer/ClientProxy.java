@@ -4,8 +4,8 @@ import java.lang.invoke.MethodHandles;
 
 import javax.annotation.Nonnull;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
