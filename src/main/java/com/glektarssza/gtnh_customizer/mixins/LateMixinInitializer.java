@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.gtnewhorizon.gtnhmixins.ILateMixinLoader;
 import com.gtnewhorizon.gtnhmixins.LateMixin;
@@ -17,6 +17,7 @@ import com.gtnewhorizon.gtnhmixins.LateMixin;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
+import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -28,8 +29,9 @@ public class LateMixinInitializer implements ILateMixinLoader {
      * The logger for this class.
      */
     @Nonnull
-    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
-        .getLogger(MethodHandles.lookup().lookupClass()));
+    private static final Logger LOGGER = TypeHelpers
+        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
+            MethodHandles.lookup().lookupClass().getSimpleName())));
 
     /**
      * Get the name of the mixin config file.
