@@ -22,6 +22,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -61,6 +62,16 @@ public class CommonProxy {
      */
     public World getWorld() {
         return MinecraftServer.getServer().getEntityWorld();
+    }
+
+    /**
+     * Get the side the mod is running on.
+     *
+     * @return The side the mod is running on.
+     */
+    @Nonnull
+    public Side getSide() {
+        return Side.SERVER;
     }
 
     /**

@@ -19,6 +19,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
+import com.glektarssza.gtnh_customizer.api.functional.UnaryConsumer;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -49,7 +50,7 @@ public class GTNHCustomizer {
      * A map for tracking how many times a particular warning has been emitted.
      */
     @Nonnull
-    public static final Map<String, Integer> WARNING_LIMIT_TRACKER = new HashMap<>();
+    public static final Map<String, Map<Logger, Integer>> WARNING_LIMIT_TRACKER = new HashMap<>();
 
     /**
      * The mod singleton instance.
@@ -105,13 +106,61 @@ public class GTNHCustomizer {
      * Check if a given warning category should be emitted.
      *
      * @param category The warning category to check.
+     * @param logFunction The function to call if logging is permitted.
      *
      * @return {@code true} if the given warning category should be emitted;
      *         {@code false} otherwise.
      */
-    public static boolean shouldEmitWarning(String category) {
-        WARNING_LIMIT_TRACKER.putIfAbsent(category, WARNING_EMIT_LIMIT);
-        return WARNING_LIMIT_TRACKER.get(category) > 0;
+    public static void emitTrackedWarning(@Nonnull String category,
+        @Nonnull UnaryConsumer<Logger> logFunction) {
+        emitTrackedWarning(LOGGER, category, logFunction);
+    }
+
+    /**
+     * Check if a given warning category should be emitted.
+     *
+     * @param logger The logger to be emitted to.
+     * @param category The warning category to check.
+     * @param logFunction The function to call if logging is permitted.
+     *
+     * @return {@code true} if the given warning category should be emitted;
+     *         {@code false} otherwise.
+     */
+    public static void emitTrackedWarning(@Nonnull Logger logger,
+        @Nonnull String category, @Nonnull UnaryConsumer<Logger> logFunction) {
+        if (shouldEmitWarning(logger, category)) {
+            trackEmitWarning(logger, category);
+            logFunction.call(logger);
+        }
+    }
+
+    /**
+     * Check if a given warning category should be emitted.
+     *
+     * @param category The warning category to check.
+     *
+     * @return {@code true} if the given warning category should be emitted;
+     *         {@code false} otherwise.
+     */
+    public static boolean shouldEmitWarning(@Nonnull String category) {
+        return shouldEmitWarning(LOGGER, category);
+    }
+
+    /**
+     * Check if a given warning category should be emitted.
+     *
+     * @param logger The logger to be emitted to.
+     * @param category The warning category to check.
+     *
+     * @return {@code true} if the given warning category should be emitted;
+     *         {@code false} otherwise.
+     */
+    public static boolean shouldEmitWarning(@Nonnull Logger logger,
+        @Nonnull String category) {
+        Map<Logger, Integer> map = WARNING_LIMIT_TRACKER
+            .computeIfAbsent(category, (key) -> new HashMap<Logger, Integer>());
+        map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        return map.get(logger) > 0;
     }
 
     /**
@@ -119,23 +168,26 @@ public class GTNHCustomizer {
      *
      * @param category The warning category to check.
      */
-    public static void trackEmitWarning(String category) {
-        trackEmitWarning(category, LOGGER);
+    public static void trackEmitWarning(@Nonnull String category) {
+        trackEmitWarning(LOGGER, category);
     }
 
     /**
      * Track that a given warning category was emitted.
      *
+     * @param logger The logger to emitted to.
      * @param category The warning category to check.
-     * @param logger The logger to emit to.
      */
-    public static void trackEmitWarning(String category,
-        @Nonnull Logger logger) {
-        WARNING_LIMIT_TRACKER.putIfAbsent(category, WARNING_EMIT_LIMIT);
-        int limit = WARNING_LIMIT_TRACKER.compute(
-            category + ";" + logger.getName(),
-            (_k, v) -> v - 1);
-        if (limit <= 0) {
+    private static void trackEmitWarning(@Nonnull Logger logger,
+        @Nonnull String category) {
+        Map<Logger, Integer> map = WARNING_LIMIT_TRACKER
+            .computeIfAbsent(category, (key) -> new HashMap<Logger, Integer>());
+        map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        int currentValue = map.get(logger);
+        if (currentValue >= 0) {
+            map.put(logger, currentValue - 1);
+        }
+        if (currentValue == 0) {
             logger.warn(String.format(
                 "Too many identical warnings logged for category \"%s\"! Silencing further warnings on this issue!",
                 category));
