@@ -19,12 +19,13 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
+import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
@@ -40,8 +41,9 @@ public class Config {
      * The logger for this class.
      */
     @Nonnull
-    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
-        .getLogger(MethodHandles.lookup().lookupClass()));
+    private static final Logger LOGGER = TypeHelpers
+        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
+            MethodHandles.lookup().lookupClass().getSimpleName())));
 
     /**
      * The current version of the configuration.

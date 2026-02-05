@@ -4,8 +4,8 @@ import java.lang.invoke.MethodHandles;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
@@ -22,8 +22,9 @@ public class ClientProxy extends CommonProxy {
      * The logger for this class.
      */
     @Nonnull
-    private static final Logger LOGGER = TypeHelpers.castToNonNull(LoggerFactory
-        .getLogger(MethodHandles.lookup().lookupClass()));
+    private static final Logger LOGGER = TypeHelpers
+        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
+            MethodHandles.lookup().lookupClass().getSimpleName())));
 
     /**
      * Get the Minecraft world.
