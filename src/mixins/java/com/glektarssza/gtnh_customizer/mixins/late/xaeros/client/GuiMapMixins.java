@@ -75,6 +75,12 @@ public class GuiMapMixins {
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
+        String biomeName = biomeGen.biomeName;
+        if (biomeName == null) {
+            this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
+                "gtnh_customizer.xaeros_world_map.biome_unknown")));
+            return;
+        }
         this.drawBiomeName(TypeHelpers.castToNonNull(biomeGen.biomeName));
     }
 }
