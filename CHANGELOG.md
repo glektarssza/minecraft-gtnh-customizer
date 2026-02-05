@@ -1,5 +1,15 @@
 # Changelog #
 
+## 0.15.1 ##
+
+### Bug Fixes ###
+
+* Fixed logging not working at all.
+
+### Technical ###
+
+* Removed `slf4j` as it was causing logging to not work.
+
 ## 0.15.0 ##
 
 ### Features ###
