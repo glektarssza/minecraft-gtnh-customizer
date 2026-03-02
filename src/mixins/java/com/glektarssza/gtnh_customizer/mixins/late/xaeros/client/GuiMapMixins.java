@@ -38,7 +38,6 @@ public class GuiMapMixins {
     /**
      * The logger for this class.
      */
-    @SuppressWarnings("unused")
     @Nonnull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,

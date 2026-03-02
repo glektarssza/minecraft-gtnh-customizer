@@ -18,6 +18,9 @@
             "build",
             "templates/vscode"
         ],
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
         "files.associations": {
             "mcmod.info": "json",
             "pack.mcmeta": "json"
