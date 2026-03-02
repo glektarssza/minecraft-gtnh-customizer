@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.llamalad7.mixinextras.sugar.Local;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
@@ -26,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xaero.map.MapProcessor;
 import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
-import xaero.map.region.LeveledRegion;
 
 import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.Tags;
@@ -78,8 +75,7 @@ public class GuiMapMixins {
     }
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z")))
-    public void drawScreen$addMousedOverBiome(CallbackInfo ci,
-        @Local(name = "reg") LeveledRegion<?> reg) {
+    public void drawScreen$addMousedOverBiome(CallbackInfo ci) {
         if (GTNHCustomizer.getProxy().getSide() != Side.CLIENT) {
             GTNHCustomizer.emitTrackedWarning(LOGGER,
                 "XAERO_WORLD_MAP_NOT_CLIENT_SIDE",

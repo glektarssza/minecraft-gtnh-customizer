@@ -737,7 +737,6 @@ public class Config {
      *
      * @param fromVersion The version being migrated from.
      * @param toVersion The version being migrated to.
-     * @param configInstance The configuration instance being migrated.
      *
      * @throws NoSuchElementException Thrown if no migration route exists from
      *         the old configuration version to the new configuration version.

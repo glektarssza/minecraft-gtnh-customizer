@@ -77,22 +77,9 @@ public final class MigrationUtils {
      * @return A clone of the category.
      */
     public static ConfigCategory cloneCategory(ConfigCategory category) {
-        return cloneCategory(category, null);
-    }
-
-    /**
-     * Clone a category.
-     *
-     * @param category The category to clone.
-     * @param parent The category make the parent of the cloned category.
-     *
-     * @return A clone of the category.
-     */
-    public static ConfigCategory cloneCategory(ConfigCategory category,
-        ConfigCategory parent) {
         ConfigCategory cloned = new ConfigCategory(category.getName(), null);
         cloned.getChildren()
-            .forEach((childCategory) -> cloneCategory(childCategory, cloned));
+            .forEach((childCategory) -> cloneCategory(childCategory));
         category.forEach((key, prop) -> cloned.put(key, cloneProperty(prop)));
         return cloned;
     }
@@ -119,8 +106,7 @@ public final class MigrationUtils {
      */
     public static ConfigCategory cloneCategory(Configuration instance,
         String path, ConfigCategory parent) {
-        return cloneCategory(instance, path, parent,
-            Configuration.CATEGORY_SPLITTER);
+        return cloneCategory(instance, path, Configuration.CATEGORY_SPLITTER);
     }
 
     /**
@@ -134,22 +120,7 @@ public final class MigrationUtils {
      */
     public static ConfigCategory cloneCategory(Configuration instance,
         String path, String parentPath) {
-        return cloneCategory(instance, path, parentPath,
-            Configuration.CATEGORY_SPLITTER);
-    }
-
-    /**
-     * Clone a category.
-     *
-     * @param path The path to the category to clone.
-     * @param parent The category make the parent of the cloned category.
-     *
-     * @return A clone of the category.
-     */
-    public static ConfigCategory cloneCategory(Configuration instance,
-        String path, ConfigCategory parent, CharSequence pathSeparators) {
-        return cloneCategory(getCategoryByPath(instance, path, pathSeparators),
-            parent);
+        return cloneCategory(instance, path, Configuration.CATEGORY_SPLITTER);
     }
 
     /**
@@ -162,9 +133,8 @@ public final class MigrationUtils {
      * @return A clone of the category.
      */
     public static ConfigCategory cloneCategory(Configuration instance,
-        String path, String parentPath, CharSequence pathSeparators) {
-        return cloneCategory(getCategoryByPath(instance, path, pathSeparators),
-            getCategoryByPath(instance, path, pathSeparators));
+        String path, CharSequence pathSeparators) {
+        return cloneCategory(getCategoryByPath(instance, path, pathSeparators));
     }
 
     /**
