@@ -324,7 +324,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             if (args.length > 2) {
                 try {
                     yawOverride = CommandUtils
-                        .parseBlockRelativeFloatArgument(sender, args[2],
+                        .parseBlockRelativeFloatArgument(args[2],
                             victim.rotationYaw, false);
                 } catch (Throwable t) {
                     // -- Does nothing
@@ -368,13 +368,13 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             }
             try {
                 targetBlockPosX = CommandUtils.parseBlockRelativeDoubleArgument(
-                    sender, args[offset + 0], victim.posX,
+                    args[offset + 0], victim.posX,
                     !args[offset + 0].contains("."));
                 targetBlockPosY = CommandUtils.parseBlockRelativeDoubleArgument(
-                    sender, args[offset + 1], victim.posY,
+                    args[offset + 1], victim.posY,
                     !args[offset + 1].contains("."));
                 targetBlockPosZ = CommandUtils.parseBlockRelativeDoubleArgument(
-                    sender, args[offset + 2], victim.posZ,
+                    args[offset + 2], victim.posZ,
                     !args[offset + 2].contains("."));
             } catch (Throwable t) {
                 throw new CommandException(
@@ -388,8 +388,8 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             if (args.length > (offset + 4)) {
                 try {
                     yawOverride = CommandUtils
-                        .parseBlockRelativeFloatArgument(sender,
-                            args[offset + 4], victim.rotationYaw, false);
+                        .parseBlockRelativeFloatArgument(args[offset + 4],
+                            victim.rotationYaw, false);
                 } catch (Throwable t) {
                     // -- Does nothing
                 }

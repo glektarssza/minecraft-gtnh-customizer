@@ -448,14 +448,14 @@ public class RepairCommand extends CommandBase {
                         // -- data
                         try {
                             targetBlockPosX = CommandUtils
-                                .parseBlockRelativeIntegerArgument(
-                                    sender, args[2], (int) victim.posX);
+                                .parseBlockRelativeIntegerArgument(args[2],
+                                    (int) victim.posX);
                             targetBlockPosY = CommandUtils
-                                .parseBlockRelativeIntegerArgument(
-                                    sender, args[3], (int) victim.posY);
+                                .parseBlockRelativeIntegerArgument(args[3],
+                                    (int) victim.posY);
                             targetBlockPosZ = CommandUtils
-                                .parseBlockRelativeIntegerArgument(
-                                    sender, args[4], (int) victim.posZ);
+                                .parseBlockRelativeIntegerArgument(args[4],
+                                    (int) victim.posZ);
                         } catch (Throwable t) {
                             throw new CommandException(
                                 "gtnh_customizer.commands.repair.error.bad_container_position",
@@ -470,14 +470,14 @@ public class RepairCommand extends CommandBase {
                         // -- data
                         try {
                             targetBlockPosX = CommandUtils
-                                .parseBlockRelativeIntegerArgument(
-                                    sender, args[1], (int) victim.posX);
+                                .parseBlockRelativeIntegerArgument(args[1],
+                                    (int) victim.posX);
                             targetBlockPosY = CommandUtils
-                                .parseBlockRelativeIntegerArgument(
-                                    sender, args[2], (int) victim.posY);
+                                .parseBlockRelativeIntegerArgument(args[2],
+                                    (int) victim.posY);
                             targetBlockPosZ = CommandUtils
-                                .parseBlockRelativeIntegerArgument(
-                                    sender, args[3], (int) victim.posZ);
+                                .parseBlockRelativeIntegerArgument(args[3],
+                                    (int) victim.posZ);
                         } catch (Throwable t) {
                             throw new CommandException(
                                 "gtnh_customizer.commands.repair.error.bad_container_position",

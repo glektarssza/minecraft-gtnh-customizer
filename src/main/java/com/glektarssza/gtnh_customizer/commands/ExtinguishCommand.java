@@ -173,18 +173,18 @@ public class ExtinguishCommand extends CommandBase {
             endingBlockZPos = (long) (coords.posZ + radius);
         } else if (args.length == 6) {
             ChunkCoordinates coords = sender.getPlayerCoordinates();
-            startingBlockXPos = CommandUtils.parseBlockRelativeLongArgument(
-                sender, args[0], coords.posX);
-            startingBlockYPos = CommandUtils.parseBlockRelativeLongArgument(
-                sender, args[1], coords.posY);
-            startingBlockZPos = CommandUtils.parseBlockRelativeLongArgument(
-                sender, args[2], coords.posZ);
-            endingBlockXPos = CommandUtils.parseBlockRelativeLongArgument(
-                sender, args[3], coords.posX);
-            endingBlockYPos = CommandUtils.parseBlockRelativeLongArgument(
-                sender, args[4], coords.posY);
-            endingBlockZPos = CommandUtils.parseBlockRelativeLongArgument(
-                sender, args[5], coords.posZ);
+            startingBlockXPos = CommandUtils
+                .parseBlockRelativeLongArgument(args[0], coords.posX);
+            startingBlockYPos = CommandUtils
+                .parseBlockRelativeLongArgument(args[1], coords.posY);
+            startingBlockZPos = CommandUtils
+                .parseBlockRelativeLongArgument(args[2], coords.posZ);
+            endingBlockXPos = CommandUtils
+                .parseBlockRelativeLongArgument(args[3], coords.posX);
+            endingBlockYPos = CommandUtils
+                .parseBlockRelativeLongArgument(args[4], coords.posY);
+            endingBlockZPos = CommandUtils
+                .parseBlockRelativeLongArgument(args[5], coords.posZ);
             // -- Ensure starting position is the lower of the two positions
             if (endingBlockXPos < startingBlockXPos) {
                 long temp = startingBlockXPos;
