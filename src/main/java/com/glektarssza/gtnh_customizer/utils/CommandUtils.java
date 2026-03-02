@@ -43,61 +43,61 @@ public final class CommandUtils {
     public static final int PERMISSION_OWNER = 4;
 
     /**
-     * A regular expression for matching parsable boolean values.
+     * A regular expression for matching parseable boolean values.
      */
     private static final Pattern BOOLEAN_MATCHER = Pattern
         .compile("true|false|1|0", Pattern.CASE_INSENSITIVE);
 
     /**
-     * A regular expression for matching parsable byte integer values.
+     * A regular expression for matching parseable byte integer values.
      */
     private static final Pattern BYTE_MATCHER = Pattern
         .compile("-?\\d{1,3}");
 
     /**
-     * A regular expression for matching parsable short integer values.
+     * A regular expression for matching parseable short integer values.
      */
     private static final Pattern SHORT_MATCHER = Pattern
         .compile("-?\\d{1,5}");
 
     /**
-     * A regular expression for matching parsable integer values.
+     * A regular expression for matching parseable integer values.
      */
     private static final Pattern INTEGER_MATCHER = Pattern
         .compile("-?\\d{1,10}");
 
     /**
-     * A regular expression for matching parsable long integer values.
+     * A regular expression for matching parseable long integer values.
      */
     private static final Pattern LONG_MATCHER = Pattern
         .compile("-?\\d{1,19}");
 
     /**
-     * A regular expression for matching parsable float values.
+     * A regular expression for matching parseable float values.
      */
     private static final Pattern FLOAT_MATCHER = Pattern
         .compile("-?\\d+(\\.\\d*)?");
 
     /**
-     * A regular expression for matching parsable double values.
+     * A regular expression for matching parseable double values.
      */
     private static final Pattern DOUBLE_MATCHER = Pattern
         .compile("-?\\d+(\\.\\d*)?");
 
     /**
-     * A regular expression for matching parsable number values.
+     * A regular expression for matching parseable number values.
      */
     private static final Pattern NUMERIC_MATCHER = Pattern
         .compile("-?\\d+(\\.\\d*)?");
 
     /**
-     * A regular expression for matching parsable coordinate values.
+     * A regular expression for matching parseable coordinate values.
      */
     private static final Pattern COORDINATE_MATCHER = Pattern
         .compile("(~(-?\\d+(\\.\\d*)?)?)|(-?\\d+(\\.\\d*)?)");
 
     /**
-     * A regular expression for matching parsable relative coordinate values.
+     * A regular expression for matching parseable relative coordinate values.
      */
     private static final Pattern RELATIVE_COORDINATE_MATCHER = Pattern
         .compile("~(-?\\d+(\\.\\d*)?)?");
