@@ -1,8 +1,10 @@
 package com.glektarssza.gtnh_customizer.config;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +28,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.exceptions.ArgumentNullException;
 import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
@@ -67,12 +70,6 @@ public class Config {
                 "categories"));
 
     /**
-     * The configuration instance.
-     */
-    @Nullable
-    private static Configuration CONFIG_INSTANCE = null;
-
-    /**
      * A map of configuration migrations to apply to move between configuration
      * versions.
      *
@@ -80,6 +77,19 @@ public class Config {
      */
     @Nonnull
     private static final Map<Number, ImmutableTuple<Number, Consumer<Configuration>>> MIGRATIONS = new HashMap<Number, ImmutableTuple<Number, Consumer<Configuration>>>();
+
+    /**
+     * The configuration instance.
+     */
+    @Nullable
+    private static Configuration configInstance = null;
+
+    /**
+     * The current version of the {@link Config#configInstance configuration
+     * instance}.
+     */
+    @Nullable
+    private static Number configInstanceVersion = null;
 
     /**
      * A list of players who are globally immune.
@@ -465,13 +475,13 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static List<ConfigCategory> getTopLevelCategories() {
-        if (CONFIG_INSTANCE == null) {
+        if (configInstance == null) {
             return Collections.emptyList();
         }
         List<ConfigCategory> list = new ArrayList<>();
         List<String> children = new ArrayList<>();
-        for (String name : CONFIG_INSTANCE.getCategoryNames()) {
-            if (CONFIG_INSTANCE.getCategory(name).parent == null) {
+        for (String name : configInstance.getCategoryNames()) {
+            if (configInstance.getCategory(name).parent == null) {
                 children.add(name);
             }
         }
@@ -479,7 +489,7 @@ public class Config {
             if (category.contains(Configuration.CATEGORY_SPLITTER)) {
                 continue;
             }
-            list.add(CONFIG_INSTANCE.getCategory(category));
+            list.add(configInstance.getCategory(category));
         }
         return list;
     }
@@ -565,12 +575,13 @@ public class Config {
                         "commands");
                 }
             });
-        if (CONFIG_INSTANCE != null) {
+        if (configInstance != null) {
             return;
         }
 
-        CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
+        configInstance = new Configuration(new File(configDir, fileName),
             Integer.toString(CONFIG_VERSION.intValue(), 10), false);
+        configInstanceVersion = CONFIG_VERSION.intValue();
     }
 
     /**
@@ -578,22 +589,113 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static void refresh() {
-        if (CONFIG_INSTANCE == null) {
+        if (configInstance == null) {
             LOGGER.error("Cannot load configuration!");
             LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        if (!CONFIG_INSTANCE.getLoadedConfigVersion().equals(CONFIG_VERSION)) {
+        Number parsedConfigVersion;
+        try {
+            parsedConfigVersion = Integer
+                .parseInt(configInstance.getLoadedConfigVersion(), 10);
+        } catch (Throwable t) {
+            LOGGER.error("Failed to parse in-memory configuration version:", t);
+            LOGGER.error(
+                "Got a string '{}' that could not be parsed as an integer",
+                configInstance.getLoadedConfigVersion());
+            return;
+        }
+        if (!parsedConfigVersion.equals(CONFIG_VERSION)) {
             LOGGER.error("Cannot load configuration!");
             LOGGER.error(
                 "In-memory configuration version of '{}' does not equal expected configuration version of '{}'!",
-                CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
+                parsedConfigVersion, CONFIG_VERSION);
             return;
         }
         // -- Load updated values
-        new Gameplay().loadValues(CONFIG_INSTANCE);
-        new Debugging().loadValues(CONFIG_INSTANCE);
-        new Commands().loadValues(CONFIG_INSTANCE);
+        new Gameplay().loadValues(configInstance);
+        new Debugging().loadValues(configInstance);
+        new Commands().loadValues(configInstance);
+    }
+
+    /**
+     * Create a backup of the given configuration.
+     *
+     * @param config The configuration to create a backup of.
+     *
+     * @return The path to the created backup.
+     *
+     * @throws IOException Thrown if the backup failed to be created.
+     * @throws ArgumentNullException Thrown if the <code>config</code> argument
+     *         is <code>null</code>.
+     */
+    @Nullable
+    public static Path backUpConfig(@Nullable Configuration config)
+        throws ArgumentNullException, IOException {
+        if (config == null) {
+            throw new ArgumentNullException("config",
+                "Cannot create a backup of a null configuration");
+        }
+        LOGGER.debug("Creating a backup of configuration file '{}'...",
+            config.getConfigFile().getAbsolutePath());
+        File backupLocation = new File(String.format("%s.bak",
+            config.getConfigFile().getAbsolutePath()));
+        LOGGER.debug("Copying main configuration to backup location '{}'...",
+            backupLocation.getAbsolutePath());
+        Files.copy(config.getConfigFile().toPath(),
+            backupLocation.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        return backupLocation.toPath();
+    }
+
+    /**
+     * Recreate the given configuration from scratch, creating a backup if
+     * possible.
+     *
+     * @param config The configuration to recreate.
+     *
+     * @return The path to the created backup, if one was requested and was
+     *         successfully created, <code>null</code> otherwise.
+     */
+    @Nullable
+    public static Path recreateConfig(@Nullable Configuration config) {
+        return recreateConfig(config, true);
+    }
+
+    /**
+     * Recreate the given configuration from scratch, optionally creating a
+     * backup.
+     *
+     * @param config The configuration to recreate.
+     * @param backup Whether to create a backup.
+     *
+     * @return The path to the created backup, if one was requested and was
+     *         successfully created, <code>null</code> otherwise.
+     */
+    @Nullable
+    public static Path recreateConfig(@Nullable Configuration config,
+        boolean backup) {
+        @Nullable
+        Path backupPath = null;
+        if (backup) {
+            try {
+                backupPath = backUpConfig(config);
+            } catch (Throwable t) {
+                LOGGER.warn(
+                    "Failed to backup your current configuration!");
+                LOGGER.warn(
+                    "Here's a stack trace for you to use if you want to diagnose what happened:",
+                    t);
+                LOGGER.warn(
+                    "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
+                LOGGER.warn("Proceeding anyway, sorry!");
+            }
+        }
+        if (config != null) {
+            config.getCategoryNames().stream()
+                .forEach((categoryName) -> config.removeCategory(
+                    config.getCategory(categoryName)));
+        }
+        return backupPath;
     }
 
     /**
@@ -601,70 +703,73 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static void load() {
-        if (CONFIG_INSTANCE == null) {
+        if (configInstance == null) {
             LOGGER.error("Cannot load configuration!");
             LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        CONFIG_INSTANCE.load();
-        if (!CONFIG_INSTANCE.getLoadedConfigVersion()
-            .equals(CONFIG_VERSION)) {
+        configInstance.load();
+        try {
+            configInstanceVersion = Integer
+                .parseInt(configInstance.getLoadedConfigVersion(), 10);
+        } catch (NumberFormatException ex) {
+            LOGGER.error(
+                "Got a value of '{}' that could not be parsed as an integer",
+                configInstance.getLoadedConfigVersion());
+            LOGGER.warn(
+                "Unable to determine the version of your configuration!");
+            LOGGER.warn(
+                "Assuming your configuration is corrupted, backing it up and recreating!");
+            LOGGER.warn(
+                "Any customizations you've made are probably about to get nuked!");
+            Path backupPath = recreateConfig(configInstance);
+            if (backupPath != null) {
+                LOGGER.warn(
+                    "Your old config was backed up to '{}'", backupPath);
+            }
+            configInstance.load();
+        }
+        if (!configInstanceVersion.equals(CONFIG_VERSION)) {
             LOGGER.warn("Your configuration is out of date!");
             LOGGER.warn("We're running version '{}' but you have version '{}'",
-                CONFIG_VERSION, CONFIG_INSTANCE.getLoadedConfigVersion());
+                CONFIG_VERSION, configInstance.getLoadedConfigVersion());
             LOGGER.warn("Attempting to migrate!");
             try {
                 applyConfigMigrations(
-                    Integer.parseInt(CONFIG_INSTANCE.getLoadedConfigVersion(),
+                    Integer.parseInt(configInstance.getLoadedConfigVersion(),
                         10),
                     CONFIG_VERSION);
             } catch (NoSuchElementException t) {
                 LOGGER.info(
                     "No migrations available from version '{}' to version '{}', assuming migration is not required!",
-                    CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
+                    configInstance.getLoadedConfigVersion(), CONFIG_VERSION);
             } catch (Throwable t) {
                 LOGGER.warn(
                     "Could not migrate configuration from version '{}' to version '{}'!",
-                    CONFIG_INSTANCE.getLoadedConfigVersion(), CONFIG_VERSION);
+                    configInstance.getLoadedConfigVersion(), CONFIG_VERSION);
                 LOGGER.warn(
                     "Here's a stack trace for you to use if you want to file a bug report about migrations failing:",
                     t);
                 LOGGER.warn(
                     "Any customizations you've made are probably about to get nuked!");
-                File backupLocation = new File(String.format("%s.bak",
-                    CONFIG_INSTANCE.getConfigFile().getAbsolutePath()));
-                LOGGER.warn(
-                    "Copying your current configuration into '{}' as a backup...",
-                    backupLocation.getAbsolutePath());
-                try {
-                    Files.copy(CONFIG_INSTANCE.getConfigFile().toPath(),
-                        backupLocation.toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
-                } catch (Throwable tt) {
+                Path backupPath = recreateConfig(configInstance);
+                if (backupPath != null) {
                     LOGGER.warn(
-                        "Failed to generate a backup of your current configuration!");
-                    LOGGER.warn(
-                        "Here's a stack trace for you to use if you want to diagnose what happened:",
-                        tt);
-                    LOGGER.warn(
-                        "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                    LOGGER.warn("Proceeding anyway, sorry!");
+                        "Your old config was backed up to '{}'", backupPath);
                 }
-                CONFIG_INSTANCE.getCategoryNames().stream()
-                    .forEach((categoryName) -> CONFIG_INSTANCE.removeCategory(
-                        CONFIG_INSTANCE.getCategory(categoryName)));
+                configInstance.load();
             }
         }
 
         // -- Register all our configurations
-        new Gameplay().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-        new Debugging().registerForgeConfigCategory(CONFIG_INSTANCE, true);
-        new Commands().registerForgeConfigCategory(CONFIG_INSTANCE, true);
+        new Gameplay().registerForgeConfigCategory(configInstance, true);
+        new Debugging().registerForgeConfigCategory(configInstance, true);
+        new Commands().registerForgeConfigCategory(configInstance, true);
 
         // -- Load updated values
-        new Gameplay().loadValues(CONFIG_INSTANCE);
-        new Debugging().loadValues(CONFIG_INSTANCE);
-        new Commands().loadValues(CONFIG_INSTANCE);
+        new Gameplay().loadValues(configInstance);
+        new Debugging().loadValues(configInstance);
+        new Commands().loadValues(configInstance);
 
         if (getVerboseLoggingEnabled()) {
             LOGGER.debug("Loaded mod configuration! Settings are:");
@@ -710,19 +815,19 @@ public class Config {
      * @return Whether the configuration has changed.
      */
     public static boolean hasChanged() {
-        return CONFIG_INSTANCE == null ? false : CONFIG_INSTANCE.hasChanged();
+        return configInstance == null ? false : configInstance.hasChanged();
     }
 
     /**
      * Save the configuration data to disk.
      */
     public static void save() {
-        if (CONFIG_INSTANCE == null) {
+        if (configInstance == null) {
             LOGGER.error("Cannot save configuration!");
             LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        CONFIG_INSTANCE.save();
+        configInstance.save();
     }
 
     /**
@@ -768,12 +873,15 @@ public class Config {
                 "No available migration route from configuration version '%s' to configuration version '%s'!",
                 fromVersion, toVersion));
         }
-        Configuration currentVersion = MigrationUtils
-            .cloneConfiguration(CONFIG_INSTANCE);
+        Configuration currentInstance = MigrationUtils
+            .cloneConfiguration(configInstance);
+        Number currentVersion = configInstanceVersion;
         for (ImmutableTuple<Number, Consumer<Configuration>> migrator : migrators) {
-            migrator.getSecond().accept(currentVersion);
+            migrator.getSecond().accept(currentInstance);
+            currentVersion = migrator.getFirst().intValue();
         }
-        CONFIG_INSTANCE = currentVersion;
+        configInstance = currentInstance;
+        configInstanceVersion = currentVersion;
         if (hasChanged()) {
             save();
         }
