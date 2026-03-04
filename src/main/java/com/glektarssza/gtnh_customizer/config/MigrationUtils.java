@@ -450,8 +450,7 @@ public final class MigrationUtils {
     public static boolean tryCopyCategory(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators) {
         try {
-            copyCategory(instance, newInstance, path,
-                Configuration.CATEGORY_SPLITTER, false);
+            copyCategory(instance, newInstance, path, pathSeparators, false);
         } catch (Throwable t) {
             return false;
         }
@@ -475,8 +474,8 @@ public final class MigrationUtils {
         Configuration newInstance, String path, CharSequence pathSeparators,
         boolean overwrite) {
         try {
-            copyCategory(instance, newInstance, path,
-                Configuration.CATEGORY_SPLITTER, overwrite);
+            copyCategory(instance, newInstance, path, pathSeparators,
+                overwrite);
         } catch (Throwable t) {
             return false;
         }
@@ -626,8 +625,8 @@ public final class MigrationUtils {
     public static boolean tryDeepCopyCategory(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators) {
         try {
-            deepCopyCategory(instance, newInstance, path,
-                Configuration.CATEGORY_SPLITTER, false);
+            deepCopyCategory(instance, newInstance, path, pathSeparators,
+                false);
         } catch (Throwable t) {
             return false;
         }
@@ -650,8 +649,8 @@ public final class MigrationUtils {
         Configuration newInstance, String path, CharSequence pathSeparators,
         boolean overwrite) {
         try {
-            deepCopyCategory(instance, newInstance, path,
-                Configuration.CATEGORY_SPLITTER, overwrite);
+            deepCopyCategory(instance, newInstance, path, pathSeparators,
+                overwrite);
         } catch (Throwable t) {
             return false;
         }
@@ -809,7 +808,7 @@ public final class MigrationUtils {
     public static boolean tryRenameProperty(Configuration instance,
         String path, String newName, CharSequence pathSeparators) {
         try {
-            renameProperty(instance, path, newName);
+            renameProperty(instance, path, newName, pathSeparators);
         } catch (Throwable t) {
             return false;
         }
@@ -1092,8 +1091,7 @@ public final class MigrationUtils {
      */
     public static boolean hasCategoryByPath(Configuration instance,
         String path, CharSequence pathSeparators) {
-        return tryGetCategoryByPath(instance, path,
-            Configuration.CATEGORY_SPLITTER) != null;
+        return tryGetCategoryByPath(instance, path, pathSeparators) != null;
     }
 
     /**
@@ -1124,8 +1122,7 @@ public final class MigrationUtils {
      */
     public static boolean hasPropertyByPath(Configuration instance,
         String path, CharSequence pathSeparators) {
-        return tryGetPropertyByPath(instance, path,
-            Configuration.CATEGORY_SPLITTER) != null;
+        return tryGetPropertyByPath(instance, path, pathSeparators) != null;
     }
 
     /**
