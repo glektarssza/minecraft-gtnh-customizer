@@ -49,7 +49,7 @@ public class Config {
      * The current version of the configuration.
      */
     @Nonnull
-    public static final String CONFIG_VERSION = "10";
+    public static final Number CONFIG_VERSION = 10;
 
     /**
      * The base localization language key.
@@ -79,7 +79,7 @@ public class Config {
      * Keys are in the format of {@code fromVersion:toVersion}.
      */
     @Nonnull
-    private static final Map<String, ImmutableTuple<String, Consumer<Configuration>>> MIGRATIONS = new HashMap<String, ImmutableTuple<String, Consumer<Configuration>>>();
+    private static final Map<Number, ImmutableTuple<Number, Consumer<Configuration>>> MIGRATIONS = new HashMap<Number, ImmutableTuple<Number, Consumer<Configuration>>>();
 
     /**
      * A list of players who are globally immune.
@@ -502,7 +502,7 @@ public class Config {
         throws MapKeyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration(
-            "1", "2", (configInstance) -> {
+            1, 2, (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
                     "general.immunePlayers")) {
                     MigrationUtils.renameProperty(configInstance,
@@ -510,7 +510,7 @@ public class Config {
                 }
             });
         registerMigration(
-            "2", "3", (configInstance) -> {
+            2, 3, (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
                     "general.globallyImmunePlayers")) {
                     MigrationUtils.renameProperty(configInstance,
@@ -519,7 +519,7 @@ public class Config {
                 }
             });
         registerMigration(
-            "5", "6", (configInstance) -> {
+            5, 6, (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
                     "general.globally_immune_players")) {
                     configInstance
@@ -549,7 +549,7 @@ public class Config {
                 }
             });
         registerMigration(
-            "6", "7", (configInstance) -> {
+            6, 7, (configInstance) -> {
                 if (MigrationUtils.hasPropertyByPath(configInstance,
                     "gameplay.tconstruct.slime_sapling_bone_mealable")) {
                     MigrationUtils.renameProperty(configInstance,
@@ -558,7 +558,7 @@ public class Config {
                 }
             });
         registerMigration(
-            "7", "8", (configInstance) -> {
+            7, 8, (configInstance) -> {
                 if (MigrationUtils.hasCategoryByPath(configInstance,
                     "command")) {
                     MigrationUtils.renameCategory(configInstance, "command",
@@ -570,7 +570,7 @@ public class Config {
         }
 
         CONFIG_INSTANCE = new Configuration(new File(configDir, fileName),
-            CONFIG_VERSION, false);
+            Integer.toString(CONFIG_VERSION.intValue(), 10), false);
     }
 
     /**
@@ -614,7 +614,9 @@ public class Config {
                 CONFIG_VERSION, CONFIG_INSTANCE.getLoadedConfigVersion());
             LOGGER.warn("Attempting to migrate!");
             try {
-                applyConfigMigrations(CONFIG_INSTANCE.getLoadedConfigVersion(),
+                applyConfigMigrations(
+                    Integer.parseInt(CONFIG_INSTANCE.getLoadedConfigVersion(),
+                        10),
                     CONFIG_VERSION);
             } catch (NoSuchElementException t) {
                 LOGGER.info(
@@ -743,18 +745,18 @@ public class Config {
      * @throws NumberFormatException Thrown if any configuration versions are
      *         not valid numbers.
      */
-    private static void applyConfigMigrations(@Nonnull String fromVersion,
-        @Nonnull String toVersion)
+    private static void applyConfigMigrations(@Nonnull Number fromVersion,
+        @Nonnull Number toVersion)
         throws NoSuchElementException, NumberFormatException {
-        LinkedList<ImmutableTuple<String, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<String, Consumer<Configuration>>>();
-        HashSet<String> alreadyMigratedVersions = new HashSet<String>();
-        String lastMigratedVersion = fromVersion;
+        LinkedList<ImmutableTuple<Number, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<Number, Consumer<Configuration>>>();
+        HashSet<Number> alreadyMigratedVersions = new HashSet<Number>();
+        Number lastMigratedVersion = fromVersion;
         while (MIGRATIONS.containsKey(lastMigratedVersion)
             && !lastMigratedVersion.equals(toVersion)) {
             migrators.push(MIGRATIONS.get(lastMigratedVersion));
             migrators
-                .sort((a, b) -> Integer.parseInt(a.getFirst(), 10)
-                    - Integer.parseInt(b.getFirst(), 10));
+                .sort((a, b) -> a.getFirst().intValue()
+                    - b.getFirst().intValue());
             alreadyMigratedVersions.add(lastMigratedVersion);
             lastMigratedVersion = migrators.peekLast().getFirst();
             if (alreadyMigratedVersions.contains(lastMigratedVersion)) {
@@ -768,7 +770,7 @@ public class Config {
         }
         Configuration currentVersion = MigrationUtils
             .cloneConfiguration(CONFIG_INSTANCE);
-        for (ImmutableTuple<String, Consumer<Configuration>> migrator : migrators) {
+        for (ImmutableTuple<Number, Consumer<Configuration>> migrator : migrators) {
             migrator.getSecond().accept(currentVersion);
         }
         CONFIG_INSTANCE = currentVersion;
@@ -788,18 +790,18 @@ public class Config {
      * @throws MapKeyExistsException Thrown if a migration already exists from
      *         the old configuration version to the new configuration version.
      */
-    private static void registerMigration(@Nonnull String fromVersion,
-        @Nonnull String toVersion, Consumer<Configuration> migrator)
+    private static void registerMigration(@Nonnull Number fromVersion,
+        @Nonnull Number toVersion, Consumer<Configuration> migrator)
         throws MapKeyExistsException {
         if (MIGRATIONS.containsKey(fromVersion)) {
             throw new MapKeyExistsException(fromVersion,
                 String.format(
-                    "Migration already exists from configuration '%s' version to configuration version '%s'",
+                    "Migration already exists from configuration '%d' version to configuration version '%d'",
                     fromVersion,
                     toVersion));
         }
         MIGRATIONS.put(fromVersion,
-            new ImmutableTuple<String, Consumer<Configuration>>(toVersion,
+            new ImmutableTuple<Number, Consumer<Configuration>>(toVersion,
                 migrator));
     }
 }

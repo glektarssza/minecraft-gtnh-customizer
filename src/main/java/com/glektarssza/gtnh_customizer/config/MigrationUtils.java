@@ -87,6 +87,7 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
+     * @param instance The configuration instance to access.
      * @param path The path to the category to clone.
      *
      * @return A clone of the category.
@@ -99,36 +100,10 @@ public final class MigrationUtils {
     /**
      * Clone a category.
      *
+     * @param instance The configuration instance to access.
      * @param path The path to the category to clone.
-     * @param parent The category make the parent of the cloned category.
-     *
-     * @return A clone of the category.
-     */
-    public static ConfigCategory cloneCategory(Configuration instance,
-        String path, ConfigCategory parent) {
-        return cloneCategory(instance, path, Configuration.CATEGORY_SPLITTER);
-    }
-
-    /**
-     * Clone a category.
-     *
-     * @param path The path to the category to clone.
-     * @param parentPath The path to the category make the parent of the cloned
-     *        category.
-     *
-     * @return A clone of the category.
-     */
-    public static ConfigCategory cloneCategory(Configuration instance,
-        String path, String parentPath) {
-        return cloneCategory(instance, path, Configuration.CATEGORY_SPLITTER);
-    }
-
-    /**
-     * Clone a category.
-     *
-     * @param path The path to the category to clone.
-     * @param parentPath The path to the category make the parent of the cloned
-     *        category.
+     * @param pathSeparators The character(s) to treat as path element
+     *        separators.
      *
      * @return A clone of the category.
      */
@@ -140,7 +115,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      *
@@ -160,7 +135,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      * @param overwrite Whether to overwrite an existing property.
@@ -175,13 +150,13 @@ public final class MigrationUtils {
         Configuration newInstance, String path, boolean overwrite)
         throws NoSuchElementException, MapKeyExistsException {
         copyProperty(instance, newInstance, path,
-            Configuration.CATEGORY_SPLITTER);
+            Configuration.CATEGORY_SPLITTER, overwrite);
     }
 
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -202,7 +177,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -253,7 +228,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      *
@@ -268,7 +243,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      * @param overwrite Whether to overwrite an existing property.
@@ -284,7 +259,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -305,7 +280,7 @@ public final class MigrationUtils {
     /**
      * Copy a property from one configuration to another.
      *
-     * @param instance The configuration to copy the property from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the property to.
      * @param path The path to the property to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -324,7 +299,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      *
@@ -344,7 +319,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param overwrite Whether to overwrite an existing category. This will
@@ -366,7 +341,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -387,7 +362,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -432,7 +407,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      *
@@ -447,7 +422,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param overwrite Whether to overwrite an existing category. This will
@@ -464,7 +439,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -486,7 +461,7 @@ public final class MigrationUtils {
     /**
      * Copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -511,7 +486,7 @@ public final class MigrationUtils {
     /**
      * Deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      *
@@ -531,7 +506,7 @@ public final class MigrationUtils {
     /**
      * Deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param overwrite Whether to overwrite an existing category.
@@ -552,7 +527,7 @@ public final class MigrationUtils {
     /**
      * Deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -573,7 +548,7 @@ public final class MigrationUtils {
     /**
      * Deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -609,7 +584,7 @@ public final class MigrationUtils {
     /**
      * Try to deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      *
@@ -624,7 +599,7 @@ public final class MigrationUtils {
     /**
      * Try to deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param overwrite Whether to overwrite an existing category.
@@ -640,7 +615,7 @@ public final class MigrationUtils {
     /**
      * Try to deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path
@@ -662,7 +637,7 @@ public final class MigrationUtils {
     /**
      * Try to deeply copy a category from one configuration to another.
      *
-     * @param instance The configuration to copy the category from.
+     * @param instance The configuration instance to access.
      * @param newInstance The configuration to copy the category to.
      * @param path The path to the category to copy.
      * @param pathSeparators The character(s) to treat as separators of path

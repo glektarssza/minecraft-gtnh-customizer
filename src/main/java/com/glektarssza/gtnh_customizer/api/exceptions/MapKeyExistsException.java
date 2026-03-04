@@ -14,7 +14,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * The key that was being used for the map insertion.
      */
     @Nonnull
-    public final String key;
+    public final Object key;
 
     // #endregion Public Fields
 
@@ -25,7 +25,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      *
      * @param key The key that was being used for the map insertion.
      */
-    public MapKeyExistsException(@Nonnull String key) {
+    public MapKeyExistsException(@Nonnull Object key) {
         super();
         this.key = key;
     }
@@ -36,7 +36,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * @param key The key that was being used for the map insertion.
      * @param msg A string describing the error that occurred.
      */
-    public MapKeyExistsException(@Nonnull String key, @Nullable String msg) {
+    public MapKeyExistsException(@Nonnull Object key, @Nullable String msg) {
         super(msg);
         this.key = key;
     }
@@ -48,7 +48,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public MapKeyExistsException(@Nonnull String key,
+    public MapKeyExistsException(@Nonnull Object key,
         @Nullable Throwable cause) {
         super(cause);
         this.key = key;
@@ -62,7 +62,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public MapKeyExistsException(@Nonnull String key, @Nullable String msg,
+    public MapKeyExistsException(@Nonnull Object key, @Nullable String msg,
         @Nullable Throwable cause) {
         super(msg, cause);
         this.key = key;
