@@ -472,7 +472,10 @@ public final class CommandUtils {
         } else {
             return parseByteArgument(arg, radix);
         }
-        return (byte) (baseValue + offset);
+        if (baseValue < Byte.MAX_VALUE - offset) {
+            return (byte) (baseValue + offset);
+        }
+        return Byte.MAX_VALUE;
     }
 
     public static byte parseBlockRelativeByteArgument(String arg,
@@ -611,7 +614,10 @@ public final class CommandUtils {
         } else {
             return parseShortArgument(arg, radix);
         }
-        return (short) (baseValue + offset);
+        if (baseValue < Short.MAX_VALUE - offset) {
+            return (short) (baseValue + offset);
+        }
+        return Short.MAX_VALUE;
     }
 
     public static short parseBlockRelativeShortArgument(String arg,
@@ -752,7 +758,10 @@ public final class CommandUtils {
         } else {
             return parseIntegerArgument(arg, radix);
         }
-        return baseValue + offset;
+        if (baseValue < Integer.MAX_VALUE - offset) {
+            return baseValue + offset;
+        }
+        return Integer.MAX_VALUE;
     }
 
     public static int parseBlockRelativeIntegerArgument(String arg,
@@ -892,7 +901,10 @@ public final class CommandUtils {
         } else {
             return parseLongArgument(arg, radix);
         }
-        return baseValue + offset;
+        if (baseValue < Long.MAX_VALUE - offset) {
+            return baseValue + offset;
+        }
+        return Long.MAX_VALUE;
     }
 
     public static long parseBlockRelativeLongArgument(String arg,
