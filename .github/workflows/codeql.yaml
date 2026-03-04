@@ -35,6 +35,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v5
         with:
           gradle-version: wrapper
+          cache-disabled: true
       - id: initialize-codeql
         name: Initialize CodeQL
         uses: github/codeql-action/init@v4
