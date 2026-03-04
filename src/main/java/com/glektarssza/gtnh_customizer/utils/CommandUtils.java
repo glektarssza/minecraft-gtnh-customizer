@@ -472,7 +472,7 @@ public final class CommandUtils {
         } else {
             return parseByteArgument(arg, radix);
         }
-        if (baseValue < Byte.MAX_VALUE - offset) {
+        if (offset < Byte.MAX_VALUE - baseValue) {
             return (byte) (baseValue + offset);
         }
         return Byte.MAX_VALUE;
@@ -614,7 +614,7 @@ public final class CommandUtils {
         } else {
             return parseShortArgument(arg, radix);
         }
-        if (baseValue < Short.MAX_VALUE - offset) {
+        if (offset < Short.MAX_VALUE - baseValue) {
             return (short) (baseValue + offset);
         }
         return Short.MAX_VALUE;
@@ -758,7 +758,7 @@ public final class CommandUtils {
         } else {
             return parseIntegerArgument(arg, radix);
         }
-        if (baseValue < Integer.MAX_VALUE - offset) {
+        if (offset < Integer.MAX_VALUE - baseValue) {
             return baseValue + offset;
         }
         return Integer.MAX_VALUE;
@@ -901,7 +901,7 @@ public final class CommandUtils {
         } else {
             return parseLongArgument(arg, radix);
         }
-        if (baseValue < Long.MAX_VALUE - offset) {
+        if (offset < Long.MAX_VALUE - baseValue) {
             return baseValue + offset;
         }
         return Long.MAX_VALUE;
@@ -1046,7 +1046,10 @@ public final class CommandUtils {
             return parseFloatArgument(arg)
                 + (centerToBlock ? 0.5f : 0.0f);
         }
-        return baseValue + offset + (centerToBlock ? 0.5f : 0.0f);
+        if (offset < Float.MAX_VALUE - baseValue) {
+            return baseValue + offset + (centerToBlock ? 0.5f : 0.0f);
+        }
+        return Float.MAX_VALUE;
     }
 
     public static float parseBlockRelativeFloatArgument(String arg,
@@ -1190,7 +1193,10 @@ public final class CommandUtils {
             return parseDoubleArgument(arg)
                 + (centerToBlock ? 0.5f : 0.0f);
         }
-        return baseValue + offset + (centerToBlock ? 0.5f : 0.0f);
+        if (offset < Double.MAX_VALUE - baseValue) {
+            return baseValue + offset + (centerToBlock ? 0.5f : 0.0f);
+        }
+        return Double.MAX_VALUE;
     }
 
     public static double parseBlockRelativeDoubleArgument(String arg,
