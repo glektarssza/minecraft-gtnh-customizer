@@ -1,13 +1,15 @@
-package com.glektarssza.gtnh_customizer.api.exceptions;
+package com.glektarssza.gtnh_customizer.api.exceptions.collections;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.glektarssza.gtnh_customizer.api.exceptions.BaseRuntimeException;
+
 /**
- * An exception that is thrown when a value being inserted into a map but there
- * is already an entry for the requested key.
+ * An exception that is thrown when a value is being inserted into a map but
+ * there is already an entry for the requested key.
  */
-public class MapKeyExistsException extends BaseRuntimeException {
+public class KeyAlreadyExistsException extends BaseRuntimeException {
     // #region Public Fields
 
     /**
@@ -25,7 +27,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      *
      * @param key The key that was being used for the map insertion.
      */
-    public MapKeyExistsException(@Nonnull Object key) {
+    public KeyAlreadyExistsException(@Nonnull Object key) {
         super();
         this.key = key;
     }
@@ -36,7 +38,8 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * @param key The key that was being used for the map insertion.
      * @param msg A string describing the error that occurred.
      */
-    public MapKeyExistsException(@Nonnull Object key, @Nullable String msg) {
+    public KeyAlreadyExistsException(@Nonnull Object key,
+        @Nullable String msg) {
         super(msg);
         this.key = key;
     }
@@ -48,7 +51,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public MapKeyExistsException(@Nonnull Object key,
+    public KeyAlreadyExistsException(@Nonnull Object key,
         @Nullable Throwable cause) {
         super(cause);
         this.key = key;
@@ -62,7 +65,7 @@ public class MapKeyExistsException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public MapKeyExistsException(@Nonnull Object key, @Nullable String msg,
+    public KeyAlreadyExistsException(@Nonnull Object key, @Nullable String msg,
         @Nullable Throwable cause) {
         super(msg, cause);
         this.key = key;
