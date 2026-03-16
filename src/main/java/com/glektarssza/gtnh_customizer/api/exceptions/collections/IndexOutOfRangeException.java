@@ -103,7 +103,7 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      */
     public IndexOutOfRangeException(@Nullable Integer index,
         @Nullable Integer minimumIndex) {
-        super();
+        super(index, minimumIndex);
     }
 
     /**
