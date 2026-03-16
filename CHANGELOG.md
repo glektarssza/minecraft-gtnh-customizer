@@ -1,5 +1,11 @@
 # Changelog #
 
+## 0.16.0 ##
+
+### Technical ###
+
+* Updated GTNH build scripts to v2.0.24.
+
 ## 0.15.1 ##
 
 ### Bug Fixes ###
