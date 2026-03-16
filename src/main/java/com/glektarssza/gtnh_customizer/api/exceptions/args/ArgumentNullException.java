@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api.exceptions;
+package com.glektarssza.gtnh_customizer.api.exceptions.args;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
  * An exception that is thrown when an argument is invalid due to being a
  * {@code null} value.
  */
-public class ArgumentNullException extends InvalidArgumentException {
+public class ArgumentNullException extends ArgumentException {
     // #region Constructors
 
     /**
