@@ -13,7 +13,7 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
+import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -122,12 +122,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         property at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a property at the given path.
      */
     public static void copyProperty(Configuration instance,
         Configuration newInstance, String path)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyProperty(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, false);
     }
@@ -143,12 +143,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         property at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a property at the given path.
      */
     public static void copyProperty(Configuration instance,
         Configuration newInstance, String path, boolean overwrite)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyProperty(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
     }
@@ -165,12 +165,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         property at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a property at the given path.
      */
     public static void copyProperty(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyProperty(instance, newInstance, path, pathSeparators, false);
     }
 
@@ -187,13 +187,13 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         property at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a property at the given path.
      */
     public static void copyProperty(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators,
         boolean overwrite)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         if (!hasPropertyByPath(instance, path, pathSeparators)) {
             throw new NoSuchElementException(String.format(
                 "Cannot copy configuration property '%s' to the given configuration instance (no property exists to copy)",
@@ -202,7 +202,7 @@ public final class MigrationUtils {
         boolean hasPropertyAlready = hasPropertyByPath(newInstance, path,
             pathSeparators);
         if (hasPropertyAlready && !overwrite) {
-            throw new MapKeyExistsException(TypeHelpers.castToNonNull(path),
+            throw new KeyAlreadyExistsException(TypeHelpers.castToNonNull(path),
                 String.format(
                     "Cannot copy configuration property '%s' to the given configuration instance (a property already exists there)",
                     path));
@@ -306,12 +306,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void copyCategory(Configuration instance,
         Configuration newInstance, String path)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -328,12 +328,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void copyCategory(Configuration instance,
         Configuration newInstance, String path, boolean overwrite)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
     }
@@ -350,12 +350,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void copyCategory(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path, pathSeparators, false);
     }
 
@@ -373,18 +373,18 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void copyCategory(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators,
         boolean overwrite)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         ConfigCategory oldCategory = getCategoryByPath(instance, path,
             pathSeparators);
         if (newInstance.hasCategory(oldCategory.getQualifiedName())
             && !overwrite) {
-            throw new MapKeyExistsException(TypeHelpers.castToNonNull(
+            throw new KeyAlreadyExistsException(TypeHelpers.castToNonNull(
                 oldCategory
                     .getQualifiedName()),
                 String.format(
@@ -492,12 +492,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void deepCopyCategory(Configuration instance,
         Configuration newInstance, String path)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         deepCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, false);
     }
@@ -513,12 +513,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void deepCopyCategory(Configuration instance,
         Configuration newInstance, String path, boolean overwrite)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         deepCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
     }
@@ -535,12 +535,12 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void deepCopyCategory(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         deepCopyCategory(instance, newInstance, path, pathSeparators, false);
     }
 
@@ -557,13 +557,13 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
      */
     public static void deepCopyCategory(Configuration instance,
         Configuration newInstance, String path, CharSequence pathSeparators,
         boolean overwrite)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path, pathSeparators, overwrite);
         getCategoryByPath(instance, path, pathSeparators)
             .forEach((propertyName, property) -> copyProperty(instance,
@@ -698,14 +698,14 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if no such element exists to copy.
      * @throws NoSuchElementException Thrown if no such category exists to copy
      *         onto.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         category at the given path.
-     * @throws MapKeyExistsException Thrown if the new instance already has a
-     *         property at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a category at the given path.
+     * @throws KeyAlreadyExistsException Thrown if the new instance already has
+     *         a property at the given path.
      */
     public static void copyConfiguration(Configuration instance,
         Configuration newInstance)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         instance.getCategoryNames().parallelStream()
             .forEach((categoryName) -> copyCategory(instance, newInstance,
                 categoryName));
@@ -738,12 +738,12 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws MapKeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be renamed to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be renamed to.
      */
     public static void renameProperty(Configuration instance, String path,
         String newName)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         renameProperty(instance, path, newName,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -759,17 +759,18 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws MapKeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be renamed to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be renamed to.
      */
     public static void renameProperty(Configuration instance, String path,
         String newName, CharSequence pathSeparators)
-        throws NoSuchElementException, MapKeyExistsException {
+        throws NoSuchElementException, KeyAlreadyExistsException {
         ConfigCategory category = getPropertyParentCategoryByPath(instance,
             path, pathSeparators);
         Property property = getPropertyByPath(instance, path, pathSeparators);
         if (category.containsKey(newName)) {
-            throw new MapKeyExistsException(TypeHelpers.castToNonNull(newName),
+            throw new KeyAlreadyExistsException(
+                TypeHelpers.castToNonNull(newName),
                 String.format(
                     "Cannot rename configuration property '%s' from '%s' to '%s' (a property already exists there)",
                     path, property.getName(), newName));
@@ -825,8 +826,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws MapKeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveProperty(Configuration instance, String path,
         String newCategoryPath)
@@ -847,8 +848,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws MapKeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveProperty(Configuration instance, String path,
         String newCategoryPath, CharSequence pathSeparators)
@@ -859,7 +860,7 @@ public final class MigrationUtils {
         ConfigCategory newCategory = getCategoryByPath(instance,
             newCategoryPath, pathSeparators);
         if (newCategory.containsKey(property.getName())) {
-            throw new MapKeyExistsException(
+            throw new KeyAlreadyExistsException(
                 TypeHelpers.castToNonNull(property.getName()),
                 String.format(
                     "Cannot move configuration property '%s' from category '%s' to '%s' (a property already exists there of the same name)",
@@ -918,8 +919,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws MapKeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveAndRenameProperty(Configuration instance,
         String path, String newPath)
@@ -940,8 +941,8 @@ public final class MigrationUtils {
      *
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
-     * @throws MapKeyExistsException Thrown if a property already exists in the
-     *         location where the property is going to be moved to.
+     * @throws KeyAlreadyExistsException Thrown if a property already exists in
+     *         the location where the property is going to be moved to.
      */
     public static void moveAndRenameProperty(Configuration instance,
         String path, String newPath, CharSequence pathSeparators)
@@ -954,7 +955,7 @@ public final class MigrationUtils {
         String[] newNameComps = splitPath(newPath, pathSeparators);
         String newName = newNameComps[newNameComps.length - 1];
         if (newCategory.containsKey(property.getName())) {
-            throw new MapKeyExistsException(
+            throw new KeyAlreadyExistsException(
                 TypeHelpers.castToNonNull(property.getName()),
                 String.format(
                     "Cannot move and rename configuration property '%s' to '%s' (a property already exists there)",
