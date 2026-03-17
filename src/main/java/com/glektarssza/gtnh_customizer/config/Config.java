@@ -28,8 +28,8 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.exceptions.ArgumentNullException;
-import com.glektarssza.gtnh_customizer.api.exceptions.MapKeyExistsException;
+import com.glektarssza.gtnh_customizer.api.exceptions.args.ArgumentNullException;
+import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
@@ -502,14 +502,14 @@ public class Config {
      * @param configDir The directory the configuration file will live in.
      * @param fileName The name of the file to save the configuration to.
      *
-     * @throws MapKeyExistsException Thrown if a duplicate configuration
+     * @throws KeyAlreadyExistsException Thrown if a duplicate configuration
      *         migration is registered.
      * @throws NoSuchElementException Thrown if configuration migration is
      *         required and no migration route exists from the old configuration
      *         version to the new configuration version.
      */
     public static void init(File configDir, String fileName)
-        throws MapKeyExistsException, NoSuchElementException {
+        throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration(
             1, 2, (configInstance) -> {
@@ -895,14 +895,15 @@ public class Config {
      * @param toVersion The version which will be migrated to.
      * @param migrator The function which will perform the migration.
      *
-     * @throws MapKeyExistsException Thrown if a migration already exists from
-     *         the old configuration version to the new configuration version.
+     * @throws KeyAlreadyExistsException Thrown if a migration already exists
+     *         from the old configuration version to the new configuration
+     *         version.
      */
     private static void registerMigration(@Nonnull Number fromVersion,
         @Nonnull Number toVersion, Consumer<Configuration> migrator)
-        throws MapKeyExistsException {
+        throws KeyAlreadyExistsException {
         if (MIGRATIONS.containsKey(fromVersion)) {
-            throw new MapKeyExistsException(fromVersion,
+            throw new KeyAlreadyExistsException(fromVersion,
                 String.format(
                     "Migration already exists from configuration '%d' version to configuration version '%d'",
                     fromVersion,

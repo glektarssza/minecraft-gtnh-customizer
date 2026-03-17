@@ -1,12 +1,14 @@
-package com.glektarssza.gtnh_customizer.api.exceptions;
+package com.glektarssza.gtnh_customizer.api.exceptions.args;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.glektarssza.gtnh_customizer.api.exceptions.BaseRuntimeException;
+
 /**
  * An exception that is thrown when an argument is invalid.
  */
-public class InvalidArgumentException extends BaseRuntimeException {
+public class ArgumentException extends BaseRuntimeException {
     // #region Public Fields
 
     /**
@@ -24,7 +26,7 @@ public class InvalidArgumentException extends BaseRuntimeException {
      *
      * @param argumentName The name of the argument that was invalid.
      */
-    public InvalidArgumentException(@Nonnull String argumentName) {
+    public ArgumentException(@Nonnull String argumentName) {
         super();
         this.argumentName = argumentName;
     }
@@ -35,7 +37,7 @@ public class InvalidArgumentException extends BaseRuntimeException {
      * @param argumentName The name of the argument that was invalid.
      * @param msg A string describing the error that occurred.
      */
-    public InvalidArgumentException(@Nonnull String argumentName,
+    public ArgumentException(@Nonnull String argumentName,
         @Nullable String msg) {
         super(msg);
         this.argumentName = argumentName;
@@ -48,7 +50,7 @@ public class InvalidArgumentException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public InvalidArgumentException(@Nonnull String argumentName,
+    public ArgumentException(@Nonnull String argumentName,
         @Nullable Throwable cause) {
         super(cause);
         this.argumentName = argumentName;
@@ -62,7 +64,7 @@ public class InvalidArgumentException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public InvalidArgumentException(@Nonnull String argumentName,
+    public ArgumentException(@Nonnull String argumentName,
         @Nullable String msg, @Nullable Throwable cause) {
         super(msg, cause);
         this.argumentName = argumentName;
