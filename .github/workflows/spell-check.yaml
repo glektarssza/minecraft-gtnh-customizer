@@ -62,20 +62,21 @@ jobs:
           lfs: true
           submodules: recursive
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-      - id: setup-pnpm-package-manager
-        name: Setup NodeJS Package Manager
-        if: inputs.package-manager == 'pnpm'
-        uses: pnpm/action-setup@v4
-        with:
-          version: ${{inputs.package-manager-version}}
-          run_install: false
-          standalone: false
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v6
         with:
           token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
           node-version: ${{inputs.node-version}}
+      - id: setup-pnpm-package-manager
+        name: Setup NodeJS Package Manager
+        if: inputs.package-manager == 'pnpm'
+        uses: pnpm/action-setup@v5
+        with:
+          version: ${{inputs.package-manager-version}}
+          run_install: false
+          standalone: false
+          cache: false
       - id: setup-non-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager != 'pnpm'
