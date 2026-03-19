@@ -2,6 +2,10 @@
 
 ## 0.16.0 ##
 
+### Features ###
+
+* Added some extra keybindings to Xaero's Mini and World Maps.
+
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.24.
