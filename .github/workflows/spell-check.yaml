@@ -71,6 +71,7 @@ jobs:
           run_install: false
           standalone: false
           cache: true
+          cache_dependency_path: ~/.local/share/pnpm/global/5/pnpm-lock.yaml
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v6
