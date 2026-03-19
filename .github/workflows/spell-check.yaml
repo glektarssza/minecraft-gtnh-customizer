@@ -46,6 +46,8 @@ on:
         description: |
           The token to use when making authenticated calls to the GitHub API.
         required: true
+env:
+  GITHUB_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
 jobs:
   spell-check:
     name: Spell Check
@@ -61,7 +63,13 @@ jobs:
           ref: ${{inputs.ref}}
           lfs: true
           submodules: recursive
-          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          token: ${{env.GITHUB_TOKEN}}
+      - id: setup-nodejs
+        name: Setup NodeJS
+        uses: actions/setup-node@v6
+        with:
+          token: ${{env.GITHUB_TOKEN}}
+          node-version: ${{inputs.node-version}}
       - id: setup-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager == 'pnpm'
@@ -72,12 +80,6 @@ jobs:
           standalone: false
           cache: true
           cache_dependency_path: ~/.local/share/pnpm/global/5/pnpm-lock.yaml
-      - id: setup-nodejs
-        name: Setup NodeJS
-        uses: actions/setup-node@v6
-        with:
-          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
-          node-version: ${{inputs.node-version}}
       - id: setup-non-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager != 'pnpm'
