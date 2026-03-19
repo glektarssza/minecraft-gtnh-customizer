@@ -70,6 +70,7 @@ jobs:
           version: ${{inputs.package-manager-version}}
           run_install: false
           standalone: false
+          cache: true
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v6
