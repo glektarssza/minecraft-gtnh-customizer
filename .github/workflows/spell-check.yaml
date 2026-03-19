@@ -73,13 +73,12 @@ jobs:
       - id: setup-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager == 'pnpm'
-        uses: pnpm/action-setup@v5
+        uses: glektarssza/action-setup-pnpm@8c23413cc9b4dbba19440ef10ab03e3b502a4b24
         with:
           version: ${{inputs.package-manager-version}}
           run_install: false
           standalone: false
           cache: true
-          cache_dependency_path: ~/.local/share/pnpm/global/5/pnpm-lock.yaml
       - id: setup-non-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager != 'pnpm'
