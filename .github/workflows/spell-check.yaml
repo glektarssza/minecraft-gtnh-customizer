@@ -73,7 +73,7 @@ jobs:
       - id: setup-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager == 'pnpm'
-        uses: glektarssza/action-setup-pnpm@cd6ed80ab74146b4c0cee7aec2d578511e59e23f
+        uses: glektarssza/action-setup-pnpm@2208dbaef29679687f47a5ce7c4bd112b6369026
         with:
           version: ${{inputs.package-manager-version}}
           run_install: false
