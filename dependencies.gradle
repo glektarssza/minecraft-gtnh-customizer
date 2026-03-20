@@ -6,6 +6,8 @@ def isPropEnabled(String id) {
 }
 
 dependencies {
+    compileOnly("com.google.code.gson:gson:2.2.+")
+
     if (isPropEnabled("enableDependenciesForLocalTesting")) {
         // -- Support for other mods and local testing
         devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
