@@ -6,6 +6,7 @@
 
 * Updated GTNH build scripts to v2.0.24.
 * Refactored internal exceptions.
+* Updated VSCode workspaces.
 
 ## 0.15.1 ##
 
