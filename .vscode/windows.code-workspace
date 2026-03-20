@@ -68,7 +68,7 @@
             "org.spongepowered",
             "com.glektarssza"
         ],
-        "java.completion.lazyResolveTextEdit.enabled": true,
+        "java.completion.lazyResolveTextEdit.enabled": false,
         "java.completion.matchCase": "off",
         "java.completion.maxResults": 0,
         "java.completion.postfix.enabled": true,
