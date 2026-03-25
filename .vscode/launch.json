@@ -36,6 +36,19 @@
             "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
             "preLaunchTask": "gradle:runClient25:debug"
-        }
+        },
+        {
+            "type": "java",
+            "name": "Attach to Running Process",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "5005"
+        },
+        {
+            "type": "java",
+            "name": "Pick Running Process to Attach To",
+            "request": "attach",
+            "processId": "${command:PickJavaProcess}",
+        },
     ]
 }
