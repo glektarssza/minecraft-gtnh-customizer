@@ -99,7 +99,7 @@ jobs:
           java-version: ${{steps.read-java-version.outputs.java-version}}
       - id: setup-gradle
         name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
         with:
           github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
           gradle-version: ${{inputs.gradle-version}}
@@ -108,6 +108,6 @@ jobs:
         run: ./gradlew setupCIWorkspace
       - id: dependency-graph
         name: Generate and submit dependency graph
-        uses: gradle/actions/dependency-submission@v5
+        uses: gradle/actions/dependency-submission@v6
         with:
           artifact-retention-days: ${{inputs.artifact-retention-days}}
