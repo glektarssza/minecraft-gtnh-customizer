@@ -106,7 +106,9 @@ nevermine
 nonnull
 nonnullbydefault
 numpad
+numpadcomma
 numpadenter
+numpadequals
 openj
 pigman
 pigmen
