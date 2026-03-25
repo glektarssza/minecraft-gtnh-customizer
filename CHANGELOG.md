@@ -2,6 +2,11 @@
 
 ## 0.16.0 ##
 
+### Bug Fixes ###
+
+* Fixed some issues with mixins to Xaero's mods and injections not properly
+  using the right refmaps.
+
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.24.
