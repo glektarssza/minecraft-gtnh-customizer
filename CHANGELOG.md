@@ -4,8 +4,8 @@
 
 ### Bug Fixes ###
 
-* Fixed some issues with mixins to Xaero's mods and injections not properly
-  using the right refmaps.
+* Fixed some issues with mixins that were causing injections to not properly get
+  loaded at runtime.
 
 ### Technical ###
 
