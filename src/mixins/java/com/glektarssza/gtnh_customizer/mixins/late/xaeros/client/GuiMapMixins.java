@@ -43,19 +43,19 @@ public class GuiMapMixins {
     /**
      * A shadow of the {@code mouseBlockPosX} field.
      */
-    @Shadow
+    @Shadow(remap = false)
     private int mouseBlockPosX;
 
     /**
      * A shadow of the {@code mouseBlockPosZ} field.
      */
-    @Shadow
+    @Shadow(remap = false)
     private int mouseBlockPosZ;
 
     /**
      *
      */
-    @Shadow
+    @Shadow(remap = false)
     private MapProcessor mapProcessor;
 
     /**
@@ -74,7 +74,7 @@ public class GuiMapMixins {
             -1);
     }
 
-    @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z")))
+    @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z", remap = false)))
     public void drawScreen$addMousedOverBiome(CallbackInfo ci) {
         if (GTNHCustomizer.getProxy().getSide() != Side.CLIENT) {
             GTNHCustomizer.emitTrackedWarning(LOGGER,

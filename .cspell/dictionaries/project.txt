@@ -26,6 +26,7 @@ deobf
 diffplug
 dists
 divinerpg
+dmixin
 downgrader
 dragonwell
 dsun
@@ -118,6 +119,7 @@ railcraft
 rawtypes
 redirector
 refmap
+refmaps
 remotehub
 reobf
 reobfuscated

@@ -2,6 +2,11 @@
 
 ## 0.16.0 ##
 
+### Bug Fixes ###
+
+* Fixed some issues with mixins that were causing injections to not properly get
+  loaded at runtime.
+
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.24.
