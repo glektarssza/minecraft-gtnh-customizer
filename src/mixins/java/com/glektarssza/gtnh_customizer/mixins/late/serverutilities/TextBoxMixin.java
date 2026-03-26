@@ -83,7 +83,7 @@ public class TextBoxMixin {
     /**
      * The injection for the {@code keyPressed} method.
      */
-    @Inject(method = "keyPressed", order = 2000, at = @At(value = "HEAD"), cancellable = true, remap = false, require = 1)
+    @Inject(method = "keyPressed", order = 2000, at = @At(value = "HEAD"), cancellable = true, remap = false)
     public void keyPressed$handleNumpad(int keyCode, char keyChar,
         CallbackInfoReturnable<Boolean> cir) {
         TextBox self = (TextBox) (Object) this;
@@ -102,7 +102,7 @@ public class TextBoxMixin {
     /**
      * The injection for the {@code keyPressed} method.
      */
-    @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true, remap = false, require = 1)
+    @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true, remap = false)
     public void keyPressed$handleExtraKeyBindings(int keyCode, char keyChar,
         CallbackInfoReturnable<Boolean> cir) {
         TextBox self = (TextBox) (Object) this;
