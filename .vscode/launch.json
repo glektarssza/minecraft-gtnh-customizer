@@ -48,16 +48,18 @@
         },
         {
             "type": "java",
-            "name": "Attach to Running Process",
+            "name": "Attach to Running Client",
             "request": "attach",
             "hostName": "localhost",
+            "projectName": "minecraft-gtnh-customizer",
             "port": "5005"
         },
         {
             "type": "java",
-            "name": "Pick Running Process to Attach To",
+            "name": "Pick Running Client to Attach To",
             "request": "attach",
-            "processId": "${command:PickJavaProcess}",
-        },
+            "projectName": "minecraft-gtnh-customizer",
+            "processId": "${command:PickJavaProcess}"
+        }
     ]
 }
