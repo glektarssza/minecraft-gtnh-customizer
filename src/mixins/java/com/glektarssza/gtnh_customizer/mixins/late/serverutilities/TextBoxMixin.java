@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.mixins.late.serverutilities;
 
-import java.util.Arrays;
+import java.util.Optional;
 
 import org.lwjgl.input.Keyboard;
 
@@ -22,21 +22,42 @@ import serverutils.lib.gui.TextBox;
 @Mixin(TextBox.class)
 public class TextBoxMixin {
     /**
-     * An array containing the numeric keys on the keypad.
+     * Map a key code to a number pad character, if possible.
+     *
+     * @param keyCode The key code to map.
+     *
+     * @return The key character, if one can be mapped.
      */
-    private static final int[] KEYPAD_NUMERIC_KEYCODES = {
-        Keyboard.KEY_NUMPAD0, Keyboard.KEY_NUMPAD1, Keyboard.KEY_NUMPAD2,
-        Keyboard.KEY_NUMPAD3, Keyboard.KEY_NUMPAD4, Keyboard.KEY_NUMPAD5,
-        Keyboard.KEY_NUMPAD6, Keyboard.KEY_NUMPAD7, Keyboard.KEY_NUMPAD8,
-        Keyboard.KEY_NUMPAD9
-    };
-
-    /**
-     * An array containing the symbolic keys on the keypad.
-     */
-    private static final int[] KEYPAD_SYMBOLIC_KEYCODES = {
-        Keyboard.KEY_NUMPADCOMMA, Keyboard.KEY_NUMPADEQUALS
-    };
+    private Optional<Character> mapNumpadKeyCodeToChar(int keyCode) {
+        switch (keyCode) {
+            case Keyboard.KEY_NUMPAD0:
+                return Optional.of('0');
+            case Keyboard.KEY_NUMPAD1:
+                return Optional.of('1');
+            case Keyboard.KEY_NUMPAD2:
+                return Optional.of('2');
+            case Keyboard.KEY_NUMPAD3:
+                return Optional.of('3');
+            case Keyboard.KEY_NUMPAD4:
+                return Optional.of('4');
+            case Keyboard.KEY_NUMPAD5:
+                return Optional.of('5');
+            case Keyboard.KEY_NUMPAD6:
+                return Optional.of('6');
+            case Keyboard.KEY_NUMPAD7:
+                return Optional.of('7');
+            case Keyboard.KEY_NUMPAD8:
+                return Optional.of('8');
+            case Keyboard.KEY_NUMPAD9:
+                return Optional.of('9');
+            case Keyboard.KEY_NUMPADCOMMA:
+                return Optional.of(',');
+            case Keyboard.KEY_NUMPADEQUALS:
+                return Optional.of('=');
+            default:
+                return Optional.empty();
+        }
+    }
 
     /**
      * A shadow of the {@code validText} private field.
@@ -45,70 +66,29 @@ public class TextBoxMixin {
     private boolean validText;
 
     /**
-     * Check if a key code is part of the numpad numeric key codes.
-     *
-     * @param keyCode The key code to check.
-     *
-     * @return {@code true} if the key code is part of the numpad numeric key
-     *         codes, {@code false} otherwise.
-     */
-    private boolean isNumpadNumericKey(int keyCode) {
-        return Arrays.binarySearch(KEYPAD_NUMERIC_KEYCODES, keyCode) < 0;
-    }
-
-    /**
-     * Check if a key code is part of the numpad symbolic key codes.
-     *
-     * @param keyCode The key code to check.
-     *
-     * @return {@code true} if the key code is part of the numpad symbolic key
-     *         codes, {@code false} otherwise.
-     */
-    private boolean isNumpadSymbolicKey(int keyCode) {
-        return Arrays.binarySearch(KEYPAD_SYMBOLIC_KEYCODES, keyCode) < 0;
-    }
-
-    /**
-     * Check if a key code is part of the numpad key codes.
-     *
-     * @param keyCode The key code to check.
-     *
-     * @return {@code true} if the key code is part of the numpad key codes,
-     *         {@code false} otherwise.
-     */
-    private boolean isNumpadKey(int keyCode) {
-        return isNumpadNumericKey(keyCode) || isNumpadSymbolicKey(keyCode);
-    }
-
-    /**
      * The injection for the {@code keyPressed} method.
      */
-    @Inject(method = "keyPressed", order = 2000, at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(method = "keyPressed", order = 900, at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ChatAllowedCharacters;isAllowedCharacter(C)Z", remap = true), cancellable = true, remap = false)
     public void keyPressed$handleNumpad(int keyCode, char keyChar,
         CallbackInfoReturnable<Boolean> cir) {
         TextBox self = (TextBox) (Object) this;
-        if (!self.isFocused()) {
-            return;
-        }
-        if (isNumpadKey(keyCode)
-            && ChatAllowedCharacters.isAllowedCharacter(keyChar)) {
-            self.writeText(
-                TypeHelpers.castToNonNull(Character.toString(keyChar)));
-            cir.setReturnValue(true);
-            return;
-        }
+        mapNumpadKeyCodeToChar(keyCode).ifPresent((numpadKeyChar) -> {
+            if (ChatAllowedCharacters.isAllowedCharacter(numpadKeyChar)) {
+                self.writeText(
+                    TypeHelpers
+                        .castToNonNull(Character.toString(numpadKeyChar)));
+                cir.setReturnValue(true);
+            }
+        });
     }
 
     /**
      * The injection for the {@code keyPressed} method.
      */
-    @Inject(method = "keyPressed", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ChatAllowedCharacters;isAllowedCharacter(C)Z", remap = true), cancellable = true, remap = false)
     public void keyPressed$handleExtraKeyBindings(int keyCode, char keyChar,
         CallbackInfoReturnable<Boolean> cir) {
         TextBox self = (TextBox) (Object) this;
-        if (!self.isFocused()) {
-            return;
-        }
         if (keyCode == Keyboard.KEY_RETURN
             || keyCode == Keyboard.KEY_NUMPADENTER) {
             if (validText) {
