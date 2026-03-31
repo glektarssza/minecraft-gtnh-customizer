@@ -14,6 +14,7 @@
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.24.
+* Updated Checkstyle to v13.4.0.
 * Refactored internal exceptions.
 * Updated VSCode workspaces.
 
