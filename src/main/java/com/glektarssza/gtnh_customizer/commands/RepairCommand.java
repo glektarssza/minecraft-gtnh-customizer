@@ -228,8 +228,7 @@ public class RepairCommand extends CommandBase {
         }
         return Arrays.stream(ItemTarget.values())
             .filter((item) -> item.commandValue.equalsIgnoreCase(args[index]))
-            .findFirst()
-            .isPresent();
+            .findFirst().isPresent();
     }
 
     /**

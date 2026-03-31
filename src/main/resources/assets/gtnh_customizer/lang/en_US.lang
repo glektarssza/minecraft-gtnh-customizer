@@ -76,6 +76,14 @@ gtnh_customizer.commands.extinguish.info.success=Successfully extinguished flame
 gtnh_customizer.commands.extinguish.info.admin_notify.radius=Player '%s' extinguished flames in a '%s' block radius.
 gtnh_customizer.commands.extinguish.info.admin_notify.zone=Player '%s' extinguished flames from '%s %s %s' to '%s %s %s'.
 
+# Commands - Cure
+gtnh_customizer.commands.cure.usage=/cure [victim player] [effect type=negative]
+gtnh_customizer.commands.cure.error.wrong_usage=Wrong command format!
+gtnh_customizer.commands.cure.error.not_enough_arguments=Not enough arguments!
+gtnh_customizer.commands.cure.info.success=Successfully cured effect(s)!
+gtnh_customizer.commands.cure.info.admin_notify.self=Player '%s' cured '%d' %s effects from themselves.
+gtnh_customizer.commands.cure.info.admin_notify.other=Player '%s' cured '%d' %s effects from player '%s'.
+
 # Keybinds
 key.categories.gtnh_customizer=GTNH Customizer
 gtnh_customizer.keybindings.serverutilities.delete_nbt_tag=Delete NBT Tag
