@@ -347,6 +347,96 @@
             ]
         },
         {
+            "label": "gradle:runClient:obfuscated",
+            "detail": "Run the obfuscated game client.",
+            "hide": false,
+            "icon": {
+                "id": "run",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["runObfClient", "-Dmixin.debug=true"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "base": "$gradle",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Configure project",
+                        "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "gradle:runClient:obfuscated:debug",
+            "detail": "Run the obfuscated game client in debug mode.",
+            "hide": false,
+            "icon": {
+                "id": "debug",
+                "color": "terminal.ansiWhite"
+            },
+            "group": {
+                "isDefault": false
+            },
+            "isBackground": true,
+            "dependsOrder": "sequence",
+            "dependsOn": [],
+            "type": "shell",
+            "command": "${workspaceFolder}/gradlew",
+            "args": ["runObfClient", "--debug-jvm", "-Dmixin.debug=true"],
+            "windows": {
+                "command": "${workspaceFolder}/gradlew.bat"
+            },
+            "runOptions": {
+                "instanceLimit": 1,
+                "instancePolicy": "silent",
+                "reevaluateOnRerun": true,
+                "runOn": "default"
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "base": "$gradle",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Configure project",
+                        "endsPattern": "BUILD (SUCCESSFUL|FAILED)|Listening for transport"
+                    }
+                }
+            ]
+        },
+        {
             "label": "gradle:runClient17",
             "detail": "Run the game client.",
             "hide": false,

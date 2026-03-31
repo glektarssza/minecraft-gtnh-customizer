@@ -26,6 +26,7 @@ deobf
 diffplug
 dists
 divinerpg
+dmixin
 downgrader
 dragonwell
 dsun
@@ -106,7 +107,9 @@ nevermine
 nonnull
 nonnullbydefault
 numpad
+numpadcomma
 numpadenter
+numpadequals
 openj
 pigman
 pigmen
@@ -116,6 +119,7 @@ railcraft
 rawtypes
 redirector
 refmap
+refmaps
 remotehub
 reobf
 reobfuscated

@@ -2,9 +2,7 @@ package com.glektarssza.gtnh_customizer.mixins.late.enderzoo;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,19 +18,12 @@ import crazypants.enderzoo.entity.EntityEnderminy;
 /**
  * A mixin for the {@link EntityEnderminy} class.
  */
-@Mixin(value = EntityEnderminy.class, remap = false)
-public abstract class EntityEnderminyMixin extends EntityMob {
-    /**
-     * Make Java happy.
-     */
-    private EntityEnderminyMixin(World theWorld) {
-        super(theWorld);
-    }
-
+@Mixin(EntityEnderminy.class)
+public class EntityEnderminyMixin {
     /**
      * Mixin for the {@code findPlayerToAttack} method.
      */
-    @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "findPlayerToAttack", at = @At("RETURN"), cancellable = true, remap = true)
     public void findPlayerToAttack$adjustReturnValue(
         CallbackInfoReturnable<Entity> cir) {
         Entity returnValue = cir.getReturnValue();
@@ -55,7 +46,7 @@ public abstract class EntityEnderminyMixin extends EntityMob {
     /**
      * Mixin for the {@code shouldAttackPlayer} method.
      */
-    @Inject(method = "shouldAttackPlayer", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "shouldAttackPlayer", at = @At("RETURN"), cancellable = true, remap = false)
     public void shouldAttackPlayer$adjustReturnValue(EntityPlayer player,
         CallbackInfoReturnable<Boolean> cir) {
         if (PlayerUtils.getIsPlayerGloballyImmune(player)) {
@@ -66,7 +57,7 @@ public abstract class EntityEnderminyMixin extends EntityMob {
     /**
      * Mixin for the {@code teleportTo} method.
      */
-    @Inject(method = "teleportTo", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "teleportTo", at = @At("HEAD"), cancellable = true, remap = false)
     public void teleportTo$disableIfConfigured(double x, double y, double z,
         CallbackInfoReturnable<Boolean> cir) {
         if (Config.getPreventEnderMobTeleportation()) {
@@ -77,15 +68,17 @@ public abstract class EntityEnderminyMixin extends EntityMob {
     /**
      * Mixin for the {@code doGroupArgo} method.
      */
-    @Inject(method = "doGroupArgo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getEntitiesWithinAABB(Ljava/lang/Class;Lnet/minecraft/util/AxisAlignedBB;)Ljava/util/List;", remap = true), cancellable = true)
+    @Inject(method = "doGroupArgo", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getEntitiesWithinAABB(Ljava/lang/Class;Lnet/minecraft/util/AxisAlignedBB;)Ljava/util/List;", remap = true), cancellable = true, remap = false)
     public void doGroupArgo$cancelIfTargetingImmunePlayer(CallbackInfo ci) {
-        if (this.entityToAttack == null) {
+        EntityEnderminy self = (EntityEnderminy) (Object) this;
+        Entity entityToAttack = self.getEntityToAttack();
+        if (entityToAttack == null) {
             return;
         }
-        if (!(this.entityToAttack instanceof EntityLivingBase)) {
+        if (!(entityToAttack instanceof EntityLivingBase)) {
             return;
         }
-        EntityLivingBase target = (EntityLivingBase) this.entityToAttack;
+        EntityLivingBase target = (EntityLivingBase) entityToAttack;
         if (!(target instanceof EntityPlayer)) {
             return;
         }

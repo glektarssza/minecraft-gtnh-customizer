@@ -68,7 +68,7 @@
             "org.spongepowered",
             "com.glektarssza"
         ],
-        "java.completion.lazyResolveTextEdit.enabled": true,
+        "java.completion.lazyResolveTextEdit.enabled": false,
         "java.completion.matchCase": "off",
         "java.completion.maxResults": 0,
         "java.completion.postfix.enabled": true,
@@ -143,7 +143,6 @@
         "java.references.includeDecompiledSources": true,
         "java.referencesCodeLens.enabled": true,
         "java.saveActions.cleanup": true,
-        "java.saveActions.organizeImports": true,
         "java.search.scope": "all",
         "java.selectionRange.enabled": true,
         "java.server.launchMode": "Standard",

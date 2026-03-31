@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Lint
+name: Spell Check
 on:
   workflow_call:
     inputs:
@@ -46,6 +46,8 @@ on:
         description: |
           The token to use when making authenticated calls to the GitHub API.
         required: true
+env:
+  GITHUB_TOKEN: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
 jobs:
   spell-check:
     name: Spell Check
@@ -61,22 +63,21 @@ jobs:
           ref: ${{inputs.ref}}
           lfs: true
           submodules: recursive
-          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          token: ${{env.GITHUB_TOKEN}}
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v6
         with:
-          token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
+          token: ${{env.GITHUB_TOKEN}}
           node-version: ${{inputs.node-version}}
       - id: setup-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager == 'pnpm'
-        uses: pnpm/action-setup@v5
+        uses: glektarssza/action-setup-pnpm@2208dbaef29679687f47a5ce7c4bd112b6369026
         with:
           version: ${{inputs.package-manager-version}}
           run_install: false
           standalone: false
-          cache: false
       - id: setup-non-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager != 'pnpm'
