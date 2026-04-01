@@ -1,6 +1,7 @@
 package com.glektarssza.gtnh_customizer.utils;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
 
 import net.minecraft.potion.Potion;
@@ -85,7 +86,13 @@ public class PotionUtils {
      *         otherwise.
      */
     public static boolean isVanilla(Potion potion) {
-        return Arrays.binarySearch(VANILLA_POTIONS, potion) >= 0;
+        return Arrays.binarySearch(VANILLA_POTIONS, potion,
+            new Comparator<Potion>() {
+                @Override
+                public int compare(Potion o1, Potion o2) {
+                    return o2.getId() - o1.getId();
+                }
+            }) >= 0;
     }
 
     /**
@@ -151,7 +158,13 @@ public class PotionUtils {
      *         otherwise.
      */
     public static boolean isModded(Potion potion) {
-        return Arrays.binarySearch(VANILLA_POTIONS, potion) < 0;
+        return Arrays.binarySearch(VANILLA_POTIONS, potion,
+            new Comparator<Potion>() {
+                @Override
+                public int compare(Potion o1, Potion o2) {
+                    return o2.getId() - o1.getId();
+                }
+            }) < 0;
     }
 
     /**
