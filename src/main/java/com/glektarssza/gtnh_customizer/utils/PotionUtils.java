@@ -281,7 +281,7 @@ public class PotionUtils {
     /**
      * Try to check if a potion is a negative potion by its potion effect.
      *
-     * @param id The potion effect to check.
+     * @param potionEffect The potion effect to check.
      *
      * @return {@code true} if the potion is a negative potion, {@code false} if
      *         it is not, an empty {@link Optional} otherwise.
@@ -350,7 +350,7 @@ public class PotionUtils {
     /**
      * Try to check if a potion is a positive potion by its potion effect.
      *
-     * @param id The potion effect to check.
+     * @param potionEffect The potion effect to check.
      *
      * @return {@code true} if the potion is a positive potion, {@code false} if
      *         it is not, an empty {@link Optional} otherwise.
