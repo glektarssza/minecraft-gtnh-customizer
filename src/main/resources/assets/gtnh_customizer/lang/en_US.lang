@@ -83,6 +83,11 @@ gtnh_customizer.commands.cure.error.not_enough_arguments=Not enough arguments!
 gtnh_customizer.commands.cure.info.success=Successfully cured effect(s)!
 gtnh_customizer.commands.cure.info.admin_notify.self=Player '%s' cured '%d' %s effects from themselves.
 gtnh_customizer.commands.cure.info.admin_notify.other=Player '%s' cured '%d' %s effects from player '%s'.
+gtnh_customizer.commands.cure.args.negative=negative
+gtnh_customizer.commands.cure.args.positive=positive
+gtnh_customizer.commands.cure.args.modded=modded
+gtnh_customizer.commands.cure.args.vanilla=vanilla
+gtnh_customizer.commands.cure.args.all=all
 
 # Keybinds
 key.categories.gtnh_customizer=GTNH Customizer

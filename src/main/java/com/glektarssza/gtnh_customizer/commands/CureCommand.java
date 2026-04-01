@@ -318,7 +318,11 @@ public class CureCommand extends CommandBase {
                     "gtnh_customizer.commands.cure.info.admin_notify.self",
                     new Object[] {
                         sender.getCommandSenderName(),
-                        statusEffects.size()
+                        statusEffects.size(),
+                        new ChatComponentTranslation(
+                            "gtnh_customizer.commands.cure.args."
+                                + target.commandValue)
+                            .getUnformattedText()
                     });
             } else {
                 func_152373_a(sender, this,
@@ -326,6 +330,10 @@ public class CureCommand extends CommandBase {
                     new Object[] {
                         sender.getCommandSenderName(),
                         statusEffects.size(),
+                        new ChatComponentTranslation(
+                            "gtnh_customizer.commands.cure.args."
+                                + target.commandValue)
+                            .getUnformattedText(),
                         victim.getDisplayName()
                     });
             }
