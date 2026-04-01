@@ -92,7 +92,7 @@ public class PotionUtils {
                 public int compare(Potion o1, Potion o2) {
                     return o2.getId() - o1.getId();
                 }
-            }) >= 0;
+            }) < 0;
     }
 
     /**
@@ -164,7 +164,7 @@ public class PotionUtils {
                 public int compare(Potion o1, Potion o2) {
                     return o2.getId() - o1.getId();
                 }
-            }) < 0;
+            }) >= 0;
     }
 
     /**
