@@ -4,7 +4,8 @@
 
 ### Features ###
 
-* Added numpad support to the ServerUtilities `TextBox` class.
+* Enabled using the numpad across all ServerUtilities text boxes.
+* Added a `/cure` command for curing various types of potion effects.
 
 ### Bug Fixes ###
 
