@@ -27,6 +27,7 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
+import com.glektarssza.gtnh_customizer.commands.CureCommand;
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.RepairCommand;
@@ -164,6 +165,7 @@ public class CommonProxy {
         event.registerServerCommand(new ListDimensionsCommand());
         event.registerServerCommand(new RepairCommand());
         event.registerServerCommand(new ExtinguishCommand());
+        event.registerServerCommand(new CureCommand());
         LOGGER.info("Done registering custom commands for {}!", Tags.MOD_NAME);
         LOGGER.info("Done handling server about to start for {}!",
             Tags.MOD_NAME);
