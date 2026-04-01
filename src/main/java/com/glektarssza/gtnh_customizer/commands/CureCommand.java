@@ -329,6 +329,7 @@ public class CureCommand extends CommandBase {
                         victim.getDisplayName()
                     });
             }
+            return;
         }
         throw new WrongUsageException(
             "gtnh_customizer.commands.cure.error.wrong_usage",
