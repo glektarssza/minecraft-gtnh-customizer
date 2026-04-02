@@ -22,6 +22,7 @@ import net.minecraft.util.EnumChatFormatting;
 
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.PotionUtils;
+import com.glektarssza.gtnh_customizer.utils.extensions.IPotionExtensions;
 
 /**
  * A command which provides the ability to cure various status effects from the
@@ -287,13 +288,15 @@ public class CureCommand extends CommandBase {
             switch (target) {
                 case Negative:
                     statusEffects.removeIf(
-                        (effect) -> !Potion.potionTypes[effect.getPotionID()]
-                            .isBadEffect());
+                        (effect) -> !((IPotionExtensions) (Object) Potion.potionTypes[effect
+                            .getPotionID()])
+                            .isNegativeEffectFor(victim));
                     break;
                 case Positive:
                     statusEffects.removeIf(
-                        (effect) -> Potion.potionTypes[effect.getPotionID()]
-                            .isBadEffect());
+                        (effect) -> ((IPotionExtensions) (Object) Potion.potionTypes[effect
+                            .getPotionID()])
+                            .isNegativeEffectFor(victim));
                     break;
                 case Modded:
                     statusEffects.removeIf(PotionUtils::isVanillaByEffect);
