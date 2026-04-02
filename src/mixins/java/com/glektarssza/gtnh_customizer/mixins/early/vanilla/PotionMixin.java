@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.potion.Potion;
 
@@ -23,19 +23,19 @@ public class PotionMixin implements IPotionExtensions {
      * Check whether the potion gives a negative/bad effect for the living
      * entity.
      *
-     * @param entityLiving The living entity which would be targeted by the
-     *        potion's effect.
+     * @param entity The living entity which would be targeted by the potion's
+     *        effect.
      *
      * @return {@code true} if the potion's effect would be negative for the
      *         living entity, {@code false} otherwise.
      */
     @Override
-    public boolean isNegativeEffectFor(EntityLiving entityLiving) {
+    public boolean isNegativeEffectFor(Entity entity) {
         Potion self = (Potion) (Object) this;
-        if (!(entityLiving instanceof EntityMob)) {
+        if (!(entity instanceof EntityMob)) {
             return this.isBadEffect;
         }
-        EntityMob mob = (EntityMob) entityLiving;
+        EntityMob mob = (EntityMob) entity;
         // -- Undead mobs heal from damaging effects and are harmed by healing
         // -- effects, except Wither which is just painful period!
         if (!mob.isEntityUndead() &&
