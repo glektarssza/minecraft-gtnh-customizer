@@ -79,6 +79,7 @@ keybinds
 knockback
 leveled
 liberica
+libs
 ljava
 lnet
 lorg

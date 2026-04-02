@@ -7,7 +7,7 @@ on:
         description: |
           The NodeJS version to use.
 
-          Defaults to "latest".
+          Defaults to 'latest'.
         type: string
         required: false
         default: latest
@@ -15,7 +15,7 @@ on:
         description: |
           The NodeJS package manager to use.
 
-          Defaults to "pnpm".
+          Defaults to 'pnpm'.
         type: choice
         required: false
         options:
@@ -27,7 +27,7 @@ on:
         description: |
           The NodeJS package manager version to use.
 
-          Defaults to "latest".
+          Defaults to 'latest'.
         type: string
         required: false
         default: latest
