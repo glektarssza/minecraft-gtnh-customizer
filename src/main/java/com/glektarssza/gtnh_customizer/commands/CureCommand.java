@@ -294,8 +294,9 @@ public class CureCommand extends CommandBase {
                     break;
                 case Positive:
                     statusEffects.removeIf(
-                        (effect) -> Potion.potionTypes[effect.getPotionID()]
-                            .isBadEffect());
+                        (effect) -> ((IPotionExtensions) (Object) Potion.potionTypes[effect
+                            .getPotionID()])
+                            .isNegativeEffectFor(victim));
                     break;
                 case Modded:
                     statusEffects.removeIf(PotionUtils::isVanillaByEffect);
