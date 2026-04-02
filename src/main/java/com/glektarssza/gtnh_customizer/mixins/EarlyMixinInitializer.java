@@ -68,6 +68,7 @@ public class EarlyMixinInitializer
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
         // -- Vanilla mixins
+
         mixins.add("vanilla.EntityAIArrowAttackMixin");
         mixins.add("vanilla.EntityAIAttackOnCollideMixin");
         mixins.add("vanilla.EntityAICreeperSwellMixin");
@@ -86,6 +87,7 @@ public class EarlyMixinInitializer
         mixins.add("vanilla.EntitySilverfishMixin");
         mixins.add("vanilla.EntitySpiderMixin");
         mixins.add("vanilla.EntityWitherMixin");
+        mixins.add("vanilla.PotionMixin");
         mixins.add("vanilla.WorldMixin");
         return mixins;
     }
