@@ -20,7 +20,7 @@ on:
         description: |
           The Java vendor to use.
 
-          Defaults to `temurin`.
+          Defaults to 'temurin'.
         type: string
         required: false
         default: temurin
@@ -28,8 +28,8 @@ on:
         description: |
           The Java version to use.
 
-          Defaults to `version-file` to use the version found in the
-          `.java-version` file present in the project.
+          Defaults to 'version-file' to use the version found in the
+          '.java-version' file present in the project.
         type: string
         required: false
         default: version-file
@@ -37,7 +37,7 @@ on:
         description: |
           The Gradle version to use.
 
-          Defaults to `wrapper` to use version of the Gradle wrapper present in
+          Defaults to 'wrapper' to use version of the Gradle wrapper present in
           the project.
         type: string
         required: false
@@ -46,7 +46,7 @@ on:
         description: |
           The duration, in days, to retain artifacts for.
 
-          Defaults to `0` which defaults to the value configured for the
+          Defaults to '0' which defaults to the value configured for the
           repository.
         type: number
         required: false
@@ -99,10 +99,12 @@ jobs:
           java-version: ${{steps.read-java-version.outputs.java-version}}
       - id: setup-gradle
         name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
         with:
           github-token: ${{secrets.github-token || secrets.GITHUB_TOKEN}}
           gradle-version: ${{inputs.gradle-version}}
+          cache-cleanup: on-success
+          gradle-home-cache-cleanup: true
       - id: setup-ci-workspace
         name: Setup CI Workspace
         run: ./gradlew setupCIWorkspace
