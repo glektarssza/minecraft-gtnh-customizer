@@ -1,8 +1,5 @@
 {
     "recommendations": [
-        "github.remotehub",
-        "github.vscode-pull-request-github",
-        "github.vscode-github-actions",
         "editorconfig.editorconfig",
         "redhat.java",
         "vscjava.vscode-java-dependency",
