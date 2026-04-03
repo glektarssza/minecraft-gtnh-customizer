@@ -1,6 +1,6 @@
-# yaml-language-server: $schema=https://json.schemastore.org/github-issue-forms.json
+# yaml-language-server: $schema=https://json.schemastore.org/gitea-issue-forms.json
 name: Bug Report
-description: Report a bug in the project.
+about: Report a bug in the project.
 title: '[Bug] '
 labels:
   - Bug
