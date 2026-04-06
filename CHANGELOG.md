@@ -7,6 +7,11 @@
 * Enabled using the numpad across all ServerUtilities text boxes.
 * Added a `/cure` command for curing various types of potion effects.
 
+### Minor Changes ###
+
+* Pointed mod to new Forgejo repository home.
+* Updated mod logo.
+
 ### Bug Fixes ###
 
 * Fixed some issues with mixins that were causing injections to not properly get
