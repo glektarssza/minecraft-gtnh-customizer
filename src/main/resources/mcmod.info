@@ -5,7 +5,7 @@
         "description": "A mod that customizes Gregtech: New Horizons to my personal preferences. Fully customizable!",
         "version": "${modVersion}",
         "mcversion": "${minecraftVersion}",
-        "url": "https://github.com/glektarssza/minecraft-gtnh-customizer",
+        "url": "https://git.disroot.org/glektarssza-mc-modding/minecraft-gtnh-customizer",
         "updateUrl": "https://git.disroot.org/glektarssza-mc-modding/minecraft-gtnh-customizer/raw/branch/main/forgeUpdateManifest.json",
         "authorList": [
             "G'lek Tarssza"
