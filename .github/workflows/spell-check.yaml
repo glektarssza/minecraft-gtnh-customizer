@@ -73,7 +73,7 @@ jobs:
       - id: setup-pnpm-package-manager
         name: Setup NodeJS Package Manager
         if: inputs.package-manager == 'pnpm'
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
         with:
           version: ${{inputs.package-manager-version}}
           run_install: false
