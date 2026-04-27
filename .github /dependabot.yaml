@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
+version: 2
+multi-ecosystem-groups:
+  weekly-production-dependency-updates:
+    dependency-type: production
+    labels:
+      - Dependency
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: '12:00'
+      timezone: Canada/Mountain
+  weekly-development-dependency-updates:
+    dependency-type: development
+    labels:
+      - Dependency
+    schedule:
+      interval: weekly
+      day: wednesday
+      time: '12:00'
+      timezone: Canada/Mountain
+updates:
+  - directory: /
+    package-ecosystem: gradle
+    multi-ecosystem-group: weekly-production-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-production-dependency-security-updates:
+        applies-to: security-updates
+        dependency-type: production
+        group-by: dependency-name
+        patterns: ['*']
+        exclude-patterns: ['gradle-wrapper']
+  - directory: /
+    package-ecosystem: gradle
+    multi-ecosystem-group: weekly-development-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-development-dependency-security-updates:
+        applies-to: security-updates
+        dependency-type: development
+        group-by: dependency-name
+        patterns: ['*']
+        exclude-patterns: ['gradle-wrapper']
+  - directory: /
+    package-ecosystem: gradle
+    multi-ecosystem-group: weekly-production-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-production-dependency-version-updates:
+        applies-to: version-updates
+        dependency-type: production
+        group-by: dependency-name
+        patterns: ['*']
+        exclude-patterns: ['gradle-wrapper']
+  - directory: /
+    package-ecosystem: gradle
+    multi-ecosystem-group: weekly-development-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-development-dependency-version-updates:
+        applies-to: version-updates
+        dependency-type: development
+        group-by: dependency-name
+        patterns: ['*']
+        exclude-patterns: ['gradle-wrapper']
+  - directory: ./.github/
+    package-ecosystem: github-actions
+    multi-ecosystem-group: weekly-production-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-production-dependency-security-updates:
+        applies-to: security-updates
+        dependency-type: production
+        group-by: dependency-name
+        patterns: ['*']
+  - directory: ./.github/
+    package-ecosystem: github-actions
+    multi-ecosystem-group: weekly-development-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-development-dependency-security-updates:
+        applies-to: security-updates
+        dependency-type: development
+        group-by: dependency-name
+        patterns: ['*']
+  - directory: ./.github/
+    package-ecosystem: github-actions
+    multi-ecosystem-group: weekly-production-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-production-dependency-version-updates:
+        applies-to: version-updates
+        dependency-type: production
+        group-by: dependency-name
+        patterns: ['*']
+  - directory: ./.github/
+    package-ecosystem: github-actions
+    multi-ecosystem-group: weekly-development-dependency-updates
+    patterns: ['*']
+    groups:
+      weekly-development-dependency-version-updates:
+        applies-to: version-updates
+        dependency-type: development
+        group-by: dependency-name
+        patterns: ['*']
