@@ -34,7 +34,6 @@ public class TypeHelpersTests {
     /**
      * The fake data source.
      */
-    @SuppressWarnings("unused")
     @Nonnull
     private static Faker fakeData = new Faker(Locale.CANADA);
 
