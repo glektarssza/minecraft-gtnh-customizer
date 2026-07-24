@@ -1,5 +1,11 @@
 # Changelog #
 
+## 0.17.0 ##
+
+### Technical ###
+
+* Updated all dependencies for GTNH 2.9.x (which is now in beta release).
+
 ## 0.16.0 ##
 
 ### Features ###
