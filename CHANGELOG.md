@@ -1,5 +1,15 @@
 # Changelog #
 
+## 0.17.0 ##
+
+### Major Changes ###
+
+* GTNH 2.9.x (which is now in beta release) compatibility update.
+
+### Minor Changes ###
+
+* Pointed mod back to GitHub repository.
+
 ## 0.16.0 ##
 
 ### Features ###
