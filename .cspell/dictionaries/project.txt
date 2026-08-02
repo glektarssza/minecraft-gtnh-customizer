@@ -1,6 +1,7 @@
 aabb
 adoptium
 appcds
+asexplicit
 assertj
 assetmover
 attackable
@@ -64,12 +65,14 @@ gtnhlib
 gtnhmixins
 gtnhsettingsconvention
 harvestability
+hookspath
 hotbar
 hotspot
 ifml
 importorder
 infi
 invincibles
+iregex
 jabel
 javac
 javax
@@ -104,10 +107,12 @@ mixinextras
 modid
 modrinth
 mojang
+mpre
 mymodid
 nbtedit
 netrwhist
 nevermine
+noconfirm
 nonnull
 nonnullbydefault
 numpad
@@ -115,6 +120,7 @@ numpadcomma
 numpadenter
 numpadequals
 openj
+pacman
 pigman
 pigmen
 pipx
@@ -129,6 +135,7 @@ reobf
 reobfuscated
 retrofuturagradle
 rong
+safecrlf
 sapmachine
 sarif
 semeru
