@@ -21,7 +21,7 @@ test {
 }
 
 checkstyle {
-    toolVersion = "13.4.0"
+    toolVersion = "13.8.0"
 }
 
 minecraft {
