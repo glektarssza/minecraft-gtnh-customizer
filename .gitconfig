@@ -1,0 +1,6 @@
+[core]
+    # Prevents encoding/line ending issues!
+    autocrlf = false
+    # Warn about EOL issues.
+	safecrlf = warn
+    hookspath = ".hooks/git/"
