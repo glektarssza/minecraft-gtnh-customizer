@@ -12,8 +12,6 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.biome.BiomeGenBase;
 
-import cpw.mods.fml.relauncher.Side;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +23,6 @@ import xaero.map.MapProcessor;
 import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
 
-import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
@@ -36,6 +33,7 @@ public class GuiMapMixins {
      * The logger for this class.
      */
     @Nonnull
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -76,12 +74,6 @@ public class GuiMapMixins {
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z", remap = false)))
     public void drawScreen$addMousedOverBiome(CallbackInfo ci) {
-        if (GTNHCustomizer.getProxy().getSide() != Side.CLIENT) {
-            GTNHCustomizer.emitTrackedWarning(LOGGER,
-                "XAERO_WORLD_MAP_NOT_CLIENT_SIDE",
-                (logger) -> logger.warn(
-                    "Xaero's World Map mixin is being called from the server side!"));
-        }
         if (!Config.getXaerosWorldMapShowHoveredBiome()) {
             return;
         }
