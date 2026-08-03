@@ -35,7 +35,7 @@ import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
-import serverutils.events.ServerUtilitiesPreInitRegistryEvent;
+import serverutils.ServerUtilitiesRegistry;
 import thaumcraft.common.blocks.BlockCustomPlant;
 
 /**
@@ -124,6 +124,7 @@ public class CommonProxy {
         MinecraftForge.EVENT_BUS.register(this);
         // -- OnConfigChangedEvent comes in through here
         FMLCommonHandler.instance().bus().register(this);
+        this.serverUtilitiesPreInit();
         LOGGER.info("Done pre-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
@@ -168,32 +169,6 @@ public class CommonProxy {
         event.registerServerCommand(new CureCommand());
         LOGGER.info("Done registering custom commands for {}!", Tags.MOD_NAME);
         LOGGER.info("Done handling server about to start for {}!",
-            Tags.MOD_NAME);
-    }
-
-    /**
-     * Handle the Server Utilities mod pre-initialization registry event.
-     *
-     * @param event The incoming event.
-     */
-    @SubscribeEvent
-    public void serverUtilitiesPreInitRegistry(
-        ServerUtilitiesPreInitRegistryEvent event) {
-        LOGGER.info(
-            "Pre-initializing server/common-side of Server Utilities stuff for {}...",
-            Tags.MOD_NAME);
-        event.getRegistry().registerServerReloadHandler(
-            new ResourceLocation(Tags.MOD_ID, "config"),
-            reloadEvent -> {
-                try {
-                    Config.sync();
-                } catch (Throwable t) {
-                    return false;
-                }
-                return true;
-            });
-        LOGGER.info(
-            "Done pre-initializing server/common-side of Server Utilities stuff for {}!",
             Tags.MOD_NAME);
     }
 
@@ -254,5 +229,29 @@ public class CommonProxy {
         }
         Config.refresh();
         Config.save();
+    }
+
+    /**
+     * Handle the Server Utilities mod pre-initialization registry event.
+     *
+     * @param event The incoming event.
+     */
+    private void serverUtilitiesPreInit() {
+        LOGGER.info(
+            "Pre-initializing server/common-side of Server Utilities stuff for {}...",
+            Tags.MOD_NAME);
+        ServerUtilitiesRegistry.registerServerReloadHandler(
+            new ResourceLocation(Tags.MOD_ID, "config"),
+            reloadEvent -> {
+                try {
+                    Config.sync();
+                } catch (Throwable t) {
+                    return false;
+                }
+                return true;
+            });
+        LOGGER.info(
+            "Done pre-initializing server/common-side of Server Utilities stuff for {}!",
+            Tags.MOD_NAME);
     }
 }
