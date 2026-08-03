@@ -263,8 +263,8 @@ public class RepairCommand extends CommandBase {
                             // -- `backhand` mod is available
                             .filter((target) -> target != ItemTarget.Offhand
                                 || Loader.isModLoaded("backhand"))
-                            .map(ItemTarget::toString)
-                            .map(String::toLowerCase)
+                            .map((itemTarget) -> itemTarget.toString())
+                            .map((str) -> str.toLowerCase())
                             .collect(Collectors.toList()));
                 }
                 return result;
@@ -275,8 +275,8 @@ public class RepairCommand extends CommandBase {
                 }
                 result = new ArrayList<String>(
                     Arrays.stream(ItemTarget.values())
-                        .map(ItemTarget::toString)
-                        .map(String::toLowerCase)
+                        .map((itemTarget) -> itemTarget.toString())
+                        .map((str) -> str.toLowerCase())
                         .collect(Collectors.toList()));
                 return result;
             default:
@@ -303,8 +303,8 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[1],
                         Arrays.stream(ItemTarget.values())
-                            .map(ItemTarget::toString)
-                            .map(String::toLowerCase)
+                            .map((itemTarget) -> itemTarget.toString())
+                            .map((str) -> str.toLowerCase())
                             .collect(Collectors.joining(", "))
                     });
             }
@@ -317,8 +317,8 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[0],
                         Arrays.stream(ItemTarget.values())
-                            .map(ItemTarget::toString)
-                            .map(String::toLowerCase)
+                            .map((itemTarget) -> itemTarget.toString())
+                            .map((str) -> str.toLowerCase())
                             .collect(Collectors.joining(", "))
                     });
             }
