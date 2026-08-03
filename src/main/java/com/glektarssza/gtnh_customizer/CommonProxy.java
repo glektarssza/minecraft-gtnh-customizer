@@ -233,8 +233,6 @@ public class CommonProxy {
 
     /**
      * Handle the Server Utilities mod pre-initialization registry event.
-     *
-     * @param event The incoming event.
      */
     private void serverUtilitiesPreInit() {
         LOGGER.info(
