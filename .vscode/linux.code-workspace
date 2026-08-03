@@ -66,6 +66,7 @@
             "cpw.mods",
             "net.minecraftforge",
             "org.spongepowered",
+            "xaero",
             "com.glektarssza"
         ],
         "java.completion.lazyResolveTextEdit.enabled": false,
