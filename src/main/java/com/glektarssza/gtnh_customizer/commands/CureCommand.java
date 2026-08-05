@@ -101,6 +101,7 @@ public class CureCommand extends CommandBase {
          *         {@code null} otherwise.
          */
         @Nullable
+        @SuppressWarnings("null")
         public static StatusEffectGroup tryGetFromCommandArgument(
             String argument) {
             return Arrays.stream(StatusEffectGroup.values())

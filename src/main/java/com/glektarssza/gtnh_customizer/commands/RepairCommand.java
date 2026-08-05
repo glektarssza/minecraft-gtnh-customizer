@@ -147,6 +147,7 @@ public class RepairCommand extends CommandBase {
          *         {@code null} otherwise.
          */
         @Nullable
+        @SuppressWarnings("null")
         public static ItemTarget tryGetFromCommandArgument(String argument) {
             return Arrays.stream(ItemTarget.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))

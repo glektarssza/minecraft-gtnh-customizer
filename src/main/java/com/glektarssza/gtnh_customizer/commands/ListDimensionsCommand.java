@@ -99,6 +99,7 @@ public class ListDimensionsCommand extends CommandBase {
      * @param args The command arguments.
      */
     @Override
+    @SuppressWarnings("null")
     public void processCommand(ICommandSender sender, String[] args) {
         Integer limit = null;
         List<String> filters = new ArrayList<String>();
