@@ -212,6 +212,7 @@ public abstract class Property<T> {
      *
      * @param config The Forge configuration to register this property on to.
      */
+    @SuppressWarnings("null")
     public void registerForgeConfigCategory(Configuration config) {
         net.minecraftforge.common.config.Property prop;
         switch (this.getValueType()) {

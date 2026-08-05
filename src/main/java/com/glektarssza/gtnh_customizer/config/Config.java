@@ -473,7 +473,6 @@ public class Config {
      *
      * @return A list of the main level configuration categories.
      */
-    @SuppressWarnings("null")
     public static List<ConfigCategory> getTopLevelCategories() {
         if (configInstance == null) {
             return Collections.emptyList();
@@ -587,7 +586,6 @@ public class Config {
     /**
      * Refresh the configuration data from the in-memory data.
      */
-    @SuppressWarnings("null")
     public static void refresh() {
         if (configInstance == null) {
             LOGGER.error("Cannot load configuration!");
@@ -701,7 +699,6 @@ public class Config {
     /**
      * Load the configuration data from disk.
      */
-    @SuppressWarnings("null")
     public static void load() {
         if (configInstance == null) {
             LOGGER.error("Cannot load configuration!");
