@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api.functional;
+package com.glektarssza.gtnh_customizer.api.functional.consumers;
 
 /**
  * A function that takes two arguments and returns no value.

@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api.functional;
+package com.glektarssza.gtnh_customizer.api.functional.suppliers;
 
 /**
  * A function that takes no arguments and returns a value.
