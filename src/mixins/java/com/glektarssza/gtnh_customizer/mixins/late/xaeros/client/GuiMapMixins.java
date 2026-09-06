@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.biome.BiomeGenBase;
 
@@ -22,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import xaero.map.MapProcessor;
 import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
+import xaero.map.region.MapBlock;
+import xaero.map.region.MapTile;
 
 import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.config.Config;
@@ -77,15 +78,23 @@ public class GuiMapMixins {
         if (!Config.getXaerosWorldMapShowHoveredBiome()) {
             return;
         }
-        WorldClient world = this.mapProcessor.getWorld();
-        if (world == null) {
+        MapTile chunk = this.mapProcessor.getMapTile(this.mouseBlockPosX >> 4,
+            this.mouseBlockPosZ >> 4);
+        if (chunk == null) {
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
-        BiomeGenBase biomeGen = world.getBiomeGenForCoords(this.mouseBlockPosX,
+        MapBlock block = chunk.getBlock(this.mouseBlockPosX,
             this.mouseBlockPosZ);
-        if (biomeGen == null) {
+        if (block == null) {
+            this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
+                "gtnh_customizer.xaeros_world_map.biome_unknown")));
+            return;
+        }
+        int biomeId = block.getBiome();
+        BiomeGenBase biomeGen = BiomeGenBase.getBiome(biomeId);
+        if (biomeGen.biomeID <= 0) {
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
@@ -96,6 +105,6 @@ public class GuiMapMixins {
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
-        this.drawBiomeName(TypeHelpers.castToNonNull(biomeGen.biomeName));
+        this.drawBiomeName(TypeHelpers.castToNonNull(biomeName));
     }
 }
