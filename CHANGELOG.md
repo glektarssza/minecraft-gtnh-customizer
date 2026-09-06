@@ -1,5 +1,12 @@
 # Changelog #
 
+## 0.18.0 ##
+
+### Technical ###
+
+* Updated GTNH build scripts to v2.0.29.
+* Updated all project dependencies to their latest versions.
+
 ## 0.17.0 ##
 
 ### Major Changes ###
