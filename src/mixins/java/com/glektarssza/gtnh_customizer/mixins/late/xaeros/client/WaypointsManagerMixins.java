@@ -36,7 +36,7 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
  * Mixin for the {@link WaypointsManager} class.
  */
 @Mixin(WaypointsManager.class)
-public class WaypointsManagerMixins {
+public abstract class WaypointsManagerMixins {
     /**
      * The logger for this class.
      */
@@ -65,7 +65,7 @@ public class WaypointsManagerMixins {
     }
 
     @Shadow(remap = false)
-    public WaypointWorld getAutoWorld();
+    public abstract WaypointWorld getAutoWorld();
 
     /**
      * Inject into the {@link WaypointsManager#canTeleport} method.
