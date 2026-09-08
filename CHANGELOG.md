@@ -2,6 +2,11 @@
 
 ## 0.18.0 ##
 
+## Features ##
+
+* Enabled support in Xaero's mods for cross-dimension teleportation when a valid
+  sub-world connection is detected.
+
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.29.
