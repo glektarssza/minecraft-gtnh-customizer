@@ -41,6 +41,7 @@ public abstract class WaypointsManagerMixins {
      * The logger for this class.
      */
     @Nonnull
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -64,6 +65,11 @@ public abstract class WaypointsManagerMixins {
             .getRootContainer();
     }
 
+    /**
+     * A shadow of the {@link WaypointsManager#getAutoWorld} method.
+     *
+     * @return The auto waypoint world.
+     */
     @Shadow(remap = false)
     public abstract WaypointWorld getAutoWorld();
 
@@ -76,7 +82,7 @@ public abstract class WaypointsManagerMixins {
      *        waypoints manager.
      * @param cir The callback return information.
      */
-    @Inject(method = "canTeleport", at = @At("TAIL"), remap = false)
+    @Inject(method = "canTeleport", at = @At("TAIL"), cancellable = true, remap = false)
     private void canTeleport$extendCheckToSubWorlds(
         boolean displayingTeleportableWorld,
         WaypointWorld displayedWorld, CallbackInfoReturnable<Boolean> cir) {
@@ -85,8 +91,9 @@ public abstract class WaypointsManagerMixins {
         }
         WaypointWorldConnectionManager subConnectionManager = getRootWorldContainer(
             displayedWorld).getSubWorldConnections();
-        cir.setReturnValue(subConnectionManager.isConnected(displayedWorld,
-            this.getAutoWorld()));
+        boolean hasConnection = subConnectionManager.isConnected(displayedWorld,
+            this.getAutoWorld());
+        cir.setReturnValue(hasConnection);
     }
 
     /**
