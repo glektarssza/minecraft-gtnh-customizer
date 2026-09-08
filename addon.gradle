@@ -1,3 +1,5 @@
+import com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask;
+
 compileJava.options.encoding = "UTF-8"
 
 eclipse {
@@ -29,6 +31,20 @@ minecraft {
     injectedTags.put("MOD_NAME", modName)
     injectedTags.put("MOD_VERSION", modVersion)
     injectedTags.put("MOD_DEPENDENCIES", modDependencies)
+}
+
+tasks.withType(RunHotswappableMinecraftTask) {
+    extraJvmArgs = []
+    if (new Boolean(project.findProperty("disableMixinValidation"))) {
+        extraJvmArgs.addAll([
+            "-Dmixin.debug=true",
+            "-Dmixin.debug.verbose=true",
+            "-Dmixin.env.ignoreRequired=true"
+        ])
+    }
+    if (new Boolean(project.findProperty("enableDebugMCLogging"))) {
+        extraJvmArgs.addAll(["-Dlog4j.configurationFile=file://${new File(project.projectDir, "log4j2-debug.xml").absolutePath}"])
+    }
 }
 
 publishing {

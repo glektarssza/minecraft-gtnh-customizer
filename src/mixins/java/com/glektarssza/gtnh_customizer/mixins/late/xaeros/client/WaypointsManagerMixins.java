@@ -16,11 +16,16 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import xaero.common.minimap.waypoints.Waypoint;
 import xaero.common.minimap.waypoints.WaypointWorld;
+import xaero.common.minimap.waypoints.WaypointWorldConnectionManager;
+import xaero.common.minimap.waypoints.WaypointWorldRootContainer;
 import xaero.common.minimap.waypoints.WaypointsManager;
 
 import com.glektarssza.gtnh_customizer.Tags;
@@ -31,11 +36,12 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
  * Mixin for the {@link WaypointsManager} class.
  */
 @Mixin(WaypointsManager.class)
-public class WaypointsManagerMixins {
+public abstract class WaypointsManagerMixins {
     /**
      * The logger for this class.
      */
     @Nonnull
+    @SuppressWarnings("unused")
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -45,6 +51,50 @@ public class WaypointsManagerMixins {
      */
     private static final Pattern COMMAND_PARAMETER_PATTERN = Pattern
         .compile("\\{([a-zA-Z]+)\\}");
+
+    /**
+     * Get the root world container for the given waypoint world.
+     *
+     * @param world The waypoint world to get the root world container for.
+     *
+     * @return The root world container for the given waypoint world.
+     */
+    private static WaypointWorldRootContainer getRootWorldContainer(
+        WaypointWorld world) {
+        return (WaypointWorldRootContainer) world.getContainer()
+            .getRootContainer();
+    }
+
+    /**
+     * A shadow of the {@link WaypointsManager#getAutoWorld} method.
+     *
+     * @return The auto waypoint world.
+     */
+    @Shadow(remap = false)
+    public abstract WaypointWorld getAutoWorld();
+
+    /**
+     * Inject into the {@link WaypointsManager#canTeleport} method.
+     *
+     * @param displayingTeleportableWorld Whether the waypoints manager is
+     *        display a world that can be teleported to.
+     * @param displayedWorld The world that is currently being displayed in the
+     *        waypoints manager.
+     * @param cir The callback return information.
+     */
+    @Inject(method = "canTeleport", at = @At("TAIL"), cancellable = true, remap = false)
+    private void canTeleport$extendCheckToSubWorlds(
+        boolean displayingTeleportableWorld,
+        WaypointWorld displayedWorld, CallbackInfoReturnable<Boolean> cir) {
+        if (cir.getReturnValue()) {
+            return;
+        }
+        WaypointWorldConnectionManager subConnectionManager = getRootWorldContainer(
+            displayedWorld).getSubWorldConnections();
+        boolean hasConnection = subConnectionManager.isConnected(displayedWorld,
+            this.getAutoWorld());
+        cir.setReturnValue(hasConnection);
+    }
 
     /**
      * Redirect the invocation of the
@@ -58,7 +108,7 @@ public class WaypointsManagerMixins {
      * @param displayedWorld The displayed world local parameter.
      * @param tpCommandPrefix The teleport command prefix local parameter.
      */
-    @Redirect(method = "teleportToWaypoint(Lxaero/common/minimap/waypoints/Waypoint;Lxaero/common/minimap/waypoints/WaypointWorld;Lnet/minecraft/client/gui/GuiScreen;Z)V", at = @At(value = "INVOKE", target = "net.minecraft.client.entity.EntityClientPlayerMP.sendChatMessage(Ljava/lang/String;)V"))
+    @Redirect(method = "teleportToWaypoint(Lxaero/common/minimap/waypoints/Waypoint;Lxaero/common/minimap/waypoints/WaypointWorld;Lnet/minecraft/client/gui/GuiScreen;Z)V", at = @At(value = "INVOKE", target = "net.minecraft.client.entity.EntityClientPlayerMP.sendChatMessage(Ljava/lang/String;)V"), remap = false)
     private void teleportToWaypoint$overrideSendTeleportCommand(
         EntityClientPlayerMP player, String originalTeleportCommand,
         @Local(name = "x") int x, @Local(name = "z") int z,
