@@ -152,6 +152,8 @@ srgify
 stdlib
 tarssza
 tconstruct
+teleportable
+teleported
 teleporter
 teleporting
 temurin
