@@ -69,6 +69,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             LOGGER.debug(
                 "Found Xaero's Minimap and running on a client, adding mixins!");
+            mixins.add("xaeros.client.GuiWaypointsMixins");
             mixins.add("xaeros.client.WaypointsManagerMixins");
         }
         if (loadedMods.contains("XaeroWorldMap")
