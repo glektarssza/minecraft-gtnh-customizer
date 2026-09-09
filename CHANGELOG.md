@@ -7,6 +7,10 @@
 * Enabled support in Xaero's mods for cross-dimension teleportation when a valid
   sub-world connection is detected.
 
+## Improvements ##
+
+* Improved biome display in Xaero's World Map somewhat.
+
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.29.
