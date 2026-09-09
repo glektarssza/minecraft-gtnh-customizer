@@ -6,59 +6,67 @@
             "name": "Debug Client",
             "request": "attach",
             "hostName": "localhost",
-            "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient:debug"
+            "preLaunchTask": "gradle:runClient:debug",
+            "sourcePaths": [
+                "${workspaceFolder}/run/client/.mixin.out/java/**"
+            ]
         },
         {
             "type": "java",
             "name": "Debug Client (Obfuscated)",
             "request": "attach",
             "hostName": "localhost",
-            "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient:obfuscated:debug"
+            "preLaunchTask": "gradle:runClient:obfuscated:debug",
+            "sourcePaths": [
+                "${workspaceFolder}/run/client/.mixin.out/java/**"
+            ]
         },
         {
             "type": "java",
             "name": "Debug Client (Java 17)",
             "request": "attach",
             "hostName": "localhost",
-            "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient17:debug"
+            "preLaunchTask": "gradle:runClient17:debug",
+            "sourcePaths": [
+                "${workspaceFolder}/run/client/.mixin.out/java/**"
+            ]
         },
         {
             "type": "java",
             "name": "Debug Client (Java 21)",
             "request": "attach",
             "hostName": "localhost",
-            "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient21:debug"
+            "preLaunchTask": "gradle:runClient21:debug",
+            "sourcePaths": [
+                "${workspaceFolder}/run/client/.mixin.out/java/**"
+            ]
         },
         {
             "type": "java",
             "name": "Debug Client (Java 25)",
             "request": "attach",
             "hostName": "localhost",
-            "projectName": "minecraft-gtnh-customizer",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient25:debug"
+            "preLaunchTask": "gradle:runClient25:debug",
+            "sourcePaths": [
+                "${workspaceFolder}/run/client/.mixin.out/java/**"
+            ]
         },
         {
             "type": "java",
             "name": "Attach to Running Client",
             "request": "attach",
             "hostName": "localhost",
-            "projectName": "minecraft-gtnh-customizer",
             "port": "5005"
         },
         {
             "type": "java",
             "name": "Pick Running Client to Attach To",
             "request": "attach",
-            "projectName": "minecraft-gtnh-customizer",
             "processId": "${command:PickJavaProcess}"
         }
     ]
