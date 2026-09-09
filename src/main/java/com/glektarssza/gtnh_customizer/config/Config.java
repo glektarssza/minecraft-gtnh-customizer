@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -165,6 +166,42 @@ public class Config {
     public static void setImmunePlayers(String[] players) {
         clearImmunePlayers();
         globallyImmunePlayers.addAll(Arrays.asList(players));
+    }
+
+    /**
+     * Set the globally immune players.
+     *
+     * @param players A list of player UUIDs or names to set as globally immune.
+     */
+    public static void addImmunePlayer(String player) {
+        globallyImmunePlayers.add(player);
+    }
+
+    /**
+     * Set the globally immune players.
+     *
+     * @param players A list of player UUIDs or names to set as globally immune.
+     */
+    public static void addAllImmunePlayer(Collection<String> players) {
+        globallyImmunePlayers.addAll(players);
+    }
+
+    /**
+     * Set the globally immune players.
+     *
+     * @param players A list of player UUIDs or names to set as globally immune.
+     */
+    public static void removeImmunePlayer(String player) {
+        globallyImmunePlayers.remove(player);
+    }
+
+    /**
+     * Set the globally immune players.
+     *
+     * @param players A list of player UUIDs or names to set as globally immune.
+     */
+    public static void removeAllImmunePlayer(Collection<String> players) {
+        globallyImmunePlayers.removeAll(players);
     }
 
     /**
