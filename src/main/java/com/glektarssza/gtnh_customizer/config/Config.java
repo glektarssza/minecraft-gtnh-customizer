@@ -190,7 +190,7 @@ public class Config {
     /**
      * Set the globally immune players.
      *
-     * @param players A list of player UUIDs or names to set as globally immune.
+     * @param player A list of player UUIDs or names to set as globally immune.
      */
     public static void addImmunePlayer(String player) {
         globallyImmunePlayers.add(player);
@@ -210,7 +210,7 @@ public class Config {
     /**
      * Set the globally immune players.
      *
-     * @param players A list of player UUIDs or names to set as globally immune.
+     * @param player A list of player UUIDs or names to set as globally immune.
      */
     public static void removeImmunePlayer(String player) {
         globallyImmunePlayers.remove(player);
@@ -894,6 +894,7 @@ public class Config {
     /**
      * Save the configuration data to disk.
      */
+    @SuppressWarnings("null")
     public static void save() {
         if (configInstance == null) {
             LOGGER.error("Cannot save configuration!");
@@ -903,9 +904,7 @@ public class Config {
         commandsConfig.saveValues(configInstance);
         gameplayConfig.saveValues(configInstance);
         debuggingConfig.saveValues(configInstance);
-        if (configInstance != null) {
-            configInstance.save();
-        }
+        configInstance.save();
     }
 
     /**

@@ -252,11 +252,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     return;
                 case Remove:
                     if (playerId != null && Arrays.stream(immunePlayers)
-                        .anyMatch((player) -> player
-                            .equalsIgnoreCase(
-                                playerId.toString().toLowerCase()))) {
-                        Config.removeImmunePlayer(
-                            playerId.toString().toLowerCase());
+                        .anyMatch(
+                            (player) -> player.equalsIgnoreCase(playerId))) {
+                        Config.removeImmunePlayer(playerId);
                     }
                     if (Arrays.stream(immunePlayers).anyMatch((player) -> player
                         .equalsIgnoreCase(playerName))) {
