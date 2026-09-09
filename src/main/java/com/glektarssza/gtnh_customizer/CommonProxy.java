@@ -29,6 +29,7 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import com.glektarssza.gtnh_customizer.commands.CureCommand;
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
+import com.glektarssza.gtnh_customizer.commands.GTNHCustomizerCommand;
 import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.RepairCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
@@ -162,11 +163,7 @@ public class CommonProxy {
     public void serverStarting(FMLServerStartingEvent event) {
         LOGGER.info("Handling server about to start for {}...", Tags.MOD_NAME);
         LOGGER.info("Registering custom commands for {}...", Tags.MOD_NAME);
-        event.registerServerCommand(new TeleportCrossDimensionCommand());
-        event.registerServerCommand(new ListDimensionsCommand());
-        event.registerServerCommand(new RepairCommand());
-        event.registerServerCommand(new ExtinguishCommand());
-        event.registerServerCommand(new CureCommand());
+        this.registerCommands(event);
         LOGGER.info("Done registering custom commands for {}!", Tags.MOD_NAME);
         LOGGER.info("Done handling server about to start for {}!",
             Tags.MOD_NAME);
@@ -251,5 +248,19 @@ public class CommonProxy {
         LOGGER.info(
             "Done pre-initializing server/common-side of Server Utilities stuff for {}!",
             Tags.MOD_NAME);
+    }
+
+    /**
+     * Register custom commands.
+     *
+     * @param event The incoming event.
+     */
+    private void registerCommands(FMLServerStartingEvent event) {
+        event.registerServerCommand(new GTNHCustomizerCommand());
+        event.registerServerCommand(new TeleportCrossDimensionCommand());
+        event.registerServerCommand(new ListDimensionsCommand());
+        event.registerServerCommand(new RepairCommand());
+        event.registerServerCommand(new ExtinguishCommand());
+        event.registerServerCommand(new CureCommand());
     }
 }
