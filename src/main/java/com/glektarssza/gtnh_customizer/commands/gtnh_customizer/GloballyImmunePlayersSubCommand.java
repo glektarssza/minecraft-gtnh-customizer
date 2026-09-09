@@ -228,12 +228,15 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
             victim = CommandBase.getCommandSenderAsPlayer(sender);
         }
         if (action != null && victim != null) {
-            UUID playerId = victim.getGameProfile().getId();
+            final String[] immunePlayers = Config.getGloballyImmunePlayers();
+            final UUID playerUuid = victim.getGameProfile().getId();
+            final String playerId = playerUuid == null ? null
+                : playerUuid.toString().toLowerCase();
+            final String playerName = victim.getGameProfile().getName();
             switch (action) {
                 case Add:
                     Config.addImmunePlayer(
-                        playerId == null ? victim.getGameProfile().getName()
-                            : playerId.toString().toLowerCase());
+                        playerId == null ? playerName : playerId);
                     try {
                         Config.save();
                     } catch (Throwable t) {
@@ -248,9 +251,17 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                         });
                     return;
                 case Remove:
-                    Config.removeImmunePlayer(
-                        playerId == null ? victim.getGameProfile().getName()
-                            : playerId.toString().toLowerCase());
+                    if (playerId != null && Arrays.stream(immunePlayers)
+                        .anyMatch((player) -> player
+                            .equalsIgnoreCase(
+                                playerId.toString().toLowerCase()))) {
+                        Config.removeImmunePlayer(
+                            playerId.toString().toLowerCase());
+                    }
+                    if (Arrays.stream(immunePlayers).anyMatch((player) -> player
+                        .equalsIgnoreCase(playerName))) {
+                        Config.removeImmunePlayer(playerName);
+                    }
                     try {
                         Config.save();
                     } catch (Throwable t) {
@@ -275,9 +286,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.cleared",
-                        new Object[] {
-                            victim.getDisplayName()
-                        });
+                        new Object[0]);
                     return;
                 default:
                     throw new CommandException(
