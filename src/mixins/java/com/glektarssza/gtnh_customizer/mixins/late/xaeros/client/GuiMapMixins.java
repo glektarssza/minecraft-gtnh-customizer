@@ -22,8 +22,11 @@ import xaero.map.MapProcessor;
 import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
 import xaero.map.region.MapBlock;
+import xaero.map.region.MapRegion;
 import xaero.map.region.MapTile;
+import xaero.map.region.MapTileChunk;
 
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
@@ -34,7 +37,6 @@ public class GuiMapMixins {
      * The logger for this class.
      */
     @Nonnull
-    @SuppressWarnings("unused")
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -67,10 +69,15 @@ public class GuiMapMixins {
     private void drawBiomeName(@Nonnull String biomeName) {
         GuiMap self = (GuiMap) (Object) this;
         Minecraft mc = Minecraft.getMinecraft();
+        int additionalHeightUnits = 0;
+        if (WorldMap.settings.coordinates) {
+            additionalHeightUnits++;
+        }
+        if (WorldMap.settings.debug) {
+            additionalHeightUnits++;
+        }
         self.drawCenteredString(mc.fontRenderer, biomeName, self.width / 2,
-            (WorldMap.settings.coordinates ? mc.fontRenderer.FONT_HEIGHT : 0)
-                + 4,
-            -1);
+            (4 + mc.fontRenderer.FONT_HEIGHT) * additionalHeightUnits, -1);
     }
 
     @Inject(method = "drawScreen", at = @At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glPopMatrix()V", slice = "shouldDrawCoordsCheck", ordinal = 0, remap = false), cancellable = false, slice = @Slice(id = "shouldDrawCoordsCheck", from = @At(value = "FIELD", target = "Lxaero/map/settings/ModSettings;coordinates:Z", remap = false)))
@@ -78,33 +85,53 @@ public class GuiMapMixins {
         if (!Config.getXaerosWorldMapShowHoveredBiome()) {
             return;
         }
-        MapTile chunk = this.mapProcessor.getMapTile(this.mouseBlockPosX >> 4,
-            this.mouseBlockPosZ >> 4);
-        if (chunk == null) {
+        final MapRegion xaeroLeafRegion = this.mapProcessor.getMapRegion(
+            this.mouseBlockPosX >> 9, this.mouseBlockPosZ >> 9, false);
+        final MapTileChunk xaeroChunk = xaeroLeafRegion == null ? null
+            : xaeroLeafRegion.getChunk(this.mouseBlockPosX >> 6 & 7,
+                this.mouseBlockPosZ >> 6 & 7);
+        final MapTile xaeroMapTile = xaeroChunk == null ? null
+            : xaeroChunk.getTile(this.mouseBlockPosX >> 4 & 3,
+                this.mouseBlockPosZ >> 4 & 3);
+        final MapBlock xaeroBlock = xaeroMapTile == null ? null
+            : xaeroMapTile.getBlock(this.mouseBlockPosX & 15,
+                this.mouseBlockPosZ & 15);
+        if (xaeroBlock == null) {
+            GTNHCustomizer.emitTrackedWarning(LOGGER,
+                TypeHelpers.castToNonNull(
+                    String.format("%s:no_xaero_block", LOGGER.getName())),
+                (logger) -> {
+                    logger.warn(
+                        "Failed to retrieve block data from Xaero's World Map!");
+                });
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
-        MapBlock block = chunk.getBlock(this.mouseBlockPosX,
-            this.mouseBlockPosZ);
-        if (block == null) {
+        if (xaeroBlock.getBiome() < 0) {
+            GTNHCustomizer.emitTrackedWarning(LOGGER,
+                TypeHelpers.castToNonNull(
+                    String.format("%s:invalid_biome_id", LOGGER.getName())),
+                (logger) -> {
+                    logger.warn(
+                        "Biome ID is not valid!");
+                });
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
-        int biomeId = block.getBiome();
-        BiomeGenBase biomeGen = BiomeGenBase.getBiome(biomeId);
-        if (biomeGen.biomeID <= 0) {
+        final BiomeGenBase biome = BiomeGenBase.getBiome(xaeroBlock.getBiome());
+        if (biome.biomeName == null) {
+            GTNHCustomizer.emitTrackedWarning(LOGGER,
+                TypeHelpers.castToNonNull(
+                    String.format("%s:missing_biome_name", LOGGER.getName())),
+                (logger) -> {
+                    logger.warn("Biome name does not exist!");
+                });
             this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
                 "gtnh_customizer.xaeros_world_map.biome_unknown")));
             return;
         }
-        String biomeName = biomeGen.biomeName;
-        if (biomeName == null) {
-            this.drawBiomeName(TypeHelpers.castToNonNull(I18n.format(
-                "gtnh_customizer.xaeros_world_map.biome_unknown")));
-            return;
-        }
-        this.drawBiomeName(TypeHelpers.castToNonNull(biomeName));
+        this.drawBiomeName(TypeHelpers.castToNonNull(biome.biomeName));
     }
 }
