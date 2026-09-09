@@ -6,11 +6,16 @@
 
 * Enabled support in Xaero's mods for cross-dimension teleportation when a valid
   sub-world connection is detected.
+* Added a `/gtnh_customizer` command to manage the mod settings on the fly.
+    * Specifically the "globally immune to mob targeting" list and reloading the
+      mod configuration at runtime.
 
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.29.
 * Updated all project dependencies to their latest versions.
+* Overhauled configuration system to better support dynamically saving
+  configuration settings at runtime.
 
 ## 0.17.0 ##
 
