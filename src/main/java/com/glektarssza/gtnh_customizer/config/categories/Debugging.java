@@ -13,11 +13,14 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The debugging-related configuration category.
  */
 public class Debugging extends Category {
+    @Nonnull
+    public final Property<Boolean> verboseLogging;
+
     /**
      * Create a new instance.
      */
     public Debugging() {
-        this.childProperties.add(new Property<Boolean>(this) {
+        this.verboseLogging = new Property<Boolean>(this) {
             @Override
             @Nonnull
             public String getID() {
@@ -43,7 +46,15 @@ public class Debugging extends Category {
                         config.getCategory(this.getParent().getFullPath())
                             .get(this.getID()).getBoolean());
             }
-        });
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(Config.getVerboseLoggingEnabled());
+            }
+        };
+        this.childProperties.add(this.verboseLogging);
     }
 
     @Override

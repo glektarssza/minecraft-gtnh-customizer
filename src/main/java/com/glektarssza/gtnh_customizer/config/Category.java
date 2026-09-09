@@ -256,4 +256,19 @@ public abstract class Category {
             .forEach((prop) -> prop.loadValues(config));
         return this;
     }
+
+    /**
+     * Load save category, its child category's, and its property's values.
+     *
+     * @param config The Forge configuration to save this category's values to.
+     *
+     * @return This instance for chaining.
+     */
+    public Category saveValues(Configuration config) {
+        Arrays.stream(this.getChildrenProperties())
+            .forEach((prop) -> prop.saveValue(config));
+        Arrays.stream(this.getChildrenCategories())
+            .forEach((prop) -> prop.saveValues(config));
+        return this;
+    }
 }

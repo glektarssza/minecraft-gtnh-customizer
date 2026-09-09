@@ -16,47 +16,68 @@ import com.glektarssza.gtnh_customizer.config.categories.gameplay.XaerosWorldMap
  * The gameplay-related configuration category.
  */
 public class Gameplay extends Category {
+    @Nonnull
+    public final TConstruct tconstruct;
+
+    @Nonnull
+    public final Thaumcraft thaumcraft;
+
+    @Nonnull
+    public final XaerosWorldMap xaerosWorldMap;
+
+    @Nonnull
+    public final Property<String[]> globallyImmunePlayers;
+
+    @Nonnull
+    public final Property<Boolean> preventEnderModTeleportation;
+
     /**
      * Create a new instance.
      */
     public Gameplay() {
-        this.childCategories.add(new TConstruct(this));
-        this.childCategories.add(new Thaumcraft(this));
-        this.childCategories.add(new XaerosWorldMap(this));
-        this.childProperties.add(
-            new Property<String[]>(this) {
-                @Override
-                @Nonnull
-                public String getID() {
-                    return "globally_immune_players";
-                }
+        this.tconstruct = new TConstruct(this);
+        this.thaumcraft = new Thaumcraft(this);
+        this.xaerosWorldMap = new XaerosWorldMap(this);
+        this.globallyImmunePlayers = new Property<String[]>(this) {
+            @Override
+            @Nonnull
+            public String getID() {
+                return "globally_immune_players";
+            }
 
-                @Override
-                public boolean isList() {
-                    return true;
-                }
+            @Override
+            public boolean isList() {
+                return true;
+            }
 
-                @Override
-                @Nonnull
-                public Type getValueType() {
-                    return Type.STRING;
-                }
+            @Override
+            @Nonnull
+            public Type getValueType() {
+                return Type.STRING;
+            }
 
-                @Override
-                @Nonnull
-                public String[] getDefaultValue() {
-                    return new String[0];
-                }
+            @Override
+            @Nonnull
+            public String[] getDefaultValue() {
+                return new String[0];
+            }
 
-                @Override
-                public void loadValue(Configuration config) {
-                    Config
-                        .setImmunePlayers(
-                            config.getCategory(this.getParent().getFullPath())
-                                .get(this.getID()).getStringList());
-                }
-            });
-        this.childProperties.add(new Property<Boolean>(this) {
+            @Override
+            public void loadValue(Configuration config) {
+                Config
+                    .setImmunePlayers(
+                        config.getCategory(this.getParent().getFullPath())
+                            .get(this.getID()).getStringList());
+            }
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(Config.getGloballyImmunePlayers());
+            }
+        };
+        this.preventEnderModTeleportation = new Property<Boolean>(this) {
             @Override
             @Nonnull
             public String getID() {
@@ -81,7 +102,19 @@ public class Gameplay extends Category {
                     config.getCategory(this.getParent().getFullPath())
                         .get(this.getID()).getBoolean());
             }
-        });
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(Config.getPreventEnderMobTeleportation());
+            }
+        };
+        this.childCategories.add(this.tconstruct);
+        this.childCategories.add(this.thaumcraft);
+        this.childCategories.add(this.xaerosWorldMap);
+        this.childProperties.add(this.globallyImmunePlayers);
+        this.childProperties.add(this.preventEnderModTeleportation);
     }
 
     @Override

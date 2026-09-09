@@ -93,6 +93,24 @@ public class Config {
     private static Number configInstanceVersion = null;
 
     /**
+     * The commands configuration object.
+     */
+    @Nonnull
+    private static final Commands commandsConfig = new Commands();
+
+    /**
+     * The gameplay configuration object.
+     */
+    @Nonnull
+    private static final Gameplay gameplayConfig = new Gameplay();
+
+    /**
+     * The debugging configuration object.
+     */
+    @Nonnull
+    private static final Debugging debuggingConfig = new Debugging();
+
+    /**
      * A list of players who are globally immune.
      */
     @Nonnull
@@ -166,6 +184,7 @@ public class Config {
     public static void setImmunePlayers(String[] players) {
         clearImmunePlayers();
         globallyImmunePlayers.addAll(Arrays.asList(players));
+        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
 
     /**
@@ -175,6 +194,7 @@ public class Config {
      */
     public static void addImmunePlayer(String player) {
         globallyImmunePlayers.add(player);
+        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
 
     /**
@@ -184,6 +204,7 @@ public class Config {
      */
     public static void addAllImmunePlayer(Collection<String> players) {
         globallyImmunePlayers.addAll(players);
+        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
 
     /**
@@ -193,6 +214,7 @@ public class Config {
      */
     public static void removeImmunePlayer(String player) {
         globallyImmunePlayers.remove(player);
+        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
 
     /**
@@ -202,6 +224,7 @@ public class Config {
      */
     public static void removeAllImmunePlayer(Collection<String> players) {
         globallyImmunePlayers.removeAll(players);
+        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
 
     /**
@@ -209,6 +232,7 @@ public class Config {
      */
     public static void clearImmunePlayers() {
         globallyImmunePlayers.clear();
+        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
 
     /**
@@ -234,6 +258,7 @@ public class Config {
      */
     public static void setPreventEnderMobTeleportation(boolean value) {
         preventEnderMobTeleport = value;
+        gameplayConfig.preventEnderModTeleportation.saveValue(configInstance);
     }
 
     /**
@@ -271,6 +296,8 @@ public class Config {
     public static void setTConstructCanBoneMealSlimeSaplings(
         boolean value) {
         tconstructCanBoneMealSlimeSaplings = value;
+        gameplayConfig.tconstruct.canBoneMealSlimeSaplings
+            .saveValue(configInstance);
     }
 
     /**
@@ -311,6 +338,8 @@ public class Config {
     public static void setThaumcraftCanBoneMealGreatwoodSaplings(
         boolean value) {
         thaumcraftCanBoneMealGreatwoodSaplings = value;
+        gameplayConfig.thaumcraft.canBoneMealGreatwoodSaplings
+            .saveValue(configInstance);
     }
 
     /**
@@ -351,6 +380,8 @@ public class Config {
     public static void setThaumcraftCanBoneMealSilverwoodSaplings(
         boolean value) {
         thaumcraftCanBoneMealSilverwoodSaplings = value;
+        gameplayConfig.thaumcraft.canBoneMealSilverwoodSaplings
+            .saveValue(configInstance);
     }
 
     /**
@@ -387,6 +418,8 @@ public class Config {
     public static void setXaerosWorldMapShowHoveredBiome(
         boolean value) {
         xaerosWorldMapShowHoveredBiome = value;
+        gameplayConfig.xaerosWorldMap.showHoveredBiome
+            .saveValue(configInstance);
     }
 
     /**
@@ -424,6 +457,7 @@ public class Config {
      */
     public static void setRepairCommandRaycastIgnoresLiquids(boolean value) {
         repairCommandIgnoresLiquids = value;
+        commandsConfig.repairRaycastIgnoresLiquids.saveValue(configInstance);
     }
 
     /**
@@ -463,6 +497,7 @@ public class Config {
      */
     public static void setExtinguishCommandMaxVolume(int value) {
         extinguishCommandMaxVolume = value;
+        commandsConfig.extinguishMaxVolume.saveValue(configInstance);
     }
 
     /**
@@ -489,6 +524,7 @@ public class Config {
      */
     public static void setVerboseLoggingEnabled(boolean value) {
         verboseLoggingEnabled = value;
+        debuggingConfig.verboseLogging.saveValue(configInstance);
     }
 
     /**
@@ -650,9 +686,9 @@ public class Config {
             return;
         }
         // -- Load updated values
-        new Gameplay().loadValues(configInstance);
-        new Debugging().loadValues(configInstance);
-        new Commands().loadValues(configInstance);
+        commandsConfig.loadValues(configInstance);
+        gameplayConfig.loadValues(configInstance);
+        debuggingConfig.loadValues(configInstance);
     }
 
     /**
@@ -799,14 +835,14 @@ public class Config {
         }
 
         // -- Register all our configurations
-        new Gameplay().registerForgeConfigCategory(configInstance, true);
-        new Debugging().registerForgeConfigCategory(configInstance, true);
-        new Commands().registerForgeConfigCategory(configInstance, true);
+        commandsConfig.registerForgeConfigCategory(configInstance, true);
+        gameplayConfig.registerForgeConfigCategory(configInstance, true);
+        debuggingConfig.registerForgeConfigCategory(configInstance, true);
 
         // -- Load updated values
-        new Gameplay().loadValues(configInstance);
-        new Debugging().loadValues(configInstance);
-        new Commands().loadValues(configInstance);
+        commandsConfig.loadValues(configInstance);
+        gameplayConfig.loadValues(configInstance);
+        debuggingConfig.loadValues(configInstance);
 
         if (getVerboseLoggingEnabled()) {
             LOGGER.debug("Loaded mod configuration! Settings are:");
@@ -864,15 +900,20 @@ public class Config {
             LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        configInstance.save();
+        commandsConfig.saveValues(configInstance);
+        gameplayConfig.saveValues(configInstance);
+        debuggingConfig.saveValues(configInstance);
+        if (configInstance != null) {
+            configInstance.save();
+        }
     }
 
     /**
      * Synchronize the mod configuration.
      */
     public static void sync() {
-        load();
         save();
+        load();
     }
 
     /**
