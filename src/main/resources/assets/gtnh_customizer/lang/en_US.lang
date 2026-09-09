@@ -89,6 +89,21 @@ gtnh_customizer.commands.cure.args.modded=modded
 gtnh_customizer.commands.cure.args.vanilla=vanilla
 gtnh_customizer.commands.cure.args.all=all
 
+# Commands - Management
+gtnh_customizer.commands.gtnh_customizer.usage=/gtnh_customizer [subcommand] [...args]
+gtnh_customizer.commands.gtnh_customizer.reload_config.usage=/gtnh_customizer reload_config
+gtnh_customizer.commands.gtnh_customizer.globally_immune_players.usage=/gtnh_customizer globally_immune_players [add|remove|clear] [victim player]
+gtnh_customizer.commands.gtnh_customizer.error.wrong_usage=Wrong command format!
+gtnh_customizer.commands.gtnh_customizer.error.not_enough_arguments=Not enough arguments!
+gtnh_customizer.commands.gtnh_customizer.error.invalid_sub_command=Invalid/unknown sub-command '%s'!
+gtnh_customizer.commands.gtnh_customizer.error.unsupported_sub_command=Unsupported sub-command '%s'!
+gtnh_customizer.commands.gtnh_customizer.error.reload_config.failed=Failed to reload mod config!
+gtnh_customizer.commands.gtnh_customizer.info.success.reload_config=Successfully reloaded mod config!
+gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.added=Successfully added player '%s' to the globally immune list!
+gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.removed=Successfully removed player '%s' from the globally immune list!
+gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.cleared=Successfully cleared the globally immune list!
+
+
 # Keybinds
 key.categories.gtnh_customizer=GTNH Customizer
 gtnh_customizer.keybindings.serverutilities.delete_nbt_tag=Delete NBT Tag

@@ -13,6 +13,9 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The Tinker's Construct gameplay-related configuration category.
  */
 public class TConstruct extends Category {
+    @Nonnull
+    public final Property<Boolean> canBoneMealSlimeSaplings;
+
     /**
      * Create a new instance.
      *
@@ -20,34 +23,41 @@ public class TConstruct extends Category {
      */
     public TConstruct(Category parent) {
         super(parent);
-        this.childProperties.add(
-            new Property<Boolean>(this) {
-                @Override
-                @Nonnull
-                public String getID() {
-                    return "can_bone_meal_slime_saplings";
-                }
+        this.canBoneMealSlimeSaplings = new Property<Boolean>(this) {
+            @Override
+            @Nonnull
+            public String getID() {
+                return "can_bone_meal_slime_saplings";
+            }
 
-                @Override
-                @Nonnull
-                public Type getValueType() {
-                    return Type.BOOLEAN;
-                }
+            @Override
+            @Nonnull
+            public Type getValueType() {
+                return Type.BOOLEAN;
+            }
 
-                @Override
-                @Nonnull
-                public Boolean getDefaultValue() {
-                    return true;
-                }
+            @Override
+            @Nonnull
+            public Boolean getDefaultValue() {
+                return true;
+            }
 
-                @Override
-                public void loadValue(Configuration config) {
-                    Config
-                        .setTConstructCanBoneMealSlimeSaplings(
-                            config.getCategory(this.getParent().getFullPath())
-                                .get(this.getID()).getBoolean());
-                }
-            });
+            @Override
+            public void loadValue(Configuration config) {
+                Config
+                    .setTConstructCanBoneMealSlimeSaplings(
+                        config.getCategory(this.getParent().getFullPath())
+                            .get(this.getID()).getBoolean());
+            }
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(Config.getTConstructCanBoneMealSlimeSaplings());
+            }
+        };
+        this.childProperties.add(this.canBoneMealSlimeSaplings);
     }
 
     @Override

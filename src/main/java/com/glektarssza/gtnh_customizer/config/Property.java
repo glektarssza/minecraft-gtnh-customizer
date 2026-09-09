@@ -286,4 +286,12 @@ public abstract class Property<T> {
      *        from.
      */
     public abstract void loadValue(Configuration config);
+
+    /**
+     * Save a value for this property to the given configuration.
+     *
+     * @param config The Forge configuration to save a value to for this
+     *        property.
+     */
+    public abstract void saveValue(Configuration config);
 }

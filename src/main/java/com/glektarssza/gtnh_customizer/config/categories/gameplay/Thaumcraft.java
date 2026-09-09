@@ -13,40 +13,53 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The Thaumcraft gameplay-related configuration category.
  */
 public class Thaumcraft extends Category {
+    @Nonnull
+    public final Property<Boolean> canBoneMealGreatwoodSaplings;
+
+    @Nonnull
+    public final Property<Boolean> canBoneMealSilverwoodSaplings;
+
     /**
      * Create a new instance.
      */
     public Thaumcraft(Category parent) {
         super(parent);
-        this.childProperties.add(
-            new Property<Boolean>(this) {
-                @Override
-                @Nonnull
-                public String getID() {
-                    return "can_bone_meal_greatwood_saplings";
-                }
+        this.canBoneMealGreatwoodSaplings = new Property<Boolean>(this) {
+            @Override
+            @Nonnull
+            public String getID() {
+                return "can_bone_meal_greatwood_saplings";
+            }
 
-                @Override
-                @Nonnull
-                public Type getValueType() {
-                    return Type.BOOLEAN;
-                }
+            @Override
+            @Nonnull
+            public Type getValueType() {
+                return Type.BOOLEAN;
+            }
 
-                @Override
-                @Nonnull
-                public Boolean getDefaultValue() {
-                    return true;
-                }
+            @Override
+            @Nonnull
+            public Boolean getDefaultValue() {
+                return true;
+            }
 
-                @Override
-                public void loadValue(Configuration config) {
-                    Config
-                        .setThaumcraftCanBoneMealGreatwoodSaplings(
-                            config.getCategory(this.getParent().getFullPath())
-                                .get(this.getID()).getBoolean());
-                }
-            });
-        this.childProperties.add(new Property<Boolean>(this) {
+            @Override
+            public void loadValue(Configuration config) {
+                Config
+                    .setThaumcraftCanBoneMealGreatwoodSaplings(
+                        config.getCategory(this.getParent().getFullPath())
+                            .get(this.getID()).getBoolean());
+            }
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(
+                        Config.getThaumcraftCanBoneMealGreatwoodSaplings());
+            }
+        };
+        this.canBoneMealSilverwoodSaplings = new Property<Boolean>(this) {
             @Override
             @Nonnull
             public String getID() {
@@ -72,7 +85,16 @@ public class Thaumcraft extends Category {
                         config.getCategory(this.getParent().getFullPath())
                             .get(this.getID()).getBoolean());
             }
-        });
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(Config.getThaumcraftCanBoneMealSilverwoodSaplings());
+            }
+        };
+        this.childProperties.add(this.canBoneMealGreatwoodSaplings);
+        this.childProperties.add(this.canBoneMealSilverwoodSaplings);
     }
 
     @Override

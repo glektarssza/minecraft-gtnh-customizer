@@ -215,8 +215,7 @@ public class CureCommand extends CommandBase {
                 if (victim != null) {
                     result.addAll(0,
                         Arrays.stream(StatusEffectGroup.values())
-                            .map((statusEffect) -> statusEffect.toString())
-                            .map((str) -> str.toLowerCase())
+                            .map((statusEffect) -> statusEffect.commandValue)
                             .collect(Collectors.toList()));
                 }
                 return result;
@@ -227,8 +226,7 @@ public class CureCommand extends CommandBase {
                 }
                 result = new ArrayList<String>(
                     Arrays.stream(StatusEffectGroup.values())
-                        .map((statusEffect) -> statusEffect.toString())
-                        .map((str) -> str.toLowerCase())
+                        .map((statusEffect) -> statusEffect.commandValue)
                         .collect(Collectors.toList()));
                 return result;
             default:
@@ -257,8 +255,7 @@ public class CureCommand extends CommandBase {
                     new Object[] {
                         args[1],
                         Arrays.stream(StatusEffectGroup.values())
-                            .map((statusEffect) -> statusEffect.toString())
-                            .map((str) -> str.toLowerCase())
+                            .map((statusEffect) -> statusEffect.commandValue)
                             .collect(Collectors.joining(", "))
                     });
             }
@@ -272,8 +269,7 @@ public class CureCommand extends CommandBase {
                     new Object[] {
                         args[0],
                         Arrays.stream(StatusEffectGroup.values())
-                            .map((statusEffect) -> statusEffect.toString())
-                            .map((str) -> str.toLowerCase())
+                            .map((statusEffect) -> statusEffect.commandValue)
                             .collect(Collectors.joining(", "))
                     });
             }

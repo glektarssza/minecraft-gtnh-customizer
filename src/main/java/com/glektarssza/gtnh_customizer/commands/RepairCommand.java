@@ -263,8 +263,7 @@ public class RepairCommand extends CommandBase {
                             // -- `backhand` mod is available
                             .filter((target) -> target != ItemTarget.Offhand
                                 || Loader.isModLoaded("backhand"))
-                            .map((itemTarget) -> itemTarget.toString())
-                            .map((str) -> str.toLowerCase())
+                            .map((itemTarget) -> itemTarget.commandValue)
                             .collect(Collectors.toList()));
                 }
                 return result;
@@ -275,8 +274,7 @@ public class RepairCommand extends CommandBase {
                 }
                 result = new ArrayList<String>(
                     Arrays.stream(ItemTarget.values())
-                        .map((itemTarget) -> itemTarget.toString())
-                        .map((str) -> str.toLowerCase())
+                        .map((itemTarget) -> itemTarget.commandValue)
                         .collect(Collectors.toList()));
                 return result;
             default:
@@ -303,8 +301,7 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[1],
                         Arrays.stream(ItemTarget.values())
-                            .map((itemTarget) -> itemTarget.toString())
-                            .map((str) -> str.toLowerCase())
+                            .map((itemTarget) -> itemTarget.commandValue)
                             .collect(Collectors.joining(", "))
                     });
             }
@@ -317,7 +314,7 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[0],
                         Arrays.stream(ItemTarget.values())
-                            .map((itemTarget) -> itemTarget.toString())
+                            .map((itemTarget) -> itemTarget.commandValue)
                             .map((str) -> str.toLowerCase())
                             .collect(Collectors.joining(", "))
                     });

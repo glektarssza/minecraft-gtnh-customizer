@@ -13,39 +13,49 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The Thaumcraft gameplay-related configuration category.
  */
 public class XaerosWorldMap extends Category {
+    @Nonnull
+    public final Property<Boolean> showHoveredBiome;
+
     /**
      * Create a new instance.
      */
     public XaerosWorldMap(Category parent) {
         super(parent);
-        this.childProperties.add(
-            new Property<Boolean>(this) {
-                @Override
-                @Nonnull
-                public String getID() {
-                    return "show_hovered_biome";
-                }
+        this.showHoveredBiome = new Property<Boolean>(this) {
+            @Override
+            @Nonnull
+            public String getID() {
+                return "show_hovered_biome";
+            }
 
-                @Override
-                @Nonnull
-                public Type getValueType() {
-                    return Type.BOOLEAN;
-                }
+            @Override
+            @Nonnull
+            public Type getValueType() {
+                return Type.BOOLEAN;
+            }
 
-                @Override
-                @Nonnull
-                public Boolean getDefaultValue() {
-                    return true;
-                }
+            @Override
+            @Nonnull
+            public Boolean getDefaultValue() {
+                return true;
+            }
 
-                @Override
-                public void loadValue(Configuration config) {
-                    Config
-                        .setXaerosWorldMapShowHoveredBiome(
-                            config.getCategory(this.getParent().getFullPath())
-                                .get(this.getID()).getBoolean());
-                }
-            });
+            @Override
+            public void loadValue(Configuration config) {
+                Config
+                    .setXaerosWorldMapShowHoveredBiome(
+                        config.getCategory(this.getParent().getFullPath())
+                            .get(this.getID()).getBoolean());
+            }
+
+            @Override
+            public void saveValue(Configuration config) {
+                config.getCategory(this.getParent().getFullPath())
+                    .get(this.getID())
+                    .set(Config.getXaerosWorldMapShowHoveredBiome());
+            }
+        };
+        this.childProperties.add(this.showHoveredBiome);
     }
 
     @Override
