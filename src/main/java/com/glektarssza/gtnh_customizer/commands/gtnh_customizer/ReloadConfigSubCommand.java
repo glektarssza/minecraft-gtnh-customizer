@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
@@ -25,6 +26,27 @@ public class ReloadConfigSubCommand implements ISubCommand {
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
+
+    /**
+     * The {@link CommandBase} that this instance belongs to.
+     */
+    @Nonnull
+    private CommandBase commandBase;
+
+    /**
+     * Create a new instance.
+     *
+     * @param base The {@link CommandBase} that the new instance belongs to.
+     */
+    public ReloadConfigSubCommand(@Nonnull CommandBase base) {
+        this.commandBase = base;
+    }
+
+    @Nonnull
+    @Override
+    public CommandBase getCommandBase() {
+        return this.commandBase;
+    }
 
     /**
      * Get the usage of the command.
@@ -65,6 +87,10 @@ public class ReloadConfigSubCommand implements ISubCommand {
     public void processCommand(ICommandSender sender, String[] args) {
         try {
             Config.sync();
+            CommandBase.func_152373_a(sender, this.getCommandBase(),
+                "gtnh_customizer.commands.gtnh_customizer.info.success.reload_config",
+                new Object[0]);
+            return;
         } catch (Throwable t) {
             LOGGER.error("Failed to synchronize mod configuration!");
             LOGGER.error(t);

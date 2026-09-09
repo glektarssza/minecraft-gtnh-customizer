@@ -2,9 +2,20 @@ package com.glektarssza.gtnh_customizer.api.command;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
 public interface ISubCommand {
+    /**
+     * Get the {@link CommandBase} this instance belongs to.
+     *
+     * @return Get the {@link CommandBase} this instance belongs to.
+     */
+    @Nonnull
+    public CommandBase getCommandBase();
+
     /**
      * Get the usage of the command.
      *

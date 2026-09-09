@@ -176,8 +176,7 @@ public class GTNHCustomizerCommand extends CommandBase {
             case 0:
                 // -- First argument is item target
                 return Arrays.stream(SubCommand.values())
-                    .map((subCommand) -> subCommand.toString())
-                    .map((subCommand) -> subCommand.toLowerCase())
+                    .map((subCommand) -> subCommand.commandValue)
                     .filter((subCommand) -> args[0] == null || args[0].isEmpty()
                         || subCommand.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toList());
@@ -191,10 +190,10 @@ public class GTNHCustomizerCommand extends CommandBase {
                     args.length);
                 switch (subCommand) {
                     case ReloadConfig:
-                        return new ReloadConfigSubCommand()
+                        return new ReloadConfigSubCommand(this)
                             .addTabCompletionOptions(sender, subCommandArgs);
                     case GloballyImmunePlayers:
-                        return new GloballyImmunePlayersSubCommand()
+                        return new GloballyImmunePlayersSubCommand(this)
                             .addTabCompletionOptions(sender, subCommandArgs);
                     default:
                         return null;
@@ -224,11 +223,13 @@ public class GTNHCustomizerCommand extends CommandBase {
                 args.length);
             switch (subCommand) {
                 case ReloadConfig:
-                    new ReloadConfigSubCommand().processCommand(sender,
+                    new ReloadConfigSubCommand(this).processCommand(sender,
                         subCommandArgs);
+                    return;
                 case GloballyImmunePlayers:
-                    new GloballyImmunePlayersSubCommand().processCommand(sender,
-                        subCommandArgs);
+                    new GloballyImmunePlayersSubCommand(this).processCommand(
+                        sender, subCommandArgs);
+                    return;
                 default:
                     throw new WrongUsageException(
                         "gtnh_customizer.commands.gtnh_customizer.error.unsupported_sub_command",
