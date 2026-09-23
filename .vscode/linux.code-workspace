@@ -129,7 +129,7 @@
         "java.jdt.ls.appcds.enabled": "off",
         "java.jdt.ls.java.home": "/usr/lib/jvm/java-25-temurin/",
         "java.jdt.ls.javac.enabled": "off",
-        "java.jdt.ls.lombokSupport.enabled": true,
+        "java.jdt.ls.lombokSupport.enabled": false,
         "java.jdt.ls.protobufSupport.enabled": true,
         "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms512m -Xlog:disable",
         "java.maven.downloadSources": true,
