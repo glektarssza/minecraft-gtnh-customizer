@@ -12,7 +12,7 @@
 
 ### Technical ###
 
-* Updated GTNH build scripts to v2.0.29.
+* Updated GTNH build scripts to v2.0.32.
 * Updated all project dependencies to their latest versions.
 * Overhauled configuration system to better support dynamically saving
   configuration settings at runtime.
