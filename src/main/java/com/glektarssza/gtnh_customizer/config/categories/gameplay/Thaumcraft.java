@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -13,10 +12,10 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The Thaumcraft gameplay-related configuration category.
  */
 public class Thaumcraft extends Category {
-    @Nonnull
+    @NotNull
     public final Property<Boolean> canBoneMealGreatwoodSaplings;
 
-    @Nonnull
+    @NotNull
     public final Property<Boolean> canBoneMealSilverwoodSaplings;
 
     /**
@@ -26,19 +25,19 @@ public class Thaumcraft extends Category {
         super(parent);
         this.canBoneMealGreatwoodSaplings = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "can_bone_meal_greatwood_saplings";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return true;
             }
@@ -61,19 +60,19 @@ public class Thaumcraft extends Category {
         };
         this.canBoneMealSilverwoodSaplings = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "can_bone_meal_silverwood_saplings";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return true;
             }
@@ -98,7 +97,7 @@ public class Thaumcraft extends Category {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public String getID() {
         return "thaumcraft";
     }

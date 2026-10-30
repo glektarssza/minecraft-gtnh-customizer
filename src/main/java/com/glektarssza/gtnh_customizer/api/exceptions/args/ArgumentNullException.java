@@ -1,7 +1,7 @@
 package com.glektarssza.gtnh_customizer.api.exceptions.args;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 
 /**
  * An exception that is thrown when an argument is invalid due to being a
@@ -16,7 +16,7 @@ public class ArgumentNullException extends ArgumentException {
      * @param argumentName The name of the argument that had a {@code null}
      *        value.
      */
-    public ArgumentNullException(@Nonnull String argumentName) {
+    public ArgumentNullException(@NotNull final String argumentName) {
         super(argumentName);
     }
 
@@ -29,8 +29,8 @@ public class ArgumentNullException extends ArgumentException {
      *        value (ideally) or describing the reason the error occurred
      *        otherwise.
      */
-    public ArgumentNullException(@Nonnull String argumentName,
-        @Nullable String msg) {
+    public ArgumentNullException(@NotNull final String argumentName,
+        @Nullable final String msg) {
         super(argumentName, msg);
     }
 
@@ -42,8 +42,8 @@ public class ArgumentNullException extends ArgumentException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ArgumentNullException(@Nonnull String argumentName,
-        @Nullable Throwable cause) {
+    public ArgumentNullException(@NotNull final String argumentName,
+        @Nullable final Throwable cause) {
         super(argumentName, cause);
     }
 
@@ -58,8 +58,8 @@ public class ArgumentNullException extends ArgumentException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ArgumentNullException(@Nonnull String argumentName,
-        @Nullable String msg, @Nullable Throwable cause) {
+    public ArgumentNullException(@NotNull final String argumentName,
+        @Nullable final String msg, @Nullable final Throwable cause) {
         super(argumentName, msg, cause);
     }
 

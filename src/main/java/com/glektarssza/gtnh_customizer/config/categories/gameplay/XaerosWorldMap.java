@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -13,7 +12,7 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The Thaumcraft gameplay-related configuration category.
  */
 public class XaerosWorldMap extends Category {
-    @Nonnull
+    @NotNull
     public final Property<Boolean> showHoveredBiome;
 
     /**
@@ -23,19 +22,19 @@ public class XaerosWorldMap extends Category {
         super(parent);
         this.showHoveredBiome = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "show_hovered_biome";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return true;
             }
@@ -59,7 +58,7 @@ public class XaerosWorldMap extends Category {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public String getID() {
         return "xaeros_world_map";
     }

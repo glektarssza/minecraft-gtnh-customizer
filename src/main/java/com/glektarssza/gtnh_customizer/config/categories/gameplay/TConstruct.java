@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -13,7 +12,7 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The Tinker's Construct gameplay-related configuration category.
  */
 public class TConstruct extends Category {
-    @Nonnull
+    @NotNull
     public final Property<Boolean> canBoneMealSlimeSaplings;
 
     /**
@@ -25,19 +24,19 @@ public class TConstruct extends Category {
         super(parent);
         this.canBoneMealSlimeSaplings = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "can_bone_meal_slime_saplings";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return true;
             }
@@ -61,7 +60,7 @@ public class TConstruct extends Category {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public String getID() {
         return "tconstruct";
     }

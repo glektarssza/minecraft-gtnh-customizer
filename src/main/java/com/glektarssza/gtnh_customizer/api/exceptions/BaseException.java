@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.api.exceptions;
 
-import javax.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 
 /**
  * A base custom exception from which other custom exceptions can extend from.
@@ -20,7 +20,7 @@ public class BaseException extends Exception {
      *
      * @param msg A string describing the error that occurred.
      */
-    public BaseException(@Nullable String msg) {
+    public BaseException(@Nullable final String msg) {
         super(msg);
     }
 
@@ -30,7 +30,7 @@ public class BaseException extends Exception {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public BaseException(@Nullable Throwable cause) {
+    public BaseException(@Nullable final Throwable cause) {
         super(cause);
     }
 
@@ -41,7 +41,8 @@ public class BaseException extends Exception {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public BaseException(@Nullable String msg, @Nullable Throwable cause) {
+    public BaseException(@Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(msg, cause);
     }
 
