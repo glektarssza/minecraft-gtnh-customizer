@@ -217,7 +217,8 @@ public class ExtinguishCommand extends CommandBase {
             throw new WrongUsageException(
                 "gtnh_customizer.commands.extinguish.error.volume_too_large",
                 new Object[] {
-                    String.format("%d", volume), String.format("%d",
+                    String.format("%d", volume),
+                    String.format("%d",
                         Config.getExtinguishCommandMaxVolume())
                 });
         }

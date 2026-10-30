@@ -460,9 +460,12 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         func_152373_a(sender, this,
             "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
             new Object[] {
-                victim.getDisplayName(), String.format("%.2f", xPos),
-                String.format("%.2f", yPos), String.format("%.2f", zPos),
-                String.format("%.2f", yaw), String.format("%.2f", pitch),
+                victim.getDisplayName(),
+                String.format("%.2f", xPos),
+                String.format("%.2f", yPos),
+                String.format("%.2f", zPos),
+                String.format("%.2f", yaw),
+                String.format("%.2f", pitch),
                 DimensionManager.getProvider(dimension).getDimensionName(),
                 String.format("%d", dimension)
             });
