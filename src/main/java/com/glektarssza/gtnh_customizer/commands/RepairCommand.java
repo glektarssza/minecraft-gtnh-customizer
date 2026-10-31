@@ -3,6 +3,7 @@ package com.glektarssza.gtnh_customizer.commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -28,9 +29,11 @@ import cpw.mods.fml.common.Loader;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 import xonin.backhand.api.core.BackhandUtils;
 
@@ -129,11 +132,15 @@ public class RepairCommand extends CommandBase {
          */
         public static ItemTarget getFromCommandArgument(final String argument)
             throws NoSuchElementException {
-            return Arrays.stream(ItemTarget.values())
+            final Iterator<@NotNull ItemTarget> iter = Arrays
+                .stream(ItemTarget.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format(
-                    "No ItemTarget with command value of '%s'", argument)));
+                .iterator();
+            if (!iter.hasNext()) {
+                throw new NoSuchElementException(String.format(
+                    "No ItemTarget with command value of '%s'", argument));
+            }
+            return TypeHelpers.castToNonNull(iter.next());
         }
 
         /**
@@ -148,10 +155,11 @@ public class RepairCommand extends CommandBase {
         @Nullable
         public static ItemTarget tryGetFromCommandArgument(
             final String argument) {
-            return Arrays.stream(ItemTarget.values())
+            return Arrays
+                .stream(ItemTarget.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElse(null);
+                .iterator()
+                .next();
         }
     }
 

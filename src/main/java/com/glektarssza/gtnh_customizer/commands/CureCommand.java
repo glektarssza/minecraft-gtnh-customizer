@@ -105,8 +105,8 @@ public class CureCommand extends CommandBase {
             final String argument) {
             return Arrays.stream(StatusEffectGroup.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElse(null);
+                .iterator()
+                .next();
         }
     }
 

@@ -2,6 +2,7 @@ package com.glektarssza.gtnh_customizer.commands;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -11,10 +12,12 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentTranslation;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.GloballyImmunePlayersSubCommand;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.ReloadConfigSubCommand;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * A command which provides the ability to manage the mod.
@@ -59,11 +62,15 @@ public class GTNHCustomizerCommand extends CommandBase {
          */
         public static SubCommand getFromCommandArgument(final String argument)
             throws NoSuchElementException {
-            return Arrays.stream(SubCommand.values())
+            final Iterator<@NotNull SubCommand> iter = Arrays
+                .stream(SubCommand.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format(
-                    "No SubCommand with command value of '%s'", argument)));
+                .iterator();
+            if (!iter.hasNext()) {
+                throw new NoSuchElementException(String.format(
+                    "No SubCommand with command value of '%s'", argument));
+            }
+            return TypeHelpers.castToNonNull(iter.next());
         }
 
         /**
@@ -78,10 +85,12 @@ public class GTNHCustomizerCommand extends CommandBase {
         @Nullable
         public static SubCommand tryGetFromCommandArgument(
             final String argument) {
-            return Arrays.stream(SubCommand.values())
+            return Arrays
+                .stream(SubCommand.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElse(null);
+                .iterator()
+                .next();
+
         }
     }
 

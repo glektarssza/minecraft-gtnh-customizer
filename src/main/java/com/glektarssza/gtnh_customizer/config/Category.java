@@ -183,8 +183,7 @@ public abstract class Category {
      */
     @NotNull
     public Category[] getChildrenCategories() {
-        return TypeHelpers
-            .castToNonNull(this.childCategories.toArray(new Category[0]));
+        return this.childCategories.toArray(new Category[0]);
     }
 
     /**
@@ -194,8 +193,7 @@ public abstract class Category {
      */
     @NotNull
     public Property<?>[] getChildrenProperties() {
-        return TypeHelpers
-            .castToNonNull(this.childProperties.toArray(new Property<?>[0]));
+        return this.childProperties.toArray(new Property<?>[0]);
     }
 
     /**
