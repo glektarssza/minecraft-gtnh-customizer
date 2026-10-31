@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.api.exceptions;
 
-import javax.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 
 /**
  * An exception that is thrown when something is in an invalid state for the
@@ -21,7 +21,7 @@ public class InvalidStateException extends BaseRuntimeException {
      *
      * @param msg A string describing the error that occurred.
      */
-    public InvalidStateException(@Nullable String msg) {
+    public InvalidStateException(@Nullable final String msg) {
         super(msg);
     }
 
@@ -31,7 +31,7 @@ public class InvalidStateException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public InvalidStateException(@Nullable Throwable cause) {
+    public InvalidStateException(@Nullable final Throwable cause) {
         super(cause);
     }
 
@@ -42,8 +42,8 @@ public class InvalidStateException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public InvalidStateException(@Nullable String msg,
-        @Nullable Throwable cause) {
+    public InvalidStateException(@Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(msg, cause);
     }
 

@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config.categories;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -13,7 +12,7 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The debugging-related configuration category.
  */
 public class Debugging extends Category {
-    @Nonnull
+    @NotNull
     public final Property<Boolean> verboseLogging;
 
     /**
@@ -22,19 +21,19 @@ public class Debugging extends Category {
     public Debugging() {
         this.verboseLogging = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "verbose_logging";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return false;
             }
@@ -58,7 +57,7 @@ public class Debugging extends Category {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public String getID() {
         return "debugging";
     }

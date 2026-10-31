@@ -1,7 +1,6 @@
 package com.glektarssza.gtnh_customizer.api.exceptions.collections;
 
-import javax.annotation.Nullable;
-
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.exceptions.ValueOutOfRangeException;
 
 /**
@@ -23,7 +22,7 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      *
      * @param msg A string describing the error that occurred.
      */
-    public IndexOutOfRangeException(@Nullable String msg) {
+    public IndexOutOfRangeException(@Nullable final String msg) {
         super(msg);
     }
 
@@ -33,7 +32,7 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Throwable cause) {
         super(cause);
     }
 
@@ -44,8 +43,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable String msg,
-        @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(msg, cause);
     }
 
@@ -54,7 +53,7 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      *
      * @param index The index that was outside of the allowed range.
      */
-    public IndexOutOfRangeException(@Nullable Integer index) {
+    public IndexOutOfRangeException(@Nullable final Integer index) {
         super(index, 0);
     }
 
@@ -64,8 +63,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param index The index that was outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable String msg) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final String msg) {
         super(index, 0, msg);
     }
 
@@ -76,8 +75,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Throwable cause) {
         super(index, 0, cause);
     }
 
@@ -89,8 +88,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable String msg, @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final String msg, @Nullable final Throwable cause) {
         super(index, 0, msg, cause);
     }
 
@@ -101,8 +100,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param minimumIndex The minimum allowed index of the index that was
      *        outside of the allowed range.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex) {
         super(index, minimumIndex);
     }
 
@@ -114,8 +113,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable String msg) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex, @Nullable final String msg) {
         super(index, minimumIndex, msg);
     }
 
@@ -128,8 +127,8 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex, @Nullable final Throwable cause) {
         super(index, minimumIndex, cause);
     }
 
@@ -143,9 +142,9 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable String msg,
-        @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex, @Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(index, minimumIndex, msg, cause);
     }
 
@@ -158,8 +157,9 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param maximumIndex The maximum allowed index of the index that was
      *        outside of the allowed range.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable Integer maximumIndex) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex,
+        @Nullable final Integer maximumIndex) {
         super(index, minimumIndex, maximumIndex);
     }
 
@@ -173,9 +173,10 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable Integer maximumIndex,
-        @Nullable String msg) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex,
+        @Nullable final Integer maximumIndex,
+        @Nullable final String msg) {
         super(index, minimumIndex, maximumIndex, msg);
     }
 
@@ -190,9 +191,10 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable Integer maximumIndex,
-        @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex,
+        @Nullable final Integer maximumIndex,
+        @Nullable final Throwable cause) {
         super(index, minimumIndex, maximumIndex, cause);
     }
 
@@ -208,9 +210,10 @@ public class IndexOutOfRangeException extends ValueOutOfRangeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public IndexOutOfRangeException(@Nullable Integer index,
-        @Nullable Integer minimumIndex, @Nullable Integer maximumIndex,
-        @Nullable String msg, @Nullable Throwable cause) {
+    public IndexOutOfRangeException(@Nullable final Integer index,
+        @Nullable final Integer minimumIndex,
+        @Nullable final Integer maximumIndex,
+        @Nullable final String msg, @Nullable final Throwable cause) {
         super(index, minimumIndex, maximumIndex, msg, cause);
     }
 

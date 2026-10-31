@@ -19,9 +19,6 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +26,8 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.exceptions.args.ArgumentNullException;
 import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
@@ -44,7 +43,7 @@ public class Config {
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -52,19 +51,19 @@ public class Config {
     /**
      * The current version of the configuration.
      */
-    @Nonnull
+    @NotNull
     public static final Number CONFIG_VERSION = 10;
 
     /**
      * The base localization language key.
      */
-    @Nonnull
+    @NotNull
     public static final String LANG_KEY_BASE = "gtnh_customizer.config";
 
     /**
      * The base localization language key for categories.
      */
-    @Nonnull
+    @NotNull
     public static final String LANG_KEY_CATEGORY_BASE = TypeHelpers
         .castToNonNull(String
             .join(Configuration.CATEGORY_SPLITTER, LANG_KEY_BASE,
@@ -76,7 +75,7 @@ public class Config {
      *
      * Keys are in the format of {@code fromVersion:toVersion}.
      */
-    @Nonnull
+    @NotNull
     private static final Map<Number, ImmutableTuple<Number, Consumer<Configuration>>> MIGRATIONS = new HashMap<Number, ImmutableTuple<Number, Consumer<Configuration>>>();
 
     /**
@@ -95,25 +94,25 @@ public class Config {
     /**
      * The commands configuration object.
      */
-    @Nonnull
+    @NotNull
     private static final Commands commandsConfig = new Commands();
 
     /**
      * The gameplay configuration object.
      */
-    @Nonnull
+    @NotNull
     private static final Gameplay gameplayConfig = new Gameplay();
 
     /**
      * The debugging configuration object.
      */
-    @Nonnull
+    @NotNull
     private static final Debugging debuggingConfig = new Debugging();
 
     /**
      * A list of players who are globally immune.
      */
-    @Nonnull
+    @NotNull
     private static final List<String> globallyImmunePlayers = new ArrayList<String>();
 
     /**
@@ -161,7 +160,7 @@ public class Config {
     /**
      * A random UUID which uniquely IDs this run of Minecraft.
      */
-    @Nonnull
+    @NotNull
     public static final UUID CONFIG_ID = TypeHelpers
         .castToNonNull(UUID.randomUUID());
 
@@ -171,7 +170,7 @@ public class Config {
      * @return The globally immune players.
      */
     public static String[] getGloballyImmunePlayers() {
-        String[] ret = new String[globallyImmunePlayers.size()];
+        final String[] ret = new String[globallyImmunePlayers.size()];
         globallyImmunePlayers.toArray(ret);
         return ret;
     }
@@ -181,7 +180,7 @@ public class Config {
      *
      * @param players A list of player UUIDs or names to set as globally immune.
      */
-    public static void setImmunePlayers(String[] players) {
+    public static void setImmunePlayers(final String[] players) {
         clearImmunePlayers();
         globallyImmunePlayers.addAll(Arrays.asList(players));
         gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
@@ -192,7 +191,7 @@ public class Config {
      *
      * @param player A list of player UUIDs or names to set as globally immune.
      */
-    public static void addImmunePlayer(String player) {
+    public static void addImmunePlayer(final String player) {
         globallyImmunePlayers.add(player);
         gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
@@ -202,7 +201,7 @@ public class Config {
      *
      * @param players A list of player UUIDs or names to set as globally immune.
      */
-    public static void addAllImmunePlayer(Collection<String> players) {
+    public static void addAllImmunePlayer(final Collection<String> players) {
         globallyImmunePlayers.addAll(players);
         gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
@@ -212,7 +211,7 @@ public class Config {
      *
      * @param player A list of player UUIDs or names to set as globally immune.
      */
-    public static void removeImmunePlayer(String player) {
+    public static void removeImmunePlayer(final String player) {
         globallyImmunePlayers.remove(player);
         gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
@@ -222,7 +221,7 @@ public class Config {
      *
      * @param players A list of player UUIDs or names to set as globally immune.
      */
-    public static void removeAllImmunePlayer(Collection<String> players) {
+    public static void removeAllImmunePlayer(final Collection<String> players) {
         globallyImmunePlayers.removeAll(players);
         gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
     }
@@ -256,7 +255,7 @@ public class Config {
      *
      * @param value Whether to prevent Enderman and Enderman-like teleportation.
      */
-    public static void setPreventEnderMobTeleportation(boolean value) {
+    public static void setPreventEnderMobTeleportation(final boolean value) {
         preventEnderMobTeleport = value;
         gameplayConfig.preventEnderModTeleportation.saveValue(configInstance);
     }
@@ -294,7 +293,7 @@ public class Config {
      *        have bone meal applied.
      */
     public static void setTConstructCanBoneMealSlimeSaplings(
-        boolean value) {
+        final boolean value) {
         tconstructCanBoneMealSlimeSaplings = value;
         gameplayConfig.tconstruct.canBoneMealSlimeSaplings
             .saveValue(configInstance);
@@ -336,7 +335,7 @@ public class Config {
      *        bone meal applied.
      */
     public static void setThaumcraftCanBoneMealGreatwoodSaplings(
-        boolean value) {
+        final boolean value) {
         thaumcraftCanBoneMealGreatwoodSaplings = value;
         gameplayConfig.thaumcraft.canBoneMealGreatwoodSaplings
             .saveValue(configInstance);
@@ -378,7 +377,7 @@ public class Config {
      *        have bone meal applied.
      */
     public static void setThaumcraftCanBoneMealSilverwoodSaplings(
-        boolean value) {
+        final boolean value) {
         thaumcraftCanBoneMealSilverwoodSaplings = value;
         gameplayConfig.thaumcraft.canBoneMealSilverwoodSaplings
             .saveValue(configInstance);
@@ -416,7 +415,7 @@ public class Config {
      * @param value Whether to show the hovered biome in Xaero's World Map.
      */
     public static void setXaerosWorldMapShowHoveredBiome(
-        boolean value) {
+        final boolean value) {
         xaerosWorldMapShowHoveredBiome = value;
         gameplayConfig.xaerosWorldMap.showHoveredBiome
             .saveValue(configInstance);
@@ -455,7 +454,8 @@ public class Config {
      * @param value Whether the {@code repair} command raycast while looking for
      *        containers ignores liquids.
      */
-    public static void setRepairCommandRaycastIgnoresLiquids(boolean value) {
+    public static void setRepairCommandRaycastIgnoresLiquids(
+        final boolean value) {
         repairCommandIgnoresLiquids = value;
         commandsConfig.repairRaycastIgnoresLiquids.saveValue(configInstance);
     }
@@ -495,7 +495,7 @@ public class Config {
      * @param value The maximum number of blocks the {@code extinguish} command
      *        should process.
      */
-    public static void setExtinguishCommandMaxVolume(int value) {
+    public static void setExtinguishCommandMaxVolume(final int value) {
         extinguishCommandMaxVolume = value;
         commandsConfig.extinguishMaxVolume.saveValue(configInstance);
     }
@@ -522,7 +522,7 @@ public class Config {
      *
      * @param value Whether verbose logging is enabled.
      */
-    public static void setVerboseLoggingEnabled(boolean value) {
+    public static void setVerboseLoggingEnabled(final boolean value) {
         verboseLoggingEnabled = value;
         debuggingConfig.verboseLogging.saveValue(configInstance);
     }
@@ -551,14 +551,14 @@ public class Config {
         if (configInstance == null) {
             return Collections.emptyList();
         }
-        List<ConfigCategory> list = new ArrayList<>();
-        List<String> children = new ArrayList<>();
-        for (String name : configInstance.getCategoryNames()) {
+        final List<ConfigCategory> list = new ArrayList<>();
+        final List<String> children = new ArrayList<>();
+        for (final String name : configInstance.getCategoryNames()) {
             if (configInstance.getCategory(name).parent == null) {
                 children.add(name);
             }
         }
-        for (String category : children) {
+        for (final String category : children) {
             if (category.contains(Configuration.CATEGORY_SPLITTER)) {
                 continue;
             }
@@ -581,7 +581,7 @@ public class Config {
      *         required and no migration route exists from the old configuration
      *         version to the new configuration version.
      */
-    public static void init(File configDir, String fileName)
+    public static void init(final File configDir, final String fileName)
         throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration(
@@ -671,7 +671,7 @@ public class Config {
         try {
             parsedConfigVersion = Integer
                 .parseInt(configInstance.getLoadedConfigVersion(), 10);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             LOGGER.error("Failed to parse in-memory configuration version:", t);
             LOGGER.error(
                 "Got a string '{}' that could not be parsed as an integer",
@@ -703,7 +703,7 @@ public class Config {
      *         is <code>null</code>.
      */
     @Nullable
-    public static Path backUpConfig(@Nullable Configuration config)
+    public static Path backUpConfig(@Nullable final Configuration config)
         throws ArgumentNullException, IOException {
         if (config == null) {
             throw new ArgumentNullException("config",
@@ -711,7 +711,7 @@ public class Config {
         }
         LOGGER.debug("Creating a backup of configuration file '{}'...",
             config.getConfigFile().getAbsolutePath());
-        File backupLocation = new File(String.format("%s.bak",
+        final File backupLocation = new File(String.format("%s.bak",
             config.getConfigFile().getAbsolutePath()));
         LOGGER.debug("Copying main configuration to backup location '{}'...",
             backupLocation.getAbsolutePath());
@@ -730,7 +730,7 @@ public class Config {
      *         successfully created, <code>null</code> otherwise.
      */
     @Nullable
-    public static Path recreateConfig(@Nullable Configuration config) {
+    public static Path recreateConfig(@Nullable final Configuration config) {
         return recreateConfig(config, true);
     }
 
@@ -745,14 +745,14 @@ public class Config {
      *         successfully created, <code>null</code> otherwise.
      */
     @Nullable
-    public static Path recreateConfig(@Nullable Configuration config,
-        boolean backup) {
+    public static Path recreateConfig(@Nullable final Configuration config,
+        final boolean backup) {
         @Nullable
         Path backupPath = null;
         if (backup) {
             try {
                 backupPath = backUpConfig(config);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 LOGGER.warn(
                     "Failed to backup your current configuration!");
                 LOGGER.warn(
@@ -785,7 +785,7 @@ public class Config {
         try {
             configInstanceVersion = Integer
                 .parseInt(configInstance.getLoadedConfigVersion(), 10);
-        } catch (NumberFormatException ex) {
+        } catch (final NumberFormatException ex) {
             LOGGER.error(
                 "Got a value of '{}' that could not be parsed as an integer",
                 configInstance.getLoadedConfigVersion());
@@ -795,7 +795,7 @@ public class Config {
                 "Assuming your configuration is corrupted, backing it up and recreating!");
             LOGGER.warn(
                 "Any customizations you've made are probably about to get nuked!");
-            Path backupPath = recreateConfig(configInstance);
+            final Path backupPath = recreateConfig(configInstance);
             if (backupPath != null) {
                 LOGGER.warn(
                     "Your old config was backed up to '{}'", backupPath);
@@ -812,11 +812,11 @@ public class Config {
                     Integer.parseInt(configInstance.getLoadedConfigVersion(),
                         10),
                     CONFIG_VERSION);
-            } catch (NoSuchElementException t) {
+            } catch (final NoSuchElementException t) {
                 LOGGER.info(
                     "No migrations available from version '{}' to version '{}', assuming migration is not required!",
                     configInstance.getLoadedConfigVersion(), CONFIG_VERSION);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 LOGGER.warn(
                     "Could not migrate configuration from version '{}' to version '{}'!",
                     configInstance.getLoadedConfigVersion(), CONFIG_VERSION);
@@ -825,7 +825,7 @@ public class Config {
                     t);
                 LOGGER.warn(
                     "Any customizations you've made are probably about to get nuked!");
-                Path backupPath = recreateConfig(configInstance);
+                final Path backupPath = recreateConfig(configInstance);
                 if (backupPath != null) {
                     LOGGER.warn(
                         "Your old config was backed up to '{}'", backupPath);
@@ -848,7 +848,7 @@ public class Config {
             LOGGER.debug("Loaded mod configuration! Settings are:");
             LOGGER.debug("=== Gameplay ===");
             LOGGER.debug("Globally Immune Players:");
-            for (String player : getGloballyImmunePlayers()) {
+            for (final String player : getGloballyImmunePlayers()) {
                 LOGGER.debug(String.format("* %s", player));
             }
             LOGGER.debug(String.format("Prevent Ender Mob Teleportation: %s",
@@ -927,11 +927,11 @@ public class Config {
      * @throws NumberFormatException Thrown if any configuration versions are
      *         not valid numbers.
      */
-    private static void applyConfigMigrations(@Nonnull Number fromVersion,
-        @Nonnull Number toVersion)
+    private static void applyConfigMigrations(@NotNull final Number fromVersion,
+        @NotNull final Number toVersion)
         throws NoSuchElementException, NumberFormatException {
-        LinkedList<ImmutableTuple<Number, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<Number, Consumer<Configuration>>>();
-        HashSet<Number> alreadyMigratedVersions = new HashSet<Number>();
+        final LinkedList<ImmutableTuple<Number, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<Number, Consumer<Configuration>>>();
+        final HashSet<Number> alreadyMigratedVersions = new HashSet<Number>();
         Number lastMigratedVersion = fromVersion;
         while (MIGRATIONS.containsKey(lastMigratedVersion)
             && !lastMigratedVersion.equals(toVersion)) {
@@ -950,10 +950,10 @@ public class Config {
                 "No available migration route from configuration version '%s' to configuration version '%s'!",
                 fromVersion, toVersion));
         }
-        Configuration currentInstance = MigrationUtils
+        final Configuration currentInstance = MigrationUtils
             .cloneConfiguration(configInstance);
         Number currentVersion = configInstanceVersion;
-        for (ImmutableTuple<Number, Consumer<Configuration>> migrator : migrators) {
+        for (final ImmutableTuple<Number, Consumer<Configuration>> migrator : migrators) {
             migrator.getSecond().accept(currentInstance);
             currentVersion = migrator.getFirst().intValue();
         }
@@ -976,8 +976,8 @@ public class Config {
      *         from the old configuration version to the new configuration
      *         version.
      */
-    private static void registerMigration(@Nonnull Number fromVersion,
-        @Nonnull Number toVersion, Consumer<Configuration> migrator)
+    private static void registerMigration(@NotNull final Number fromVersion,
+        @NotNull final Number toVersion, final Consumer<Configuration> migrator)
         throws KeyAlreadyExistsException {
         if (MIGRATIONS.containsKey(fromVersion)) {
             throw new KeyAlreadyExistsException(fromVersion,

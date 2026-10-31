@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -30,6 +28,7 @@ import cpw.mods.fml.common.Loader;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 
@@ -116,7 +115,7 @@ public class RepairCommand extends CommandBase {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private ItemTarget(String commandValue) {
+        private ItemTarget(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -128,7 +127,7 @@ public class RepairCommand extends CommandBase {
          *
          * @return The corresponding {@link ItemTarget}.
          */
-        public static ItemTarget getFromCommandArgument(String argument)
+        public static ItemTarget getFromCommandArgument(final String argument)
             throws NoSuchElementException {
             return Arrays.stream(ItemTarget.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
@@ -147,7 +146,8 @@ public class RepairCommand extends CommandBase {
          *         {@code null} otherwise.
          */
         @Nullable
-        public static ItemTarget tryGetFromCommandArgument(String argument) {
+        public static ItemTarget tryGetFromCommandArgument(
+            final String argument) {
             return Arrays.stream(ItemTarget.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
                 .findFirst()
@@ -183,7 +183,7 @@ public class RepairCommand extends CommandBase {
      * @return The usage of the command.
      */
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "gtnh_customizer.commands.repair.usage";
     }
 
@@ -208,7 +208,7 @@ public class RepairCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(final String[] args, final int index) {
         return index == 0 && !isItemTargetIndex(args, index);
     }
 
@@ -222,7 +222,7 @@ public class RepairCommand extends CommandBase {
      * @return {@code true} if the index should be for an item target;
      *         {@code false} otherwise.
      */
-    public boolean isItemTargetIndex(String[] args, int index) {
+    public boolean isItemTargetIndex(final String[] args, final int index) {
         if (index < 0 || index >= args.length) {
             return false;
         }
@@ -241,17 +241,17 @@ public class RepairCommand extends CommandBase {
      *         command.
      */
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender,
-        String[] args) {
+    public List<String> addTabCompletionOptions(final ICommandSender sender,
+        final String[] args) {
         EntityPlayerMP victim = null;
         List<String> result = null;
-        int index = args.length - 1;
+        final int index = args.length - 1;
         switch (index) {
             case 0:
                 // -- First argument is one of victim or item target
                 try {
                     victim = getPlayer(sender, args[0]);
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     // -- Does nothing
                 }
                 result = CommandUtils
@@ -289,7 +289,8 @@ public class RepairCommand extends CommandBase {
      * @param args The command arguments.
      */
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender,
+        final String[] args) {
         EntityPlayerMP victim = null;
         ItemTarget target = null;
         if (args.length > 1 && isUsernameIndex(args, 0)) {
@@ -324,7 +325,7 @@ public class RepairCommand extends CommandBase {
             target = ItemTarget.Hand;
         }
         if (victim != null && target != null) {
-            ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+            final ArrayList<ItemStack> items = new ArrayList<ItemStack>();
             switch (target) {
                 case Hand:
                     if (victim.getHeldItem() != null) {
@@ -376,7 +377,8 @@ public class RepairCommand extends CommandBase {
                     break;
                 case Inventory:
                     if (Loader.isModLoaded("backhand")) {
-                        int offhandIndex = BackhandUtils.getOffhandSlot(victim);
+                        final int offhandIndex = BackhandUtils
+                            .getOffhandSlot(victim);
                         if (offhandIndex < InventoryPlayer.getHotbarSize()) {
                             items.addAll(Arrays.asList(
                                 Arrays.copyOfRange(
@@ -452,7 +454,7 @@ public class RepairCommand extends CommandBase {
                             targetBlockPosZ = CommandUtils
                                 .parseBlockRelativeIntegerArgument(args[4],
                                     (int) victim.posZ);
-                        } catch (Throwable t) {
+                        } catch (final Throwable t) {
                             throw new CommandException(
                                 "gtnh_customizer.commands.repair.error.bad_container_position",
                                 new Object[] {
@@ -474,7 +476,7 @@ public class RepairCommand extends CommandBase {
                             targetBlockPosZ = CommandUtils
                                 .parseBlockRelativeIntegerArgument(args[3],
                                     (int) victim.posZ);
-                        } catch (Throwable t) {
+                        } catch (final Throwable t) {
                             throw new CommandException(
                                 "gtnh_customizer.commands.repair.error.bad_container_position",
                                 new Object[] {
@@ -486,14 +488,14 @@ public class RepairCommand extends CommandBase {
                     } else {
                         // -- Arguments contain no victim player and no position
                         // -- data, fall back to container being looked at
-                        double reach = victim.theItemInWorldManager
+                        final double reach = victim.theItemInWorldManager
                             .getBlockReachDistance();
-                        Vec3 start = Vec3.createVectorHelper(victim.posX,
+                        final Vec3 start = Vec3.createVectorHelper(victim.posX,
                             victim.posY + victim.getEyeHeight(), victim.posZ);
-                        Vec3 look = victim.getLookVec();
-                        Vec3 end = start.addVector(look.xCoord * reach,
+                        final Vec3 look = victim.getLookVec();
+                        final Vec3 end = start.addVector(look.xCoord * reach,
                             look.yCoord * reach, look.zCoord * reach);
-                        MovingObjectPosition pos = victim.worldObj
+                        final MovingObjectPosition pos = victim.worldObj
                             .func_147447_a(start, end,
                                 !Config.getRepairCommandRaycastIgnoresLiquids(),
                                 Config.getRepairCommandRaycastIgnoresLiquids(),
@@ -518,9 +520,9 @@ public class RepairCommand extends CommandBase {
                             "gtnh_customizer.commands.repair.error.no_container",
                             new Object[0]);
                     }
-                    int slotCount = tileInventory.getSizeInventory();
+                    final int slotCount = tileInventory.getSizeInventory();
                     for (int i = 0; i < slotCount; i += 1) {
-                        ItemStack itemStack = tileInventory
+                        final ItemStack itemStack = tileInventory
                             .getStackInSlot(i);
                         if (itemStack != null) {
                             items.add(itemStack);
@@ -531,7 +533,7 @@ public class RepairCommand extends CommandBase {
             }
             items.parallelStream()
                 .forEach((itemStack) -> {
-                    NBTTagCompound stackTag = itemStack.hasTagCompound()
+                    final NBTTagCompound stackTag = itemStack.hasTagCompound()
                         ? itemStack.stackTagCompound
                         : new NBTTagCompound();
                     if (stackTag.hasKey("InfiTool", NBT.TAG_COMPOUND)) {

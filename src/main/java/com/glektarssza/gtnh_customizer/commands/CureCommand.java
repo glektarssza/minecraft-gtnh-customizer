@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -20,6 +18,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.PotionUtils;
 import com.glektarssza.gtnh_customizer.utils.extensions.IPotionExtensions;
@@ -69,7 +68,7 @@ public class CureCommand extends CommandBase {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private StatusEffectGroup(String commandValue) {
+        private StatusEffectGroup(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -81,7 +80,8 @@ public class CureCommand extends CommandBase {
          *
          * @return The corresponding {@link StatusEffectGroup}.
          */
-        public static StatusEffectGroup getFromCommandArgument(String argument)
+        public static StatusEffectGroup getFromCommandArgument(
+            final String argument)
             throws NoSuchElementException {
             return Arrays.stream(StatusEffectGroup.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
@@ -102,7 +102,7 @@ public class CureCommand extends CommandBase {
          */
         @Nullable
         public static StatusEffectGroup tryGetFromCommandArgument(
-            String argument) {
+            final String argument) {
             return Arrays.stream(StatusEffectGroup.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
                 .findFirst()
@@ -138,7 +138,7 @@ public class CureCommand extends CommandBase {
      * @return The usage of the command.
      */
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return new ChatComponentTranslation(
             "gtnh_customizer.commands.cure.usage").getUnformattedTextForChat();
     }
@@ -164,7 +164,7 @@ public class CureCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(final String[] args, final int index) {
         return index == 0 && !isEffectTypeIndex(args, index);
     }
 
@@ -178,7 +178,7 @@ public class CureCommand extends CommandBase {
      * @return {@code true} if the index should be for an item target;
      *         {@code false} otherwise.
      */
-    public boolean isEffectTypeIndex(String[] args, int index) {
+    public boolean isEffectTypeIndex(final String[] args, final int index) {
         if (index < 0 || index >= args.length) {
             return false;
         }
@@ -197,17 +197,17 @@ public class CureCommand extends CommandBase {
      *         command.
      */
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender,
-        String[] args) {
+    public List<String> addTabCompletionOptions(final ICommandSender sender,
+        final String[] args) {
         EntityPlayerMP victim = null;
         List<String> result = null;
-        int index = args.length - 1;
+        final int index = args.length - 1;
         switch (index) {
             case 0:
                 // -- First argument is one of victim or item target
                 try {
                     victim = getPlayer(sender, args[0]);
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     // -- Does nothing
                 }
                 result = CommandUtils
@@ -241,7 +241,8 @@ public class CureCommand extends CommandBase {
      * @param args The command arguments.
      */
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender,
+        final String[] args) {
         final EntityPlayerMP victim;
         final StatusEffectGroup target;
         final boolean victimIsSender;
@@ -279,7 +280,7 @@ public class CureCommand extends CommandBase {
             target = StatusEffectGroup.Negative;
         }
         if (victim != null && target != null) {
-            Collection<PotionEffect> statusEffects = new ArrayList<PotionEffect>();
+            final Collection<PotionEffect> statusEffects = new ArrayList<PotionEffect>();
             statusEffects.addAll(victim.getActivePotionEffects());
             switch (target) {
                 case Negative:
