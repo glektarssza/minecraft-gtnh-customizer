@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +27,7 @@ import xaero.common.minimap.waypoints.WaypointWorldRootContainer;
 import xaero.common.minimap.waypoints.WaypointsManager;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
@@ -40,7 +39,7 @@ public abstract class WaypointsManagerMixins {
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));

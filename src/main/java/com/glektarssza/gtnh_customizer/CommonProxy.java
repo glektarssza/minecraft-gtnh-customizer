@@ -3,9 +3,6 @@ package com.glektarssza.gtnh_customizer;
 import java.io.File;
 import java.lang.invoke.MethodHandles;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,6 +24,8 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.commands.CureCommand;
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
 import com.glektarssza.gtnh_customizer.commands.GTNHCustomizerCommand;
@@ -46,7 +45,7 @@ public class CommonProxy {
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -71,7 +70,7 @@ public class CommonProxy {
      *
      * @return The side the mod is running on.
      */
-    @Nonnull
+    @NotNull
     public Side getSide() {
         return Side.SERVER;
     }
@@ -113,7 +112,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(final FMLPreInitializationEvent event) {
         LOGGER.info("Pre-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         this.configDir = event.getModConfigurationDirectory();
@@ -135,7 +134,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
-    public void init(FMLInitializationEvent event) {
+    public void init(final FMLInitializationEvent event) {
         LOGGER.info("Initializing server/common-side for {}...", Tags.MOD_NAME);
         // -- Does nothing yet!
         LOGGER.info("Done initializing server/common-side for {}!",
@@ -147,7 +146,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
-    public void postInit(FMLPostInitializationEvent event) {
+    public void postInit(final FMLPostInitializationEvent event) {
         LOGGER.info("Post-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         // -- Does nothing yet!
@@ -160,7 +159,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(final FMLServerStartingEvent event) {
         LOGGER.info("Handling server about to start for {}...", Tags.MOD_NAME);
         LOGGER.info("Registering custom commands for {}...", Tags.MOD_NAME);
         this.registerCommands(event);
@@ -175,7 +174,7 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     @SubscribeEvent
-    public void boneMeal(BonemealEvent event) {
+    public void boneMeal(final BonemealEvent event) {
         if (!Loader.isModLoaded("Thaumcraft")) {
             return;
         }
@@ -220,7 +219,7 @@ public class CommonProxy {
     }
 
     @SubscribeEvent
-    public void configChanged(ConfigChangedEvent event) {
+    public void configChanged(final ConfigChangedEvent event) {
         if (!event.modID.equals(Tags.MOD_ID)) {
             return;
         }
@@ -240,7 +239,7 @@ public class CommonProxy {
             reloadEvent -> {
                 try {
                     Config.sync();
-                } catch (Throwable t) {
+                } catch (final Throwable t) {
                     return false;
                 }
                 return true;
@@ -255,7 +254,7 @@ public class CommonProxy {
      *
      * @param event The incoming event.
      */
-    private void registerCommands(FMLServerStartingEvent event) {
+    private void registerCommands(final FMLServerStartingEvent event) {
         event.registerServerCommand(new GTNHCustomizerCommand());
         event.registerServerCommand(new TeleportCrossDimensionCommand());
         event.registerServerCommand(new ListDimensionsCommand());

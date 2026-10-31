@@ -2,8 +2,6 @@ package com.glektarssza.gtnh_customizer;
 
 import java.lang.invoke.MethodHandles;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +11,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -22,7 +21,7 @@ public class ClientProxy extends CommonProxy {
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -42,7 +41,7 @@ public class ClientProxy extends CommonProxy {
      *
      * @return The side the mod is running on.
      */
-    @Nonnull
+    @NotNull
     @Override
     public Side getSide() {
         return Side.SERVER;
@@ -64,7 +63,7 @@ public class ClientProxy extends CommonProxy {
      * @param event The incoming event.
      */
     @Override
-    public void init(FMLInitializationEvent event) {
+    public void init(final FMLInitializationEvent event) {
         super.init(event);
         LOGGER.info("Initializing client-side for {}...", Tags.MOD_NAME);
         LOGGER.info("Registering key bindings for {}...",

@@ -3,8 +3,6 @@ package com.glektarssza.gtnh_customizer.commands.gtnh_customizer;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +12,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.api.command.ISubCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
@@ -22,7 +21,7 @@ public class ReloadConfigSubCommand implements ISubCommand {
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -30,7 +29,7 @@ public class ReloadConfigSubCommand implements ISubCommand {
     /**
      * The {@link CommandBase} that this instance belongs to.
      */
-    @Nonnull
+    @NotNull
     private CommandBase commandBase;
 
     /**
@@ -38,11 +37,11 @@ public class ReloadConfigSubCommand implements ISubCommand {
      *
      * @param base The {@link CommandBase} that the new instance belongs to.
      */
-    public ReloadConfigSubCommand(@Nonnull CommandBase base) {
+    public ReloadConfigSubCommand(@NotNull CommandBase base) {
         this.commandBase = base;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public CommandBase getCommandBase() {
         return this.commandBase;

@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -44,7 +43,7 @@ public abstract class Category {
      *
      * @param parent The parent of this category.
      */
-    public Category(@Nullable Category parent) {
+    public Category(@Nullable final Category parent) {
         this.parent = parent;
     }
 
@@ -53,7 +52,7 @@ public abstract class Category {
      *
      * @return The ID of the category.
      */
-    @Nonnull
+    @NotNull
     public abstract String getID();
 
     /**
@@ -61,9 +60,9 @@ public abstract class Category {
      *
      * @return The full path of the category.
      */
-    @Nonnull
+    @NotNull
     public String getFullPath() {
-        Category parent = this.getParent();
+        final Category parent = this.getParent();
         if (parent == null) {
             return this.getID();
         }
@@ -77,9 +76,9 @@ public abstract class Category {
      *
      * @return The language key of the category.
      */
-    @Nonnull
+    @NotNull
     public String getLanguageKey() {
-        Category parent = this.getParent();
+        final Category parent = this.getParent();
         if (parent == null) {
             return TypeHelpers
                 .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
@@ -182,10 +181,9 @@ public abstract class Category {
      *
      * @return The children categories of this category.
      */
-    @Nonnull
+    @NotNull
     public Category[] getChildrenCategories() {
-        return TypeHelpers
-            .castToNonNull(this.childCategories.toArray(new Category[0]));
+        return this.childCategories.toArray(new Category[0]);
     }
 
     /**
@@ -193,10 +191,9 @@ public abstract class Category {
      *
      * @return The children properties of this category.
      */
-    @Nonnull
+    @NotNull
     public Property<?>[] getChildrenProperties() {
-        return TypeHelpers
-            .castToNonNull(this.childProperties.toArray(new Property<?>[0]));
+        return this.childProperties.toArray(new Property<?>[0]);
     }
 
     /**
@@ -205,7 +202,7 @@ public abstract class Category {
      *
      * @param config The Forge configuration to register this category on to.
      */
-    public void registerForgeConfigCategory(Configuration config) {
+    public void registerForgeConfigCategory(final Configuration config) {
         this.registerForgeConfigCategory(config, true);
     }
 
@@ -219,15 +216,15 @@ public abstract class Category {
      *
      * @return This instance for chaining.
      */
-    public Category registerForgeConfigCategory(Configuration config,
-        boolean recurse) {
-        ConfigCategory cat = config.getCategory(this.getFullPath());
+    public Category registerForgeConfigCategory(final Configuration config,
+        final boolean recurse) {
+        final ConfigCategory cat = config.getCategory(this.getFullPath());
         cat.setComment(this.getComment());
         cat.setLanguageKey(this.getLanguageKey());
         cat.setShowInGui(this.getShowInGui());
         cat.setRequiresWorldRestart(this.getRequiresWorldRestart());
         cat.setRequiresMcRestart(this.getRequiresGameRestart());
-        List<String> order = this.getPropertyOrder();
+        final List<String> order = this.getPropertyOrder();
         if (order != null) {
             cat.setPropertyOrder(order);
         }
@@ -249,7 +246,7 @@ public abstract class Category {
      *
      * @return This instance for chaining.
      */
-    public Category loadValues(Configuration config) {
+    public Category loadValues(final Configuration config) {
         Arrays.stream(this.getChildrenProperties())
             .forEach((prop) -> prop.loadValue(config));
         Arrays.stream(this.getChildrenCategories())
@@ -264,7 +261,7 @@ public abstract class Category {
      *
      * @return This instance for chaining.
      */
-    public Category saveValues(Configuration config) {
+    public Category saveValues(final Configuration config) {
         Arrays.stream(this.getChildrenProperties())
             .forEach((prop) -> prop.saveValue(config));
         Arrays.stream(this.getChildrenCategories())

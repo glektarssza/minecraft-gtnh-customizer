@@ -7,12 +7,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
-
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
@@ -27,7 +26,7 @@ public final class MigrationUtils {
      *
      * @return A clone of the property.
      */
-    public static Property cloneProperty(Property property) {
+    public static Property cloneProperty(final Property property) {
         if (property.isList()) {
             return new Property(property.getName(), property.getStringList(),
                 property.getType(), property.getLanguageKey())
@@ -50,7 +49,8 @@ public final class MigrationUtils {
      *
      * @return A clone of the property.
      */
-    public static Property cloneProperty(Configuration instance, String path) {
+    public static Property cloneProperty(final Configuration instance,
+        final String path) {
         return cloneProperty(instance, path, Configuration.CATEGORY_SPLITTER);
     }
 
@@ -64,8 +64,9 @@ public final class MigrationUtils {
      *
      * @return A clone of the property.
      */
-    public static Property cloneProperty(Configuration instance, String path,
-        CharSequence pathSeparators) {
+    public static Property cloneProperty(final Configuration instance,
+        final String path,
+        final CharSequence pathSeparators) {
         return cloneProperty(getPropertyByPath(instance, path, pathSeparators));
     }
 
@@ -76,8 +77,9 @@ public final class MigrationUtils {
      *
      * @return A clone of the category.
      */
-    public static ConfigCategory cloneCategory(ConfigCategory category) {
-        ConfigCategory cloned = new ConfigCategory(category.getName(), null);
+    public static ConfigCategory cloneCategory(final ConfigCategory category) {
+        final ConfigCategory cloned = new ConfigCategory(category.getName(),
+            null);
         cloned.getChildren()
             .forEach((childCategory) -> cloneCategory(childCategory));
         category.forEach((key, prop) -> cloned.put(key, cloneProperty(prop)));
@@ -92,8 +94,8 @@ public final class MigrationUtils {
      *
      * @return A clone of the category.
      */
-    public static ConfigCategory cloneCategory(Configuration instance,
-        String path) {
+    public static ConfigCategory cloneCategory(final Configuration instance,
+        final String path) {
         return cloneCategory(instance, path, Configuration.CATEGORY_SPLITTER);
     }
 
@@ -107,8 +109,8 @@ public final class MigrationUtils {
      *
      * @return A clone of the category.
      */
-    public static ConfigCategory cloneCategory(Configuration instance,
-        String path, CharSequence pathSeparators) {
+    public static ConfigCategory cloneCategory(final Configuration instance,
+        final String path, final CharSequence pathSeparators) {
         return cloneCategory(getCategoryByPath(instance, path, pathSeparators));
     }
 
@@ -125,8 +127,8 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
-    public static void copyProperty(Configuration instance,
-        Configuration newInstance, String path)
+    public static void copyProperty(final Configuration instance,
+        final Configuration newInstance, final String path)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyProperty(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, false);
@@ -146,8 +148,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
-    public static void copyProperty(Configuration instance,
-        Configuration newInstance, String path, boolean overwrite)
+    public static void copyProperty(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final boolean overwrite)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyProperty(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
@@ -168,8 +171,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
-    public static void copyProperty(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators)
+    public static void copyProperty(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyProperty(instance, newInstance, path, pathSeparators, false);
     }
@@ -190,16 +194,17 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
-    public static void copyProperty(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators,
-        boolean overwrite)
+    public static void copyProperty(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators,
+        final boolean overwrite)
         throws NoSuchElementException, KeyAlreadyExistsException {
         if (!hasPropertyByPath(instance, path, pathSeparators)) {
             throw new NoSuchElementException(String.format(
                 "Cannot copy configuration property '%s' to the given configuration instance (no property exists to copy)",
                 path));
         }
-        boolean hasPropertyAlready = hasPropertyByPath(newInstance, path,
+        final boolean hasPropertyAlready = hasPropertyByPath(newInstance, path,
             pathSeparators);
         if (hasPropertyAlready && !overwrite) {
             throw new KeyAlreadyExistsException(TypeHelpers.castToNonNull(path),
@@ -207,9 +212,10 @@ public final class MigrationUtils {
                     "Cannot copy configuration property '%s' to the given configuration instance (a property already exists there)",
                     path));
         }
-        ConfigCategory oldCategory = getPropertyParentCategoryByPath(instance,
+        final ConfigCategory oldCategory = getPropertyParentCategoryByPath(
+            instance,
             path, pathSeparators);
-        Property oldProperty = getPropertyByPath(instance, path,
+        final Property oldProperty = getPropertyByPath(instance, path,
             pathSeparators);
         if (hasPropertyAlready) {
             getPropertyParentCategoryByPath(newInstance, path, pathSeparators)
@@ -234,8 +240,8 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyProperty(Configuration instance,
-        Configuration newInstance, String path) {
+    public static boolean tryCopyProperty(final Configuration instance,
+        final Configuration newInstance, final String path) {
         return tryCopyProperty(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -250,8 +256,9 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyProperty(Configuration instance,
-        Configuration newInstance, String path, boolean overwrite) {
+    public static boolean tryCopyProperty(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final boolean overwrite) {
         return tryCopyProperty(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
     }
@@ -267,11 +274,12 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyProperty(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators) {
+    public static boolean tryCopyProperty(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators) {
         try {
             copyProperty(instance, newInstance, path, pathSeparators, false);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -289,9 +297,10 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyProperty(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators,
-        boolean overwrite) {
+    public static boolean tryCopyProperty(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators,
+        final boolean overwrite) {
         return tryCopyProperty(instance, newInstance, path, pathSeparators,
             overwrite);
     }
@@ -309,8 +318,8 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void copyCategory(Configuration instance,
-        Configuration newInstance, String path)
+    public static void copyCategory(final Configuration instance,
+        final Configuration newInstance, final String path)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER);
@@ -331,8 +340,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void copyCategory(Configuration instance,
-        Configuration newInstance, String path, boolean overwrite)
+    public static void copyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final boolean overwrite)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
@@ -353,8 +363,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void copyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators)
+    public static void copyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path, pathSeparators, false);
     }
@@ -376,11 +387,12 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void copyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators,
-        boolean overwrite)
+    public static void copyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators,
+        final boolean overwrite)
         throws NoSuchElementException, KeyAlreadyExistsException {
-        ConfigCategory oldCategory = getCategoryByPath(instance, path,
+        final ConfigCategory oldCategory = getCategoryByPath(instance, path,
             pathSeparators);
         if (newInstance.hasCategory(oldCategory.getQualifiedName())
             && !overwrite) {
@@ -394,7 +406,7 @@ public final class MigrationUtils {
             newInstance.removeCategory(
                 newInstance.getCategory(oldCategory.getQualifiedName()));
         }
-        ConfigCategory newCategory = newInstance
+        final ConfigCategory newCategory = newInstance
             .getCategory(oldCategory.getQualifiedName());
         newCategory.setComment(oldCategory.getComment());
         newCategory.setLanguageKey(oldCategory.getLanguagekey());
@@ -413,8 +425,8 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyCategory(Configuration instance,
-        Configuration newInstance, String path) {
+    public static boolean tryCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path) {
         return tryCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, false);
     }
@@ -430,8 +442,9 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyCategory(Configuration instance,
-        Configuration newInstance, String path, boolean overwrite) {
+    public static boolean tryCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final boolean overwrite) {
         return tryCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
     }
@@ -447,11 +460,12 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators) {
+    public static boolean tryCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators) {
         try {
             copyCategory(instance, newInstance, path, pathSeparators, false);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -470,13 +484,14 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators,
-        boolean overwrite) {
+    public static boolean tryCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators,
+        final boolean overwrite) {
         try {
             copyCategory(instance, newInstance, path, pathSeparators,
                 overwrite);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -495,8 +510,8 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void deepCopyCategory(Configuration instance,
-        Configuration newInstance, String path)
+    public static void deepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path)
         throws NoSuchElementException, KeyAlreadyExistsException {
         deepCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, false);
@@ -516,8 +531,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void deepCopyCategory(Configuration instance,
-        Configuration newInstance, String path, boolean overwrite)
+    public static void deepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final boolean overwrite)
         throws NoSuchElementException, KeyAlreadyExistsException {
         deepCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
@@ -538,8 +554,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void deepCopyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators)
+    public static void deepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators)
         throws NoSuchElementException, KeyAlreadyExistsException {
         deepCopyCategory(instance, newInstance, path, pathSeparators, false);
     }
@@ -560,9 +577,10 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    public static void deepCopyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators,
-        boolean overwrite)
+    public static void deepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators,
+        final boolean overwrite)
         throws NoSuchElementException, KeyAlreadyExistsException {
         copyCategory(instance, newInstance, path, pathSeparators, overwrite);
         getCategoryByPath(instance, path, pathSeparators)
@@ -589,8 +607,8 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryDeepCopyCategory(Configuration instance,
-        Configuration newInstance, String path) {
+    public static boolean tryDeepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path) {
         return tryDeepCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, false);
     }
@@ -605,8 +623,9 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryDeepCopyCategory(Configuration instance,
-        Configuration newInstance, String path, boolean overwrite) {
+    public static boolean tryDeepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final boolean overwrite) {
         return tryDeepCopyCategory(instance, newInstance, path,
             Configuration.CATEGORY_SPLITTER, overwrite);
     }
@@ -622,12 +641,13 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryDeepCopyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators) {
+    public static boolean tryDeepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators) {
         try {
             deepCopyCategory(instance, newInstance, path, pathSeparators,
                 false);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -645,13 +665,14 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryDeepCopyCategory(Configuration instance,
-        Configuration newInstance, String path, CharSequence pathSeparators,
-        boolean overwrite) {
+    public static boolean tryDeepCopyCategory(final Configuration instance,
+        final Configuration newInstance, final String path,
+        final CharSequence pathSeparators,
+        final boolean overwrite) {
         try {
             deepCopyCategory(instance, newInstance, path, pathSeparators,
                 overwrite);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -664,8 +685,9 @@ public final class MigrationUtils {
      *
      * @return A clone of the configuration.
      */
-    public static Configuration cloneConfiguration(Configuration instance) {
-        Configuration cloned = new Configuration(instance.getConfigFile(),
+    public static Configuration cloneConfiguration(
+        final Configuration instance) {
+        final Configuration cloned = new Configuration(instance.getConfigFile(),
             instance.getDefinedConfigVersion(), false);
         instance.getCategoryNames()
             .forEach((category) -> deepCopyCategory(instance, cloned, category,
@@ -681,10 +703,11 @@ public final class MigrationUtils {
      * @return A clone of the configuration on success; {@code null} otherwise.
      */
     @Nullable
-    public static Configuration tryCloneConfiguration(Configuration instance) {
+    public static Configuration tryCloneConfiguration(
+        final Configuration instance) {
         try {
             return cloneConfiguration(instance);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return null;
         }
     }
@@ -703,8 +726,8 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
-    public static void copyConfiguration(Configuration instance,
-        Configuration newInstance)
+    public static void copyConfiguration(final Configuration instance,
+        final Configuration newInstance)
         throws NoSuchElementException, KeyAlreadyExistsException {
         instance.getCategoryNames().parallelStream()
             .forEach((categoryName) -> copyCategory(instance, newInstance,
@@ -719,11 +742,11 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryCopyConfiguration(Configuration instance,
-        Configuration newInstance) {
+    public static boolean tryCopyConfiguration(final Configuration instance,
+        final Configuration newInstance) {
         try {
             copyConfiguration(instance, newInstance);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -741,8 +764,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be renamed to.
      */
-    public static void renameProperty(Configuration instance, String path,
-        String newName)
+    public static void renameProperty(final Configuration instance,
+        final String path,
+        final String newName)
         throws NoSuchElementException, KeyAlreadyExistsException {
         renameProperty(instance, path, newName,
             Configuration.CATEGORY_SPLITTER);
@@ -762,12 +786,15 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be renamed to.
      */
-    public static void renameProperty(Configuration instance, String path,
-        String newName, CharSequence pathSeparators)
+    public static void renameProperty(final Configuration instance,
+        final String path,
+        final String newName, final CharSequence pathSeparators)
         throws NoSuchElementException, KeyAlreadyExistsException {
-        ConfigCategory category = getPropertyParentCategoryByPath(instance,
+        final ConfigCategory category = getPropertyParentCategoryByPath(
+            instance,
             path, pathSeparators);
-        Property property = getPropertyByPath(instance, path, pathSeparators);
+        final Property property = getPropertyByPath(instance, path,
+            pathSeparators);
         if (category.containsKey(newName)) {
             throw new KeyAlreadyExistsException(
                 TypeHelpers.castToNonNull(newName),
@@ -789,8 +816,8 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryRenameProperty(Configuration instance,
-        String path, String newName) {
+    public static boolean tryRenameProperty(final Configuration instance,
+        final String path, final String newName) {
         return tryRenameProperty(instance, path, newName,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -806,11 +833,12 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryRenameProperty(Configuration instance,
-        String path, String newName, CharSequence pathSeparators) {
+    public static boolean tryRenameProperty(final Configuration instance,
+        final String path, final String newName,
+        final CharSequence pathSeparators) {
         try {
             renameProperty(instance, path, newName, pathSeparators);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -829,8 +857,9 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
-    public static void moveProperty(Configuration instance, String path,
-        String newCategoryPath)
+    public static void moveProperty(final Configuration instance,
+        final String path,
+        final String newCategoryPath)
         throws NoSuchElementException {
         moveProperty(instance, path, newCategoryPath,
             Configuration.CATEGORY_SPLITTER);
@@ -851,13 +880,16 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
-    public static void moveProperty(Configuration instance, String path,
-        String newCategoryPath, CharSequence pathSeparators)
+    public static void moveProperty(final Configuration instance,
+        final String path,
+        final String newCategoryPath, final CharSequence pathSeparators)
         throws NoSuchElementException {
-        Property property = getPropertyByPath(instance, path, pathSeparators);
-        ConfigCategory oldCategory = getPropertyParentCategoryByPath(instance,
+        final Property property = getPropertyByPath(instance, path,
+            pathSeparators);
+        final ConfigCategory oldCategory = getPropertyParentCategoryByPath(
+            instance,
             path, pathSeparators);
-        ConfigCategory newCategory = getCategoryByPath(instance,
+        final ConfigCategory newCategory = getCategoryByPath(instance,
             newCategoryPath, pathSeparators);
         if (newCategory.containsKey(property.getName())) {
             throw new KeyAlreadyExistsException(
@@ -881,8 +913,8 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryMoveProperty(Configuration instance,
-        String path, String newCategoryPath) {
+    public static boolean tryMoveProperty(final Configuration instance,
+        final String path, final String newCategoryPath) {
         return tryMoveProperty(instance, path, newCategoryPath,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -899,11 +931,12 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryMoveProperty(Configuration instance,
-        String path, String newCategoryPath, CharSequence pathSeparators) {
+    public static boolean tryMoveProperty(final Configuration instance,
+        final String path, final String newCategoryPath,
+        final CharSequence pathSeparators) {
         try {
             moveProperty(instance, path, newCategoryPath, pathSeparators);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -922,8 +955,8 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
-    public static void moveAndRenameProperty(Configuration instance,
-        String path, String newPath)
+    public static void moveAndRenameProperty(final Configuration instance,
+        final String path, final String newPath)
         throws NoSuchElementException {
         moveAndRenameProperty(instance, path, newPath,
             Configuration.CATEGORY_SPLITTER);
@@ -944,16 +977,20 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
-    public static void moveAndRenameProperty(Configuration instance,
-        String path, String newPath, CharSequence pathSeparators)
+    public static void moveAndRenameProperty(final Configuration instance,
+        final String path, final String newPath,
+        final CharSequence pathSeparators)
         throws NoSuchElementException {
-        Property property = getPropertyByPath(instance, path, pathSeparators);
-        ConfigCategory oldCategory = getPropertyParentCategoryByPath(instance,
+        final Property property = getPropertyByPath(instance, path,
+            pathSeparators);
+        final ConfigCategory oldCategory = getPropertyParentCategoryByPath(
+            instance,
             path, pathSeparators);
-        ConfigCategory newCategory = getPropertyParentCategoryByPath(instance,
+        final ConfigCategory newCategory = getPropertyParentCategoryByPath(
+            instance,
             newPath, pathSeparators);
-        String[] newNameComps = splitPath(newPath, pathSeparators);
-        String newName = newNameComps[newNameComps.length - 1];
+        final String[] newNameComps = splitPath(newPath, pathSeparators);
+        final String newName = newNameComps[newNameComps.length - 1];
         if (newCategory.containsKey(property.getName())) {
             throw new KeyAlreadyExistsException(
                 TypeHelpers.castToNonNull(property.getName()),
@@ -976,8 +1013,8 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryMoveAndRenameProperty(Configuration instance,
-        String path, String newPath) {
+    public static boolean tryMoveAndRenameProperty(final Configuration instance,
+        final String path, final String newPath) {
         return tryMoveAndRenameProperty(instance, path, newPath,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -994,41 +1031,45 @@ public final class MigrationUtils {
      *
      * @return {@code true} if the operation succeeded; {@code} false otherwise.
      */
-    public static boolean tryMoveAndRenameProperty(Configuration instance,
-        String path, String newPath, CharSequence pathSeparators) {
+    public static boolean tryMoveAndRenameProperty(final Configuration instance,
+        final String path, final String newPath,
+        final CharSequence pathSeparators) {
         try {
             moveAndRenameProperty(instance, path, newPath, pathSeparators);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
     }
 
-    public static void renameCategory(Configuration instance, String path,
-        String newName)
+    public static void renameCategory(final Configuration instance,
+        final String path,
+        final String newName)
         throws NoSuchElementException {
         // -- Rename is just a fancy move to a new location at the same depth
-        String[] pathComps = splitPath(path, Configuration.CATEGORY_SPLITTER);
+        final String[] pathComps = splitPath(path,
+            Configuration.CATEGORY_SPLITTER);
         pathComps[pathComps.length - 1] = newName;
         moveCategory(instance, path, String.join(
             Configuration.CATEGORY_SPLITTER, pathComps));
     }
 
-    public static boolean tryRenameCategory(Configuration instance,
-        String path, String newName) {
+    public static boolean tryRenameCategory(final Configuration instance,
+        final String path, final String newName) {
         try {
             renameCategory(instance, path, newName);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
     }
 
-    public static void moveCategory(Configuration instance, String path,
-        String newPath)
+    public static void moveCategory(final Configuration instance,
+        final String path,
+        final String newPath)
         throws NoSuchElementException {
-        ConfigCategory category = getCategoryByPath(instance, path);
-        ConfigCategory newCategory = instance
+        final ConfigCategory category = getCategoryByPath(instance, path);
+        final ConfigCategory newCategory = instance
             .getCategory(newPath);
         newCategory.setComment(category.getComment());
         newCategory.setLanguageKey(category.getLanguagekey());
@@ -1054,11 +1095,11 @@ public final class MigrationUtils {
         instance.removeCategory(category);
     }
 
-    public static boolean tryMoveCategory(Configuration instance,
-        String path, String newPath) {
+    public static boolean tryMoveCategory(final Configuration instance,
+        final String path, final String newPath) {
         try {
             moveCategory(instance, path, newPath);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return false;
         }
         return true;
@@ -1073,8 +1114,8 @@ public final class MigrationUtils {
      * @return {@code true} if the configuration instance has a category at the
      *         given path; {@code false} otherwise.
      */
-    public static boolean hasCategoryByPath(Configuration instance,
-        String path) {
+    public static boolean hasCategoryByPath(final Configuration instance,
+        final String path) {
         return hasCategoryByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1090,8 +1131,8 @@ public final class MigrationUtils {
      * @return {@code true} if the configuration instance has a category at the
      *         given path; {@code false} otherwise.
      */
-    public static boolean hasCategoryByPath(Configuration instance,
-        String path, CharSequence pathSeparators) {
+    public static boolean hasCategoryByPath(final Configuration instance,
+        final String path, final CharSequence pathSeparators) {
         return tryGetCategoryByPath(instance, path, pathSeparators) != null;
     }
 
@@ -1104,8 +1145,8 @@ public final class MigrationUtils {
      * @return {@code true} if the configuration instance has a property at the
      *         given path; {@code false} otherwise.
      */
-    public static boolean hasPropertyByPath(Configuration instance,
-        String path) {
+    public static boolean hasPropertyByPath(final Configuration instance,
+        final String path) {
         return hasPropertyByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1121,8 +1162,8 @@ public final class MigrationUtils {
      * @return {@code true} if the configuration instance has a property at the
      *         given path; {@code false} otherwise.
      */
-    public static boolean hasPropertyByPath(Configuration instance,
-        String path, CharSequence pathSeparators) {
+    public static boolean hasPropertyByPath(final Configuration instance,
+        final String path, final CharSequence pathSeparators) {
         return tryGetPropertyByPath(instance, path, pathSeparators) != null;
     }
 
@@ -1137,8 +1178,8 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if there is no category at the
      *         given path.
      */
-    public static ConfigCategory getCategoryByPath(Configuration instance,
-        String path) throws NoSuchElementException {
+    public static ConfigCategory getCategoryByPath(final Configuration instance,
+        final String path) throws NoSuchElementException {
         return getCategoryByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1156,10 +1197,10 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if there is no category at the
      *         given path.
      */
-    public static ConfigCategory getCategoryByPath(Configuration instance,
-        String path, CharSequence pathSeparators)
+    public static ConfigCategory getCategoryByPath(final Configuration instance,
+        final String path, final CharSequence pathSeparators)
         throws NoSuchElementException {
-        String[] pathComps = splitPath(path, pathSeparators);
+        final String[] pathComps = splitPath(path, pathSeparators);
         if (pathComps.length > 0) {
             if (!instance.hasCategory(pathComps[0])) {
                 throw new NoSuchElementException(String
@@ -1168,8 +1209,9 @@ public final class MigrationUtils {
             }
             ConfigCategory category = instance.getCategory(pathComps[0]);
             for (int i = 1; i < pathComps.length; i++) {
-                String categoryComp = pathComps[i];
-                Optional<ConfigCategory> newCategory = category.getChildren()
+                final String categoryComp = pathComps[i];
+                final Optional<ConfigCategory> newCategory = category
+                    .getChildren()
                     .parallelStream()
                     .filter((item) -> item.getName().equals(categoryComp))
                     .findFirst();
@@ -1193,8 +1235,9 @@ public final class MigrationUtils {
      * @return The configuration category on success; {@code null} otherwise.
      */
     @Nullable
-    public static ConfigCategory tryGetCategoryByPath(Configuration instance,
-        String path) {
+    public static ConfigCategory tryGetCategoryByPath(
+        final Configuration instance,
+        final String path) {
         return tryGetCategoryByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1210,11 +1253,12 @@ public final class MigrationUtils {
      * @return The configuration category on success; {@code null} otherwise.
      */
     @Nullable
-    public static ConfigCategory tryGetCategoryByPath(Configuration instance,
-        String path, CharSequence pathSeparators) {
+    public static ConfigCategory tryGetCategoryByPath(
+        final Configuration instance,
+        final String path, final CharSequence pathSeparators) {
         try {
             return getCategoryByPath(instance, path, pathSeparators);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return null;
         }
     }
@@ -1230,8 +1274,8 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
      */
-    public static Property getPropertyByPath(Configuration instance,
-        String path) throws NoSuchElementException {
+    public static Property getPropertyByPath(final Configuration instance,
+        final String path) throws NoSuchElementException {
         return getPropertyByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1249,15 +1293,16 @@ public final class MigrationUtils {
      * @throws NoSuchElementException Thrown if there is no property at the
      *         given path.
      */
-    public static Property getPropertyByPath(Configuration instance,
-        String path, CharSequence pathSeparators)
+    public static Property getPropertyByPath(final Configuration instance,
+        final String path, final CharSequence pathSeparators)
         throws NoSuchElementException {
-        String[] pathComps = splitPath(path, pathSeparators);
+        final String[] pathComps = splitPath(path, pathSeparators);
         if (pathComps.length > 1) {
-            ConfigCategory category = getCategoryByPath(instance, String.join(
-                Configuration.CATEGORY_SPLITTER,
-                Arrays.copyOfRange(pathComps, 0,
-                    pathComps.length - 1)));
+            final ConfigCategory category = getCategoryByPath(instance,
+                String.join(
+                    Configuration.CATEGORY_SPLITTER,
+                    Arrays.copyOfRange(pathComps, 0,
+                        pathComps.length - 1)));
             if (!category.containsKey(pathComps[pathComps.length - 1])) {
                 throw new NoSuchElementException(String
                     .format("No such configuration property with path '%s'",
@@ -1278,8 +1323,8 @@ public final class MigrationUtils {
      * @return The configuration property on success; {@code null} otherwise.
      */
     @Nullable
-    public static Property tryGetPropertyByPath(Configuration instance,
-        String path) {
+    public static Property tryGetPropertyByPath(final Configuration instance,
+        final String path) {
         return tryGetPropertyByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1295,11 +1340,11 @@ public final class MigrationUtils {
      * @return The configuration property on success; {@code null} otherwise.
      */
     @Nullable
-    public static Property tryGetPropertyByPath(Configuration instance,
-        String path, CharSequence pathSeparators) {
+    public static Property tryGetPropertyByPath(final Configuration instance,
+        final String path, final CharSequence pathSeparators) {
         try {
             return getPropertyByPath(instance, path, pathSeparators);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return null;
         }
     }
@@ -1317,8 +1362,8 @@ public final class MigrationUtils {
      *         given path.
      */
     public static ConfigCategory getPropertyParentCategoryByPath(
-        Configuration instance,
-        String path) throws NoSuchElementException {
+        final Configuration instance,
+        final String path) throws NoSuchElementException {
         return getPropertyParentCategoryByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1338,14 +1383,14 @@ public final class MigrationUtils {
      *         given path.
      */
     public static ConfigCategory getPropertyParentCategoryByPath(
-        Configuration instance,
-        String path, CharSequence pathSeparators)
+        final Configuration instance,
+        final String path, final CharSequence pathSeparators)
         throws NoSuchElementException {
         if (!hasPropertyByPath(instance, path, pathSeparators)) {
             throw new NoSuchElementException(String
                 .format("No such configuration property with path '%s'", path));
         }
-        String[] pathComps = splitPath(path, pathSeparators);
+        final String[] pathComps = splitPath(path, pathSeparators);
         return getCategoryByPath(instance,
             String.join(Configuration.CATEGORY_SPLITTER,
                 Arrays.copyOfRange(pathComps, 0, pathComps.length - 1)));
@@ -1363,8 +1408,8 @@ public final class MigrationUtils {
      */
     @Nullable
     public static ConfigCategory tryGetPropertyParentCategoryByPath(
-        Configuration instance,
-        String path) {
+        final Configuration instance,
+        final String path) {
         return tryGetPropertyParentCategoryByPath(instance, path,
             Configuration.CATEGORY_SPLITTER);
     }
@@ -1383,12 +1428,12 @@ public final class MigrationUtils {
      */
     @Nullable
     public static ConfigCategory tryGetPropertyParentCategoryByPath(
-        Configuration instance,
-        String path, CharSequence pathSeparators) {
+        final Configuration instance,
+        final String path, final CharSequence pathSeparators) {
         try {
             return getPropertyParentCategoryByPath(instance, path,
                 pathSeparators);
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             return null;
         }
     }
@@ -1402,9 +1447,10 @@ public final class MigrationUtils {
      *
      * @return An array of path components.
      */
-    public static String[] splitPath(String path, CharSequence pathSeparators) {
-        StringBuilder sb = new StringBuilder();
-        List<String> seps = pathSeparators.chars()
+    public static String[] splitPath(final String path,
+        final CharSequence pathSeparators) {
+        final StringBuilder sb = new StringBuilder();
+        final List<String> seps = pathSeparators.chars()
             .mapToObj((i) -> String.valueOf(Character.toChars(i)))
             .collect(Collectors.toList());
         sb.append('[');

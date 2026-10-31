@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config.categories;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -16,19 +15,19 @@ import com.glektarssza.gtnh_customizer.config.categories.gameplay.XaerosWorldMap
  * The gameplay-related configuration category.
  */
 public class Gameplay extends Category {
-    @Nonnull
+    @NotNull
     public final TConstruct tconstruct;
 
-    @Nonnull
+    @NotNull
     public final Thaumcraft thaumcraft;
 
-    @Nonnull
+    @NotNull
     public final XaerosWorldMap xaerosWorldMap;
 
-    @Nonnull
+    @NotNull
     public final Property<String[]> globallyImmunePlayers;
 
-    @Nonnull
+    @NotNull
     public final Property<Boolean> preventEnderModTeleportation;
 
     /**
@@ -40,7 +39,7 @@ public class Gameplay extends Category {
         this.xaerosWorldMap = new XaerosWorldMap(this);
         this.globallyImmunePlayers = new Property<String[]>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "globally_immune_players";
             }
@@ -51,19 +50,18 @@ public class Gameplay extends Category {
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.STRING;
             }
 
             @Override
-            @Nonnull
-            public String[] getDefaultValue() {
+            public String @NotNull [] getDefaultValue() {
                 return new String[0];
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setImmunePlayers(
                         config.getCategory(this.getParent().getFullPath())
@@ -71,7 +69,7 @@ public class Gameplay extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getGloballyImmunePlayers());
@@ -79,32 +77,32 @@ public class Gameplay extends Category {
         };
         this.preventEnderModTeleportation = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "prevent_ender_mob_teleportation";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return true;
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config.setPreventEnderMobTeleportation(
                     config.getCategory(this.getParent().getFullPath())
                         .get(this.getID()).getBoolean());
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getPreventEnderMobTeleportation());
@@ -118,7 +116,7 @@ public class Gameplay extends Category {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public String getID() {
         return "gameplay";
     }

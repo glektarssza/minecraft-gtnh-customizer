@@ -2,20 +2,22 @@ package com.glektarssza.gtnh_customizer.commands;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentTranslation;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.GloballyImmunePlayersSubCommand;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.ReloadConfigSubCommand;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * A command which provides the ability to manage the mod.
@@ -46,7 +48,7 @@ public class GTNHCustomizerCommand extends CommandBase {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private SubCommand(String commandValue) {
+        private SubCommand(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -58,13 +60,17 @@ public class GTNHCustomizerCommand extends CommandBase {
          *
          * @return The corresponding {@link SubCommand}.
          */
-        public static SubCommand getFromCommandArgument(String argument)
+        public static SubCommand getFromCommandArgument(final String argument)
             throws NoSuchElementException {
-            return Arrays.stream(SubCommand.values())
+            final Iterator<@NotNull SubCommand> iter = Arrays
+                .stream(SubCommand.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format(
-                    "No SubCommand with command value of '%s'", argument)));
+                .iterator();
+            if (!iter.hasNext()) {
+                throw new NoSuchElementException(String.format(
+                    "No SubCommand with command value of '%s'", argument));
+            }
+            return TypeHelpers.castToNonNull(iter.next());
         }
 
         /**
@@ -78,11 +84,13 @@ public class GTNHCustomizerCommand extends CommandBase {
          */
         @Nullable
         public static SubCommand tryGetFromCommandArgument(
-            String argument) {
-            return Arrays.stream(SubCommand.values())
+            final String argument) {
+            return Arrays
+                .stream(SubCommand.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElse(null);
+                .iterator()
+                .next();
+
         }
     }
 
@@ -114,7 +122,7 @@ public class GTNHCustomizerCommand extends CommandBase {
      * @return The usage of the command.
      */
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return new ChatComponentTranslation(
             "gtnh_customizer.commands.gtnh_customizer.usage")
             .getUnformattedTextForChat();
@@ -141,7 +149,7 @@ public class GTNHCustomizerCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(final String[] args, final int index) {
         return false;
     }
 
@@ -155,7 +163,7 @@ public class GTNHCustomizerCommand extends CommandBase {
      * @return {@code true} if the index should be for a subcommand target;
      *         {@code false} otherwise.
      */
-    public boolean isSubCommandTypeIndex(String[] args, int index) {
+    public boolean isSubCommandTypeIndex(final String[] args, final int index) {
         return index == 0;
     }
 
@@ -169,9 +177,9 @@ public class GTNHCustomizerCommand extends CommandBase {
      *         command.
      */
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender,
-        String[] args) {
-        int index = args.length - 1;
+    public List<String> addTabCompletionOptions(final ICommandSender sender,
+        final String[] args) {
+        final int index = args.length - 1;
         switch (index) {
             case 0:
                 // -- First argument is item target
@@ -208,7 +216,8 @@ public class GTNHCustomizerCommand extends CommandBase {
      * @param args The command arguments.
      */
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender,
+        final String[] args) {
         if (args.length > 0) {
             final SubCommand subCommand = SubCommand
                 .tryGetFromCommandArgument(args[0]);

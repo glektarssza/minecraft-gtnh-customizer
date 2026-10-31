@@ -2,13 +2,11 @@ package com.glektarssza.gtnh_customizer.commands.gtnh_customizer;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +18,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.command.ISubCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
@@ -56,7 +56,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private SubCommand(String commandValue) {
+        private SubCommand(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -68,13 +68,19 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
          *
          * @return The corresponding {@link SubCommand}.
          */
-        public static SubCommand getFromCommandArgument(String argument)
+        @NotNull
+        public static SubCommand getFromCommandArgument(final String argument)
             throws NoSuchElementException {
-            return Arrays.stream(SubCommand.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format(
-                    "No SubCommand with command value of '%s'", argument)));
+            final Iterator<@NotNull SubCommand> iter = Arrays
+                .stream(SubCommand.values())
+                .filter((item) -> item.commandValue.equalsIgnoreCase(
+                    argument))
+                .iterator();
+            if (!iter.hasNext()) {
+                throw new NoSuchElementException(String.format(
+                    "No SubCommand with command value of '%s'", argument));
+            }
+            return TypeHelpers.castToNonNull(iter.next());
         }
 
         /**
@@ -88,18 +94,19 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
          */
         @Nullable
         public static SubCommand tryGetFromCommandArgument(
-            String argument) {
-            return Arrays.stream(SubCommand.values())
+            final String argument) {
+            return Arrays
+                .stream(SubCommand.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElse(null);
+                .iterator()
+                .next();
         }
     }
 
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -107,19 +114,19 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
     /**
      * The {@link CommandBase} that this instance belongs to.
      */
-    @Nonnull
-    private CommandBase commandBase;
+    @NotNull
+    private final CommandBase commandBase;
 
     /**
      * Create a new instance.
      *
      * @param base The {@link CommandBase} that the new instance belongs to.
      */
-    public GloballyImmunePlayersSubCommand(@Nonnull CommandBase base) {
+    public GloballyImmunePlayersSubCommand(@NotNull final CommandBase base) {
         this.commandBase = base;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public CommandBase getCommandBase() {
         return this.commandBase;
@@ -133,7 +140,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
      * @return The usage of the command.
      */
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return new ChatComponentTranslation(
             "gtnh_customizer.commands.gtnh_customizer.globally_immune_players.usage")
             .getUnformattedTextForChat();
@@ -149,7 +156,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
      * @return {@code true} if the index should be for a player username;
      *         {@code false} otherwise.
      */
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(final String[] args, final int index) {
         return index == 1;
     }
 
@@ -163,7 +170,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
      * @return {@code true} if the index should be for a subcommand target;
      *         {@code false} otherwise.
      */
-    public boolean isSubCommandTypeIndex(String[] args, int index) {
+    public boolean isSubCommandTypeIndex(final String[] args, final int index) {
         return index == 0;
     }
 
@@ -177,8 +184,8 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
      *         command.
      */
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender,
-        String[] args) {
+    public List<String> addTabCompletionOptions(final ICommandSender sender,
+        final String[] args) {
         final int index = args.length - 1;
         final String arg = args[index];
         switch (index) {
@@ -207,7 +214,8 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
      * @param args The command arguments.
      */
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender,
+        final String[] args) {
         EntityPlayerMP victim;
         SubCommand action;
         if (args.length > 0) {
@@ -239,7 +247,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                         playerId == null ? playerName : playerId);
                     try {
                         Config.save();
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         LOGGER
                             .warn("Failed to save updated mod configuration!");
                         LOGGER.warn(t);
@@ -262,7 +270,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     }
                     try {
                         Config.save();
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         LOGGER
                             .warn("Failed to save updated mod configuration!");
                         LOGGER.warn(t);
@@ -277,7 +285,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     Config.clearImmunePlayers();
                     try {
                         Config.save();
-                    } catch (Throwable t) {
+                    } catch (final Throwable t) {
                         LOGGER
                             .warn("Failed to save updated mod configuration!");
                         LOGGER.warn(t);

@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +16,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -28,7 +27,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
     /**
      * The logger for this class.
      */
-    @Nonnull
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -51,7 +50,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
      * @returns The list of additional mixins to load based on the loaded mods.
      */
     @Override
-    @Nonnull
+    @NotNull
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
         if (loadedMods.contains("SpecialMobs")) {

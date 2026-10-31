@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-
 import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 
 /**
  * The early-stage mixin initializer.
@@ -64,7 +64,7 @@ public class EarlyMixinInitializer
      * @return The list of additional mixins to load based on the loaded mods.
      */
     @Override
-    @Nonnull
+    @NotNull
     public List<String> getMixins(Set<String> loadedMods) {
         List<String> mixins = new ArrayList<String>();
         // -- Vanilla mixins
