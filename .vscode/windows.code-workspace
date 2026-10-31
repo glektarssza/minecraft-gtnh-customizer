@@ -44,11 +44,18 @@
         "java.codeGeneration.toString.template": "${object.className} [${member.name()}=${member.value}, ${otherMembers}]",
         "java.codeGeneration.useBlocks": true,
         "java.compile.nullAnalysis.mode": "automatic",
-        "java.compile.nullAnalysis.nonnull": ["javax.annotation.Nonnull"],
+        "java.compile.nullAnalysis.nonnull": [
+            "com.glektarssza.gtnh_customizer.api.annotations.NotNull",
+            "javax.annotation.Nonnull"
+        ],
         "java.compile.nullAnalysis.nonnullbydefault": [
+            "com.glektarssza.gtnh_customizer.api.annotations.NotNullByDefault",
             "javax.annotation.ParametersAreNonnullByDefault"
         ],
-        "java.compile.nullAnalysis.nullable": ["javax.annotation.Nullable"],
+        "java.compile.nullAnalysis.nullable": [
+            "com.glektarssza.gtnh_customizer.api.annotations.Nullable",
+            "javax.annotation.Nullable"
+        ],
         "java.completion.chain.enabled": true,
         "java.completion.collapseCompletionItems": true,
         "java.completion.enabled": true,
