@@ -60,7 +60,6 @@ public abstract class GuiEditNBTMixin extends GuiBase
      *
      * @returns {@code true} the event was handled, {@code} false otherwise.
      */
-    @SuppressWarnings("null")
     @Override
     public boolean keyPressed(final int keyCode, final char keyChar) {
         final GuiEditNBT self = (GuiEditNBT) (Object) this;
