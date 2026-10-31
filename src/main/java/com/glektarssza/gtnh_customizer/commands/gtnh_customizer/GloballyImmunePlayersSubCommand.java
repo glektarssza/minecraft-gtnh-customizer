@@ -2,6 +2,7 @@ package com.glektarssza.gtnh_customizer.commands.gtnh_customizer;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -67,13 +68,19 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
          *
          * @return The corresponding {@link SubCommand}.
          */
+        @NotNull
         public static SubCommand getFromCommandArgument(final String argument)
             throws NoSuchElementException {
-            return Arrays.stream(SubCommand.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(String.format(
-                    "No SubCommand with command value of '%s'", argument)));
+            final Iterator<@NotNull SubCommand> iter = Arrays
+                .stream(SubCommand.values())
+                .filter((item) -> item.commandValue.equalsIgnoreCase(
+                    argument))
+                .iterator();
+            if (!iter.hasNext()) {
+                throw new NoSuchElementException(String.format(
+                    "No SubCommand with command value of '%s'", argument));
+            }
+            return TypeHelpers.castToNonNull(iter.next());
         }
 
         /**
@@ -88,10 +95,11 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
         @Nullable
         public static SubCommand tryGetFromCommandArgument(
             final String argument) {
-            return Arrays.stream(SubCommand.values())
+            return Arrays
+                .stream(SubCommand.values())
                 .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
-                .findFirst()
-                .orElse(null);
+                .iterator()
+                .next();
         }
     }
 

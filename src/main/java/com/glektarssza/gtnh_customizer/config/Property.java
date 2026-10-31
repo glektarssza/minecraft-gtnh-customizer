@@ -22,7 +22,7 @@ public abstract class Property<T> {
      *
      * @param parent The category that this property will belong to.
      */
-    public Property(Category parent) {
+    public Property(final Category parent) {
         this.parent = parent;
     }
 
@@ -211,7 +211,7 @@ public abstract class Property<T> {
      *
      * @param config The Forge configuration to register this property on to.
      */
-    public void registerForgeConfigCategory(Configuration config) {
+    public void registerForgeConfigCategory(final Configuration config) {
         net.minecraftforge.common.config.Property prop;
         switch (this.getValueType()) {
             case BOOLEAN:

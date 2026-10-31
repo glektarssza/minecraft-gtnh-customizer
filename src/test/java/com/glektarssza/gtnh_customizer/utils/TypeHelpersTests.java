@@ -63,6 +63,7 @@ public class TypeHelpersTests {
      * throws a {@link NullPointerException} when passed a {@code null} value.
      */
     @Test
+    @SuppressWarnings("null")
     public void testCastToNonNullThrowsOnNull() {
         // -- Given
         final Object value = null;

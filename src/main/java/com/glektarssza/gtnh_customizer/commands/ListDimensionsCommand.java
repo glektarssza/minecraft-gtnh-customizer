@@ -13,8 +13,10 @@ import net.minecraft.util.ChatComponentTranslation;
 
 import net.minecraftforge.common.DimensionManager;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
+import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * A command for listing dimensions and their IDs.
@@ -48,7 +50,7 @@ public class ListDimensionsCommand extends CommandBase {
      * @return The usage of the command.
      */
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return "gtnh_customizer.commands.list_dimensions.usage";
     }
 
@@ -73,7 +75,7 @@ public class ListDimensionsCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     @Override
-    public boolean isUsernameIndex(String[] args, int index) {
+    public boolean isUsernameIndex(final String[] args, final int index) {
         return false;
     }
 
@@ -87,8 +89,8 @@ public class ListDimensionsCommand extends CommandBase {
      *         command.
      */
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender,
-        String[] args) {
+    public List<String> addTabCompletionOptions(final ICommandSender sender,
+        final String[] args) {
         return Collections.emptyList();
     }
 
@@ -99,13 +101,14 @@ public class ListDimensionsCommand extends CommandBase {
      * @param args The command arguments.
      */
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender,
+        final String[] args) {
         Integer limit = null;
-        List<String> filters = new ArrayList<String>();
+        final List<String> filters = new ArrayList<String>();
         for (int i = 0; i < args.length; i++) {
             try {
                 limit = Integer.parseInt(args[0], 10);
-            } catch (Throwable t) {
+            } catch (final Throwable t) {
                 filters.add(args[i]);
             }
         }
@@ -120,8 +123,8 @@ public class ListDimensionsCommand extends CommandBase {
                 });
         }
 
-        List<ImmutableTuple<Integer, String>> dimensions;
-        Stream<ImmutableTuple<Integer, String>> dimensionStream = CommandUtils
+        List<@NotNull ImmutableTuple<Integer, String>> dimensions;
+        Stream<@NotNull ImmutableTuple<Integer, String>> dimensionStream = CommandUtils
             .getAllDimensionIDsIterable()
             .parallelStream()
             .map((id) -> new ImmutableTuple<Integer, String>(
@@ -140,8 +143,8 @@ public class ListDimensionsCommand extends CommandBase {
             sender.addChatMessage(new ChatComponentTranslation(
                 "gtnh_customizer.commands.list_dimensions.info.entry",
                 new Object[] {
-                    dimensions.get(i).getFirst(),
-                    dimensions.get(i).getSecond()
+                    TypeHelpers.castToNonNull(dimensions.get(i)).getFirst(),
+                    TypeHelpers.castToNonNull(dimensions.get(i)).getSecond()
                 }));
         }
     }
