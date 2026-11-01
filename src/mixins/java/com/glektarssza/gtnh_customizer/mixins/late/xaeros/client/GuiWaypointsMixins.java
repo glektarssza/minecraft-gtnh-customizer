@@ -2,8 +2,6 @@ package com.glektarssza.gtnh_customizer.mixins.late.xaeros.client;
 
 import java.lang.invoke.MethodHandles;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +18,7 @@ import xaero.common.minimap.waypoints.WaypointWorldRootContainer;
 import xaero.common.minimap.waypoints.WaypointsManager;
 
 import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -30,8 +29,8 @@ public abstract class GuiWaypointsMixins {
     /**
      * The logger for this class.
      */
-    @Nonnull
     @SuppressWarnings("unused")
+    @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
             MethodHandles.lookup().lookupClass().getSimpleName())));
@@ -44,7 +43,7 @@ public abstract class GuiWaypointsMixins {
      * @return The root world container for the given waypoint world.
      */
     private static WaypointWorldRootContainer getRootWorldContainer(
-        WaypointWorld world) {
+        final WaypointWorld world) {
         return (WaypointWorldRootContainer) world.getContainer()
             .getRootContainer();
     }
@@ -63,13 +62,14 @@ public abstract class GuiWaypointsMixins {
 
     @Inject(method = "canTeleport", at = @At("TAIL"), cancellable = true, remap = false)
     private void canTeleport$extendCheckToSubWorlds(
-        CallbackInfoReturnable<Boolean> cir) {
+        final CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
             return;
         }
-        WaypointWorldConnectionManager subConnectionManager = getRootWorldContainer(
+        final WaypointWorldConnectionManager subConnectionManager = getRootWorldContainer(
             this.displayedWorld).getSubWorldConnections();
-        boolean hasConnection = subConnectionManager.isConnected(displayedWorld,
+        final boolean hasConnection = subConnectionManager.isConnected(
+            displayedWorld,
             this.waypointsManager.getAutoWorld());
         cir.setReturnValue(hasConnection);
     }

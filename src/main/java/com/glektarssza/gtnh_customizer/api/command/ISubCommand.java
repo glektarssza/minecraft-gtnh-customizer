@@ -2,10 +2,10 @@ package com.glektarssza.gtnh_customizer.api.command;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 
 public interface ISubCommand {
     /**
@@ -13,7 +13,7 @@ public interface ISubCommand {
      *
      * @return Get the {@link CommandBase} this instance belongs to.
      */
-    @Nonnull
+    @NotNull
     public CommandBase getCommandBase();
 
     /**

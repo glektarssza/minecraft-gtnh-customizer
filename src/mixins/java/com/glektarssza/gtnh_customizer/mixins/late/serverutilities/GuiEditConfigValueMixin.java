@@ -64,14 +64,15 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
      * @returns {@code true} the event was handled, {@code} false otherwise.
      */
     @Override
-    public boolean keyPressed(int keyCode, char keyChar) {
-        GuiEditConfigValue self = (GuiEditConfigValue) (Object) this;
+    public boolean keyPressed(final int keyCode, final char keyChar) {
+        final GuiEditConfigValue self = (GuiEditConfigValue) (Object) this;
         if (!((IGuiBaseExtensions) self).isFocused()) {
             return false;
         }
         if (keyCode == Keyboard.KEY_RETURN
             || keyCode == Keyboard.KEY_NUMPADENTER) {
-            if (value.setValueFromString(Minecraft.getMinecraft().thePlayer,
+            if (value.setValueFromString(
+                TypeHelpers.castToNonNull(Minecraft.getMinecraft().thePlayer),
                 TypeHelpers.castToNonNull(textBox.getText()), false)) {
                 callback.onCallback(TypeHelpers.castToNonNull(value), true);
             }

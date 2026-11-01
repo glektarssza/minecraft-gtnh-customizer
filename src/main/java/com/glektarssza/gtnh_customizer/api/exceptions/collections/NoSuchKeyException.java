@@ -1,8 +1,7 @@
 package com.glektarssza.gtnh_customizer.api.exceptions.collections;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.exceptions.BaseRuntimeException;
 
 /**
@@ -15,7 +14,7 @@ public class NoSuchKeyException extends BaseRuntimeException {
     /**
      * The key that was being used for the map insertion.
      */
-    @Nonnull
+    @NotNull
     public final Object key;
 
     // #endregion Public Fields
@@ -27,7 +26,7 @@ public class NoSuchKeyException extends BaseRuntimeException {
      *
      * @param key The key that was being used for the map insertion.
      */
-    public NoSuchKeyException(@Nonnull Object key) {
+    public NoSuchKeyException(@NotNull final Object key) {
         super();
         this.key = key;
     }
@@ -38,8 +37,8 @@ public class NoSuchKeyException extends BaseRuntimeException {
      * @param key The key that was being used for the map insertion.
      * @param msg A string describing the error that occurred.
      */
-    public NoSuchKeyException(@Nonnull Object key,
-        @Nullable String msg) {
+    public NoSuchKeyException(@NotNull final Object key,
+        @Nullable final String msg) {
         super(msg);
         this.key = key;
     }
@@ -51,8 +50,8 @@ public class NoSuchKeyException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public NoSuchKeyException(@Nonnull Object key,
-        @Nullable Throwable cause) {
+    public NoSuchKeyException(@NotNull final Object key,
+        @Nullable final Throwable cause) {
         super(cause);
         this.key = key;
     }
@@ -65,8 +64,9 @@ public class NoSuchKeyException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public NoSuchKeyException(@Nonnull Object key, @Nullable String msg,
-        @Nullable Throwable cause) {
+    public NoSuchKeyException(@NotNull final Object key,
+        @Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(msg, cause);
         this.key = key;
     }

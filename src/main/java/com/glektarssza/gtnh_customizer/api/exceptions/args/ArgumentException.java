@@ -1,8 +1,7 @@
 package com.glektarssza.gtnh_customizer.api.exceptions.args;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.exceptions.BaseRuntimeException;
 
 /**
@@ -14,7 +13,7 @@ public class ArgumentException extends BaseRuntimeException {
     /**
      * The name of the argument that was invalid.
      */
-    @Nonnull
+    @NotNull
     public final String argumentName;
 
     // #endregion Public Fields
@@ -26,7 +25,7 @@ public class ArgumentException extends BaseRuntimeException {
      *
      * @param argumentName The name of the argument that was invalid.
      */
-    public ArgumentException(@Nonnull String argumentName) {
+    public ArgumentException(@NotNull final String argumentName) {
         super();
         this.argumentName = argumentName;
     }
@@ -37,8 +36,8 @@ public class ArgumentException extends BaseRuntimeException {
      * @param argumentName The name of the argument that was invalid.
      * @param msg A string describing the error that occurred.
      */
-    public ArgumentException(@Nonnull String argumentName,
-        @Nullable String msg) {
+    public ArgumentException(@NotNull final String argumentName,
+        @Nullable final String msg) {
         super(msg);
         this.argumentName = argumentName;
     }
@@ -50,8 +49,8 @@ public class ArgumentException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ArgumentException(@Nonnull String argumentName,
-        @Nullable Throwable cause) {
+    public ArgumentException(@NotNull final String argumentName,
+        @Nullable final Throwable cause) {
         super(cause);
         this.argumentName = argumentName;
     }
@@ -64,8 +63,8 @@ public class ArgumentException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ArgumentException(@Nonnull String argumentName,
-        @Nullable String msg, @Nullable Throwable cause) {
+    public ArgumentException(@NotNull final String argumentName,
+        @Nullable final String msg, @Nullable final Throwable cause) {
         super(msg, cause);
         this.argumentName = argumentName;
     }

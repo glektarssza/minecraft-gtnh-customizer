@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config.categories;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -13,10 +12,10 @@ import com.glektarssza.gtnh_customizer.config.Property;
  * The command-related configuration category.
  */
 public class Commands extends Category {
-    @Nonnull
+    @NotNull
     public final Property<Boolean> repairRaycastIgnoresLiquids;
 
-    @Nonnull
+    @NotNull
     public final Property<Integer> extinguishMaxVolume;
 
     /**
@@ -25,19 +24,19 @@ public class Commands extends Category {
     public Commands() {
         this.repairRaycastIgnoresLiquids = new Property<Boolean>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "repair_raycast_ignores_liquids";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.BOOLEAN;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Boolean getDefaultValue() {
                 return false;
             }
@@ -59,19 +58,19 @@ public class Commands extends Category {
         };
         this.extinguishMaxVolume = new Property<Integer>(this) {
             @Override
-            @Nonnull
+            @NotNull
             public String getID() {
                 return "extinguish_max_volume";
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Type getValueType() {
                 return Type.INTEGER;
             }
 
             @Override
-            @Nonnull
+            @NotNull
             public Integer getDefaultValue() {
                 return Integer.MAX_VALUE;
             }
@@ -96,7 +95,7 @@ public class Commands extends Category {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public String getID() {
         return "commands";
     }

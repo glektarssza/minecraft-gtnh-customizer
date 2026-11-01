@@ -1,10 +1,9 @@
 package com.glektarssza.gtnh_customizer.config;
 
-import javax.annotation.Nonnull;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
+import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -23,7 +22,7 @@ public abstract class Property<T> {
      *
      * @param parent The category that this property will belong to.
      */
-    public Property(Category parent) {
+    public Property(final Category parent) {
         this.parent = parent;
     }
 
@@ -32,7 +31,7 @@ public abstract class Property<T> {
      *
      * @return The ID of the property.
      */
-    @Nonnull
+    @NotNull
     public abstract String getID();
 
     /**
@@ -40,7 +39,7 @@ public abstract class Property<T> {
      *
      * @return The full path of the property.
      */
-    @Nonnull
+    @NotNull
     public String getFullPath() {
         return TypeHelpers
             .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
@@ -52,7 +51,7 @@ public abstract class Property<T> {
      *
      * @return The language key of the property.
      */
-    @Nonnull
+    @NotNull
     public String getLanguageKey() {
         return TypeHelpers
             .castToNonNull(String.join(Configuration.CATEGORY_SPLITTER,
@@ -64,7 +63,7 @@ public abstract class Property<T> {
      *
      * @return The comment of the property.
      */
-    @Nonnull
+    @NotNull
     public String getComment() {
         return "";
     }
@@ -101,7 +100,7 @@ public abstract class Property<T> {
      *
      * @return The type of value held in this property.
      */
-    @Nonnull
+    @NotNull
     public abstract Type getValueType();
 
     /**
@@ -194,7 +193,7 @@ public abstract class Property<T> {
      *
      * @return The default value of the property.
      */
-    @Nonnull
+    @NotNull
     public abstract T getDefaultValue();
 
     /**
@@ -202,7 +201,7 @@ public abstract class Property<T> {
      *
      * @return The parent category of this property.
      */
-    @Nonnull
+    @NotNull
     public Category getParent() {
         return TypeHelpers.castToNonNull(this.parent);
     }
@@ -212,7 +211,7 @@ public abstract class Property<T> {
      *
      * @param config The Forge configuration to register this property on to.
      */
-    public void registerForgeConfigCategory(Configuration config) {
+    public void registerForgeConfigCategory(final Configuration config) {
         net.minecraftforge.common.config.Property prop;
         switch (this.getValueType()) {
             case BOOLEAN:

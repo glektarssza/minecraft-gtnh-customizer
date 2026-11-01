@@ -1,6 +1,6 @@
 package com.glektarssza.gtnh_customizer.api.exceptions;
 
-import javax.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
 
 public class ValueOutOfRangeException extends BaseRuntimeException {
     // #region Public Fields
@@ -42,7 +42,7 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *
      * @param msg A string describing the error that occurred.
      */
-    public ValueOutOfRangeException(@Nullable String msg) {
+    public ValueOutOfRangeException(@Nullable final String msg) {
         super(msg);
         this.value = null;
         this.minimumValue = null;
@@ -55,7 +55,7 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Throwable cause) {
         super(cause);
         this.value = null;
         this.minimumValue = null;
@@ -69,8 +69,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable String msg,
-        @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(msg, cause);
         this.value = null;
         this.minimumValue = null;
@@ -82,7 +82,7 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *
      * @param value The value that was outside of the allowed range.
      */
-    public ValueOutOfRangeException(@Nullable Number value) {
+    public ValueOutOfRangeException(@Nullable final Number value) {
         super();
         this.value = value;
         this.minimumValue = null;
@@ -95,8 +95,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param value The value that was outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable String msg) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final String msg) {
         super(msg);
         this.value = value;
         this.minimumValue = null;
@@ -110,8 +110,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Throwable cause) {
         super(cause);
         this.value = value;
         this.minimumValue = null;
@@ -126,8 +126,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable String msg, @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final String msg, @Nullable final Throwable cause) {
         super(msg, cause);
         this.value = value;
         this.minimumValue = null;
@@ -141,8 +141,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param minimumValue The minimum allowed value of the value that was
      *        outside of the allowed range.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue) {
         super();
         this.value = value;
         this.minimumValue = minimumValue;
@@ -157,8 +157,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable String msg) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue, @Nullable final String msg) {
         super(msg);
         this.value = value;
         this.minimumValue = minimumValue;
@@ -174,8 +174,8 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue, @Nullable final Throwable cause) {
         super(cause);
         this.value = value;
         this.minimumValue = minimumValue;
@@ -192,9 +192,9 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable String msg,
-        @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue, @Nullable final String msg,
+        @Nullable final Throwable cause) {
         super(msg, cause);
         this.value = value;
         this.minimumValue = minimumValue;
@@ -210,8 +210,9 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param maximumValue The maximum allowed value of the value that was
      *        outside of the allowed range.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable Number maximumValue) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue,
+        @Nullable final Number maximumValue) {
         super();
         this.value = value;
         this.minimumValue = minimumValue;
@@ -228,9 +229,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable Number maximumValue,
-        @Nullable String msg) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue,
+        @Nullable final Number maximumValue,
+        @Nullable final String msg) {
         super(msg);
         this.value = value;
         this.minimumValue = minimumValue;
@@ -248,9 +250,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable Number maximumValue,
-        @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue,
+        @Nullable final Number maximumValue,
+        @Nullable final Throwable cause) {
         super(cause);
         this.value = value;
         this.minimumValue = minimumValue;
@@ -269,9 +272,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
      */
-    public ValueOutOfRangeException(@Nullable Number value,
-        @Nullable Number minimumValue, @Nullable Number maximumValue,
-        @Nullable String msg, @Nullable Throwable cause) {
+    public ValueOutOfRangeException(@Nullable final Number value,
+        @Nullable final Number minimumValue,
+        @Nullable final Number maximumValue,
+        @Nullable final String msg, @Nullable final Throwable cause) {
         super(msg, cause);
         this.value = value;
         this.minimumValue = minimumValue;
