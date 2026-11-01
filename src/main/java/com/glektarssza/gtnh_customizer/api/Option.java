@@ -37,7 +37,7 @@ public class Option<T> {
      * Create a new instance holding a possible value.
      *
      * @param <T> The type of value that might be held.
-     * @param value The possible value to be held.
+     * @param maybeValue The possible value to be held.
      *
      * @return The new instance.
      */
