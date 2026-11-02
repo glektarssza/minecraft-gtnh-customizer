@@ -35,7 +35,8 @@
         "./gradlew",
         "./gradlew.bat",
         "./spotless.importorder",
-        "./formatter.xml"
+        "./formatter.xml",
+        "./checkstyle.xml"
     ],
     "loadDefaultConfiguration": true,
     "unknownWords": "report-all",
