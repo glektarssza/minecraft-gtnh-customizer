@@ -81,6 +81,7 @@ javac
 javax
 jdks
 jitpack
+journeymap
 jvmargs
 keybind
 keybinds
