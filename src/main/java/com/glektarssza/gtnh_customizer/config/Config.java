@@ -909,7 +909,11 @@ public class Config {
 
     /**
      * Synchronize the mod configuration.
+     *
+     * @deprecated Use {@link Config#load load} and {@link Config#save save}
+     *             separately.
      */
+    @Deprecated
     public static void sync() {
         save();
         load();
