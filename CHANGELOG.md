@@ -1,8 +1,56 @@
 # Changelog #
 
+* [Changelog](#changelog)
+    * [0.18.0](#0180)
+    * [0.17.0](#0170)
+    * [0.16.0](#0160)
+    * [0.15.1](#0151)
+    * [0.15.0](#0150)
+    * [0.14.7](#0147)
+    * [0.14.6](#0146)
+    * [0.14.5](#0145)
+    * [0.14.4](#0144)
+    * [0.14.3](#0143)
+    * [0.14.2](#0142)
+    * [0.14.1](#0141)
+    * [0.14.0](#0140)
+    * [0.13.1](#0131)
+    * [0.13.0](#0130)
+    * [0.12.3](#0123)
+    * [0.12.2](#0122)
+    * [0.12.1](#0121)
+    * [0.12.0](#0120)
+    * [0.11.1](#0111)
+    * [0.11.0](#0110)
+    * [0.10.0](#0100)
+    * [0.9.0](#090)
+    * [0.8.0](#080)
+    * [0.7.0](#070)
+    * [0.6.3](#063)
+    * [0.6.2](#062)
+    * [0.6.1](#061)
+    * [0.6.0](#060)
+    * [0.5.3](#053)
+    * [0.5.2](#052)
+    * [0.5.1](#051)
+    * [0.5.0](#050)
+    * [0.4.0](#040)
+    * [0.3.1](#031)
+    * [0.3.0](#030)
+    * [0.2.3](#023)
+    * [0.2.2](#022)
+    * [0.2.1](#021)
+    * [0.2.0](#020)
+    * [0.1.2](#012)
+    * [0.1.1](#011)
+    * [0.1.0](#010)
+    * [0.0.0](#000)
+
+
 ## 0.18.0 ##
 
-## Features ##
+<!-- omit in toc -->
+### Features ###
 
 * Enabled support in Xaero's mods for cross-dimension teleportation when a valid
   sub-world connection is detected.
@@ -10,6 +58,7 @@
     * Specifically the "globally immune to mob targeting" list and reloading the
       mod configuration at runtime.
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.34.
@@ -24,31 +73,37 @@
 
 ## 0.17.0 ##
 
+<!-- omit in toc -->
 ### Major Changes ###
 
 * GTNH 2.9.x (which is now in beta release) compatibility update.
 
+<!-- omit in toc -->
 ### Minor Changes ###
 
 * Pointed mod back to GitHub repository.
 
 ## 0.16.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Enabled using the numpad across all ServerUtilities text boxes.
 * Added a `/cure` command for curing various types of potion effects.
 
+<!-- omit in toc -->
 ### Minor Changes ###
 
 * Pointed mod to new Forgejo repository home.
 * Updated mod logo.
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed some issues with mixins that were causing injections to not properly get
   loaded at runtime.
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.24.
@@ -58,32 +113,38 @@
 
 ## 0.15.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed back port of showing the biome when hovering over things in Xaero's
   World Map not working at all due to Xaero's World Map being obfuscated.
 * Fixed logging not working at all.
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Removed `slf4j` as it was causing logging to not work.
 
 ## 0.15.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added a mixin to display the hovered biome in Xaero's World Map.
   * Added relevant setting to control the new feature.
 
-### Minor ###
+<!-- omit in toc -->
+### Minor Changes ###
 
 * Moved to hard-coded NBT editing key bindings to avoid polluting the key
   bindings pages.
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed a bad Gradle update.
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Updated GTNH build scripts to v2.0.19.
@@ -95,18 +156,21 @@
 
 ## 0.14.7 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed bad mod dependency string.
 
 ## 0.14.6 ##
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Updated dependencies.
 
 ## 0.14.5 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed a bad world access on the client side that would cause a random crash
@@ -114,12 +178,14 @@
 
 ## 0.14.4 ##
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Updated dependencies.
 
 ## 0.14.3 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed Tinker's tools not properly repairing via the `/repair` command when
@@ -127,6 +193,7 @@
 
 ## 0.14.2 ##
 
+<!-- omit in toc -->
 ### Features Removed ###
 
 * Removed the change added in `v0.13.0` to `/nbtedit` that let you add things to
@@ -138,6 +205,7 @@
   * It has officially been added to GTNH in 2.8.0. See
     [GTNewHorizons/ServerUtilities#231](https://github.com/GTNewHorizons/ServerUtilities/pull/231).
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Removed the version checker.
@@ -146,23 +214,27 @@
 
 ## 0.14.1 ##
 
-### Bug Fix ###
+<!-- omit in toc -->
+### Bug Fixes ###
 
 * Fixed bad world cast in `/extinguish` command that caused it to not work.
 
 ## 0.14.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added support for EnderZoo so that Enderminy's will no longer attack immune
   players.
 
-### Bug Fix ###
+<!-- omit in toc -->
+### Bug Fixes ###
 
 * Fixed ServerUtilities `/reload` command no longer showing the
   `gtnh_customizer` namespace anymore.
 * Fixed config changes not applying in a running game.
 
+<!-- omit in toc -->
 ### Misc. ###
 
 * Removed refreshing of top panel widgets in the ServerUtilities `/nbtedit`
@@ -170,6 +242,7 @@
 
 ## 0.13.1 ##
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Added a version checker "script" that runs during startup.
@@ -177,6 +250,7 @@
 
 ## 0.13.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Changed the ServerUtilities `/nbtedit` command so it can now add things to
@@ -184,6 +258,7 @@
 
 ## 0.12.3 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the `/extinguish` command causing an error when using the `/help`
@@ -191,6 +266,7 @@
 
 ## 0.12.2 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the `/extinguish` command causing an error when using the `/help`
@@ -198,6 +274,7 @@
 
 ## 0.12.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the `/extinguish` command causing an error on server consoles when using
@@ -205,22 +282,26 @@
 
 ## 0.12.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added a setting to disable Enderman and Enderman-like mobs from teleporting.
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the '/nbtedit' UI closing when you used the 'accept' hotkey.
 
 ## 0.11.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed key bindings being loaded on the server side, causing a crash.
 
 ## 0.11.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Fall back to in-hand item if the targeted block has no tile entity when
@@ -232,6 +313,7 @@
 
 ## 0.10.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Patched ServerUtilities' `/nbtedit` command to let you use `Numpad enter` to
@@ -239,6 +321,7 @@
 
 ## 0.9.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Patched ServerUtilities' `/nbtedit` command to edit the in-hand item, if
@@ -246,23 +329,27 @@
 
 ## 0.8.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added the ability to apply bone meal to Thaumcraft saplings.
 
 ## 0.7.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * The ability to apply bone meal to Tinker's Construct Slime Saplings can now be
   toggled on and off via a configuration option.
 
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed changing configuration values from the Forge mod options menu while in a
   single player world not taking effect immediately.
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Big configuration system overhaul.
@@ -273,6 +360,7 @@
 
 ## 0.6.3 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the `/repair` command not applying to Tinker's Construct and Gregtech
@@ -282,12 +370,14 @@
 
 ## 0.6.2 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the `/reload` command not working properly on servers.
 
 ## 0.6.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the `/extinguish` command trying to access the currently configured
@@ -295,6 +385,7 @@
 
 ## 0.6.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added an `/extinguish` command to extinguish flames in an area.
@@ -306,12 +397,14 @@
 
 ## 0.5.3 ##
 
+<!-- omit in toc -->
 ### Misc. ###
 
 * Adjusted the admin output of the `/repair` command.
 
 ## 0.5.2 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed an issue where the `/repair` command was formatting the number of
@@ -319,6 +412,7 @@
 
 ## 0.5.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed an issue where the `/teleport-cross-dimension` command was parsing
@@ -326,6 +420,7 @@
 
 ## 0.5.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added `/repair` command to repair items.
@@ -336,12 +431,14 @@
 
 ## 0.4.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Allow bone meal to be applied to Tinker's Construct Slime Saplings.
 
 ## 0.3.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed Zombie Pigmen attacking players who are immune to mob aggressive when
@@ -349,6 +446,7 @@
 
 ## 0.3.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Integrated the mod into ServerUtilities.
@@ -361,6 +459,7 @@
 
 ## 0.2.3 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed the mod's adjustments to how Xaero's mods parse teleport commands not
@@ -368,18 +467,21 @@
 
 ## 0.2.2 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed broken `/teleport-cross-dimension` command.
 
 ## 0.2.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed `/teleport-cross-dimension` command argument processing.
 
 ## 0.2.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added ability to customize how Xaero's mods parse their configured teleport
@@ -393,30 +495,35 @@
 
 ## 0.1.2 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed `/teleport-cross-dimension` command not respecting coordinates.
 
 ## 0.1.1 ##
 
+<!-- omit in toc -->
 ### Bug Fixes ###
 
 * Fixed configuration migrations not applying correctly.
 
 ## 0.1.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Ported existing code from old repository.
 * Added a cross-dimension teleport command.
 * Changed logo.
 
+<!-- omit in toc -->
 ### Technical ###
 
 * Updated several dependencies.
 
 ## 0.0.0 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Initial release.
