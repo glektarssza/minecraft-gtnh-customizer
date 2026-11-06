@@ -16,7 +16,11 @@
             ".vscode",
             ".vscode-insiders",
             "build",
-            "templates/vscode"
+            "templates/vscode",
+            "config/spotless/formatter.xml",
+            "config/spotless/spotless.importorder",
+            "config/checkstyle/checkstyle.xml",
+            "config/log4j2-debug.xml"
         ],
         "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
@@ -26,10 +30,24 @@
             "pack.mcmeta": "json"
         },
         "java.autobuild.enabled": true,
+        "java.checkstyle.configuration": "checkstyle.xml",
+        "java.checkstyle.properties": {
+            "basedir": "${workspaceFolder}"
+        },
         "java.cleanup.actions": [
             "renameFileToType",
+            "organizeImports",
             "addOverride",
-            "organizeImports"
+            "addFinalModifier",
+            "qualifyMembers",
+            "qualifyStaticMembers",
+            "redundantModifiers",
+            "redundantSuperCall",
+            "instanceofPatternMatch",
+            "renameUnusedLocalVariables",
+            "lambdaExpression",
+            "lambdaExpressionFromAnonymousClass",
+            "stringConcatToTextBlock"
         ],
         "java.codeAction.sortMembers.avoidVolatileChanges": true,
         "java.codeGeneration.addFinalForNewDeclaration": "none",
@@ -59,7 +77,6 @@
         "java.completion.chain.enabled": true,
         "java.completion.collapseCompletionItems": true,
         "java.completion.enabled": true,
-        "java.completion.engine": "ecj",
         "java.completion.guessMethodArguments": "off",
         "java.completion.importOrder": [
             "#",
@@ -135,7 +152,6 @@
         "java.jdt.ls.androidSupport.enabled": "off",
         "java.jdt.ls.appcds.enabled": "off",
         "java.jdt.ls.java.home": "/usr/lib/jvm/java-25-temurin/",
-        "java.jdt.ls.javac.enabled": "off",
         "java.jdt.ls.lombokSupport.enabled": false,
         "java.jdt.ls.protobufSupport.enabled": true,
         "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms512m -Xlog:disable",
@@ -161,6 +177,21 @@
         "java.silentNotification": true,
         "java.sources.organizeImports.starThreshold": 9999,
         "java.sources.organizeImports.staticStarThreshold": 9999,
-        "java.symbols.includeSourceMethodDeclarations": true
+        "java.symbols.includeSourceMethodDeclarations": true,
+        "java.templates.catchBody": ["// ${todo} Auto-generated catch block"],
+        "java.templates.methodBody": [
+            "// ${todo} Auto-generated method stub",
+            "throw new UnsupportedOperationException(\"Unimplemented method '${enclosing_method}'\");"
+        ],
+        "java.templates.methodBodySuper": [
+            "// ${todo} Auto-generated method stub",
+            "${body_statement}"
+        ],
+        "java.templates.newFile.enabled": true,
+        "java.templates.preferPackagePrivateVisibility": false,
+        "java.templates.typeComment": ["/**", " * ", " */"],
+        "terminal.integrated.env.linux": {
+            "JAVA_HOME": "/usr/lib/jvm/java-25-temurin/"
+        }
     }
 }
