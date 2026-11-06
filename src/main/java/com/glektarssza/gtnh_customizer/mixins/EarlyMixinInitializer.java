@@ -42,7 +42,7 @@ public class EarlyMixinInitializer
     }
 
     @Override
-    public void injectData(Map<String, Object> data) {
+    public void injectData(final Map<String, Object> data) {
         // -- Does nothing!
     }
 
@@ -65,10 +65,10 @@ public class EarlyMixinInitializer
      */
     @Override
     @NotNull
-    public List<String> getMixins(Set<String> loadedMods) {
-        List<String> mixins = new ArrayList<String>();
-        // -- Vanilla mixins
+    public List<String> getMixins(final Set<String> loadedMods) {
+        final List<String> mixins = new ArrayList<String>();
 
+        // -- Vanilla mixins
         mixins.add("vanilla.EntityAIArrowAttackMixin");
         mixins.add("vanilla.EntityAIAttackOnCollideMixin");
         mixins.add("vanilla.EntityAICreeperSwellMixin");
@@ -87,6 +87,7 @@ public class EarlyMixinInitializer
         mixins.add("vanilla.EntitySilverfishMixin");
         mixins.add("vanilla.EntitySpiderMixin");
         mixins.add("vanilla.EntityWitherMixin");
+        mixins.add("vanilla.GuiMainMenuMixin");
         mixins.add("vanilla.PotionMixin");
         mixins.add("vanilla.WorldMixin");
         return mixins;

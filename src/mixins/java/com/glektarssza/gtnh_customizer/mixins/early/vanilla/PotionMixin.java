@@ -10,6 +10,9 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import com.glektarssza.gtnh_customizer.utils.extensions.IPotionExtensions;
 
+/**
+ * Mixin for the {@code Potion} class.
+ */
 @Mixin(Potion.class)
 public class PotionMixin implements IPotionExtensions {
     /**
@@ -30,12 +33,11 @@ public class PotionMixin implements IPotionExtensions {
      *         living entity, {@code false} otherwise.
      */
     @Override
-    public boolean isNegativeEffectFor(Entity entity) {
-        Potion self = (Potion) (Object) this;
-        if (!(entity instanceof EntityMob)) {
+    public boolean isNegativeEffectFor(final Entity entity) {
+        final Potion self = (Potion) (Object) this;
+        if (!(entity instanceof final EntityMob mob)) {
             return this.isBadEffect;
         }
-        EntityMob mob = (EntityMob) entity;
         // -- Undead mobs heal from damaging effects and are harmed by healing
         // -- effects, except Wither which is just painful period!
         if (!mob.isEntityUndead() &&

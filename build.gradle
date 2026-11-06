@@ -48,6 +48,41 @@ tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) 
     if (new Boolean(project.findProperty("enableDebugMCLogging"))) {
         extraJvmArgs.addAll(["-Dlog4j.configurationFile=file://${new File(project.projectDir, "log4j2-debug.xml").absolutePath}"])
     }
+    if (new Boolean(project.findProperty("mcEnableProxy"))) {
+        if (project.findProperty("mcProxySetup") == "ENV") {
+            switch(project.findProperty("mcProxyType")) {
+                    case "HTTP":
+                        environment("HTTP_PROXY", "${project.findProperty("mcProxyHost")}:${project.findProperty("mcProxyPort")}")
+                        environment("HTTPS_PROXY", "${project.findProperty("mcProxyHost")}:${project.findProperty("mcProxyPort")}")
+                        break
+                    case "SOCKS":
+                        environment("SOCKS_PROXY", "${project.findProperty("mcProxyHost")}:${project.findProperty("mcProxyPort")}")
+                        break
+                }
+        } else if (project.findProperty("mcProxySetup") == "JVM") {
+            switch(project.findProperty("mcProxyType")) {
+                case "HTTP":
+                    extraJvmArgs.addAll([
+                        "-Dhttp.proxyHost=${project.findProperty("mcProxyHost")}",
+                        "-Dhttp.proxyPort=${project.findProperty("mcProxyPort")}",
+                        "-Dhttps.proxyHost=${project.findProperty("mcProxyHost")}",
+                        "-Dhttps.proxyPort=${project.findProperty("mcProxyPort")}"
+                    ])
+                    break
+                case "SOCKS":
+                    extraJvmArgs.addAll([
+                        "-DsocksProxyHost=${project.findProperty("mcProxyHost")}",
+                        "-DsocksProxyPort=${project.findProperty("mcProxyPort")}"
+                    ])
+                    break
+            }
+        } else if (project.findProperty("mcProxySetup") == "CLI") {
+            extraMcArgs.addAll([
+                "-proxyHost", "${project.findProperty("mcProxyHost")}",
+                "-proxyPort", "${project.findProperty("mcProxyPort")}"
+            ])
+        }
+    }
 }
 
 publishing {
