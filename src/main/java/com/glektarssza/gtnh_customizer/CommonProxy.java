@@ -113,19 +113,22 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void preInit(final FMLPreInitializationEvent event) {
-        LOGGER.info("Pre-initializing server/common-side for {}...",
+        CommonProxy.LOGGER.info("Pre-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         this.configDir = event.getModConfigurationDirectory();
-        Config.init(configDir, String.format("%s.cfg", Tags.MOD_ID));
-        LOGGER.info("Synchronizing configuration for {}...", Tags.MOD_NAME);
-        Config.sync();
-        LOGGER.info("Registering mod {} with the Forge event bus...",
+        Config.init(this.configDir, String.format("%s.cfg", Tags.MOD_ID));
+        CommonProxy.LOGGER.info("Loading configuration for {}...",
+            Tags.MOD_NAME);
+        Config.load();
+        CommonProxy.LOGGER.info(
+            "Registering mod {} with the Forge event bus...",
             Tags.MOD_NAME);
         MinecraftForge.EVENT_BUS.register(this);
         // -- OnConfigChangedEvent comes in through here
         FMLCommonHandler.instance().bus().register(this);
         this.serverUtilitiesPreInit();
-        LOGGER.info("Done pre-initializing server/common-side for {}!",
+        CommonProxy.LOGGER.info(
+            "Done pre-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -135,9 +138,10 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void init(final FMLInitializationEvent event) {
-        LOGGER.info("Initializing server/common-side for {}...", Tags.MOD_NAME);
+        CommonProxy.LOGGER.info("Initializing server/common-side for {}...",
+            Tags.MOD_NAME);
         // -- Does nothing yet!
-        LOGGER.info("Done initializing server/common-side for {}!",
+        CommonProxy.LOGGER.info("Done initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -147,10 +151,12 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void postInit(final FMLPostInitializationEvent event) {
-        LOGGER.info("Post-initializing server/common-side for {}...",
+        CommonProxy.LOGGER.info(
+            "Post-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         // -- Does nothing yet!
-        LOGGER.info("Done post-initializing server/common-side for {}!",
+        CommonProxy.LOGGER.info(
+            "Done post-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -160,11 +166,14 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void serverStarting(final FMLServerStartingEvent event) {
-        LOGGER.info("Handling server about to start for {}...", Tags.MOD_NAME);
-        LOGGER.info("Registering custom commands for {}...", Tags.MOD_NAME);
+        CommonProxy.LOGGER.info("Handling server about to start for {}...",
+            Tags.MOD_NAME);
+        CommonProxy.LOGGER.info("Registering custom commands for {}...",
+            Tags.MOD_NAME);
         this.registerCommands(event);
-        LOGGER.info("Done registering custom commands for {}!", Tags.MOD_NAME);
-        LOGGER.info("Done handling server about to start for {}!",
+        CommonProxy.LOGGER.info("Done registering custom commands for {}!",
+            Tags.MOD_NAME);
+        CommonProxy.LOGGER.info("Done handling server about to start for {}!",
             Tags.MOD_NAME);
     }
 
@@ -231,20 +240,21 @@ public class CommonProxy {
      * Handle the Server Utilities mod pre-initialization registry event.
      */
     private void serverUtilitiesPreInit() {
-        LOGGER.info(
+        CommonProxy.LOGGER.info(
             "Pre-initializing server/common-side of Server Utilities stuff for {}...",
             Tags.MOD_NAME);
         ServerUtilitiesRegistry.registerServerReloadHandler(
             new ResourceLocation(Tags.MOD_ID, "config"),
             reloadEvent -> {
                 try {
-                    Config.sync();
+                    Config.save();
+                    Config.load();
                 } catch (final Throwable t) {
                     return false;
                 }
                 return true;
             });
-        LOGGER.info(
+        CommonProxy.LOGGER.info(
             "Done pre-initializing server/common-side of Server Utilities stuff for {}!",
             Tags.MOD_NAME);
     }
