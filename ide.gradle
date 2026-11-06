@@ -1,0 +1,23 @@
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+    project {
+        file {
+            beforeMerged { project ->
+                setEclipsePreference(file('.settings/org.eclipse.core.resources.prefs'), 'encoding/<project>', getPropertyOrDefault('java.compiler.file.encoding', 'UTF-8'))
+            }
+        }
+    }
+    jdt {
+        file {
+            withProperties {props ->
+                props.setProperty(
+                    "org.eclipse.jdt.core.compiler.compliance",
+                    "1.8"
+                )
+            }
+        }
+    }
+}
