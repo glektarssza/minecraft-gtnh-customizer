@@ -12,10 +12,15 @@
 
 ### Technical ###
 
-* Updated GTNH build scripts to v2.0.32.
+* Updated GTNH build scripts to v2.0.34.
+* Refactored project-level build scripts.
 * Updated all project dependencies to their latest versions.
 * Overhauled configuration system to better support dynamically saving
   configuration settings at runtime.
+* Updated VSCode workspace configurations.
+    * Pruned no longer relevant configuration entries.
+    * Added some new entries that are either quality-of-life things or
+      reasonable defaults for newly introduced settings since I last did this.
 
 ## 0.17.0 ##
 
