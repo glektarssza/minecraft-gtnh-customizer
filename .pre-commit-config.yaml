@@ -26,22 +26,33 @@ repos:
       - id: trailing-whitespace
   - repo: local
     hooks:
-      - id: gradle-spotless
-        name: gradle-spotless
+      - id: gradle-check
+        name: Run linting checks via Gradle
         types_or: [java]
-        language: unsupported
-        entry: ./gradlew spotlessCheck
+        language: system
+        entry: ./gradlew --console plain check
         pass_filenames: false
         verbose: true
         stages:
           - pre-commit
           - pre-push
       - id: gradle-test
-        name: gradle-test
+        name: Run tests via Gradle
         types_or: [java]
-        language: unsupported
-        entry: ./gradlew test
+        language: system
+        entry: ./gradlew --console plain test
         pass_filenames: false
         verbose: true
         stages:
           - pre-push
+      - id: spell-check
+        name: Run spell checking via CSpell
+        language: system
+        types_or: [text]
+        pass_filenames: false
+        entry: |
+          pnpx cspell lint \
+            --no-color \
+            --no-must-find-files \
+            --no-progress \
+            --no-cache .
