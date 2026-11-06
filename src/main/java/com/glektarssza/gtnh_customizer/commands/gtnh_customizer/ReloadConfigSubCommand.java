@@ -85,7 +85,8 @@ public class ReloadConfigSubCommand implements ISubCommand {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         try {
-            Config.sync();
+            Config.save();
+            Config.load();
             CommandBase.func_152373_a(sender, this.getCommandBase(),
                 "gtnh_customizer.commands.gtnh_customizer.info.success.reload_config",
                 new Object[0]);

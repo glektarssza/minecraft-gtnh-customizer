@@ -1,6 +1,7 @@
 # Changelog #
 
 * [Changelog](#changelog)
+    * [0.18.1](#0181)
     * [0.18.0](#0180)
     * [0.17.0](#0170)
     * [0.16.0](#0160)
@@ -46,6 +47,17 @@
     * [0.1.0](#010)
     * [0.0.0](#000)
 
+## 0.18.1 ##
+
+<!-- omit in toc -->
+### Bug Fixes ###
+
+* Fixed mod configuration getting wiped on startup.
+
+<!-- omit in toc -->
+### Technical ###
+
+* Refactored changelog format.
 
 ## 0.18.0 ##
 
