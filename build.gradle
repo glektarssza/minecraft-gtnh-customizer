@@ -38,7 +38,6 @@ minecraft {
 }
 
 tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) {
-    extraJvmArgs = []
     if (new Boolean(project.findProperty("disableMixinValidation"))) {
         extraJvmArgs.addAll([
             "-Dmixin.debug=true",
