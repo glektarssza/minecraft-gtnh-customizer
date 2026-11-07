@@ -16,7 +16,6 @@
             ".vscode",
             ".vscode-insiders",
             "build",
-            "templates/vscode",
             "config/spotless/formatter.xml",
             "config/spotless/spotless.importorder",
             "config/checkstyle/checkstyle.xml",
@@ -30,10 +29,11 @@
             "pack.mcmeta": "json"
         },
         "java.autobuild.enabled": true,
-        "java.checkstyle.configuration": "checkstyle.xml",
+        "java.checkstyle.configuration": "./config/checkstyle/checkstyle.xml",
         "java.checkstyle.properties": {
             "basedir": "${workspaceFolder}"
         },
+        "java.checkstyle.version": "13.8.0",
         "java.cleanup.actions": [
             "renameFileToType",
             "organizeImports",
