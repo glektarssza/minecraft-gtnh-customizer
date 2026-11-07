@@ -1,6 +1,7 @@
 # Changelog #
 
 * [Changelog](#changelog)
+    * [0.18.2](#0182)
     * [0.18.1](#0181)
     * [0.18.0](#0180)
     * [0.17.0](#0170)
@@ -46,6 +47,14 @@
     * [0.1.1](#011)
     * [0.1.0](#010)
     * [0.0.0](#000)
+
+## 0.18.2 ##
+
+<!-- omit in toc -->
+### Features ###
+
+* Silverfish now respect the `mobGriefing` gamerule.
+    * Little buggers...
 
 ## 0.18.1 ##
 

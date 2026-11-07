@@ -48,6 +48,7 @@ fplib
 futura
 g'lek
 gamemaster
+gamerule
 gasstation
 getenv
 ghast
