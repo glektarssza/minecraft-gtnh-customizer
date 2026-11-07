@@ -1,0 +1,44 @@
+apply plugin: "com.diffplug.spotless"
+
+spotless {
+    encoding("UTF-8")
+
+    format("misc") {
+        target(".gitignore", ".gitattributes", "*.gradle")
+        trimTrailingWhitespace()
+        leadingTabsToSpaces(4)
+        endWithNewline()
+    }
+    java {
+        target("src/*/java/**/*.java")
+        toggleOffOn()
+        forbidWildcardImports()
+        trimTrailingWhitespace()
+        leadingTabsToSpaces(4)
+        endWithNewline()
+        removeUnusedImports()
+        importOrderFile(new File(projectDir, "config/spotless/spotless.importorder"))
+        eclipse("4.35").configFile(new File(projectDir, "config/spotless/formatter.xml"))
+    }
+}
+
+checkstyle {
+    def configDir = new File(projectDir.absolutePath, "config/checkstyle")
+    toolVersion = "13.8.0"
+    configDirectory = configDir
+    configFile = new File(configDir, "checkstyle.xml")
+    ignoreFailures = true
+}
+
+tasks.register('checkstyle') {
+    dependsOn('checkstyleApi', 'checkstyleMain', 'checkstyleMixins', 'checkstyleTest')
+}
+
+tasks.register('spotless') {
+    dependsOn('spotlessCheck')
+}
+
+tasks.named('check') {
+    actions.clear()
+    setDependsOn(['spotless', 'checkstyle'])
+}

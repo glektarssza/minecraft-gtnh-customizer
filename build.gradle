@@ -1,7 +1,68 @@
 plugins {
     id("eclipse")
+    id('checkstyle')
     id("maven-publish")
     id("com.gtnewhorizons.gtnhconvention")
+    id('com.diffplug.spotless') version '8.8.0' apply false
 }
 
-apply from: "spotless.gradle"
+project.ext.getProperty = { String key ->
+    return providers.gradleProperty(key).get()
+}
+
+project.ext.getPropertyOrDefault = { String key, String defaultValue ->
+    return providers.gradleProperty(key).getOrElse(defaultValue)
+}
+
+project.ext.setProperty = { File file, String key, String value ->
+    def s = file.text.replaceAll("(?ms)(^\\Q${key}\\E\\s*=).*?\$", '')
+    s = s.replaceAll('\n{2,}', '\n')
+    file.text = s + key + '=' + value + '\n'
+}
+
+project.ext.setEclipsePreference = { File prefsFile, String key, String value ->
+    if (!prefsFile.exists()) {
+        prefsFile.parentFile.mkdirs()
+        prefsFile.write("eclipse.preferences.version=1\n")
+    }
+    setProperty(prefsFile, key, value)
+}
+
+compileJava.options.encoding = "UTF-8"
+
+minecraft {
+    injectedTags.put("MOD_ID", modId)
+    injectedTags.put("MOD_NAME", modName)
+    injectedTags.put("MOD_VERSION", modVersion)
+    injectedTags.put("MOD_DEPENDENCIES", modDependencies)
+}
+
+tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) {
+    if (new Boolean(project.findProperty("disableMixinValidation"))) {
+        extraJvmArgs.addAll([
+            "-Dmixin.debug=true",
+            "-Dmixin.debug.verbose=true",
+            "-Dmixin.env.ignoreRequired=true"
+        ])
+    }
+    if (new Boolean(project.findProperty("enableDebugMCLogging"))) {
+        extraJvmArgs.addAll(["-Dlog4j.configurationFile=file://${new File(project.projectDir, "log4j2-debug.xml").absolutePath}"])
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHub-Packages"
+            url = uri("https://maven.pkg.github.com/glektarssza/minecraft-gtnh-customizer")
+            credentials {
+                username = project.findProperty("ghpr.user") ?: System.getenv("GHPR_USERNAME")
+                password = project.findProperty("ghpr.key") ?: System.getenv("GHPR_TOKEN")
+            }
+        }
+    }
+}
+
+apply from: "tests.gradle"
+apply from: "linting.gradle"
+apply from: "ide.gradle"
