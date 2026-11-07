@@ -59,6 +59,7 @@ gradletoken
 gradlew
 greatwood
 gregtech
+griefing
 gson
 gtnewhorizons
 gtnh
