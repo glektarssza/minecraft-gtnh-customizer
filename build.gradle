@@ -63,6 +63,15 @@ publishing {
     }
 }
 
+tasks.register("setupAllHotswapAgents") {
+    description = "Installs a recent version of HotSwapAgent for Java versions 17, 21, and 25"
+    dependsOn(
+        "setupHotswapAgent17",
+        "setupHotswapAgent21",
+        "setupHotswapAgent25"
+    )
+}
+
 apply from: "tests.gradle"
 apply from: "linting.gradle"
 apply from: "ide.gradle"

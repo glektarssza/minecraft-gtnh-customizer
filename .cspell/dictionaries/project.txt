@@ -71,6 +71,7 @@ harvestability
 hookspath
 hotbar
 hotspot
+hotswap
 ifml
 importorder
 infi
