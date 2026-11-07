@@ -48,6 +48,7 @@ fplib
 futura
 g'lek
 gamemaster
+gamerule
 gasstation
 getenv
 ghast
@@ -59,6 +60,7 @@ gradletoken
 gradlew
 greatwood
 gregtech
+griefing
 gson
 gtnewhorizons
 gtnh
