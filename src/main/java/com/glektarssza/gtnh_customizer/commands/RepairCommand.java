@@ -29,8 +29,8 @@ import cpw.mods.fml.common.Loader;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;

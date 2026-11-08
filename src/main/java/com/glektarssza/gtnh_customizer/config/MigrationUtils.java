@@ -11,8 +11,8 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
-import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v1.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -194,6 +194,7 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
+    @SuppressWarnings("null")
     public static void copyProperty(final Configuration instance,
         final Configuration newInstance, final String path,
         final CharSequence pathSeparators,
@@ -387,6 +388,7 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
+    @SuppressWarnings("null")
     public static void copyCategory(final Configuration instance,
         final Configuration newInstance, final String path,
         final CharSequence pathSeparators,
@@ -397,8 +399,7 @@ public final class MigrationUtils {
         if (newInstance.hasCategory(oldCategory.getQualifiedName())
             && !overwrite) {
             throw new KeyAlreadyExistsException(TypeHelpers.castToNonNull(
-                oldCategory
-                    .getQualifiedName()),
+                oldCategory.getQualifiedName()),
                 String.format(
                     "Cannot copy configuration category '%s' to the given configuration instance (a category already exists there)",
                     path));
@@ -786,6 +787,7 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be renamed to.
      */
+    @SuppressWarnings("null")
     public static void renameProperty(final Configuration instance,
         final String path,
         final String newName, final CharSequence pathSeparators)
@@ -880,6 +882,7 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
+    @SuppressWarnings("null")
     public static void moveProperty(final Configuration instance,
         final String path,
         final String newCategoryPath, final CharSequence pathSeparators)
@@ -977,6 +980,7 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
+    @SuppressWarnings("null")
     public static void moveAndRenameProperty(final Configuration instance,
         final String path, final String newPath,
         final CharSequence pathSeparators)

@@ -18,7 +18,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.PotionUtils;
 import com.glektarssza.gtnh_customizer.utils.extensions.IPotionExtensions;

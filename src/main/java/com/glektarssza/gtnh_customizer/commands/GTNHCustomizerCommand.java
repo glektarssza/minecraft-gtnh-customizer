@@ -12,8 +12,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentTranslation;
 
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.GloballyImmunePlayersSubCommand;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.ReloadConfigSubCommand;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;

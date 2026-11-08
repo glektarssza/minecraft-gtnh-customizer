@@ -22,16 +22,18 @@ import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
+/**
+ * Mixin for the {@link GuiMap} class.
+ */
 @Mixin(GuiMap.class)
 public class GuiMapMixins {
     /**
      * The logger for this class.
      */
-    @SuppressWarnings("unused")
     @NotNull
     private static final Logger LOGGER = TypeHelpers
         .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,

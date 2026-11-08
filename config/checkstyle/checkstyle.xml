@@ -33,12 +33,9 @@
             <property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_IF, LITERAL_WHILE" />
         </module>
         <module name="RightCurly">
-            <property name="option" value="alone_or_singleline" />
+            <property name="option" value="same" />
             <property name="tokens"
-                value="LITERAL_IF, CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF, INTERFACE_DEF, RECORD_DEF, COMPACT_CTOR_DEF, LITERAL_SWITCH, LITERAL_CASE" />
-        </module>
-        <module name="RightCurly">
-            <property name="tokens" value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_CATCH, LITERAL_ELSE" />
+                value="LITERAL_FINALLY, LITERAL_CATCH, LITERAL_ELSE, LITERAL_IF, CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF, INTERFACE_DEF, RECORD_DEF, COMPACT_CTOR_DEF, LITERAL_SWITCH, LITERAL_CASE, LITERAL_TRY" />
         </module>
         <module name="FinalClass" />
         <module name="HideUtilityClassConstructor" />
@@ -202,8 +199,22 @@
             <property name="groups" value="java, javax, org, com, net, com.mojang, net.minecraft, cpw.mods, net.minecraftforge, org.spongepowered, xaero, com.glektarssza" />
             <property name="separated" value="true" />
         </module>
-        <module name="SuppressionCommentFilter" />
-        <module name="SuppressWithNearbyCommentFilter" />
+        <module name="SuppressionCommentFilter">
+            <property name="checkC" value="true" />
+            <property name="checkCPP" value="true" />
+            <property name="checkFormat" value=".*" />
+            <property name="offCommentFormat" value="checkstyle disable(\s+(\w+),?)+" />
+            <property name="onCommentFormat" value="checkstyle enable(\s+(\w+),?)+" />
+            <property name="idFormat" value="$2" />
+        </module>
+        <module name="SuppressWithNearbyCommentFilter">
+            <property name="checkC" value="true" />
+            <property name="checkCPP" value="true" />
+            <property name="checkFormat" value=".*" />
+            <property name="commentFormat" value="checkstyle disalbe-next-line(\s+(\w+),?)+" />
+            <property name="idFormat" value="$2" />
+            <property name="influenceFormat" value="1" />
+        </module>
         <module name="AvoidDoubleBraceInitialization" />
         <module name="CovariantEquals" />
         <!-- <module name="DeclarationOrder">
@@ -266,5 +277,8 @@
     <module name="SuppressWithPlainTextCommentFilter" />
     <module name="BeforeExecutionExclusionFileFilter">
         <property name="fileNamePattern" value="(.+(\\|/))?(build|run|bin|\.gradle)(\\|/).+" />
+    </module>
+    <module name="MultipleStringLiterals">
+        <property name="severity" value="ignore" />
     </module>
 </module>

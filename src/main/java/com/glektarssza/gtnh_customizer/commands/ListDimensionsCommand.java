@@ -13,7 +13,7 @@ import net.minecraft.util.ChatComponentTranslation;
 
 import net.minecraftforge.common.DimensionManager;
 
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;

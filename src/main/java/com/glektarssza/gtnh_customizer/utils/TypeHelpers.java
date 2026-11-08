@@ -1,7 +1,7 @@
 package com.glektarssza.gtnh_customizer.utils;
 
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
 
 /**
  * Some useful type helpers.
