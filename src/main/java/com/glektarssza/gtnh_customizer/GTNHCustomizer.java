@@ -24,7 +24,7 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 /**
  * The root mod class.
  */
-@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.7.10]", modLanguage = "java", guiFactory = "com.glektarssza.gtnh_customizer.config.GuiFactory", canBeDeactivated = false, useMetadata = true)
+@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = Tags.MOD_ACCEPTABLE_REMOTE_VERSION_RANGE, acceptedMinecraftVersions = Tags.MOD_MC_VERSION_RANGE, modLanguage = Tags.MOD_LANGUAGE, guiFactory = Tags.MOD_GUI_CLASS, canBeDeactivated = false, useMetadata = true)
 public class GTNHCustomizer {
     /**
      * The logger for this class.
@@ -69,7 +69,7 @@ public class GTNHCustomizer {
      * @return The mod singleton instance.
      */
     public static GTNHCustomizer getInstance() {
-        return instance;
+        return GTNHCustomizer.instance;
     }
 
     /**
@@ -78,7 +78,7 @@ public class GTNHCustomizer {
      * @return The mod metadata singleton instance.
      */
     public static ModMetadata getMetadata() {
-        return metadata;
+        return GTNHCustomizer.metadata;
     }
 
     /**
@@ -88,7 +88,7 @@ public class GTNHCustomizer {
      */
     @Nullable
     public File getConfigDir() {
-        return proxy.getConfigDir();
+        return GTNHCustomizer.proxy.getConfigDir();
     }
 
     /**
@@ -98,7 +98,7 @@ public class GTNHCustomizer {
      */
     @NotNull
     public static CommonProxy getProxy() {
-        return TypeHelpers.castToNonNull(proxy);
+        return TypeHelpers.castToNonNull(GTNHCustomizer.proxy);
     }
 
     /**
@@ -112,7 +112,8 @@ public class GTNHCustomizer {
      */
     public static void emitTrackedWarning(@NotNull final String category,
         @NotNull final UnaryConsumer<Logger> logFunction) {
-        emitTrackedWarning(LOGGER, category, logFunction);
+        GTNHCustomizer.emitTrackedWarning(GTNHCustomizer.LOGGER, category,
+            logFunction);
     }
 
     /**
@@ -128,8 +129,8 @@ public class GTNHCustomizer {
     public static void emitTrackedWarning(@NotNull final Logger logger,
         @NotNull final String category,
         @NotNull final UnaryConsumer<Logger> logFunction) {
-        if (shouldEmitWarning(logger, category)) {
-            trackEmitWarning(logger, category);
+        if (GTNHCustomizer.shouldEmitWarning(logger, category)) {
+            GTNHCustomizer.trackEmitWarning(logger, category);
             logFunction.call(logger);
         }
     }
@@ -143,7 +144,8 @@ public class GTNHCustomizer {
      *         {@code false} otherwise.
      */
     public static boolean shouldEmitWarning(@NotNull final String category) {
-        return shouldEmitWarning(LOGGER, category);
+        return GTNHCustomizer.shouldEmitWarning(GTNHCustomizer.LOGGER,
+            category);
     }
 
     /**
@@ -157,9 +159,9 @@ public class GTNHCustomizer {
      */
     public static boolean shouldEmitWarning(@NotNull final Logger logger,
         @NotNull final String category) {
-        final Map<Logger, Integer> map = WARNING_LIMIT_TRACKER
-            .computeIfAbsent(category, (key) -> new HashMap<Logger, Integer>());
-        map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        final Map<Logger, Integer> map = GTNHCustomizer.WARNING_LIMIT_TRACKER
+            .computeIfAbsent(category, _ -> new HashMap<Logger, Integer>());
+        map.putIfAbsent(logger, GTNHCustomizer.WARNING_EMIT_LIMIT);
         return map.get(logger) > 0;
     }
 
@@ -169,7 +171,7 @@ public class GTNHCustomizer {
      * @param category The warning category to check.
      */
     public static void trackEmitWarning(@NotNull final String category) {
-        trackEmitWarning(LOGGER, category);
+        GTNHCustomizer.trackEmitWarning(GTNHCustomizer.LOGGER, category);
     }
 
     /**
@@ -180,9 +182,9 @@ public class GTNHCustomizer {
      */
     private static void trackEmitWarning(@NotNull final Logger logger,
         @NotNull final String category) {
-        final Map<Logger, Integer> map = WARNING_LIMIT_TRACKER
-            .computeIfAbsent(category, (key) -> new HashMap<Logger, Integer>());
-        map.putIfAbsent(logger, WARNING_EMIT_LIMIT);
+        final Map<Logger, Integer> map = GTNHCustomizer.WARNING_LIMIT_TRACKER
+            .computeIfAbsent(category, _ -> new HashMap<Logger, Integer>());
+        map.putIfAbsent(logger, GTNHCustomizer.WARNING_EMIT_LIMIT);
         final int currentValue = map.get(logger);
         if (currentValue >= 0) {
             map.put(logger, currentValue - 1);
@@ -201,7 +203,7 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onPreInit(final FMLPreInitializationEvent event) {
-        proxy.preInit(event);
+        GTNHCustomizer.proxy.preInit(event);
     }
 
     /**
@@ -211,7 +213,7 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onInit(final FMLInitializationEvent event) {
-        proxy.init(event);
+        GTNHCustomizer.proxy.init(event);
     }
 
     /**
@@ -221,7 +223,7 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onPostInit(final FMLPostInitializationEvent event) {
-        proxy.postInit(event);
+        GTNHCustomizer.proxy.postInit(event);
     }
 
     /**
@@ -231,6 +233,6 @@ public class GTNHCustomizer {
      */
     @Mod.EventHandler
     public void onServerStarting(final FMLServerStartingEvent event) {
-        proxy.serverStarting(event);
+        GTNHCustomizer.proxy.serverStarting(event);
     }
 }
