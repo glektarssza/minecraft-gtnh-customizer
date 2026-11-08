@@ -100,7 +100,7 @@
         "java.completion.postfix.enabled": true,
         "java.configuration.detectJdksAtStart": true,
         "java.configuration.runtimes": [],
-        "java.configuration.updateBuildConfiguration": "interactive",
+        "java.configuration.updateBuildConfiguration": "disabled",
         "java.debug.logLevel": "warn",
         "java.debug.settings.console": "integratedTerminal",
         "java.debug.settings.debugSupportOnDecompiledSource": "on",
