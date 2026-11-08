@@ -6,6 +6,7 @@
 <summary><b>Table of Contents</b></summary>
 
 * [0.18.3](#0183)
+    * [Features](#features)
 * [0.18.2](#0182)
 * [0.18.1](#0181)
 * [0.18.0](#0180)
@@ -56,6 +57,11 @@
 </details>
 
 ## 0.18.3 ##
+
+### Features ###
+
+* Added the ability for Journeymap to reset waypoint coordinates by clearing the
+  coordinate fields.
 
 <!-- omit in toc -->
 ### Bug Fixes ###
