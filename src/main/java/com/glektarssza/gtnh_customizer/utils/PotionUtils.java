@@ -6,7 +6,7 @@ import java.util.Optional;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-import com.glektarssza.gtnh_customizer.api.exceptions.args.ArgumentOutOfRangeException;
+import com.glektarssza.gtnh_customizer.api.v1.exceptions.args.ArgumentOutOfRangeException;
 
 /**
  * A collection of utilities for working with potions/potion effects.

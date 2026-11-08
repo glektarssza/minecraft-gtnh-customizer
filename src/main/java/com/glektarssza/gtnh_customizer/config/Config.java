@@ -26,10 +26,10 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
-import com.glektarssza.gtnh_customizer.api.exceptions.args.ArgumentNullException;
-import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v1.exceptions.args.ArgumentNullException;
+import com.glektarssza.gtnh_customizer.api.v1.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
@@ -39,7 +39,7 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 /**
  * The main configuration for the mod.
  */
-public class Config {
+public final class Config {
     /**
      * The logger for this class.
      */
@@ -73,7 +73,9 @@ public class Config {
      * A map of configuration migrations to apply to move between configuration
      * versions.
      *
+     * <p>
      * Keys are in the format of {@code fromVersion:toVersion}.
+     * </p>
      */
     @NotNull
     private static final Map<Number, ImmutableTuple<Number, Consumer<Configuration>>> MIGRATIONS = new HashMap<Number, ImmutableTuple<Number, Consumer<Configuration>>>();
@@ -82,14 +84,14 @@ public class Config {
      * The configuration instance.
      */
     @Nullable
-    private static Configuration configInstance = null;
+    private static Configuration configInstance;
 
     /**
      * The current version of the {@link Config#configInstance configuration
      * instance}.
      */
     @Nullable
-    private static Number configInstanceVersion = null;
+    private static Number configInstanceVersion;
 
     /**
      * The commands configuration object.
@@ -124,7 +126,7 @@ public class Config {
      * Whether the {@code repair} command ignores liquids when raycasting to
      * look for containers to repair items inside of.
      */
-    private static boolean repairCommandIgnoresLiquids = false;
+    private static boolean repairCommandIgnoresLiquids;
 
     /**
      * Whether Tinker's Construct Slime Saplings can be bone mealed.
@@ -155,7 +157,7 @@ public class Config {
     /**
      * Whether verbose logging is enabled.
      */
-    private static boolean verboseLoggingEnabled = false;
+    private static boolean verboseLoggingEnabled;
 
     /**
      * A random UUID which uniquely IDs this run of Minecraft.
@@ -546,7 +548,6 @@ public class Config {
      *
      * @return A list of the main level configuration categories.
      */
-    @SuppressWarnings("null")
     public static List<ConfigCategory> getTopLevelCategories() {
         if (configInstance == null) {
             return Collections.emptyList();
@@ -585,27 +586,27 @@ public class Config {
         throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
         registerMigration(
-            1, 2, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+            1, 2, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "general.immunePlayers")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(instance,
                         "general.immunePlayers", "globallyImmunePlayers");
                 }
             });
         registerMigration(
-            2, 3, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+            2, 3, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "general.globallyImmunePlayers")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(instance,
                         "general.globallyImmunePlayers",
                         "globally_immune_players");
                 }
             });
         registerMigration(
-            5, 6, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+            5, 6, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "general.globally_immune_players")) {
-                    configInstance
+                    instance
                         .setCategoryComment(
                             "gameplay", "Gameplay-related tweaks")
                         .setCategoryLanguageKey(
@@ -615,13 +616,13 @@ public class Config {
                             "gameplay", false)
                         .setCategoryRequiresMcRestart(
                             "gameplay", false);
-                    MigrationUtils.moveProperty(configInstance,
+                    MigrationUtils.moveProperty(instance,
                         "general.globally_immune_players", "gameplay");
                     // -- This SHOULD be `true` but let's be safe about things
-                    if (configInstance.getCategory("general").isEmpty()) {
-                        configInstance
+                    if (instance.getCategory("general").isEmpty()) {
+                        instance
                             .removeCategory(
-                                configInstance.getCategory("general"));
+                                instance.getCategory("general"));
                     }
                 }
                 if (MigrationUtils.hasPropertyByPath(configInstance,
@@ -632,19 +633,19 @@ public class Config {
                 }
             });
         registerMigration(
-            6, 7, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+            6, 7, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "gameplay.tconstruct.slime_sapling_bone_mealable")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(instance,
                         "gameplay.tconstruct.slime_sapling_bone_mealable",
                         "can_bone_meal_slime_saplings");
                 }
             });
         registerMigration(
-            7, 8, (configInstance) -> {
-                if (MigrationUtils.hasCategoryByPath(configInstance,
+            7, 8, instance -> {
+                if (MigrationUtils.hasCategoryByPath(instance,
                     "command")) {
-                    MigrationUtils.renameCategory(configInstance, "command",
+                    MigrationUtils.renameCategory(instance, "command",
                         "commands");
                 }
             });
@@ -660,14 +661,13 @@ public class Config {
     /**
      * Refresh the configuration data from the in-memory data.
      */
-    @SuppressWarnings("null")
     public static void refresh() {
         if (configInstance == null) {
             LOGGER.error("Cannot load configuration!");
             LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        Number parsedConfigVersion;
+        final Number parsedConfigVersion;
         try {
             parsedConfigVersion = Integer
                 .parseInt(configInstance.getLoadedConfigVersion(), 10);
@@ -765,7 +765,7 @@ public class Config {
         }
         if (config != null) {
             config.getCategoryNames().stream()
-                .forEach((categoryName) -> config.removeCategory(
+                .forEach(categoryName -> config.removeCategory(
                     config.getCategory(categoryName)));
         }
         return backupPath;
@@ -774,7 +774,6 @@ public class Config {
     /**
      * Load the configuration data from disk.
      */
-    @SuppressWarnings("null")
     public static void load() {
         if (configInstance == null) {
             LOGGER.error("Cannot load configuration!");
@@ -784,8 +783,8 @@ public class Config {
         configInstance.load();
         try {
             configInstanceVersion = Integer
-                .parseInt(configInstance.getLoadedConfigVersion(), 10);
-        } catch (final NumberFormatException ex) {
+                .parseInt(configInstance.getLoadedConfigVersion());
+        } catch (final NumberFormatException _) {
             LOGGER.error(
                 "Got a value of '{}' that could not be parsed as an integer",
                 configInstance.getLoadedConfigVersion());
@@ -894,7 +893,6 @@ public class Config {
     /**
      * Save the configuration data to disk.
      */
-    @SuppressWarnings("null")
     public static void save() {
         if (configInstance == null) {
             LOGGER.error("Cannot save configuration!");
@@ -980,6 +978,7 @@ public class Config {
      *         from the old configuration version to the new configuration
      *         version.
      */
+    @SuppressWarnings("null")
     private static void registerMigration(@NotNull final Number fromVersion,
         @NotNull final Number toVersion, final Consumer<Configuration> migrator)
         throws KeyAlreadyExistsException {
@@ -993,5 +992,12 @@ public class Config {
         MIGRATIONS.put(fromVersion,
             new ImmutableTuple<Number, Consumer<Configuration>>(toVersion,
                 migrator));
+    }
+
+    /**
+     * Create a new instance.
+     */
+    private Config() {
+        // -- Does nothing.
     }
 }

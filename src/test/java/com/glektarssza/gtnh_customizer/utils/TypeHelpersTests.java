@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import net.datafaker.Faker;
 
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
 
 /**
  * Unit tests for the {@link TypeHelpers} class.
@@ -36,7 +36,6 @@ public class TypeHelpersTests {
      * The fake data source.
      */
     @NotNull
-    @SuppressWarnings("unused")
     private static Faker fakeData = new Faker(Locale.CANADA);
 
     /**
@@ -63,7 +62,6 @@ public class TypeHelpersTests {
      * throws a {@link NullPointerException} when passed a {@code null} value.
      */
     @Test
-    @SuppressWarnings("null")
     public void testCastToNonNullThrowsOnNull() {
         // -- Given
         final Object value = null;

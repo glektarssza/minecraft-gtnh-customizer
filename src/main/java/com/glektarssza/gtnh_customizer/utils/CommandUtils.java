@@ -10,7 +10,7 @@ import net.minecraft.server.MinecraftServer;
 
 import net.minecraftforge.common.DimensionManager;
 
-import com.glektarssza.gtnh_customizer.api.exceptions.ValueOutOfRangeException;
+import com.glektarssza.gtnh_customizer.api.v1.exceptions.ValueOutOfRangeException;
 
 /**
  * Utilities for commands.
