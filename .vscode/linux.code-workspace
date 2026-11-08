@@ -63,15 +63,15 @@
         "java.codeGeneration.useBlocks": true,
         "java.compile.nullAnalysis.mode": "automatic",
         "java.compile.nullAnalysis.nonnull": [
-            "com.glektarssza.gtnh_customizer.api.annotations.NotNull",
+            "com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull",
             "javax.annotation.Nonnull"
         ],
         "java.compile.nullAnalysis.nonnullbydefault": [
-            "com.glektarssza.gtnh_customizer.api.annotations.NotNullByDefault",
+            "com.glektarssza.gtnh_customizer.api.v2.annotation.NotNullByDefault",
             "javax.annotation.ParametersAreNonnullByDefault"
         ],
         "java.compile.nullAnalysis.nullable": [
-            "com.glektarssza.gtnh_customizer.api.annotations.Nullable",
+            "com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable",
             "javax.annotation.Nullable"
         ],
         "java.completion.chain.enabled": true,

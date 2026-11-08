@@ -8,8 +8,13 @@ import java.lang.annotation.Target;
 
 /**
  * An annotation that indicates the annotated thing cannot be {@code null}.
+ *
+ * @deprecated Use
+ *             {@link com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull}
+ *             instead.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE_USE)
+@Deprecated
 public @interface NotNull {}

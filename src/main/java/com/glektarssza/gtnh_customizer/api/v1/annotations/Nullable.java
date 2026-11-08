@@ -9,10 +9,13 @@ import java.lang.annotation.Target;
 /**
  * An annotation that indicates the annotated thing could possibly be
  * {@code null}.
+ *
+ * @deprecated Use
+ *             {@link com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable}
+ *             instead.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({
-    ElementType.TYPE_USE
-})
+@Target(ElementType.TYPE_USE)
+@Deprecated
 public @interface Nullable {}
