@@ -74,8 +74,10 @@ hookspath
 hotbar
 hotspot
 ifml
+iizzl
 importorder
 infi
+inheritdoc
 invincibles
 iregex
 jabel
@@ -92,8 +94,10 @@ leveled
 liberica
 libs
 ljava
+ljourneymap
 lnet
 lorg
+lshift
 ltconstruct
 lthaumcraft
 lwjgl
@@ -142,6 +146,7 @@ reobf
 reobfuscated
 retrofuturagradle
 rong
+rshift
 safecrlf
 sapmachine
 sarif
@@ -174,6 +179,3 @@ waila
 xaero
 xaeros
 xlog
-ljourneymap
-iizzl
-inheritdoc
