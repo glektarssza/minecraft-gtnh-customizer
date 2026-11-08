@@ -174,3 +174,6 @@ waila
 xaero
 xaeros
 xlog
+ljourneymap
+iizzl
+inheritdoc

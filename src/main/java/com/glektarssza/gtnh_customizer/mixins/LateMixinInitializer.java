@@ -101,6 +101,7 @@ public class LateMixinInitializer implements ILateMixinLoader {
         if (loadedMods.contains("journeymap")) {
             LateMixinInitializer.LOGGER
                 .debug("Found Journeymap, adding mixins!");
+            mixins.add("journeymap.WaypointEditorMixin");
         }
         LateMixinInitializer.LOGGER.debug("Final mixin list: {}",
             mixins.stream().collect(Collectors.joining(", ")));

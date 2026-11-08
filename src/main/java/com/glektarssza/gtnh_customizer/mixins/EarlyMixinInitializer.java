@@ -66,9 +66,10 @@ public class EarlyMixinInitializer
     @Override
     @NotNull
     public List<String> getMixins(Set<String> loadedMods) {
-        List<String> mixins = new ArrayList<String>();
-        // -- Vanilla mixins
+        final List<String> mixins = new ArrayList<String>();
 
+        // -- Vanilla mixins
+        mixins.add("accessor.vanilla.ITextBoxFontAccessor");
         mixins.add("vanilla.EntityAIArrowAttackMixin");
         mixins.add("vanilla.EntityAIAttackOnCollideMixin");
         mixins.add("vanilla.EntityAICreeperSwellMixin");
