@@ -62,6 +62,7 @@
 
 * Added the ability for Journeymap to reset waypoint coordinates by clearing the
   coordinate fields.
+* Added the ability to tab between text fields in the waypoint editor.
 
 <!-- omit in toc -->
 ### Bug Fixes ###
