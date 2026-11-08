@@ -48,24 +48,6 @@ public class GhostTextBox extends TextBox implements ITextBoxAccessor {
     }
 
     /**
-     * {@inheritdoc net.minecraft.client.gui.GuiTextField#getText()}
-     */
-    @Override
-    public String getText() {
-        final String text = super.getText();
-        return text.isEmpty() ? this.getGhostText() : text;
-    }
-
-    /**
-     * Get the raw text from the instance.
-     *
-     * @return The raw text from the instance.
-     */
-    public String getRawText() {
-        return super.getText();
-    }
-
-    /**
      * {@inheritdoc net.minecraft.client.gui.GuiTextField#setMinLength(int)}
      */
     @Override
@@ -131,7 +113,7 @@ public class GhostTextBox extends TextBox implements ITextBoxAccessor {
             && this.hasErrorState())) {
             return;
         }
-        if (this.getRawText().isEmpty() && !this.getGhostText().isEmpty()) {
+        if (this.getText().isEmpty() && !this.getGhostText().isEmpty()) {
             this.getFontRenderer().drawStringWithShadow(this.getGhostText(),
                 this.isBackgroundDrawingEnabled() ? this.xPosition + 4
                     : this.xPosition,
