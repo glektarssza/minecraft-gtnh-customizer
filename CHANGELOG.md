@@ -1,6 +1,7 @@
 # Changelog #
 
 * [Changelog](#changelog)
+    * [0.18.3](#0183)
     * [0.18.2](#0182)
     * [0.18.1](#0181)
     * [0.18.0](#0180)
@@ -47,6 +48,16 @@
     * [0.1.1](#011)
     * [0.1.0](#010)
     * [0.0.0](#000)
+
+## 0.18.3 ##
+
+<!-- omit in toc -->
+### Bug Fixes ###
+
+* Fixed Forge dependency specifier in `mcmod.info` being out of sync with the
+  mod's actual dependencies.
+* Fixed the mod's dependency specifier in the `@Mod` annotation being wrongly
+  formatted.
 
 ## 0.18.2 ##
 
