@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import net.datafaker.Faker;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 
 /**
  * Unit tests for the {@link TypeHelpers} class.
@@ -36,6 +36,7 @@ public class TypeHelpersTests {
      * The fake data source.
      */
     @NotNull
+    @SuppressWarnings("unused")
     private static Faker fakeData = new Faker(Locale.CANADA);
 
     /**
@@ -46,11 +47,14 @@ public class TypeHelpersTests {
         final String rawFakerSeed = System.getenv().getOrDefault("FAKER_SEED",
             System.getProperty("FAKER_SEED"));
         if (rawFakerSeed != null
-            && (rawFakerSeed.matches(UNSIGNED_LONG_INTEGER_PATTERN)
-                || rawFakerSeed.matches(SIGNED_LONG_INTEGER_PATTERN))) {
+            && (rawFakerSeed
+                .matches(TypeHelpersTests.UNSIGNED_LONG_INTEGER_PATTERN)
+                || rawFakerSeed
+                    .matches(TypeHelpersTests.SIGNED_LONG_INTEGER_PATTERN))) {
             try {
                 final long fakerSeed = Long.parseLong(rawFakerSeed, 10);
-                fakeData = new Faker(Locale.CANADA, new Random(fakerSeed));
+                TypeHelpersTests.fakeData = new Faker(Locale.CANADA,
+                    new Random(fakerSeed));
             } catch (final Throwable t) {
                 // -- Do nothing
             }
@@ -62,6 +66,7 @@ public class TypeHelpersTests {
      * throws a {@link NullPointerException} when passed a {@code null} value.
      */
     @Test
+    @SuppressWarnings("null")
     public void testCastToNonNullThrowsOnNull() {
         // -- Given
         final Object value = null;

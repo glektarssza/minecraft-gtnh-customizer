@@ -18,9 +18,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
 import com.glektarssza.gtnh_customizer.api.v1.command.ISubCommand;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
@@ -37,7 +37,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
     /**
      * An enumeration of valid sub-commands.
      */
-    public static enum SubCommand {
+    public enum SubCommand {
         /**
          * Add a player to the list.
          */
@@ -64,7 +64,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
          * @param argCommandValue The value to use in commands when representing
          *        the new instance.
          */
-        private SubCommand(final String argCommandValue) {
+        SubCommand(final String argCommandValue) {
             this.commandValue = argCommandValue;
         }
 
@@ -206,7 +206,8 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
             case 1 ->
                 // -- Second argument is a player to act on
                 CommandUtils.getTruncatedPlayerUsernameIterable(
-                    MAX_PLAYERS_TO_RETURN).stream()
+                    GloballyImmunePlayersSubCommand.MAX_PLAYERS_TO_RETURN)
+                    .stream()
                     .filter(playerName -> arg == null
                         || arg.isEmpty() || playerName.startsWith(arg))
                     .collect(Collectors.toList());
@@ -256,9 +257,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        LOGGER
+                        GloballyImmunePlayersSubCommand.LOGGER
                             .warn("Failed to save updated mod configuration!");
-                        LOGGER.warn(t);
+                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.added",
@@ -280,9 +281,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        LOGGER
+                        GloballyImmunePlayersSubCommand.LOGGER
                             .warn("Failed to save updated mod configuration!");
-                        LOGGER.warn(t);
+                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.removed",
@@ -296,9 +297,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        LOGGER
+                        GloballyImmunePlayersSubCommand.LOGGER
                             .warn("Failed to save updated mod configuration!");
-                        LOGGER.warn(t);
+                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.cleared",

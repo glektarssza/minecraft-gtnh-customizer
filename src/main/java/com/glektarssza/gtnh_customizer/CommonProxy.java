@@ -24,8 +24,8 @@ import cpw.mods.fml.relauncher.Side;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.commands.CureCommand;
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
 import com.glektarssza.gtnh_customizer.commands.GTNHCustomizerCommand;
@@ -245,7 +245,7 @@ public class CommonProxy {
             Tags.MOD_NAME);
         ServerUtilitiesRegistry.registerServerReloadHandler(
             new ResourceLocation(Tags.MOD_ID, "config"),
-            reloadEvent -> {
+            _ -> {
                 try {
                     Config.save();
                     Config.load();

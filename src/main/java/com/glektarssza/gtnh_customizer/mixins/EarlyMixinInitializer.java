@@ -9,7 +9,7 @@ import com.gtnewhorizon.gtnhmixins.IEarlyMixinLoader;
 
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 
 /**
  * The early-stage mixin initializer.
@@ -42,7 +42,7 @@ public class EarlyMixinInitializer
     }
 
     @Override
-    public void injectData(Map<String, Object> data) {
+    public void injectData(final Map<String, Object> data) {
         // -- Does nothing!
     }
 
@@ -65,8 +65,8 @@ public class EarlyMixinInitializer
      */
     @Override
     @NotNull
-    public List<String> getMixins(Set<String> loadedMods) {
-        List<String> mixins = new ArrayList<String>();
+    public List<String> getMixins(final Set<String> loadedMods) {
+        final List<String> mixins = new ArrayList<String>();
         // -- Vanilla mixins
 
         mixins.add("vanilla.EntityAIArrowAttackMixin");

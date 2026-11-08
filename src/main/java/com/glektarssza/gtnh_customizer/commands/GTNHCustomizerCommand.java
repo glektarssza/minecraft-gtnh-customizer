@@ -12,8 +12,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentTranslation;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.GloballyImmunePlayersSubCommand;
 import com.glektarssza.gtnh_customizer.commands.gtnh_customizer.ReloadConfigSubCommand;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
@@ -48,7 +48,7 @@ public class GTNHCustomizerCommand extends CommandBase {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private SubCommand(final String commandValue) {
+        SubCommand(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -64,7 +64,7 @@ public class GTNHCustomizerCommand extends CommandBase {
             throws NoSuchElementException {
             final Iterator<@NotNull SubCommand> iter = Arrays
                 .stream(SubCommand.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator();
             if (!iter.hasNext()) {
                 throw new NoSuchElementException(String.format(
@@ -87,7 +87,7 @@ public class GTNHCustomizerCommand extends CommandBase {
             final String argument) {
             return Arrays
                 .stream(SubCommand.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator()
                 .next();
 
@@ -184,8 +184,8 @@ public class GTNHCustomizerCommand extends CommandBase {
             case 0:
                 // -- First argument is item target
                 return Arrays.stream(SubCommand.values())
-                    .map((subCommand) -> subCommand.commandValue)
-                    .filter((subCommand) -> args[0] == null || args[0].isEmpty()
+                    .map(subCommand -> subCommand.commandValue)
+                    .filter(subCommand -> args[0] == null || args[0].isEmpty()
                         || subCommand.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toList());
             default:

@@ -3,7 +3,7 @@ package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -20,7 +20,7 @@ public class TConstruct extends Category {
      *
      * @param parent The parent of this category.
      */
-    public TConstruct(Category parent) {
+    public TConstruct(final Category parent) {
         super(parent);
         this.canBoneMealSlimeSaplings = new Property<Boolean>(this) {
             @Override
@@ -42,7 +42,7 @@ public class TConstruct extends Category {
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setTConstructCanBoneMealSlimeSaplings(
                         config.getCategory(this.getParent().getFullPath())
@@ -50,7 +50,7 @@ public class TConstruct extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getTConstructCanBoneMealSlimeSaplings());

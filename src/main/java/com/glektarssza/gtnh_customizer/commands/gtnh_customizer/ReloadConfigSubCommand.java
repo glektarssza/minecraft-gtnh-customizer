@@ -12,8 +12,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
 import com.glektarssza.gtnh_customizer.api.v1.command.ISubCommand;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
@@ -33,7 +33,7 @@ public class ReloadConfigSubCommand implements ISubCommand {
      * The {@link CommandBase} that this instance belongs to.
      */
     @NotNull
-    private CommandBase commandBase;
+    private final CommandBase commandBase;
 
     /**
      * Create a new instance.
@@ -95,9 +95,10 @@ public class ReloadConfigSubCommand implements ISubCommand {
                 "gtnh_customizer.commands.gtnh_customizer.info.success.reload_config",
                 new Object[0]);
             return;
-        } catch (Throwable t) {
-            LOGGER.error("Failed to synchronize mod configuration!");
-            LOGGER.error(t);
+        } catch (final Throwable t) {
+            ReloadConfigSubCommand.LOGGER
+                .error("Failed to synchronize mod configuration!");
+            ReloadConfigSubCommand.LOGGER.error(t);
         }
         throw new CommandException(
             "gtnh_customizer.commands.gtnh_customizer.error.reload_config.failed",
