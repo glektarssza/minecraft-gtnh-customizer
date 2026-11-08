@@ -26,10 +26,11 @@ public class PlayerUtils {
      *
      * @return The name of a player.
      */
-    public static String getName(EntityPlayer player) {
-        int i = GTNHCustomizer.getProxy().getWorld().playerEntities
+    public static String getName(final EntityPlayer player) {
+        final int i = GTNHCustomizer.getProxy().getWorld().playerEntities
             .indexOf(player);
-        return getName(player, Optional.of(String.format("Player %d", i)));
+        return PlayerUtils.getName(player,
+            Optional.of(String.format("Player %d", i)));
     }
 
     /**
@@ -40,14 +41,14 @@ public class PlayerUtils {
      *
      * @return The name of a player.
      */
-    public static String getName(EntityPlayer player,
-        Optional<String> fallback) {
-        GameProfile playerProfile = player.getGameProfile();
+    public static String getName(final EntityPlayer player,
+        final Optional<String> fallback) {
+        final GameProfile playerProfile = player.getGameProfile();
         if (playerProfile != null) {
             return playerProfile.getName();
         }
         return fallback.orElseGet(() -> {
-            int i = GTNHCustomizer.getProxy().getWorld().playerEntities
+            final int i = GTNHCustomizer.getProxy().getWorld().playerEntities
                 .indexOf(player);
             return String.format("Player %d", i);
         });
@@ -61,18 +62,16 @@ public class PlayerUtils {
      * @return {@code true} if the player is globally immune; {@code false}
      *         otherwise.
      */
-    public static boolean getIsPlayerGloballyImmune(EntityPlayer player) {
-        GameProfile playerProfile = player.getGameProfile();
-        UUID playerUUID = playerProfile == null ? null
+    public static boolean getIsPlayerGloballyImmune(final EntityPlayer player) {
+        final GameProfile playerProfile = player.getGameProfile();
+        final UUID playerUUID = playerProfile == null ? null
             : EntityPlayer.func_146094_a(playerProfile);
-        String nameFallback = getName(player,
+        final String nameFallback = PlayerUtils.getName(player,
             Optional.of(player.getDisplayName()));
         return Arrays.asList(Config.getGloballyImmunePlayers())
             .stream()
             .anyMatch(
-                // -- Check player UUID or player name if UUID does not exist or
-                // -- UUID check fails
-                (item) -> playerUUID != null
+                item -> playerUUID != null
                     && item.equalsIgnoreCase(playerUUID.toString())
                     || item.equalsIgnoreCase(nameFallback));
     }
@@ -85,8 +84,8 @@ public class PlayerUtils {
      * @return The mod data from the player; an empty NBT compound tag if it is
      *         not available.
      */
-    public static NBTTagCompound getPlayerModData(EntityPlayer player) {
-        NBTTagCompound playerData = player.getEntityData();
+    public static NBTTagCompound getPlayerModData(final EntityPlayer player) {
+        final NBTTagCompound playerData = player.getEntityData();
         if (!playerData.hasKey(Tags.MOD_ID, NBT.TAG_COMPOUND)) {
             return new NBTTagCompound();
         }

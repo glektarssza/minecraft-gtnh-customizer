@@ -51,9 +51,7 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
     /**
      * Make Java happy again.
      */
-    private GuiEditConfigValueMixin() {
-        super();
-    }
+    private GuiEditConfigValueMixin() {}
 
     /**
      * The injection for the {@code keyPressed} method.
@@ -64,6 +62,7 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
      * @returns {@code true} the event was handled, {@code} false otherwise.
      */
     @Override
+    @SuppressWarnings("null")
     public boolean keyPressed(final int keyCode, final char keyChar) {
         final GuiEditConfigValue self = (GuiEditConfigValue) (Object) this;
         if (!((IGuiBaseExtensions) self).isFocused()) {
@@ -71,19 +70,21 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
         }
         if (keyCode == Keyboard.KEY_RETURN
             || keyCode == Keyboard.KEY_NUMPADENTER) {
-            if (value.setValueFromString(
+            if (this.value.setValueFromString(
                 TypeHelpers.castToNonNull(Minecraft.getMinecraft().thePlayer),
-                TypeHelpers.castToNonNull(textBox.getText()), false)) {
-                callback.onCallback(TypeHelpers.castToNonNull(value), true);
+                TypeHelpers.castToNonNull(this.textBox.getText()), false)) {
+                this.callback.onCallback(TypeHelpers.castToNonNull(this.value),
+                    true);
             }
 
-            if (getGui().parent instanceof GuiBase) {
-                getGui().parent.closeContextMenu();
+            if (this.getGui().parent instanceof GuiBase) {
+                this.getGui().parent.closeContextMenu();
             }
             return true;
         }
         if (keyCode == Keyboard.KEY_ESCAPE) {
-            callback.onCallback(TypeHelpers.castToNonNull(inst.getValue()),
+            this.callback.onCallback(
+                TypeHelpers.castToNonNull(this.inst.getValue()),
                 false);
             return true;
         }
