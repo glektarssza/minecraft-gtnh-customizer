@@ -1,8 +1,13 @@
 package com.glektarssza.gtnh_customizer.mixins.late.journeymap;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
@@ -21,6 +26,7 @@ import journeymap.client.JourneymapClient;
 import journeymap.client.ui.component.TextBox;
 import journeymap.client.ui.component.TextBox.OnPress;
 import journeymap.client.ui.component.layouts.GridLayout;
+import journeymap.client.ui.waypointmanager.waypoint.CoordinatesLayout;
 import journeymap.client.ui.waypointmanager.waypoint.WaypointEditor;
 import journeymap.client.waypoint.ClientWaypointImpl;
 
@@ -68,31 +74,6 @@ public abstract class WaypointEditorMixin {
 
     /**
      * An injection for the {@link WaypointEditor#buildLocGridLayout
-     * buildLocGridLayout} method to replace the normal {@link TextBox}
-     * instances with our own.
-     *
-     * @param text The text to display by default.
-     * @param fontRenderer The font renderer.
-     * @param width The width of the text box.
-     * @param height The height of the text box.
-     * @param isNumeric Whether the text box should be purely numeric.
-     * @param negative Whether to allow next numbers in numeric text boxes.
-     * @param onPress The key press callback.
-     * @param original The original constructor call for reference.
-     *
-     * @return The new {@link GhostTextBox} instance.
-     */
-    @WrapOperation(method = "initGui", at = @At(value = "NEW", target = "(Ljava/lang/Object;Lnet/minecraft/client/gui/FontRenderer;IIZZLjourneymap/client/ui/component/TextBox$OnPress;)Ljourneymap/client/ui/component/TextBox;"))
-    private TextBox redirectTextBoxCreationToGhostTextBoxes(
-        Object text, FontRenderer fontRenderer, int width, int height,
-        boolean isNumeric, boolean negative, OnPress onPress,
-        Operation<TextBox> original) {
-        return new GhostTextBox(text, fontRenderer, width, height,
-            isNumeric, negative, onPress);
-    }
-
-    /**
-     * An injection for the {@link WaypointEditor#buildLocGridLayout
      * buildLocGridLayout} method set up the values for the ghost text.
      *
      * @param original The {@link GridLayout} that was to be returned
@@ -100,7 +81,7 @@ public abstract class WaypointEditorMixin {
      *
      * @return The original {@link GridLayout}.
      */
-    @ModifyReturnValue(method = "buildLocGridLayout", at = @At("RETURN"), remap = false)
+    @ModifyReturnValue(method = "buildLocGridLayout()Ljourneymap/client/ui/component/layouts/GridLayout;", at = @At("RETURN"), remap = false)
     public GridLayout setupLocGhostText(GridLayout original) {
         if (!JourneymapClient.getInstance().getStateHandler()
             .isHideCoordinates()) {
@@ -119,6 +100,31 @@ public abstract class WaypointEditorMixin {
     }
 
     /**
+     * An injection for the {@link WaypointEditor#buildLocGridLayout
+     * buildLocGridLayout} method to replace the normal {@link TextBox}
+     * instances with our own.
+     *
+     * @param text The text to display by default.
+     * @param fontRenderer The font renderer.
+     * @param width The width of the text box.
+     * @param height The height of the text box.
+     * @param isNumeric Whether the text box should be purely numeric.
+     * @param negative Whether to allow next numbers in numeric text boxes.
+     * @param onPress The key press callback.
+     * @param original The original constructor call for reference.
+     *
+     * @return The new {@link GhostTextBox} instance.
+     */
+    @WrapOperation(method = "initGui()V", at = @At(value = "NEW", target = "(Ljava/lang/Object;Lnet/minecraft/client/gui/FontRenderer;IIZZLjourneymap/client/ui/component/TextBox$OnPress;)Ljourneymap/client/ui/component/TextBox;"))
+    private TextBox redirectTextBoxCreationToGhostTextBoxes(
+        Object text, FontRenderer fontRenderer, int width, int height,
+        boolean isNumeric, boolean negative, OnPress onPress,
+        Operation<TextBox> original) {
+        return new GhostTextBox(text, fontRenderer, width, height,
+            isNumeric, negative, onPress);
+    }
+
+    /**
      * An injection for the {@link WaypointEditor#initGui initGui} method to
      * allow empty text boxes.
      *
@@ -127,7 +133,7 @@ public abstract class WaypointEditorMixin {
      *
      * @return Whether to allow the minimum length to be set.
      */
-    @WrapWithCondition(method = "initGui", at = @At(value = "INVOKE", target = "Ljourneymap/client/ui/component/TextBox;setMinLength(I)V", remap = false))
+    @WrapWithCondition(method = "initGui()V", at = @At(value = "INVOKE", target = "Ljourneymap/client/ui/component/TextBox;setMinLength(I)V", remap = false))
     public boolean allowEmptyTextBoxes(TextBox instance, int _minLength) {
         return !(instance instanceof GhostTextBox);
     }
@@ -144,7 +150,8 @@ public abstract class WaypointEditorMixin {
      * @return The new return value.
      */
     @WrapOperation(method = {
-        "save", "validateTextBoxes"
+        "save(Ljourneymap/client/ui/component/buttons/Button;)V",
+        "validateTextBoxes([Ljourneymap/client/ui/component/TextBox;)Z"
     }, at = @At(value = "INVOKE", target = "Ljourneymap/client/ui/component/TextBox;getText()Ljava/lang/String;"))
     private String getGhostTextIfNoTextEntered(TextBox box,
         Operation<String> original) {
@@ -154,35 +161,54 @@ public abstract class WaypointEditorMixin {
             : originalResult;
     }
 
-    @WrapOperation(method = "keyTyped", at = @At(value = "INVOKE", target = "Ljourneymap/api/v2/client/ui/component/LayeredScreen;keyTyped(CI)V"))
-    private void handleTabbing(WaypointEditor thisInstance, char typedChar,
-        int keyCode, Operation<Void> original) {
+    @WrapMethod(method = "keyTyped(CI)V")
+    private void handleTabInputs(char typedChar, int keyCode,
+        Operation<Void> original) {
         if (keyCode == Keyboard.KEY_TAB) {
-            final TextBox[] boxes = new TextBox[] {
-                this.nameTextBox,
-                this.xLocTextBox,
-                this.yLocTextBox,
-                this.zLocTextBox,
-                this.xyzLocTextBox
-            };
-            for (int i = 0; i < boxes.length; i += 1) {
-                final TextBox box = boxes[i];
-                int offset = 0;
-                if (!box.isFocused()) {
+            final List<TextBox> boxes = Arrays
+                .asList(JourneymapClient.getInstance()
+                    .getWaypointProperties().coordinatesFormat
+                    .get() == CoordinatesLayout.SINGLE_FIELD ? new TextBox[] {
+                        this.nameTextBox,
+                        this.xyzLocTextBox
+                } : new TextBox[] {
+                    this.nameTextBox,
+                    this.xLocTextBox,
+                    this.zLocTextBox,
+                    this.yLocTextBox
+                });
+            final List<TextBox> workingList = Collections
+                .unmodifiableList(boxes);
+            Integer focusedIndex = null;
+            for (int i = 0; i < workingList.size(); i += 1) {
+                final TextBox box = workingList.get(i);
+                if (!box.getVisible()) {
+                    boxes.remove(box);
                     continue;
                 }
-                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
-                    || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) && i - 1 >= 0) {
-                    offset = -1;
-                } else if (i + 1 < boxes.length - 1) {
-                    offset = 1;
+                if (box.isFocused()) {
+                    if (focusedIndex == null) {
+                        focusedIndex = i;
+                    }
+                    box.setFocused(false);
                 }
-                final TextBox nextBox = boxes[i + offset];
-                if (box == null || nextBox == null || offset == 0) {
-                    continue;
+            }
+            int offset = 0;
+            if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
+                || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))) {
+                offset = -1;
+            } else {
+                offset = 1;
+            }
+            if (focusedIndex != null) {
+                focusedIndex = focusedIndex + offset;
+                if (focusedIndex < 0) {
+                    focusedIndex = boxes.size() + focusedIndex;
                 }
-                nextBox.setFocused(true);
-                return;
+                focusedIndex = focusedIndex % boxes.size();
+                boxes.get(focusedIndex).setFocused(true);
+            } else {
+                boxes.get(0).setFocused(true);
             }
         }
         original.call(typedChar, keyCode);
