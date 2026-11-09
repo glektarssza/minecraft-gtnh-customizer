@@ -7,7 +7,8 @@
             "request": "attach",
             "hostName": "localhost",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient:debug"
+            "preLaunchTask": "gradle:runClient:debug",
+            "sourcePaths": ["${workspaceFolder}/run/client/.mixin.out/java/"]
         },
         {
             "type": "java",
@@ -15,7 +16,8 @@
             "request": "attach",
             "hostName": "localhost",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient:obfuscated:debug"
+            "preLaunchTask": "gradle:runClient:obfuscated:debug",
+            "sourcePaths": ["${workspaceFolder}/run/client/.mixin.out/java/"]
         },
         {
             "type": "java",
@@ -23,7 +25,8 @@
             "request": "attach",
             "hostName": "localhost",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient17:debug"
+            "preLaunchTask": "gradle:runClient17:debug",
+            "sourcePaths": ["${workspaceFolder}/run/client/.mixin.out/java/"]
         },
         {
             "type": "java",
@@ -31,7 +34,8 @@
             "request": "attach",
             "hostName": "localhost",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient21:debug"
+            "preLaunchTask": "gradle:runClient21:debug",
+            "sourcePaths": ["${workspaceFolder}/run/client/.mixin.out/java/"]
         },
         {
             "type": "java",
@@ -39,7 +43,8 @@
             "request": "attach",
             "hostName": "localhost",
             "port": "5005",
-            "preLaunchTask": "gradle:runClient25:debug"
+            "preLaunchTask": "gradle:runClient25:debug",
+            "sourcePaths": ["${workspaceFolder}/run/client/.mixin.out/java/"]
         },
         {
             "type": "java",

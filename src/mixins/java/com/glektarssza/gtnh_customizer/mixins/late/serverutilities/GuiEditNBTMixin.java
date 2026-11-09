@@ -61,6 +61,7 @@ public abstract class GuiEditNBTMixin extends GuiBase
      * @returns {@code true} the event was handled, {@code} false otherwise.
      */
     @Override
+    @SuppressWarnings("null")
     public boolean keyPressed(final int keyCode, final char keyChar) {
         final GuiEditNBT self = (GuiEditNBT) (Object) this;
         if (!((IGuiBaseExtensions) self).isFocused()) {
@@ -68,21 +69,22 @@ public abstract class GuiEditNBTMixin extends GuiBase
         }
         if (keyCode == Keyboard.KEY_RETURN
             || keyCode == Keyboard.KEY_NUMPADENTER) {
-            shouldClose = 1;
+            this.shouldClose = 1;
             self.closeGui();
             return true;
         }
         if (keyCode == Keyboard.KEY_ESCAPE) {
-            shouldClose = 2;
+            this.shouldClose = 2;
             self.closeGui();
             return true;
         }
         if (keyCode == Keyboard.KEY_DELETE
             && this.selected != this.buttonNBTRoot) {
-            this.selected.parent.setTag(TypeHelpers.castToNonNull(selected.key),
+            this.selected.parent.setTag(
+                TypeHelpers.castToNonNull(this.selected.key),
                 null);
             this.selected.parent.updateChildren(false);
-            this.selected = selected.parent;
+            this.selected = this.selected.parent;
             return true;
         }
         if (super.keyPressed(keyCode, keyChar)) {

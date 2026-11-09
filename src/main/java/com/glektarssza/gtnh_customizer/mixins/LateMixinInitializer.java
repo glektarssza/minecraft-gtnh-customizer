@@ -51,39 +51,42 @@ public class LateMixinInitializer implements ILateMixinLoader {
      */
     @Override
     @SuppressWarnings("null")
-    public List<String> getMixins(Set<String> loadedMods) {
-        List<String> mixins = new ArrayList<String>();
+    public List<String> getMixins(final Set<String> loadedMods) {
+        final List<String> mixins = new ArrayList<String>();
         if (loadedMods.contains("SpecialMobs")) {
-            LOGGER.debug("Found Special Mobs, adding mixins!");
+            LateMixinInitializer.LOGGER
+                .debug("Found Special Mobs, adding mixins!");
             mixins.add("specialmobs.Entity_SpecialCaveSpiderMixin");
             mixins.add("specialmobs.Entity_SpecialGhastMixin");
             mixins.add("specialmobs.Entity_SpecialSpiderMixin");
             mixins.add("specialmobs.EntityEnderCreeperMixin");
         }
         if (loadedMods.contains("Thaumcraft")) {
-            LOGGER.debug("Found Thaumcraft, adding mixins!");
+            LateMixinInitializer.LOGGER
+                .debug("Found Thaumcraft, adding mixins!");
             mixins.add("thaumcraft.EntityWispMixin");
         }
         if (loadedMods.contains("XaeroMinimap")
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            LOGGER.debug(
+            LateMixinInitializer.LOGGER.debug(
                 "Found Xaero's Minimap and running on a client, adding mixins!");
             mixins.add("xaeros.client.GuiWaypointsMixins");
             mixins.add("xaeros.client.WaypointsManagerMixins");
         }
         if (loadedMods.contains("XaeroWorldMap")
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            LOGGER.debug(
+            LateMixinInitializer.LOGGER.debug(
                 "Found Xaero's World Map and running on a client, adding mixins!");
             mixins.add("xaeros.client.GuiMapMixins");
         }
         if (loadedMods.contains("TConstruct")) {
-            LOGGER.debug("Found Tinker's Construct, adding mixins!");
+            LateMixinInitializer.LOGGER
+                .debug("Found Tinker's Construct, adding mixins!");
             mixins.add("tconstruct.SlimeSaplingMixin");
         }
         if (loadedMods.contains("serverutilities")
             && FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-            LOGGER.debug(
+            LateMixinInitializer.LOGGER.debug(
                 "Found server utilities and running on a client, adding mixins!");
             mixins.add("serverutilities.GuiBaseMixin");
             mixins.add("serverutilities.GuiEditConfigValueMixin");
@@ -91,10 +94,16 @@ public class LateMixinInitializer implements ILateMixinLoader {
             mixins.add("serverutilities.TextBoxMixin");
         }
         if (loadedMods.contains("EnderZoo")) {
-            LOGGER.debug("Found Ender Zoo, adding mixins!");
+            LateMixinInitializer.LOGGER
+                .debug("Found Ender Zoo, adding mixins!");
             mixins.add("enderzoo.EntityEnderminyMixin");
         }
-        LOGGER.debug("Final mixin list: {}",
+        if (loadedMods.contains("journeymap")) {
+            LateMixinInitializer.LOGGER
+                .debug("Found Journeymap, adding mixins!");
+            mixins.add("journeymap.WaypointEditorMixin");
+        }
+        LateMixinInitializer.LOGGER.debug("Final mixin list: {}",
             mixins.stream().collect(Collectors.joining(", ")));
         return mixins;
     }

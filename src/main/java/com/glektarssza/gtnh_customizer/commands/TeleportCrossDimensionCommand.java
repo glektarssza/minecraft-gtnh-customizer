@@ -92,7 +92,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         if (index == 0) {
             return !CommandUtils.isCoordinateArgument(args, index);
         }
-        if (index == 1 && isUsernameIndex(args, 0)) {
+        if (index == 1 && this.isUsernameIndex(args, 0)) {
             return !CommandUtils.isCoordinateArgument(args, index);
         }
         return false;
@@ -109,9 +109,9 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     public boolean isCoordinateIndex(final String[] args, final int index) {
-        if (isUsernameIndex(args, 0) && isUsernameIndex(args, 1)) {
+        if (this.isUsernameIndex(args, 0) && this.isUsernameIndex(args, 1)) {
             return false;
-        } else if (isUsernameIndex(args, 0)) {
+        } else if (this.isUsernameIndex(args, 0)) {
             return index == 1 || index == 2 || index == 3;
         }
         return index == 0 || index == 1 || index == 2;
@@ -128,9 +128,9 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     public boolean isDimensionIndex(final String[] args, final int index) {
-        if (isUsernameIndex(args, 0) && isUsernameIndex(args, 1)) {
+        if (this.isUsernameIndex(args, 0) && this.isUsernameIndex(args, 1)) {
             return false;
-        } else if (isUsernameIndex(args, 0)) {
+        } else if (this.isUsernameIndex(args, 0)) {
             return index == 4;
         }
         return index == 3;
@@ -147,9 +147,9 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *         {@code false} otherwise.
      */
     public boolean isYawIndex(final String[] args, final int index) {
-        if (isUsernameIndex(args, 0) && isUsernameIndex(args, 1)) {
+        if (this.isUsernameIndex(args, 0) && this.isUsernameIndex(args, 1)) {
             return false;
-        } else if (isUsernameIndex(args, 0)) {
+        } else if (this.isUsernameIndex(args, 0)) {
             return index == 5;
         }
         return index == 4;
@@ -174,7 +174,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             case 0:
                 // -- First argument is one of victim, target, or X coordinate
                 try {
-                    victim = getPlayer(sender, args[0]);
+                    victim = CommandBase.getPlayer(sender, args[0]);
                 } catch (final Throwable t) {
                     // -- Does nothing
                 }
@@ -187,9 +187,9 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             case 1:
                 // -- Second argument is one of target, X coordinate, Y
                 // -- coordinate, or yaw
-                if (isUsernameIndex(args, 0)) {
+                if (this.isUsernameIndex(args, 0)) {
                     try {
-                        victim = getPlayer(sender, args[0]);
+                        victim = CommandBase.getPlayer(sender, args[0]);
                     } catch (final Throwable t) {
                         return null;
                     }
@@ -199,88 +199,88 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     return result;
                 }
                 try {
-                    victim = getCommandSenderAsPlayer(sender);
+                    victim = CommandBase.getCommandSenderAsPlayer(sender);
                 } catch (final Throwable t) {
                     return null;
                 }
-                if (isCoordinateIndex(args, 0)) {
+                if (this.isCoordinateIndex(args, 0)) {
                     return Collections.singletonList("~");
                 }
                 return null;
             case 2:
                 // -- Third argument is one of yaw, Y position, or Z position
-                if (isUsernameIndex(args, 0)) {
+                if (this.isUsernameIndex(args, 0)) {
                     try {
-                        victim = getPlayer(sender, args[0]);
+                        victim = CommandBase.getPlayer(sender, args[0]);
                     } catch (final Throwable t) {
                         return null;
                     }
-                    if (isUsernameIndex(args, 1)) {
+                    if (this.isUsernameIndex(args, 1)) {
                         return Collections.singletonList("~");
                     }
-                    if (isCoordinateIndex(args, 1)) {
+                    if (this.isCoordinateIndex(args, 1)) {
                         return Collections.singletonList("~");
                     }
                     return null;
                 }
                 try {
-                    victim = getCommandSenderAsPlayer(sender);
+                    victim = CommandBase.getCommandSenderAsPlayer(sender);
                 } catch (final Throwable t) {
                     return null;
                 }
-                if (isCoordinateIndex(args, 1)) {
+                if (this.isCoordinateIndex(args, 1)) {
                     return Collections
                         .singletonList("~");
                 }
                 return null;
             case 3:
                 // -- Fourth argument is one of Z position or dimension ID
-                if (isUsernameIndex(args, 0)) {
+                if (this.isUsernameIndex(args, 0)) {
                     try {
-                        victim = getPlayer(sender, args[0]);
+                        victim = CommandBase.getPlayer(sender, args[0]);
                     } catch (final Throwable t) {
                         return null;
                     }
-                    if (isCoordinateIndex(args, index)) {
+                    if (this.isCoordinateIndex(args, index)) {
                         return Collections.singletonList("~");
                     }
                     return null;
                 }
                 try {
-                    victim = getCommandSenderAsPlayer(sender);
+                    victim = CommandBase.getCommandSenderAsPlayer(sender);
                 } catch (final Throwable t) {
                     return null;
                 }
                 result = CommandUtils.getTruncatedDimensionIDsIterable(512)
-                    .parallelStream().map((id) -> String.format("%d", id))
+                    .parallelStream().map(id -> String.format("%d", id))
                     .collect(Collectors.toList());
                 result.add(0, "~");
                 return result;
             case 4:
                 // -- Fifth argument is one of dimension ID or yaw
-                if (isUsernameIndex(args, 0)) {
+                if (this.isUsernameIndex(args, 0)) {
                     try {
-                        victim = getPlayer(sender, args[0]);
+                        victim = CommandBase.getPlayer(sender, args[0]);
                     } catch (final Throwable t) {
                         return null;
                     }
                     result = CommandUtils.getTruncatedDimensionIDsIterable(512)
-                        .parallelStream().map((id) -> String.format("%d", id))
+                        .parallelStream().map(id -> String.format("%d", id))
                         .collect(Collectors.toList());
                     result.add(0, "~");
                     return result;
                 }
                 try {
-                    victim = getCommandSenderAsPlayer(sender);
+                    victim = CommandBase.getCommandSenderAsPlayer(sender);
                 } catch (final Throwable t) {
                     return null;
                 }
                 return Collections.singletonList("~");
             case 5:
                 // -- Sixth argument is yaw
-                if (isUsernameIndex(args, 0)) {
+                if (this.isUsernameIndex(args, 0)) {
                     try {
-                        victim = getPlayer(sender, args[0]);
+                        victim = CommandBase.getPlayer(sender, args[0]);
                     } catch (final Throwable t) {
                         return null;
                     }
@@ -303,18 +303,18 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         final String[] args) {
         EntityPlayerMP victim = null;
         EntityPlayerMP target = null;
-        if (args.length > 1 && isUsernameIndex(args, 0)
-            && isUsernameIndex(args, 1)) {
-            victim = getPlayer(sender, args[0]);
-            target = getPlayer(sender, args[1]);
-        } else if (args.length > 1 && isUsernameIndex(args, 0)
-            && !isUsernameIndex(args, 1)) {
-            victim = getPlayer(sender, args[0]);
-        } else if (args.length > 0 && isUsernameIndex(args, 0)) {
-            victim = getCommandSenderAsPlayer(sender);
-            target = getPlayer(sender, args[0]);
+        if (args.length > 1 && this.isUsernameIndex(args, 0)
+            && this.isUsernameIndex(args, 1)) {
+            victim = CommandBase.getPlayer(sender, args[0]);
+            target = CommandBase.getPlayer(sender, args[1]);
+        } else if (args.length > 1 && this.isUsernameIndex(args, 0)
+            && !this.isUsernameIndex(args, 1)) {
+            victim = CommandBase.getPlayer(sender, args[0]);
+        } else if (args.length > 0 && this.isUsernameIndex(args, 0)) {
+            victim = CommandBase.getCommandSenderAsPlayer(sender);
+            target = CommandBase.getPlayer(sender, args[0]);
         } else if (args.length > 0) {
-            victim = getCommandSenderAsPlayer(sender);
+            victim = CommandBase.getCommandSenderAsPlayer(sender);
         } else {
             throw new WrongUsageException(
                 "gtnh_customizer.commands.teleport_cross_dimension.error.not_enough_arguments",
@@ -331,7 +331,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     // -- Does nothing
                 }
             }
-            sendVictimToTarget(sender, victim, target, yawOverride);
+            this.sendVictimToTarget(sender, victim, target, yawOverride);
             sender.addChatMessage(new ChatComponentTranslation(
                 "gtnh_customizer.commands.teleport_cross_dimension.warning.sent_self_to_self")
                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GOLD)
@@ -343,7 +343,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
             Double targetBlockPosZ = null;
             int targetDimension = victim.dimension;
             Float yawOverride = null;
-            final int offset = isUsernameIndex(args, 0) ? 1 : 0;
+            final int offset = this.isUsernameIndex(args, 0) ? 1 : 0;
             if (args.length > (offset + 3)) {
                 if (args[offset + 3].startsWith("~")) {
                     if (args[offset + 3].length() > 1) {
@@ -395,7 +395,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                     // -- Does nothing
                 }
             }
-            sendVictimToLocation(sender, victim, targetBlockPosX,
+            this.sendVictimToLocation(sender, victim, targetBlockPosX,
                 targetBlockPosY, targetBlockPosZ, targetDimension, yawOverride,
                 victim.rotationPitch);
             return;
@@ -448,7 +448,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
         if (pitchOverride != null) {
             pitch = pitchOverride;
         }
-        updatePlayerLastLocation(victim);
+        this.updatePlayerLastLocation(victim);
         if (victim.dimension != dimension) {
             MinecraftServer.getServer().getConfigurationManager()
                 .transferPlayerToDimension(victim, dimension,
@@ -460,7 +460,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
                 yaw, pitch);
         }
         // -- Notify admin 'console'
-        func_152373_a(sender, this,
+        CommandBase.func_152373_a(sender, this,
             "gtnh_customizer.commands.teleport_cross_dimension.info.teleported",
             new Object[] {
                 victim.getDisplayName(),
@@ -482,6 +482,7 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *
      * @param victim The player who is about to be teleported.
      */
+    @SuppressWarnings("null")
     private void updatePlayerLastLocation(final EntityPlayerMP victim) {
         if (Loader.isModLoaded("serverutilities")) {
             ServerUtilitiesPlayerData.get(TypeHelpers.castToNonNull(victim))

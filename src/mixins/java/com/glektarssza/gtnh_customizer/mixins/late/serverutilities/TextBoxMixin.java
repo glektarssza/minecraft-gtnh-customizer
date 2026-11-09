@@ -28,7 +28,7 @@ public class TextBoxMixin {
      *
      * @return The key character, if one can be mapped.
      */
-    private Optional<Character> mapNumpadKeyCodeToChar(int keyCode) {
+    private Optional<Character> mapNumpadKeyCodeToChar(final int keyCode) {
         switch (keyCode) {
             case Keyboard.KEY_NUMPAD0:
                 return Optional.of('0');
@@ -68,11 +68,12 @@ public class TextBoxMixin {
     /**
      * The injection for the {@code keyPressed} method.
      */
+    @SuppressWarnings("null")
     @Inject(method = "keyPressed", order = 900, at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ChatAllowedCharacters;isAllowedCharacter(C)Z", remap = true), cancellable = true, remap = false)
-    public void keyPressed$handleNumpad(int keyCode, char keyChar,
-        CallbackInfoReturnable<Boolean> cir) {
-        TextBox self = (TextBox) (Object) this;
-        mapNumpadKeyCodeToChar(keyCode).ifPresent((numpadKeyChar) -> {
+    public void keyPressed$handleNumpad(final int keyCode, final char keyChar,
+        final CallbackInfoReturnable<Boolean> cir) {
+        final TextBox self = (TextBox) (Object) this;
+        this.mapNumpadKeyCodeToChar(keyCode).ifPresent(numpadKeyChar -> {
             if (ChatAllowedCharacters.isAllowedCharacter(numpadKeyChar)) {
                 self.writeText(
                     TypeHelpers
@@ -86,19 +87,20 @@ public class TextBoxMixin {
      * The injection for the {@code keyPressed} method.
      */
     @Inject(method = "keyPressed", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ChatAllowedCharacters;isAllowedCharacter(C)Z", remap = true), cancellable = true, remap = false)
-    public void keyPressed$handleExtraKeyBindings(int keyCode, char keyChar,
-        CallbackInfoReturnable<Boolean> cir) {
-        TextBox self = (TextBox) (Object) this;
+    public void keyPressed$handleExtraKeyBindings(final int keyCode,
+        final char keyChar,
+        final CallbackInfoReturnable<Boolean> cir) {
+        final TextBox self = (TextBox) (Object) this;
         if (keyCode == Keyboard.KEY_RETURN
             || keyCode == Keyboard.KEY_NUMPADENTER) {
-            if (validText) {
+            if (this.validText) {
                 self.setFocused(false);
                 self.onEnterPressed();
             }
             cir.setReturnValue(true);
         }
         if (keyCode == Keyboard.KEY_ESCAPE) {
-            if (validText) {
+            if (this.validText) {
                 self.closeGui(false);
             }
             cir.setReturnValue(true);

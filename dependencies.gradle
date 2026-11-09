@@ -8,6 +8,7 @@ def isPropEnabled(String id) {
 dependencies {
     if (isPropEnabled("enableDependenciesForLocalTesting")) {
         // -- Support for other mods and local testing
+        devOnlyNonPublishable(rfg.deobf("curse.maven:journeymap-32274:9049794"))
         devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
         devOnlyNonPublishable(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
         devOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.17"))
@@ -20,6 +21,7 @@ dependencies {
         runtimeOnlyNonPublishable("com.github.GTNewHorizons:Baubles-Expanded:2.2.27-GTNH")
     } else {
         // -- Support for other mods
+        compileOnly(rfg.deobf("curse.maven:journeymap-32274:9049794"))
         compileOnly(rfg.deobf("curse.maven:xaeros-minimap-263420:6012805"))
         compileOnly(rfg.deobf("curse.maven:xaeros-world-map-317780:5987124"))
         compileOnly(rfg.deobf("com.github.GTNewHorizons:Backhand:1.8.17"))
@@ -34,7 +36,6 @@ dependencies {
 
     // -- Local testing only
     if (isPropEnabled("enableConvenienceRuntimeMods")) {
-        runtimeOnlyNonPublishable(rfg.deobf("curse.maven:journeymap-32274:9049794"))
         runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Angelica:2.2.44"))
         runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:Controlling:2.2.0"))
         runtimeOnlyNonPublishable(rfg.deobf("com.github.GTNewHorizons:CoreTweaks:0.3.5.0-GTNH"))
