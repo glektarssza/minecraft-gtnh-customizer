@@ -119,7 +119,7 @@ public abstract class WaypointEditorMixin {
     private TextBox redirectTextBoxCreationToGhostTextBoxes(
         Object text, FontRenderer fontRenderer, int width, int height,
         boolean isNumeric, boolean negative, OnPress onPress,
-        Operation<TextBox> original) {
+        Operation<TextBox> _original) {
         return new GhostTextBox(text, fontRenderer, width, height,
             isNumeric, negative, onPress);
     }

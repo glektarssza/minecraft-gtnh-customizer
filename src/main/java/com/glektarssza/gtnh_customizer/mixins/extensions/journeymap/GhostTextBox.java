@@ -107,6 +107,7 @@ public class GhostTextBox extends TextBox implements ITextBoxAccessor {
         this.setGhostText("");
     }
 
+    @Override
     public void drawTextBox() {
         super.drawTextBox();
         if (!this.getVisible() || (this.hasMinLength()
