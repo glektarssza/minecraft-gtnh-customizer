@@ -111,7 +111,7 @@ public abstract class WaypointEditorMixin {
      * @param isNumeric Whether the text box should be purely numeric.
      * @param negative Whether to allow next numbers in numeric text boxes.
      * @param onPress The key press callback.
-     * @param original The original constructor call for reference.
+     * @param _original The original constructor call for reference.
      *
      * @return The new {@link GhostTextBox} instance.
      */
