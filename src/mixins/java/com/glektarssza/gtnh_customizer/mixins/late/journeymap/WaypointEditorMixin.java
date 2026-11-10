@@ -219,7 +219,9 @@ public abstract class WaypointEditorMixin {
                     focusedIndex = boxes.size() + focusedIndex;
                 }
                 focusedIndex = focusedIndex % boxes.size();
-                boxes.get(focusedIndex).setFocused(true);
+                final TextBox box = boxes.get(focusedIndex);
+                box.setFocused(true);
+                box.selectAll();
             } else {
                 boxes.get(0).setFocused(true);
             }
