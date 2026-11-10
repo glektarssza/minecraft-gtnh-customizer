@@ -5,8 +5,8 @@
 
 <summary><b>Table of Contents</b></summary>
 
+* [0.18.4](#0184)
 * [0.18.3](#0183)
-    * [Features](#features)
 * [0.18.2](#0182)
 * [0.18.1](#0181)
 * [0.18.0](#0180)
@@ -56,8 +56,17 @@
 
 </details>
 
+## 0.18.4 ##
+
+<!-- omit in toc -->
+### Bug Fixes ###
+
+* Ensure that tabbing between fields in the waypoint editor respects the various
+  possible field arrangements/orders.
+
 ## 0.18.3 ##
 
+<!-- omit in toc -->
 ### Features ###
 
 * Added the ability for Journeymap to reset waypoint coordinates by clearing the
