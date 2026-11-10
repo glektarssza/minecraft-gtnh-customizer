@@ -203,6 +203,7 @@ public abstract class WaypointEditorMixin {
                         focusedIndex = i;
                     }
                     box.setFocused(false);
+                    box.setSelectionPos(box.getCursorPosition());
                 }
             }
             int offset = 0;
