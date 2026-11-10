@@ -61,8 +61,11 @@
 <!-- omit in toc -->
 ### Bug Fixes ###
 
-* Ensure that tabbing between fields in the waypoint editor respects the various
-  possible field arrangements/orders.
+* Ensure that tabbing between fields in the Journeymap waypoint editor respects
+  the various possible field arrangements/orders.
+* Tabbing between text fields in the Journeymap waypoint editor now correctly
+  removes text selections on the newly unfocused text field and selects the
+  entire contexts of the newly focused text field.
 
 ## 0.18.3 ##
 
