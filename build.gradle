@@ -6,6 +6,10 @@ plugins {
     id('com.diffplug.spotless') version '8.8.0' apply false
 }
 
+project.ext.hasProperty = { String key ->
+    return providers..gradleProperty(key) != null
+}
+
 project.ext.getProperty = { String key ->
     return providers.gradleProperty(key).get()
 }
@@ -34,7 +38,11 @@ minecraft {
     injectedTags.put("MOD_ID", modId)
     injectedTags.put("MOD_NAME", modName)
     injectedTags.put("MOD_VERSION", modVersion)
-    injectedTags.put("MOD_DEPENDENCIES", modDependencies)
+    injectedTags.put("MOD_DEPENDENCIES", getProperty("mod.dependencies"))
+    injectedTags.put("MOD_GUI_CLASS", getPropertyOrDefault("mod.guiClass", ""))
+    injectedTags.put("MOD_MC_VERSION_RANGE", getPropertyOrDefault("mod.minecraftVersionRange", "1.7.0"))
+    injectedTags.put("MOD_ACCEPTABLE_REMOTE_VERSION_RANGE", getPropertyOrDefault("mod.acceptableRemoteVersionRange", "*"))
+    injectedTags.put("MOD_LANGUAGE", getPropertyOrDefault("mod.language", "java"))
 }
 
 tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) {

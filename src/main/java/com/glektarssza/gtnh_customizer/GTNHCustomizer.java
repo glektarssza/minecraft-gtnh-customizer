@@ -24,7 +24,7 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 /**
  * The root mod class.
  */
-@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = "*", acceptedMinecraftVersions = "[1.7.10]", modLanguage = "java", guiFactory = "com.glektarssza.gtnh_customizer.config.GuiFactory", canBeDeactivated = false, useMetadata = true)
+@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = Tags.MOD_ACCEPTABLE_REMOTE_VERSION_RANGE, acceptedMinecraftVersions = Tags.MOD_MC_VERSION_RANGE, modLanguage = Tags.MOD_LANGUAGE, guiFactory = Tags.MOD_GUI_CLASS, canBeDeactivated = false, useMetadata = true)
 public class GTNHCustomizer {
     /**
      * The logger for this class.
