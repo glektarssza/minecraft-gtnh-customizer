@@ -1,5 +1,6 @@
 package com.glektarssza.gtnh_customizer.mixins.late.journeymap;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,6 @@ import journeymap.client.JourneymapClient;
 import journeymap.client.ui.component.TextBox;
 import journeymap.client.ui.component.TextBox.OnPress;
 import journeymap.client.ui.component.layouts.GridLayout;
-import journeymap.client.ui.waypointmanager.waypoint.CoordinatesLayout;
 import journeymap.client.ui.waypointmanager.waypoint.WaypointEditor;
 import journeymap.client.waypoint.ClientWaypointImpl;
 
@@ -82,7 +82,7 @@ public abstract class WaypointEditorMixin {
      * @return The original {@link GridLayout}.
      */
     @ModifyReturnValue(method = "buildLocGridLayout()Ljourneymap/client/ui/component/layouts/GridLayout;", at = @At("RETURN"), remap = false)
-    public GridLayout setupLocGhostText(GridLayout original) {
+    public GridLayout setupLocGhostText(final GridLayout original) {
         if (!JourneymapClient.getInstance().getStateHandler()
             .isHideCoordinates()) {
             final BlockPos pos = new BlockPos(
@@ -117,9 +117,10 @@ public abstract class WaypointEditorMixin {
      */
     @WrapOperation(method = "initGui()V", at = @At(value = "NEW", target = "(Ljava/lang/Object;Lnet/minecraft/client/gui/FontRenderer;IIZZLjourneymap/client/ui/component/TextBox$OnPress;)Ljourneymap/client/ui/component/TextBox;"))
     private TextBox redirectTextBoxCreationToGhostTextBoxes(
-        Object text, FontRenderer fontRenderer, int width, int height,
-        boolean isNumeric, boolean negative, OnPress onPress,
-        Operation<TextBox> _original) {
+        final Object text, final FontRenderer fontRenderer, final int width,
+        final int height,
+        final boolean isNumeric, final boolean negative, final OnPress onPress,
+        final Operation<TextBox> _original) {
         return new GhostTextBox(text, fontRenderer, width, height,
             isNumeric, negative, onPress);
     }
@@ -134,7 +135,8 @@ public abstract class WaypointEditorMixin {
      * @return Whether to allow the minimum length to be set.
      */
     @WrapWithCondition(method = "initGui()V", at = @At(value = "INVOKE", target = "Ljourneymap/client/ui/component/TextBox;setMinLength(I)V", remap = false))
-    public boolean allowEmptyTextBoxes(TextBox instance, int _minLength) {
+    public boolean allowEmptyTextBoxes(final TextBox instance,
+        final int _minLength) {
         return !(instance instanceof GhostTextBox);
     }
 
@@ -153,30 +155,40 @@ public abstract class WaypointEditorMixin {
         "save(Ljourneymap/client/ui/component/buttons/Button;)V",
         "validateTextBoxes([Ljourneymap/client/ui/component/TextBox;)Z"
     }, at = @At(value = "INVOKE", target = "Ljourneymap/client/ui/component/TextBox;getText()Ljava/lang/String;"))
-    private String getGhostTextIfNoTextEntered(TextBox box,
-        Operation<String> original) {
+    private String getGhostTextIfNoTextEntered(final TextBox box,
+        final Operation<String> original) {
         final String originalResult = original.call(box);
-        return originalResult.isEmpty() && (box instanceof GhostTextBox)
-            ? ((GhostTextBox) box).getGhostText()
+        return originalResult.isEmpty() && (box instanceof final GhostTextBox g)
+            ? g.getGhostText()
             : originalResult;
     }
 
     @WrapMethod(method = "keyTyped(CI)V")
-    private void handleTabInputs(char typedChar, int keyCode,
-        Operation<Void> original) {
+    private void handleTabInputs(final char typedChar, final int keyCode,
+        final Operation<Void> original) {
+
         if (keyCode == Keyboard.KEY_TAB) {
-            final List<TextBox> boxes = Arrays
-                .asList(JourneymapClient.getInstance()
-                    .getWaypointProperties().coordinatesFormat
-                    .get() == CoordinatesLayout.SINGLE_FIELD ? new TextBox[] {
-                        this.nameTextBox,
-                        this.xyzLocTextBox
-                } : new TextBox[] {
-                    this.nameTextBox,
-                    this.xLocTextBox,
-                    this.zLocTextBox,
-                    this.yLocTextBox
-                });
+            final List<TextBox> boxes = new ArrayList<TextBox>();
+            boxes.add(this.nameTextBox);
+            switch (JourneymapClient.getInstance()
+                .getWaypointProperties().coordinatesFormat
+                .get()) {
+                case SINGLE_FIELD:
+                    boxes.add(this.xyzLocTextBox);
+                    break;
+                case XYZ:
+                    boxes.addAll(Arrays.asList(
+                        this.xLocTextBox,
+                        this.yLocTextBox,
+                        this.zLocTextBox));
+                    break;
+                case XZY:
+                    boxes.addAll(Arrays.asList(
+                        this.xLocTextBox,
+                        this.zLocTextBox,
+                        this.yLocTextBox));
+                    break;
+            }
             final List<TextBox> workingList = Collections
                 .unmodifiableList(boxes);
             Integer focusedIndex = null;
@@ -191,6 +203,7 @@ public abstract class WaypointEditorMixin {
                         focusedIndex = i;
                     }
                     box.setFocused(false);
+                    box.setSelectionPos(box.getCursorPosition());
                 }
             }
             int offset = 0;
@@ -206,7 +219,9 @@ public abstract class WaypointEditorMixin {
                     focusedIndex = boxes.size() + focusedIndex;
                 }
                 focusedIndex = focusedIndex % boxes.size();
-                boxes.get(focusedIndex).setFocused(true);
+                final TextBox box = boxes.get(focusedIndex);
+                box.setFocused(true);
+                box.selectAll();
             } else {
                 boxes.get(0).setFocused(true);
             }
