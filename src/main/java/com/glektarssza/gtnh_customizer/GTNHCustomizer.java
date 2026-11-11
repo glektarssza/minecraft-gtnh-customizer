@@ -16,9 +16,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
-import com.glektarssza.gtnh_customizer.api.v1.functional.UnaryConsumer;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.functional.consumer.UnaryConsumer;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**

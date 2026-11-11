@@ -2,7 +2,7 @@ package com.glektarssza.gtnh_customizer.mixins.extensions.journeymap;
 
 import net.minecraft.client.gui.FontRenderer;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.mixins.extensions.vanilla.ITextBoxAccessor;
 
 import journeymap.client.ui.component.TextBox;
@@ -26,24 +26,26 @@ public class GhostTextBox extends TextBox implements ITextBoxAccessor {
      */
     private int ghostTextColor = 7368816;
 
-    public GhostTextBox(Object text, FontRenderer fontRenderer,
-        int width, int height) {
+    public GhostTextBox(final Object text, final FontRenderer fontRenderer,
+        final int width, final int height) {
         this(text, fontRenderer, width, height, false, false, () -> {});
     }
 
-    public GhostTextBox(Object text, FontRenderer fontRenderer,
-        int width, int height, OnPress onPress) {
+    public GhostTextBox(final Object text, final FontRenderer fontRenderer,
+        final int width, final int height, final OnPress onPress) {
         this(text, fontRenderer, width, height, false, false, onPress);
     }
 
-    public GhostTextBox(Object text, FontRenderer fontRenderer,
-        int width, int height, boolean isNumeric, boolean negative) {
+    public GhostTextBox(final Object text, final FontRenderer fontRenderer,
+        final int width, final int height, final boolean isNumeric,
+        final boolean negative) {
         this(text, fontRenderer, width, height, isNumeric, negative, () -> {});
     }
 
-    public GhostTextBox(Object text, FontRenderer fontRenderer,
-        int width, int height, boolean isNumeric, boolean negative,
-        OnPress onPress) {
+    public GhostTextBox(final Object text, final FontRenderer fontRenderer,
+        final int width, final int height, final boolean isNumeric,
+        final boolean negative,
+        final OnPress onPress) {
         super(text, fontRenderer, width, height, isNumeric, negative, onPress);
     }
 
@@ -51,7 +53,7 @@ public class GhostTextBox extends TextBox implements ITextBoxAccessor {
      * {@inheritdoc net.minecraft.client.gui.GuiTextField#setMinLength(int)}
      */
     @Override
-    public void setMinLength(int _minLength) {
+    public void setMinLength(final int _minLength) {
         super.setMinLength(0);
     }
 

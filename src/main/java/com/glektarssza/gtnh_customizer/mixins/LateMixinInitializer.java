@@ -50,7 +50,6 @@ public class LateMixinInitializer implements ILateMixinLoader {
      * @returns The list of additional mixins to load based on the loaded mods.
      */
     @Override
-    @SuppressWarnings("null")
     public List<String> getMixins(final Set<String> loadedMods) {
         final List<String> mixins = new ArrayList<String>();
         if (loadedMods.contains("SpecialMobs")) {

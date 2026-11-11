@@ -200,7 +200,6 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a property at the given path.
      */
-    @SuppressWarnings("null")
     public static void copyProperty(final Configuration instance,
         final Configuration newInstance, final String path,
         final CharSequence pathSeparators,
@@ -404,7 +403,6 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if the new instance already has
      *         a category at the given path.
      */
-    @SuppressWarnings("null")
     public static void copyCategory(final Configuration instance,
         final Configuration newInstance, final String path,
         final CharSequence pathSeparators,
@@ -816,7 +814,6 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be renamed to.
      */
-    @SuppressWarnings("null")
     public static void renameProperty(final Configuration instance,
         final String path,
         final String newName, final CharSequence pathSeparators)
@@ -914,7 +911,6 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
-    @SuppressWarnings("null")
     public static void moveProperty(final Configuration instance,
         final String path,
         final String newCategoryPath, final CharSequence pathSeparators)
@@ -1016,7 +1012,6 @@ public final class MigrationUtils {
      * @throws KeyAlreadyExistsException Thrown if a property already exists in
      *         the location where the property is going to be moved to.
      */
-    @SuppressWarnings("null")
     public static void moveAndRenameProperty(final Configuration instance,
         final String path, final String newPath,
         final CharSequence pathSeparators)

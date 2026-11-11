@@ -45,7 +45,6 @@ public class ReloadConfigSubCommand implements ISubCommand {
     }
 
     @Override
-    @SuppressWarnings("null")
     public CommandBase getCommandBase() {
         return this.commandBase;
     }

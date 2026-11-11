@@ -2,7 +2,10 @@ package com.glektarssza.gtnh_customizer.api.v1.functional;
 
 /**
  * A function that takes four arguments and returns a value.
+ *
+ * @deprecated Use the v2 APIs instead.
  */
+@Deprecated
 public interface QuaternarySupplier<A1, A2, A3, A4, R> {
     /**
      * Call the function.
@@ -13,6 +16,9 @@ public interface QuaternarySupplier<A1, A2, A3, A4, R> {
      * @param arg4 The fourth argument.
      *
      * @return The return value.
+     *
+     * @deprecated Use the v2 APIs instead.
      */
-    public R call(A1 arg1, A2 arg2, A3 arg3, A4 arg4);
+    @Deprecated
+    R call(A1 arg1, A2 arg2, A3 arg3, A4 arg4);
 }

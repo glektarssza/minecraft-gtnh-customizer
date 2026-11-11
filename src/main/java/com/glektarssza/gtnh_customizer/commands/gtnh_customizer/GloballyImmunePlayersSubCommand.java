@@ -134,7 +134,6 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
     }
 
     @Override
-    @SuppressWarnings("null")
     public CommandBase getCommandBase() {
         return this.commandBase;
     }
