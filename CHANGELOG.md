@@ -67,6 +67,11 @@
   removes text selections on the newly unfocused text field and selects the
   entire contexts of the newly focused text field.
 
+<!-- omit in toc -->
+### Technical ###
+
+* Updated VSCode workspaces.
+
 ## 0.18.3 ##
 
 <!-- omit in toc -->
