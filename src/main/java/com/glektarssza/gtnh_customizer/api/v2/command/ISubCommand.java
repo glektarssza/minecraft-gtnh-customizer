@@ -16,7 +16,8 @@ public interface ISubCommand {
      *
      * @return Get the {@link CommandBase} this instance belongs to.
      */
-    @Nonnull CommandBase getCommandBase();
+    @Nonnull
+    CommandBase getCommandBase();
 
     /**
      * Get the usage of the command.
