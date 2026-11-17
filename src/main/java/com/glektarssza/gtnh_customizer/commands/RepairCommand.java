@@ -29,8 +29,8 @@ import cpw.mods.fml.common.Loader;
 
 import net.minecraftforge.common.util.Constants.NBT;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
@@ -118,7 +118,7 @@ public class RepairCommand extends CommandBase {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private ItemTarget(final String commandValue) {
+        ItemTarget(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -134,7 +134,7 @@ public class RepairCommand extends CommandBase {
             throws NoSuchElementException {
             final Iterator<@NotNull ItemTarget> iter = Arrays
                 .stream(ItemTarget.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator();
             if (!iter.hasNext()) {
                 throw new NoSuchElementException(String.format(
@@ -157,7 +157,7 @@ public class RepairCommand extends CommandBase {
             final String argument) {
             return Arrays
                 .stream(ItemTarget.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator()
                 .next();
         }
@@ -217,7 +217,7 @@ public class RepairCommand extends CommandBase {
      */
     @Override
     public boolean isUsernameIndex(final String[] args, final int index) {
-        return index == 0 && !isItemTargetIndex(args, index);
+        return index == 0 && !this.isItemTargetIndex(args, index);
     }
 
     /**
@@ -235,7 +235,7 @@ public class RepairCommand extends CommandBase {
             return false;
         }
         return Arrays.stream(ItemTarget.values())
-            .filter((item) -> item.commandValue.equalsIgnoreCase(args[index]))
+            .filter(item -> item.commandValue.equalsIgnoreCase(args[index]))
             .findFirst().isPresent();
     }
 
@@ -258,7 +258,7 @@ public class RepairCommand extends CommandBase {
             case 0:
                 // -- First argument is one of victim or item target
                 try {
-                    victim = getPlayer(sender, args[0]);
+                    victim = CommandBase.getPlayer(sender, args[0]);
                 } catch (final Throwable t) {
                     // -- Does nothing
                 }
@@ -269,20 +269,20 @@ public class RepairCommand extends CommandBase {
                         Arrays.stream(ItemTarget.values())
                             // -- Only expose the "offhand" target if the
                             // -- `backhand` mod is available
-                            .filter((target) -> target != ItemTarget.Offhand
+                            .filter(target -> target != ItemTarget.Offhand
                                 || Loader.isModLoaded("backhand"))
-                            .map((itemTarget) -> itemTarget.commandValue)
+                            .map(itemTarget -> itemTarget.commandValue)
                             .collect(Collectors.toList()));
                 }
                 return result;
             case 1:
                 // -- Second argument is an item target
-                if (!isUsernameIndex(args, 0)) {
+                if (!this.isUsernameIndex(args, 0)) {
                     return null;
                 }
                 result = new ArrayList<String>(
                     Arrays.stream(ItemTarget.values())
-                        .map((itemTarget) -> itemTarget.commandValue)
+                        .map(itemTarget -> itemTarget.commandValue)
                         .collect(Collectors.toList()));
                 return result;
             default:
@@ -296,13 +296,14 @@ public class RepairCommand extends CommandBase {
      * @param sender The thing sending the command.
      * @param args The command arguments.
      */
+    @SuppressWarnings("null")
     @Override
     public void processCommand(final ICommandSender sender,
         final String[] args) {
         EntityPlayerMP victim = null;
         ItemTarget target = null;
-        if (args.length > 1 && isUsernameIndex(args, 0)) {
-            victim = getPlayer(sender, args[0]);
+        if (args.length > 1 && this.isUsernameIndex(args, 0)) {
+            victim = CommandBase.getPlayer(sender, args[0]);
             target = ItemTarget.tryGetFromCommandArgument(args[1]);
             if (target == null) {
                 throw new WrongUsageException(
@@ -310,12 +311,12 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[1],
                         Arrays.stream(ItemTarget.values())
-                            .map((itemTarget) -> itemTarget.commandValue)
+                            .map(itemTarget -> itemTarget.commandValue)
                             .collect(Collectors.joining(", "))
                     });
             }
         } else if (args.length > 0) {
-            victim = getCommandSenderAsPlayer(sender);
+            victim = CommandBase.getCommandSenderAsPlayer(sender);
             target = ItemTarget.tryGetFromCommandArgument(args[0]);
             if (target == null) {
                 throw new WrongUsageException(
@@ -323,13 +324,13 @@ public class RepairCommand extends CommandBase {
                     new Object[] {
                         args[0],
                         Arrays.stream(ItemTarget.values())
-                            .map((itemTarget) -> itemTarget.commandValue)
-                            .map((str) -> str.toLowerCase())
+                            .map(itemTarget -> itemTarget.commandValue)
+                            .map(String::toLowerCase)
                             .collect(Collectors.joining(", "))
                     });
             }
         } else {
-            victim = getCommandSenderAsPlayer(sender);
+            victim = CommandBase.getCommandSenderAsPlayer(sender);
             target = ItemTarget.Hand;
         }
         if (victim != null && target != null) {
@@ -372,7 +373,7 @@ public class RepairCommand extends CommandBase {
                     break;
                 case Armor:
                     items.addAll(Arrays.stream(victim.inventory.armorInventory)
-                        .filter((item) -> item != null)
+                        .filter(item -> item != null)
                         .collect(Collectors.toList()));
                     break;
                 case Hotbar:
@@ -380,7 +381,7 @@ public class RepairCommand extends CommandBase {
                         Arrays.copyOfRange(victim.inventory.mainInventory, 0,
                             InventoryPlayer
                                 .getHotbarSize()))
-                        .stream().filter((item) -> item != null)
+                        .stream().filter(item -> item != null)
                         .collect(Collectors.toList()));
                     break;
                 case Inventory:
@@ -394,7 +395,7 @@ public class RepairCommand extends CommandBase {
                                     InventoryPlayer
                                         .getHotbarSize(),
                                     victim.inventory.mainInventory.length))
-                                .stream().filter((item) -> item != null)
+                                .stream().filter(item -> item != null)
                                 .collect(Collectors.toList()));
                         } else if (offhandIndex >= victim.inventory.mainInventory.length
                             - 1) {
@@ -404,7 +405,7 @@ public class RepairCommand extends CommandBase {
                                     InventoryPlayer
                                         .getHotbarSize(),
                                     offhandIndex))
-                                .stream().filter((item) -> item != null)
+                                .stream().filter(item -> item != null)
                                 .collect(Collectors.toList()));
                         } else {
                             items.addAll(Arrays.asList(
@@ -413,14 +414,14 @@ public class RepairCommand extends CommandBase {
                                     InventoryPlayer
                                         .getHotbarSize(),
                                     offhandIndex))
-                                .stream().filter((item) -> item != null)
+                                .stream().filter(item -> item != null)
                                 .collect(Collectors.toList()));
                             items.addAll(Arrays.asList(
                                 Arrays.copyOfRange(
                                     victim.inventory.mainInventory,
                                     offhandIndex + 1,
                                     victim.inventory.mainInventory.length))
-                                .stream().filter((item) -> item != null)
+                                .stream().filter(item -> item != null)
                                 .collect(Collectors.toList()));
                         }
 
@@ -430,17 +431,17 @@ public class RepairCommand extends CommandBase {
                                 InventoryPlayer
                                     .getHotbarSize() + 1,
                                 victim.inventory.mainInventory.length))
-                            .stream().filter((item) -> item != null)
+                            .stream().filter(item -> item != null)
                             .collect(Collectors.toList()));
                     }
                     break;
                 case All:
                 case Everything:
                     items.addAll(Arrays.stream(victim.inventory.mainInventory)
-                        .filter((item) -> item != null)
+                        .filter(item -> item != null)
                         .collect(Collectors.toList()));
                     items.addAll(Arrays.stream(victim.inventory.armorInventory)
-                        .filter((item) -> item != null)
+                        .filter(item -> item != null)
                         .collect(Collectors.toList()));
                     break;
                 case Container: {
@@ -449,7 +450,7 @@ public class RepairCommand extends CommandBase {
                     Integer targetBlockPosZ = null;
                     TileEntity tileEntity = null;
                     IInventory tileInventory = null;
-                    if (args.length >= 5 && isUsernameIndex(args, 0)) {
+                    if (args.length >= 5 && this.isUsernameIndex(args, 0)) {
                         // -- Arguments contain a victim player and position
                         // -- data
                         try {
@@ -471,7 +472,8 @@ public class RepairCommand extends CommandBase {
                                     String.format("%d", args[4])
                                 });
                         }
-                    } else if (args.length >= 4 && isItemTargetIndex(args, 0)) {
+                    } else if (args.length >= 4
+                        && this.isItemTargetIndex(args, 0)) {
                         // -- Arguments contain no victim player and position
                         // -- data
                         try {
@@ -540,7 +542,7 @@ public class RepairCommand extends CommandBase {
                     break;
             }
             items.parallelStream()
-                .forEach((itemStack) -> {
+                .forEach(itemStack -> {
                     final NBTTagCompound stackTag = itemStack.hasTagCompound()
                         ? itemStack.stackTagCompound
                         : new NBTTagCompound();
@@ -580,13 +582,13 @@ public class RepairCommand extends CommandBase {
                 "gtnh_customizer.commands.repair.info.success")
                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)
                     .setItalic(true)));
-            func_152373_a(sender, this,
+            CommandBase.func_152373_a(sender, this,
                 "gtnh_customizer.commands.repair.info.admin_notify",
                 new Object[] {
                     sender.getCommandSenderName(),
                     String.format("%d",
                         items.stream()
-                            .mapToInt((itemStack) -> itemStack.stackSize)
+                            .mapToInt(itemStack -> itemStack.stackSize)
                             .sum())
                 });
             return;

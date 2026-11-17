@@ -482,7 +482,6 @@ public class TeleportCrossDimensionCommand extends CommandBase {
      *
      * @param victim The player who is about to be teleported.
      */
-    @SuppressWarnings("null")
     private void updatePlayerLastLocation(final EntityPlayerMP victim) {
         if (Loader.isModLoaded("serverutilities")) {
             ServerUtilitiesPlayerData.get(TypeHelpers.castToNonNull(victim))

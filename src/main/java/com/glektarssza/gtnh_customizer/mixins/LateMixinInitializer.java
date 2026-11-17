@@ -16,7 +16,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -50,7 +50,6 @@ public class LateMixinInitializer implements ILateMixinLoader {
      * @returns The list of additional mixins to load based on the loaded mods.
      */
     @Override
-    @SuppressWarnings("null")
     public List<String> getMixins(final Set<String> loadedMods) {
         final List<String> mixins = new ArrayList<String>();
         if (loadedMods.contains("SpecialMobs")) {

@@ -18,7 +18,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.PotionUtils;
 import com.glektarssza.gtnh_customizer.utils.extensions.IPotionExtensions;
@@ -68,7 +68,7 @@ public class CureCommand extends CommandBase {
          * @param commandValue The value to use in commands when representing
          *        the new instance.
          */
-        private StatusEffectGroup(final String commandValue) {
+        StatusEffectGroup(final String commandValue) {
             this.commandValue = commandValue;
         }
 
@@ -84,7 +84,7 @@ public class CureCommand extends CommandBase {
             final String argument)
             throws NoSuchElementException {
             return Arrays.stream(StatusEffectGroup.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException(String.format(
                     "No StatusEffectGroup with command value of '%s'",
@@ -104,7 +104,7 @@ public class CureCommand extends CommandBase {
         public static StatusEffectGroup tryGetFromCommandArgument(
             final String argument) {
             return Arrays.stream(StatusEffectGroup.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator()
                 .next();
         }
@@ -165,7 +165,7 @@ public class CureCommand extends CommandBase {
      */
     @Override
     public boolean isUsernameIndex(final String[] args, final int index) {
-        return index == 0 && !isEffectTypeIndex(args, index);
+        return index == 0 && !this.isEffectTypeIndex(args, index);
     }
 
     /**
@@ -183,7 +183,7 @@ public class CureCommand extends CommandBase {
             return false;
         }
         return Arrays.stream(StatusEffectGroup.values())
-            .filter((item) -> item.commandValue.equalsIgnoreCase(args[index]))
+            .filter(item -> item.commandValue.equalsIgnoreCase(args[index]))
             .findFirst().isPresent();
     }
 
@@ -206,7 +206,7 @@ public class CureCommand extends CommandBase {
             case 0:
                 // -- First argument is one of victim or item target
                 try {
-                    victim = getPlayer(sender, args[0]);
+                    victim = CommandBase.getPlayer(sender, args[0]);
                 } catch (final Throwable t) {
                     // -- Does nothing
                 }
@@ -215,18 +215,18 @@ public class CureCommand extends CommandBase {
                 if (victim != null) {
                     result.addAll(0,
                         Arrays.stream(StatusEffectGroup.values())
-                            .map((statusEffect) -> statusEffect.commandValue)
+                            .map(statusEffect -> statusEffect.commandValue)
                             .collect(Collectors.toList()));
                 }
                 return result;
             case 1:
                 // -- Second argument is an item target
-                if (!isUsernameIndex(args, 0)) {
+                if (!this.isUsernameIndex(args, 0)) {
                     return null;
                 }
                 result = new ArrayList<String>(
                     Arrays.stream(StatusEffectGroup.values())
-                        .map((statusEffect) -> statusEffect.commandValue)
+                        .map(statusEffect -> statusEffect.commandValue)
                         .collect(Collectors.toList()));
                 return result;
             default:
@@ -246,9 +246,9 @@ public class CureCommand extends CommandBase {
         final EntityPlayerMP victim;
         final StatusEffectGroup target;
         final boolean victimIsSender;
-        if (args.length > 1 && isUsernameIndex(args, 0)) {
+        if (args.length > 1 && this.isUsernameIndex(args, 0)) {
             victimIsSender = false;
-            victim = getPlayer(sender, args[0]);
+            victim = CommandBase.getPlayer(sender, args[0]);
             target = StatusEffectGroup.tryGetFromCommandArgument(args[1]);
             if (target == null) {
                 throw new WrongUsageException(
@@ -256,13 +256,13 @@ public class CureCommand extends CommandBase {
                     new Object[] {
                         args[1],
                         Arrays.stream(StatusEffectGroup.values())
-                            .map((statusEffect) -> statusEffect.commandValue)
+                            .map(statusEffect -> statusEffect.commandValue)
                             .collect(Collectors.joining(", "))
                     });
             }
         } else if (args.length > 0) {
             victimIsSender = true;
-            victim = getCommandSenderAsPlayer(sender);
+            victim = CommandBase.getCommandSenderAsPlayer(sender);
             target = StatusEffectGroup.tryGetFromCommandArgument(args[0]);
             if (target == null) {
                 throw new WrongUsageException(
@@ -270,13 +270,13 @@ public class CureCommand extends CommandBase {
                     new Object[] {
                         args[0],
                         Arrays.stream(StatusEffectGroup.values())
-                            .map((statusEffect) -> statusEffect.commandValue)
+                            .map(statusEffect -> statusEffect.commandValue)
                             .collect(Collectors.joining(", "))
                     });
             }
         } else {
             victimIsSender = true;
-            victim = getCommandSenderAsPlayer(sender);
+            victim = CommandBase.getCommandSenderAsPlayer(sender);
             target = StatusEffectGroup.Negative;
         }
         if (victim != null && target != null) {
@@ -285,13 +285,13 @@ public class CureCommand extends CommandBase {
             switch (target) {
                 case Negative:
                     statusEffects.removeIf(
-                        (effect) -> !((IPotionExtensions) (Object) Potion.potionTypes[effect
+                        effect -> !((IPotionExtensions) (Object) Potion.potionTypes[effect
                             .getPotionID()])
                             .isNegativeEffectFor(victim));
                     break;
                 case Positive:
                     statusEffects.removeIf(
-                        (effect) -> ((IPotionExtensions) (Object) Potion.potionTypes[effect
+                        effect -> ((IPotionExtensions) (Object) Potion.potionTypes[effect
                             .getPotionID()])
                             .isNegativeEffectFor(victim));
                     break;
@@ -305,16 +305,16 @@ public class CureCommand extends CommandBase {
                     break;
             }
             statusEffects.removeIf(
-                (effect) -> !victim.isPotionActive(effect.getPotionID()));
+                effect -> !victim.isPotionActive(effect.getPotionID()));
             statusEffects
-                .forEach((effect) -> victim
+                .forEach(effect -> victim
                     .removePotionEffect(effect.getPotionID()));
             sender.addChatMessage(new ChatComponentTranslation(
                 "gtnh_customizer.commands.cure.info.success")
                 .setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)
                     .setItalic(true)));
             if (victimIsSender) {
-                func_152373_a(sender, this,
+                CommandBase.func_152373_a(sender, this,
                     "gtnh_customizer.commands.cure.info.admin_notify.self",
                     new Object[] {
                         sender.getCommandSenderName(),
@@ -325,7 +325,7 @@ public class CureCommand extends CommandBase {
                             .getUnformattedText()
                     });
             } else {
-                func_152373_a(sender, this,
+                CommandBase.func_152373_a(sender, this,
                     "gtnh_customizer.commands.cure.info.admin_notify.other",
                     new Object[] {
                         sender.getCommandSenderName(),

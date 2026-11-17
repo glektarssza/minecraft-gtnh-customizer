@@ -7,8 +7,8 @@ import java.util.List;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -229,11 +229,11 @@ public abstract class Category {
             cat.setPropertyOrder(order);
         }
         Arrays.stream(this.getChildrenProperties())
-            .forEach((prop) -> prop.registerForgeConfigCategory(config));
+            .forEach(prop -> prop.registerForgeConfigCategory(config));
         if (recurse) {
             Arrays.stream(this.getChildrenCategories())
                 .forEach(
-                    (ccat) -> ccat.registerForgeConfigCategory(config, true));
+                    ccat -> ccat.registerForgeConfigCategory(config, true));
         }
         return this;
     }
@@ -248,9 +248,9 @@ public abstract class Category {
      */
     public Category loadValues(final Configuration config) {
         Arrays.stream(this.getChildrenProperties())
-            .forEach((prop) -> prop.loadValue(config));
+            .forEach(prop -> prop.loadValue(config));
         Arrays.stream(this.getChildrenCategories())
-            .forEach((prop) -> prop.loadValues(config));
+            .forEach(prop -> prop.loadValues(config));
         return this;
     }
 
@@ -263,9 +263,9 @@ public abstract class Category {
      */
     public Category saveValues(final Configuration config) {
         Arrays.stream(this.getChildrenProperties())
-            .forEach((prop) -> prop.saveValue(config));
+            .forEach(prop -> prop.saveValue(config));
         Arrays.stream(this.getChildrenCategories())
-            .forEach((prop) -> prop.saveValues(config));
+            .forEach(prop -> prop.saveValues(config));
         return this;
     }
 }
