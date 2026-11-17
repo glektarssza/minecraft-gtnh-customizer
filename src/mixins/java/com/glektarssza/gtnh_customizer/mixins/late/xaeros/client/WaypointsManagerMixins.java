@@ -82,7 +82,7 @@ public abstract class WaypointsManagerMixins {
      */
     @Inject(method = "canTeleport", at = @At("TAIL"), cancellable = true, remap = false)
     private void canTeleport$extendCheckToSubWorlds(
-        final boolean displayingTeleportableWorld,
+        final boolean _displayingTeleportableWorld,
         final WaypointWorld displayedWorld,
         final CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue()) {
@@ -113,7 +113,6 @@ public abstract class WaypointsManagerMixins {
     @Redirect(method = "teleportToWaypoint(Lxaero/common/minimap/waypoints/Waypoint;Lxaero/common/minimap/waypoints/WaypointWorld;Lnet/minecraft/client/gui/GuiScreen;Z)V", at = @At(value = "INVOKE", target = "net.minecraft.client.entity.EntityClientPlayerMP.sendChatMessage(Ljava/lang/String;)V"), remap = false)
     private void teleportToWaypoint$overrideSendTeleportCommand(
         final EntityClientPlayerMP player, final String originalTeleportCommand,
-        @Local(name = "x") final int x, @Local(name = "z") final int z,
         @Local(name = "selected") final Waypoint selected,
         @Local(name = "displayedWorld") final WaypointWorld displayedWorld,
         @Local(name = "tpCommandPrefix") final String tpCommandPrefix) {
