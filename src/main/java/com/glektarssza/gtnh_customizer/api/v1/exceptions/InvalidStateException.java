@@ -5,13 +5,19 @@ import javax.annotation.Nullable;
 /**
  * An exception that is thrown when something is in an invalid state for the
  * requested operation.
+ *
+ * @deprecated Use the v2 API instead.
  */
+@Deprecated
 public class InvalidStateException extends BaseRuntimeException {
     // #region Constructors
 
     /**
      * Create a new instance.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public InvalidStateException() {
         // -- Does nothing
     }
@@ -20,7 +26,10 @@ public class InvalidStateException extends BaseRuntimeException {
      * Create a new instance.
      *
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public InvalidStateException(@Nullable final String msg) {
         super(msg);
     }
@@ -30,7 +39,10 @@ public class InvalidStateException extends BaseRuntimeException {
      *
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public InvalidStateException(@Nullable final Throwable cause) {
         super(cause);
     }
@@ -41,7 +53,10 @@ public class InvalidStateException extends BaseRuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public InvalidStateException(@Nullable final String msg,
         @Nullable final Throwable cause) {
         super(msg, cause);

@@ -6,27 +6,39 @@ import javax.annotation.Nullable;
 /**
  * An exception that is thrown when an argument is invalid because its value was
  * outside of the allowed range.
+ *
+ * @deprecated Use the v2 API instead.
  */
+@Deprecated
 public class ArgumentOutOfRangeException extends ArgumentException {
     // #region Public Fields
 
     /**
      * The value of the argument that was outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nullable
     public final Number argumentValue;
 
     /**
      * The minimum allowed value of the argument that was outside of the allowed
      * range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nullable
     public final Number argumentMinimumValue;
 
     /**
      * The maximum allowed value of the argument that was outside of the allowed
      * range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nullable
     public final Number argumentMaximumValue;
 
@@ -38,7 +50,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * Create a new instance.
      *
      * @param argumentName The name of the argument that was invalid.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName) {
         super(argumentName);
         this.argumentValue = null;
@@ -51,7 +66,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final String msg) {
         super(argumentName, msg);
@@ -66,7 +84,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param argumentName The name of the argument that was invalid.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Throwable cause) {
         super(argumentName, cause);
@@ -82,7 +103,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final String msg, @Nullable final Throwable cause) {
         super(argumentName, msg, cause);
@@ -96,7 +120,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      *
      * @param argumentName The name of the argument that was invalid.
      * @param argValue The value of the argument that was invalid.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue) {
         super(argumentName);
@@ -111,7 +138,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param argumentName The name of the argument that was invalid.
      * @param argValue The value of the argument that was invalid.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue, @Nullable final String msg) {
         super(argumentName, msg);
@@ -127,7 +157,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param argValue The value of the argument that was invalid.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue, @Nullable final Throwable cause) {
         super(argumentName, cause);
@@ -144,7 +177,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue, @Nullable final String msg,
         @Nullable final Throwable cause) {
@@ -161,7 +197,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param argValue The value of the argument that was invalid.
      * @param argMinimumValue The minimum allowed value of the value that was
      *        outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue) {
@@ -179,7 +218,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param argMinimumValue The minimum allowed value of the value that was
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
@@ -199,7 +241,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      *        outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
@@ -220,7 +265,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
@@ -241,7 +289,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      *        outside of the allowed range.
      * @param argMaximumValue The maximum allowed value of the value that was
      *        outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
@@ -262,7 +313,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param argMaximumValue The maximum allowed value of the value that was
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
@@ -285,7 +339,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      *        outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
@@ -309,7 +366,10 @@ public class ArgumentOutOfRangeException extends ArgumentException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentOutOfRangeException(@Nonnull final String argumentName,
         @Nullable final Number argValue,
         @Nullable final Number argMinimumValue,

@@ -5,13 +5,19 @@ import javax.annotation.Nullable;
 /**
  * A base custom runtime exception from which other custom runtime exceptions
  * can extend from.
+ *
+ * @deprecated Use the v2 API instead.
  */
+@Deprecated
 public class BaseRuntimeException extends RuntimeException {
     // #region Constructors
 
     /**
      * Create a new instance.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public BaseRuntimeException() {
         // -- Does nothing
     }
@@ -20,7 +26,10 @@ public class BaseRuntimeException extends RuntimeException {
      * Create a new instance.
      *
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public BaseRuntimeException(@Nullable final String msg) {
         super(msg);
     }
@@ -30,7 +39,10 @@ public class BaseRuntimeException extends RuntimeException {
      *
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public BaseRuntimeException(@Nullable final Throwable cause) {
         super(cause);
     }
@@ -41,7 +53,10 @@ public class BaseRuntimeException extends RuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public BaseRuntimeException(@Nullable final String msg,
         @Nullable final Throwable cause) {
         super(msg, cause);

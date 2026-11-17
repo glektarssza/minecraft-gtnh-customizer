@@ -6,7 +6,10 @@ import javax.annotation.Nullable;
 /**
  * An exception that is thrown when an argument is invalid due to being a
  * {@code null} value.
+ *
+ * @deprecated Use the v2 API instead.
  */
+@Deprecated
 public class ArgumentNullException extends ArgumentException {
     // #region Constructors
 
@@ -15,7 +18,10 @@ public class ArgumentNullException extends ArgumentException {
      *
      * @param argumentName The name of the argument that had a {@code null}
      *        value.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentNullException(@Nonnull final String argumentName) {
         super(argumentName);
     }
@@ -28,7 +34,10 @@ public class ArgumentNullException extends ArgumentException {
      * @param msg A string describing the reason the argument had a {@code null}
      *        value (ideally) or describing the reason the error occurred
      *        otherwise.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentNullException(@Nonnull final String argumentName,
         @Nullable final String msg) {
         super(argumentName, msg);
@@ -41,7 +50,10 @@ public class ArgumentNullException extends ArgumentException {
      *        value.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentNullException(@Nonnull final String argumentName,
         @Nullable final Throwable cause) {
         super(argumentName, cause);
@@ -57,7 +69,10 @@ public class ArgumentNullException extends ArgumentException {
      *        otherwise.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ArgumentNullException(@Nonnull final String argumentName,
         @Nullable final String msg, @Nullable final Throwable cause) {
         super(argumentName, msg, cause);

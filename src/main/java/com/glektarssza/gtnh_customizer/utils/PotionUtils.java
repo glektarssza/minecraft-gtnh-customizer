@@ -1,12 +1,11 @@
 package com.glektarssza.gtnh_customizer.utils;
 
-import java.util.Comparator;
 import java.util.Optional;
 
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-import com.glektarssza.gtnh_customizer.api.v1.exceptions.args.ArgumentOutOfRangeException;
+import com.glektarssza.gtnh_customizer.api.v2.exception.argument.ArgumentOutOfBoundsException;
 
 /**
  * A collection of utilities for working with potions/potion effects.
@@ -47,12 +46,13 @@ public class PotionUtils {
      *
      * @return The potion.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static Potion getByID(int id) throws ArgumentOutOfRangeException {
+    public static Potion getByID(final int id)
+        throws ArgumentOutOfBoundsException {
         if (id < 0 || id >= Potion.potionTypes.length) {
-            throw new ArgumentOutOfRangeException("id", id, 0,
+            throw new ArgumentOutOfBoundsException("id", id, 0,
                 Potion.potionTypes.length,
                 "Potion ID was outside the allowed range.");
         }
@@ -66,10 +66,10 @@ public class PotionUtils {
      *
      * @return The potion, if available.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static Optional<Potion> tryGetByID(int id) {
+    public static Optional<Potion> tryGetByID(final int id) {
         if (id < 0 || id >= Potion.potionTypes.length) {
             return Optional.empty();
         }
@@ -84,14 +84,9 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      */
-    public static boolean isVanilla(Potion potion) {
-        return ArrayUtils.contains(VANILLA_POTIONS, potion,
-            new Comparator<Potion>() {
-                @Override
-                public int compare(Potion o1, Potion o2) {
-                    return o2.getId() - o1.getId();
-                }
-            });
+    public static boolean isVanilla(final Potion potion) {
+        return ArrayUtils.contains(PotionUtils.VANILLA_POTIONS, potion,
+            (o1, o2) -> o2.getId() - o1.getId());
     }
 
     /**
@@ -102,12 +97,12 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static boolean isVanillaByID(int id)
-        throws ArgumentOutOfRangeException {
-        return isVanilla(getByID(id));
+    public static boolean isVanillaByID(final int id)
+        throws ArgumentOutOfBoundsException {
+        return PotionUtils.isVanilla(PotionUtils.getByID(id));
     }
 
     /**
@@ -118,8 +113,8 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      */
-    public static boolean isVanillaByEffect(PotionEffect potionEffect) {
-        return isVanillaByID(potionEffect.getPotionID());
+    public static boolean isVanillaByEffect(final PotionEffect potionEffect) {
+        return PotionUtils.isVanillaByID(potionEffect.getPotionID());
     }
 
     /**
@@ -130,8 +125,8 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false} if
      *         it is not, an empty {@link Optional} otherwise.
      */
-    public static Optional<Boolean> tryIsVanillaByID(int id) {
-        return tryGetByID(id).map(PotionUtils::isVanilla);
+    public static Optional<Boolean> tryIsVanillaByID(final int id) {
+        return PotionUtils.tryGetByID(id).map(PotionUtils::isVanilla);
     }
 
     /**
@@ -143,8 +138,8 @@ public class PotionUtils {
      *         it is not, an empty {@link Optional} otherwise.
      */
     public static Optional<Boolean> tryIsVanillaByEffect(
-        PotionEffect potionEffect) {
-        return tryGetByID(potionEffect.getPotionID())
+        final PotionEffect potionEffect) {
+        return PotionUtils.tryGetByID(potionEffect.getPotionID())
             .map(PotionUtils::isVanilla);
     }
 
@@ -156,14 +151,9 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      */
-    public static boolean isModded(Potion potion) {
-        return !ArrayUtils.contains(VANILLA_POTIONS, potion,
-            new Comparator<Potion>() {
-                @Override
-                public int compare(Potion o1, Potion o2) {
-                    return o2.getId() - o1.getId();
-                }
-            });
+    public static boolean isModded(final Potion potion) {
+        return !ArrayUtils.contains(PotionUtils.VANILLA_POTIONS, potion,
+            (o1, o2) -> o2.getId() - o1.getId());
     }
 
     /**
@@ -174,12 +164,12 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static boolean isModdedByID(int id)
-        throws ArgumentOutOfRangeException {
-        return !isVanillaByID(id);
+    public static boolean isModdedByID(final int id)
+        throws ArgumentOutOfBoundsException {
+        return !PotionUtils.isVanillaByID(id);
     }
 
     /**
@@ -190,11 +180,11 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false} if
      *         it is not, an empty {@link Optional} otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static Optional<Boolean> tryIsModdedByID(int id) {
-        return tryGetByID(id).map(PotionUtils::isModded);
+    public static Optional<Boolean> tryIsModdedByID(final int id) {
+        return PotionUtils.tryGetByID(id).map(PotionUtils::isModded);
     }
 
     /**
@@ -205,8 +195,8 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      */
-    public static boolean isModdedByEffect(PotionEffect potionEffect) {
-        return isModdedByID(potionEffect.getPotionID());
+    public static boolean isModdedByEffect(final PotionEffect potionEffect) {
+        return PotionUtils.isModdedByID(potionEffect.getPotionID());
     }
 
     /**
@@ -218,8 +208,8 @@ public class PotionUtils {
      *         it is not, an empty {@link Optional} otherwise.
      */
     public static Optional<Boolean> tryIsModdedByEffect(
-        PotionEffect potionEffect) {
-        return tryGetByID(potionEffect.getPotionID())
+        final PotionEffect potionEffect) {
+        return PotionUtils.tryGetByID(potionEffect.getPotionID())
             .map(PotionUtils::isModded);
     }
 
@@ -231,7 +221,7 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      */
-    public static boolean isNegative(Potion potion) {
+    public static boolean isNegative(final Potion potion) {
         return potion.isBadEffect();
     }
 
@@ -243,12 +233,12 @@ public class PotionUtils {
      * @return {@code true} if the potion is a negative potion, {@code false}
      *         otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static boolean isNegativeByID(int id)
-        throws ArgumentOutOfRangeException {
-        return isNegative(getByID(id));
+    public static boolean isNegativeByID(final int id)
+        throws ArgumentOutOfBoundsException {
+        return PotionUtils.isNegative(PotionUtils.getByID(id));
     }
 
     /**
@@ -259,11 +249,11 @@ public class PotionUtils {
      * @return {@code true} if the potion is a negative potion, {@code false} if
      *         it is not, an empty {@link Optional} otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static Optional<Boolean> tryIsNegativeByID(int id) {
-        return tryGetByID(id).map(PotionUtils::isNegative);
+    public static Optional<Boolean> tryIsNegativeByID(final int id) {
+        return PotionUtils.tryGetByID(id).map(PotionUtils::isNegative);
     }
 
     /**
@@ -274,8 +264,8 @@ public class PotionUtils {
      * @return {@code true} if the potion is a negative potion, {@code false}
      *         otherwise.
      */
-    public static boolean isNegativeByEffect(PotionEffect potionEffect) {
-        return isNegativeByID(potionEffect.getPotionID());
+    public static boolean isNegativeByEffect(final PotionEffect potionEffect) {
+        return PotionUtils.isNegativeByID(potionEffect.getPotionID());
     }
 
     /**
@@ -287,8 +277,8 @@ public class PotionUtils {
      *         it is not, an empty {@link Optional} otherwise.
      */
     public static Optional<Boolean> tryIsNegativeByEffect(
-        PotionEffect potionEffect) {
-        return tryGetByID(potionEffect.getPotionID())
+        final PotionEffect potionEffect) {
+        return PotionUtils.tryGetByID(potionEffect.getPotionID())
             .map(PotionUtils::isNegative);
     }
 
@@ -300,7 +290,7 @@ public class PotionUtils {
      * @return {@code true} if the potion is a vanilla potion, {@code false}
      *         otherwise.
      */
-    public static boolean isPositive(Potion potion) {
+    public static boolean isPositive(final Potion potion) {
         return !potion.isBadEffect();
     }
 
@@ -312,12 +302,12 @@ public class PotionUtils {
      * @return {@code true} if the potion is a positive potion, {@code false}
      *         otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static boolean isPositiveByID(int id)
-        throws ArgumentOutOfRangeException {
-        return isPositive(getByID(id));
+    public static boolean isPositiveByID(final int id)
+        throws ArgumentOutOfBoundsException {
+        return PotionUtils.isPositive(PotionUtils.getByID(id));
     }
 
     /**
@@ -328,11 +318,11 @@ public class PotionUtils {
      * @return {@code true} if the potion is a positive potion, {@code false} if
      *         it is not, an empty {@link Optional} otherwise.
      *
-     * @throws ArgumentOutOfRangeException Thrown if the ID is outside the
+     * @throws ArgumentOutOfBoundsException Thrown if the ID is outside the
      *         allowed range.
      */
-    public static Optional<Boolean> tryIsPositiveByID(int id) {
-        return tryGetByID(id).map(PotionUtils::isPositive);
+    public static Optional<Boolean> tryIsPositiveByID(final int id) {
+        return PotionUtils.tryGetByID(id).map(PotionUtils::isPositive);
     }
 
     /**
@@ -343,8 +333,8 @@ public class PotionUtils {
      * @return {@code true} if the potion is a positive potion, {@code false}
      *         otherwise.
      */
-    public static boolean isPositiveByEffect(PotionEffect potionEffect) {
-        return isPositiveByID(potionEffect.getPotionID());
+    public static boolean isPositiveByEffect(final PotionEffect potionEffect) {
+        return PotionUtils.isPositiveByID(potionEffect.getPotionID());
     }
 
     /**
@@ -356,8 +346,8 @@ public class PotionUtils {
      *         it is not, an empty {@link Optional} otherwise.
      */
     public static Optional<Boolean> tryIsPositiveByEffect(
-        PotionEffect potionEffect) {
-        return tryGetByID(potionEffect.getPotionID())
+        final PotionEffect potionEffect) {
+        return PotionUtils.tryGetByID(potionEffect.getPotionID())
             .map(PotionUtils::isPositive);
     }
 }

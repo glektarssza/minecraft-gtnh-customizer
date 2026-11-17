@@ -8,13 +8,19 @@ import com.glektarssza.gtnh_customizer.api.v1.exceptions.BaseRuntimeException;
 /**
  * An exception that is thrown when a value is being requested from a map but
  * there is no such entry for the requested key.
+ *
+ * @deprecated Use the v2 API instead.
  */
+@Deprecated
 public class NoSuchKeyException extends BaseRuntimeException {
     // #region Public Fields
 
     /**
      * The key that was being used for the map insertion.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nonnull
     public final Object key;
 
@@ -26,7 +32,10 @@ public class NoSuchKeyException extends BaseRuntimeException {
      * Create a new instance.
      *
      * @param argKey The key that was being used for the map insertion.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public NoSuchKeyException(@Nonnull final Object argKey) {
         this.key = argKey;
     }
@@ -36,7 +45,10 @@ public class NoSuchKeyException extends BaseRuntimeException {
      *
      * @param argKey The key that was being used for the map insertion.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public NoSuchKeyException(@Nonnull final Object argKey,
         @Nullable final String msg) {
         super(msg);
@@ -49,7 +61,10 @@ public class NoSuchKeyException extends BaseRuntimeException {
      * @param argKey The key that was being used for the map insertion.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public NoSuchKeyException(@Nonnull final Object argKey,
         @Nullable final Throwable cause) {
         super(cause);
@@ -63,7 +78,10 @@ public class NoSuchKeyException extends BaseRuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public NoSuchKeyException(
         @Nonnull final Object argKey,
         @Nullable final String msg,

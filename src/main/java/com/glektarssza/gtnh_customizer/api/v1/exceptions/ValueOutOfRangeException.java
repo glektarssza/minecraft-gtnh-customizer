@@ -4,25 +4,37 @@ import javax.annotation.Nullable;
 
 /**
  * An exception indicating that a value was outside of the allowed range.
+ *
+ * @deprecated Use the v2 API instead.
  */
+@Deprecated
 public class ValueOutOfRangeException extends BaseRuntimeException {
     // #region Public Fields
 
     /**
      * The value that was outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nullable
     public final Number value;
 
     /**
      * The minimum allowed value of the outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nullable
     public final Number minimumValue;
 
     /**
      * The maximum allowed value of the outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     @Nullable
     public final Number maximumValue;
 
@@ -32,7 +44,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
 
     /**
      * Create a new instance.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException() {
         this.value = null;
         this.minimumValue = null;
@@ -43,7 +58,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * Create a new instance.
      *
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final String msg) {
         super(msg);
         this.value = null;
@@ -56,7 +74,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Throwable cause) {
         super(cause);
         this.value = null;
@@ -70,7 +91,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final String msg,
         @Nullable final Throwable cause) {
         super(msg, cause);
@@ -83,7 +107,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * Create a new instance.
      *
      * @param argValue The value that was outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue) {
         this.value = argValue;
         this.minimumValue = null;
@@ -95,7 +122,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *
      * @param argValue The value that was outside of the allowed range.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final String msg) {
         super(msg);
@@ -110,7 +140,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param argValue The value that was outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Throwable cause) {
         super(cause);
@@ -126,7 +159,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final String msg, @Nullable final Throwable cause) {
         super(msg, cause);
@@ -141,7 +177,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param argValue The value that was outside of the allowed range.
      * @param argMinimumValue The minimum allowed value of the value that was
      *        outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue) {
         this.value = argValue;
@@ -156,7 +195,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param argMinimumValue The minimum allowed value of the value that was
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue, @Nullable final String msg) {
         super(msg);
@@ -173,7 +215,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *        outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
         @Nullable final Throwable cause) {
@@ -192,7 +237,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue, @Nullable final String msg,
         @Nullable final Throwable cause) {
@@ -210,7 +258,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *        outside of the allowed range.
      * @param argMaximumValue The maximum allowed value of the value that was
      *        outside of the allowed range.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
         @Nullable final Number argMaximumValue) {
@@ -228,7 +279,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param argMaximumValue The maximum allowed value of the value that was
      *        outside of the allowed range.
      * @param msg A string describing the error that occurred.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
         @Nullable final Number argMaximumValue,
@@ -249,7 +303,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      *        outside of the allowed range.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
         @Nullable final Number argMaximumValue,
@@ -271,7 +328,10 @@ public class ValueOutOfRangeException extends BaseRuntimeException {
      * @param msg A string describing the error that occurred.
      * @param cause The {@link Throwable} that caused the new instance to be
      *        created.
+     *
+     * @deprecated Use the v2 API instead.
      */
+    @Deprecated
     public ValueOutOfRangeException(@Nullable final Number argValue,
         @Nullable final Number argMinimumValue,
         @Nullable final Number argMaximumValue,

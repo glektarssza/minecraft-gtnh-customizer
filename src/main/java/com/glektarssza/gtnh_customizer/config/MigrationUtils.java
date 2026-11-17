@@ -11,8 +11,8 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
-import com.glektarssza.gtnh_customizer.api.v1.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.exception.collection.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**

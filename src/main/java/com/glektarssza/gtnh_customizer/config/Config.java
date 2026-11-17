@@ -26,10 +26,10 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.v1.exceptions.args.ArgumentNullException;
-import com.glektarssza.gtnh_customizer.api.v1.exceptions.collections.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.exception.argument.ArgumentNullException;
+import com.glektarssza.gtnh_customizer.api.v2.exception.collection.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
