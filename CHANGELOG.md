@@ -5,7 +5,7 @@
 
 <summary><b>Table of Contents</b></summary>
 
-* [0.18.4](#0184)
+* [0.19.0](#0190)
 * [0.18.3](#0183)
 * [0.18.2](#0182)
 * [0.18.1](#0181)
@@ -56,7 +56,7 @@
 
 </details>
 
-## 0.18.4 ##
+## 0.19.0 ##
 
 <!-- omit in toc -->
 ### Bug Fixes ###
@@ -71,6 +71,8 @@
 ### Technical ###
 
 * Updated VSCode workspaces.
+* Migrated API from v1 to v2.
+* Updated Spotless from v8.8.0 to v8.11.0.
 
 ## 0.18.3 ##
 
