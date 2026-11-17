@@ -1,4 +1,4 @@
-package com.glektarssza.gtnh_customizer.api.v1.command;
+package com.glektarssza.gtnh_customizer.api.v2.command;
 
 import java.util.List;
 
@@ -16,8 +16,7 @@ public interface ISubCommand {
      *
      * @return Get the {@link CommandBase} this instance belongs to.
      */
-    @Nonnull
-    public abstract CommandBase getCommandBase();
+    @Nonnull CommandBase getCommandBase();
 
     /**
      * Get the usage of the command.
@@ -26,7 +25,7 @@ public interface ISubCommand {
      *
      * @return The usage of the command.
      */
-    public abstract String getCommandUsage(ICommandSender sender);
+    String getCommandUsage(ICommandSender sender);
 
     /**
      * Get a list of possible completions for the current state of the command.
@@ -37,7 +36,7 @@ public interface ISubCommand {
      * @return A list of possible completions for the current state of the
      *         command.
      */
-    public abstract List<String> addTabCompletionOptions(ICommandSender sender,
+    List<String> addTabCompletionOptions(ICommandSender sender,
         String[] args);
 
     /**
@@ -46,5 +45,5 @@ public interface ISubCommand {
      * @param sender The thing sending the command.
      * @param args The command arguments.
      */
-    public abstract void processCommand(ICommandSender sender, String[] args);
+    void processCommand(ICommandSender sender, String[] args);
 }
