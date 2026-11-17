@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -65,11 +65,12 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(final FMLInitializationEvent event) {
         super.init(event);
-        LOGGER.info("Initializing client-side for {}...", Tags.MOD_NAME);
-        LOGGER.info("Registering key bindings for {}...",
+        ClientProxy.LOGGER.info("Initializing client-side for {}...",
+            Tags.MOD_NAME);
+        ClientProxy.LOGGER.info("Registering key bindings for {}...",
             Tags.MOD_NAME);
         KeyBindings.registerKeybinds();
-        LOGGER.info("Done initializing client-side for {}!",
+        ClientProxy.LOGGER.info("Done initializing client-side for {}!",
             Tags.MOD_NAME);
     }
 }

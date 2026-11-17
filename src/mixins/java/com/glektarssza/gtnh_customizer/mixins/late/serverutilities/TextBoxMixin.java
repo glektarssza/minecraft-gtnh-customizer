@@ -68,7 +68,6 @@ public class TextBoxMixin {
     /**
      * The injection for the {@code keyPressed} method.
      */
-    @SuppressWarnings("null")
     @Inject(method = "keyPressed", order = 900, at = @At(value = "INVOKE", target = "Lnet/minecraft/util/ChatAllowedCharacters;isAllowedCharacter(C)Z", remap = true), cancellable = true, remap = false)
     public void keyPressed$handleNumpad(final int keyCode, final char keyChar,
         final CallbackInfoReturnable<Boolean> cir) {

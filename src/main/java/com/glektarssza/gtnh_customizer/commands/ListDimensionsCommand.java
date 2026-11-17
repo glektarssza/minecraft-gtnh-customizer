@@ -13,7 +13,7 @@ import net.minecraft.util.ChatComponentTranslation;
 
 import net.minecraftforge.common.DimensionManager;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.ImmutableTuple;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
@@ -127,10 +127,10 @@ public class ListDimensionsCommand extends CommandBase {
         Stream<@NotNull ImmutableTuple<Integer, String>> dimensionStream = CommandUtils
             .getAllDimensionIDsIterable()
             .parallelStream()
-            .map((id) -> new ImmutableTuple<Integer, String>(
+            .map(id -> new ImmutableTuple<Integer, String>(
                 id, DimensionManager.getProvider(id).getDimensionName()));
         if (filters.size() > 0) {
-            dimensionStream = dimensionStream.filter((tuple) -> filters.stream()
+            dimensionStream = dimensionStream.filter(tuple -> filters.stream()
                 .anyMatch((filter) -> tuple.getSecond().toLowerCase()
                     .contains(filter.toLowerCase())));
         }

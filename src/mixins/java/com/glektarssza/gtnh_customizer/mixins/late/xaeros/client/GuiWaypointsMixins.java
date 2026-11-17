@@ -1,10 +1,5 @@
 package com.glektarssza.gtnh_customizer.mixins.late.xaeros.client;
 
-import java.lang.invoke.MethodHandles;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,23 +12,11 @@ import xaero.common.minimap.waypoints.WaypointWorldConnectionManager;
 import xaero.common.minimap.waypoints.WaypointWorldRootContainer;
 import xaero.common.minimap.waypoints.WaypointsManager;
 
-import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
-
 /**
  * Mixin for the {@link GuiWaypoints} class.
  */
 @Mixin(GuiWaypoints.class)
 public abstract class GuiWaypointsMixins {
-    /**
-     * The logger for this class.
-     */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
-
     /**
      * Get the root world container for the given waypoint world.
      *
@@ -65,10 +48,12 @@ public abstract class GuiWaypointsMixins {
         if (cir.getReturnValue()) {
             return;
         }
-        final WaypointWorldConnectionManager subConnectionManager = getRootWorldContainer(
-            this.displayedWorld).getSubWorldConnections();
+        final WaypointWorldConnectionManager subConnectionManager = GuiWaypointsMixins
+            .getRootWorldContainer(
+                this.displayedWorld)
+            .getSubWorldConnections();
         final boolean hasConnection = subConnectionManager.isConnected(
-            displayedWorld,
+            this.displayedWorld,
             this.waypointsManager.getAutoWorld());
         cir.setReturnValue(hasConnection);
     }

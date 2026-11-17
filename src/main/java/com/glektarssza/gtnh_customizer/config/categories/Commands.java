@@ -3,7 +3,7 @@ package com.glektarssza.gtnh_customizer.config.categories;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -42,7 +42,7 @@ public class Commands extends Category {
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setRepairCommandRaycastIgnoresLiquids(
                         config.getCategory(this.getParent().getFullPath())
@@ -50,7 +50,7 @@ public class Commands extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getRepairCommandRaycastIgnoresLiquids());
@@ -76,7 +76,7 @@ public class Commands extends Category {
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setExtinguishCommandMaxVolume(
                         config.getCategory(this.getParent().getFullPath())
@@ -84,7 +84,7 @@ public class Commands extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getExtinguishCommandMaxVolume());

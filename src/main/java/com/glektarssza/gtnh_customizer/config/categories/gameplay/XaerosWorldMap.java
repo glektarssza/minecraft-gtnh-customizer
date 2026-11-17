@@ -3,7 +3,7 @@ package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -18,7 +18,7 @@ public class XaerosWorldMap extends Category {
     /**
      * Create a new instance.
      */
-    public XaerosWorldMap(Category parent) {
+    public XaerosWorldMap(final Category parent) {
         super(parent);
         this.showHoveredBiome = new Property<Boolean>(this) {
             @Override
@@ -40,7 +40,7 @@ public class XaerosWorldMap extends Category {
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setXaerosWorldMapShowHoveredBiome(
                         config.getCategory(this.getParent().getFullPath())
@@ -48,7 +48,7 @@ public class XaerosWorldMap extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getXaerosWorldMapShowHoveredBiome());

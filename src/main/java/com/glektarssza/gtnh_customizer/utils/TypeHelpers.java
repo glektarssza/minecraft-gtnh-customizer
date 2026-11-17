@@ -1,7 +1,7 @@
 package com.glektarssza.gtnh_customizer.utils;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.v1.annotations.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 
 /**
  * Some useful type helpers.
@@ -19,7 +19,7 @@ public class TypeHelpers {
      * @throws NullPointerException Thrown if the {@code value} is {@code null}.
      */
     public static @NotNull <T> T castToNonNull(@Nullable final T value) {
-        return castToNonNull(value, null);
+        return TypeHelpers.castToNonNull(value, null);
     }
 
     /**

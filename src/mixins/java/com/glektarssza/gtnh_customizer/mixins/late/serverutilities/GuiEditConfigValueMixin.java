@@ -62,7 +62,6 @@ public abstract class GuiEditConfigValueMixin extends GuiBase {
      * @returns {@code true} the event was handled, {@code} false otherwise.
      */
     @Override
-    @SuppressWarnings("null")
     public boolean keyPressed(final int keyCode, final char keyChar) {
         final GuiEditConfigValue self = (GuiEditConfigValue) (Object) this;
         if (!((IGuiBaseExtensions) self).isFocused()) {

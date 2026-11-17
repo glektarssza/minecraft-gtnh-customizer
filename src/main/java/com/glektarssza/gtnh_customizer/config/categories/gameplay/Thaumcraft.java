@@ -3,7 +3,7 @@ package com.glektarssza.gtnh_customizer.config.categories.gameplay;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property.Type;
 
-import com.glektarssza.gtnh_customizer.api.v1.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.config.Category;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.config.Property;
@@ -21,7 +21,7 @@ public class Thaumcraft extends Category {
     /**
      * Create a new instance.
      */
-    public Thaumcraft(Category parent) {
+    public Thaumcraft(final Category parent) {
         super(parent);
         this.canBoneMealGreatwoodSaplings = new Property<Boolean>(this) {
             @Override
@@ -43,7 +43,7 @@ public class Thaumcraft extends Category {
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setThaumcraftCanBoneMealGreatwoodSaplings(
                         config.getCategory(this.getParent().getFullPath())
@@ -51,7 +51,7 @@ public class Thaumcraft extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(
@@ -78,7 +78,7 @@ public class Thaumcraft extends Category {
             }
 
             @Override
-            public void loadValue(Configuration config) {
+            public void loadValue(final Configuration config) {
                 Config
                     .setThaumcraftCanBoneMealSilverwoodSaplings(
                         config.getCategory(this.getParent().getFullPath())
@@ -86,7 +86,7 @@ public class Thaumcraft extends Category {
             }
 
             @Override
-            public void saveValue(Configuration config) {
+            public void saveValue(final Configuration config) {
                 config.getCategory(this.getParent().getFullPath())
                     .get(this.getID())
                     .set(Config.getThaumcraftCanBoneMealSilverwoodSaplings());

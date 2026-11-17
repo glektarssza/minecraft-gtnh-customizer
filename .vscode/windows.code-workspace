@@ -64,15 +64,15 @@
         "java.codeGeneration.useBlocks": true,
         "java.compile.nullAnalysis.mode": "automatic",
         "java.compile.nullAnalysis.nonnull": [
-            "com.glektarssza.gtnh_customizer.api.annotations.NotNull",
+            "com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull",
             "javax.annotation.Nonnull"
         ],
         "java.compile.nullAnalysis.nonnullbydefault": [
-            "com.glektarssza.gtnh_customizer.api.annotations.NotNullByDefault",
+            "com.glektarssza.gtnh_customizer.api.v2.annotation.NotNullByDefault",
             "javax.annotation.ParametersAreNonnullByDefault"
         ],
         "java.compile.nullAnalysis.nullable": [
-            "com.glektarssza.gtnh_customizer.api.annotations.Nullable",
+            "com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable",
             "javax.annotation.Nullable"
         ],
         "java.completion.chain.enabled": true,
@@ -136,7 +136,7 @@
         "java.format.enabled": true,
         "java.format.onType.enabled": false,
         "java.format.settings.profile": "Spotless",
-        "java.format.settings.url": "https://github.com/glektarssza/minecraft-gtnh-customizer/raw/refs/heads/main/formatter.xml",
+        "java.format.settings.url": "./config/spotless/formatter.xml",
         "java.gradle.buildServer.enabled": "on",
         "java.gradle.buildServer.openBuildOutput": "openOnBuildFailure",
         "java.implementationCodeLens": "all",
