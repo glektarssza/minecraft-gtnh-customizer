@@ -54,7 +54,76 @@ tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) 
         ])
     }
     if (new Boolean(project.findProperty("enableDebugMCLogging"))) {
-        extraJvmArgs.addAll(["-Dlog4j.configurationFile=file://${new File(project.projectDir, "log4j2-debug.xml").absolutePath}"])
+        extraJvmArgs.addAll([
+            "-Dlog4j.configurationFile=file://${new File(project.projectDir, "log4j2-debug.xml").absolutePath}"
+        ])
+    }
+    if (new Boolean(project.findProperty("enableProxy")) && hasProperty("proxyHost") && hasProperty("proxyPort")) {
+        def proxyHost = getProperty("proxyHost")
+        def proxyPort = getPropertyOrDefault("proxyPort", "")
+        def proxyUser = getPropertyOrDefault("proxyUser", "")
+        def proxyPass = getPropertyOrDefault("proxyPass", "")
+        def proxyProtocol = getPropertyOrDefault("proxyProtocol", "")
+        def proxyProtocolVersion = getPropertyOrDefault("proxyProtocolVersion", "")
+        if (proxyProtocol.equalsIgnoreCase("socks") && proxyProtocolVersion.isEmpty()) {
+            proxyProtocolVersion = "5"
+        }
+        if (getPropertyOrDefault("proxyType", "jvm").equalsIgnoreCase("env")) {
+            // -- Not implemented yet!
+        } else if (getPropertyOrDefault("proxyType", "jvm").equalsIgnoreCase("jvm")) {
+            if (proxyProtocol.equalsIgnoreCase("socks")) {
+                extraJvmArgs.add("-DsocksProxyHost=${proxyHost}")
+                if (!proxyPort.isEmpty()) {
+                    extraJvmArgs.add("-DsocksProxyPort=${proxyPort}")
+                }
+                if (!proxyProtocolVersion.isEmpty()) {
+                    extraJvmArgs.add("-DsocksProxyVersion=${proxyProtocolVersion}")
+                }
+                if (!proxyUser.isEmpty()) {
+                    extraJvmArgs.add("-Djava.net.socks.username=${}")
+                }
+                if (!proxyPass.isEmpty()) {
+                    extraJvmArgs.add("-Djava.net.socks.password=${proxyPass}")
+                }
+            } else {
+                extraJvmArgs.addAll([
+                    "-Dhttp.proxyHost=${proxyHost}",
+                    "-Dhttps.proxyHost=${proxyHost}",
+                    "-Dftp.proxyHost=${proxyHost}"
+                ])
+                if (!proxyPort.isEmpty()) {
+                    extraJvmArgs.addAll([
+                        "-Dhttp.proxyPort=${proxyPort}",
+                        "-Dhttps.proxyPort=${proxyPort}",
+                        "-Dftp.proxyPort=${proxyPort}"
+                    ])
+                }
+                if (!proxyUser.isEmpty()) {
+                    extraJvmArgs.addAll([
+                        "-Dhttp.proxyUser=${proxyUser}",
+                        "-Dhttps.proxyUser=${proxyUser}",
+                        "-Dftp.proxyUser=${proxyUser}"
+                    ])
+                }
+                if (!proxyPass.isEmpty()) {
+                    extraJvmArgs.addAll([
+                        "-Dhttp.proxyPassword=${proxyPass}",
+                        "-Dhttps.proxyPassword=${proxyPass}"
+                    ])
+                }
+            }
+        } else if (getPropertyOrDefault("proxyType", "jvm").equalsIgnoreCase("cli")) {
+            extraArgs.add("-proxyHost=${proxyHost}")
+            if (!proxyPort.isEmpty()) {
+                extraArgs.add("-proxyPort=${proxyPort}")
+            }
+            if (!proxyUser.isEmpty()) {
+                extraArgs.add("-proxyUser=${proxyUser}")
+            }
+            if (!proxyPass.isEmpty()) {
+                extraArgs.add("-proxyPass=${proxyPass}")
+            }
+        }
     }
 }
 
