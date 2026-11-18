@@ -88,6 +88,7 @@ public class EarlyMixinInitializer
         mixins.add("vanilla.EntitySilverfishMixin");
         mixins.add("vanilla.EntitySpiderMixin");
         mixins.add("vanilla.EntityWitherMixin");
+        mixins.add("vanilla.NetworkManagerMixin");
         mixins.add("vanilla.PotionMixin");
         mixins.add("vanilla.WorldMixin");
         return mixins;
