@@ -8,8 +8,8 @@ import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import net.minecraft.network.NetworkManager;
 import net.minecraft.util.MessageDeserializer;
@@ -31,7 +31,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
  */
 @Mixin(NetworkManager.class)
 public abstract class NetworkManagerMixin {
-    @WrapOperation(method = "provideLanClient(Ljava/net/InetAddress;I)Lnet/minecraft/network/NetworkManager;")
+    @WrapMethod(method = "provideLanClient(Ljava/net/InetAddress;I)Lnet/minecraft/network/NetworkManager;")
     private static NetworkManager wrapProvideLanClientWithProxySupport(
         final InetAddress address, final int port,
         final Operation<NetworkManager> original) {
