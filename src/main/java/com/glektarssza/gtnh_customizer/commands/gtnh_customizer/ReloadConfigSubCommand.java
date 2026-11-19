@@ -12,11 +12,14 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.command.ISubCommand;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.command.ISubCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
+/**
+ * A sub-command to reload the mod configuration.
+ */
 public class ReloadConfigSubCommand implements ISubCommand {
     /**
      * The logger for this class.
@@ -30,18 +33,17 @@ public class ReloadConfigSubCommand implements ISubCommand {
      * The {@link CommandBase} that this instance belongs to.
      */
     @NotNull
-    private CommandBase commandBase;
+    private final CommandBase commandBase;
 
     /**
      * Create a new instance.
      *
      * @param base The {@link CommandBase} that the new instance belongs to.
      */
-    public ReloadConfigSubCommand(@NotNull CommandBase base) {
+    public ReloadConfigSubCommand(@NotNull final CommandBase base) {
         this.commandBase = base;
     }
 
-    @NotNull
     @Override
     public CommandBase getCommandBase() {
         return this.commandBase;
@@ -55,7 +57,7 @@ public class ReloadConfigSubCommand implements ISubCommand {
      * @return The usage of the command.
      */
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getCommandUsage(final ICommandSender sender) {
         return new ChatComponentTranslation(
             "gtnh_customizer.commands.gtnh_customizer.reload_config.usage")
             .getUnformattedTextForChat();
@@ -71,8 +73,8 @@ public class ReloadConfigSubCommand implements ISubCommand {
      *         command.
      */
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender,
-        String[] args) {
+    public List<String> addTabCompletionOptions(
+        final ICommandSender sender, final String[] args) {
         return null;
     }
 
@@ -83,7 +85,8 @@ public class ReloadConfigSubCommand implements ISubCommand {
      * @param args The command arguments.
      */
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void processCommand(final ICommandSender sender,
+        final String[] args) {
         try {
             Config.save();
             Config.load();
@@ -91,9 +94,10 @@ public class ReloadConfigSubCommand implements ISubCommand {
                 "gtnh_customizer.commands.gtnh_customizer.info.success.reload_config",
                 new Object[0]);
             return;
-        } catch (Throwable t) {
-            LOGGER.error("Failed to synchronize mod configuration!");
-            LOGGER.error(t);
+        } catch (final Throwable t) {
+            ReloadConfigSubCommand.LOGGER
+                .error("Failed to synchronize mod configuration!");
+            ReloadConfigSubCommand.LOGGER.error(t);
         }
         throw new CommandException(
             "gtnh_customizer.commands.gtnh_customizer.error.reload_config.failed",

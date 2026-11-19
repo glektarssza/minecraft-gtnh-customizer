@@ -48,6 +48,7 @@ fplib
 futura
 g'lek
 gamemaster
+gamerule
 gasstation
 getenv
 ghast
@@ -59,6 +60,7 @@ gradletoken
 gradlew
 greatwood
 gregtech
+griefing
 gson
 gtnewhorizons
 gtnh
@@ -73,8 +75,10 @@ hotbar
 hotspot
 hotswap
 ifml
+iizzl
 importorder
 infi
+inheritdoc
 invincibles
 iregex
 jabel
@@ -91,8 +95,10 @@ leveled
 liberica
 libs
 ljava
+ljourneymap
 lnet
 lorg
+lshift
 ltconstruct
 lthaumcraft
 lwjgl
@@ -141,6 +147,7 @@ reobf
 reobfuscated
 retrofuturagradle
 rong
+rshift
 safecrlf
 sapmachine
 sarif

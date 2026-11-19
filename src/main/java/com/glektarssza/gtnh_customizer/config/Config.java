@@ -26,10 +26,10 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
-import com.glektarssza.gtnh_customizer.api.exceptions.args.ArgumentNullException;
-import com.glektarssza.gtnh_customizer.api.exceptions.collections.KeyAlreadyExistsException;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.exception.argument.ArgumentNullException;
+import com.glektarssza.gtnh_customizer.api.v2.exception.collection.KeyAlreadyExistsException;
 import com.glektarssza.gtnh_customizer.config.categories.Commands;
 import com.glektarssza.gtnh_customizer.config.categories.Debugging;
 import com.glektarssza.gtnh_customizer.config.categories.Gameplay;
@@ -39,7 +39,7 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 /**
  * The main configuration for the mod.
  */
-public class Config {
+public final class Config {
     /**
      * The logger for this class.
      */
@@ -66,14 +66,16 @@ public class Config {
     @NotNull
     public static final String LANG_KEY_CATEGORY_BASE = TypeHelpers
         .castToNonNull(String
-            .join(Configuration.CATEGORY_SPLITTER, LANG_KEY_BASE,
+            .join(Configuration.CATEGORY_SPLITTER, Config.LANG_KEY_BASE,
                 "categories"));
 
     /**
      * A map of configuration migrations to apply to move between configuration
      * versions.
      *
+     * <p>
      * Keys are in the format of {@code fromVersion:toVersion}.
+     * </p>
      */
     @NotNull
     private static final Map<Number, ImmutableTuple<Number, Consumer<Configuration>>> MIGRATIONS = new HashMap<Number, ImmutableTuple<Number, Consumer<Configuration>>>();
@@ -82,14 +84,14 @@ public class Config {
      * The configuration instance.
      */
     @Nullable
-    private static Configuration configInstance = null;
+    private static Configuration configInstance;
 
     /**
      * The current version of the {@link Config#configInstance configuration
      * instance}.
      */
     @Nullable
-    private static Number configInstanceVersion = null;
+    private static Number configInstanceVersion;
 
     /**
      * The commands configuration object.
@@ -124,7 +126,7 @@ public class Config {
      * Whether the {@code repair} command ignores liquids when raycasting to
      * look for containers to repair items inside of.
      */
-    private static boolean repairCommandIgnoresLiquids = false;
+    private static boolean repairCommandIgnoresLiquids;
 
     /**
      * Whether Tinker's Construct Slime Saplings can be bone mealed.
@@ -155,7 +157,7 @@ public class Config {
     /**
      * Whether verbose logging is enabled.
      */
-    private static boolean verboseLoggingEnabled = false;
+    private static boolean verboseLoggingEnabled;
 
     /**
      * A random UUID which uniquely IDs this run of Minecraft.
@@ -170,8 +172,8 @@ public class Config {
      * @return The globally immune players.
      */
     public static String[] getGloballyImmunePlayers() {
-        final String[] ret = new String[globallyImmunePlayers.size()];
-        globallyImmunePlayers.toArray(ret);
+        final String[] ret = new String[Config.globallyImmunePlayers.size()];
+        Config.globallyImmunePlayers.toArray(ret);
         return ret;
     }
 
@@ -181,9 +183,10 @@ public class Config {
      * @param players A list of player UUIDs or names to set as globally immune.
      */
     public static void setImmunePlayers(final String[] players) {
-        clearImmunePlayers();
-        globallyImmunePlayers.addAll(Arrays.asList(players));
-        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
+        Config.clearImmunePlayers();
+        Config.globallyImmunePlayers.addAll(Arrays.asList(players));
+        Config.gameplayConfig.globallyImmunePlayers
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -192,8 +195,9 @@ public class Config {
      * @param player A list of player UUIDs or names to set as globally immune.
      */
     public static void addImmunePlayer(final String player) {
-        globallyImmunePlayers.add(player);
-        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
+        Config.globallyImmunePlayers.add(player);
+        Config.gameplayConfig.globallyImmunePlayers
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -202,8 +206,9 @@ public class Config {
      * @param players A list of player UUIDs or names to set as globally immune.
      */
     public static void addAllImmunePlayer(final Collection<String> players) {
-        globallyImmunePlayers.addAll(players);
-        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
+        Config.globallyImmunePlayers.addAll(players);
+        Config.gameplayConfig.globallyImmunePlayers
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -212,8 +217,9 @@ public class Config {
      * @param player A list of player UUIDs or names to set as globally immune.
      */
     public static void removeImmunePlayer(final String player) {
-        globallyImmunePlayers.remove(player);
-        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
+        Config.globallyImmunePlayers.remove(player);
+        Config.gameplayConfig.globallyImmunePlayers
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -222,23 +228,25 @@ public class Config {
      * @param players A list of player UUIDs or names to set as globally immune.
      */
     public static void removeAllImmunePlayer(final Collection<String> players) {
-        globallyImmunePlayers.removeAll(players);
-        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
+        Config.globallyImmunePlayers.removeAll(players);
+        Config.gameplayConfig.globallyImmunePlayers
+            .saveValue(Config.configInstance);
     }
 
     /**
      * Clear the globally immune players.
      */
     public static void clearImmunePlayers() {
-        globallyImmunePlayers.clear();
-        gameplayConfig.globallyImmunePlayers.saveValue(configInstance);
+        Config.globallyImmunePlayers.clear();
+        Config.gameplayConfig.globallyImmunePlayers
+            .saveValue(Config.configInstance);
     }
 
     /**
      * Reset the globally immune players.
      */
     public static void resetImmunePlayers() {
-        clearImmunePlayers();
+        Config.clearImmunePlayers();
     }
 
     /**
@@ -247,7 +255,7 @@ public class Config {
      * @return Whether to prevent Enderman and Enderman-like mob teleportation.
      */
     public static boolean getPreventEnderMobTeleportation() {
-        return preventEnderMobTeleport;
+        return Config.preventEnderMobTeleport;
     }
 
     /**
@@ -256,22 +264,24 @@ public class Config {
      * @param value Whether to prevent Enderman and Enderman-like teleportation.
      */
     public static void setPreventEnderMobTeleportation(final boolean value) {
-        preventEnderMobTeleport = value;
-        gameplayConfig.preventEnderModTeleportation.saveValue(configInstance);
+        Config.preventEnderMobTeleport = value;
+        Config.gameplayConfig.preventEnderModTeleportation
+            .saveValue(Config.configInstance);
     }
 
     /**
      * Reset whether to prevent Enderman and Enderman-like teleportation.
      */
     public static void resetPreventEnderMobTeleportation() {
-        setPreventEnderMobTeleportation(true);
+        Config.setPreventEnderMobTeleportation(true);
     }
 
     /**
      * Toggle whether to prevent Enderman and Enderman-like teleportation.
      */
     public static void togglePreventEnderMobTeleportation() {
-        setPreventEnderMobTeleportation(!getPreventEnderMobTeleportation());
+        Config.setPreventEnderMobTeleportation(
+            !Config.getPreventEnderMobTeleportation());
     }
 
     /**
@@ -282,7 +292,7 @@ public class Config {
      *         bone meal applied.
      */
     public static boolean getTConstructCanBoneMealSlimeSaplings() {
-        return tconstructCanBoneMealSlimeSaplings;
+        return Config.tconstructCanBoneMealSlimeSaplings;
     }
 
     /**
@@ -294,9 +304,9 @@ public class Config {
      */
     public static void setTConstructCanBoneMealSlimeSaplings(
         final boolean value) {
-        tconstructCanBoneMealSlimeSaplings = value;
-        gameplayConfig.tconstruct.canBoneMealSlimeSaplings
-            .saveValue(configInstance);
+        Config.tconstructCanBoneMealSlimeSaplings = value;
+        Config.gameplayConfig.tconstruct.canBoneMealSlimeSaplings
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -304,7 +314,7 @@ public class Config {
      * bone meal applied.
      */
     public static void resetTConstructCanBoneMealSlimeSaplings() {
-        setTConstructCanBoneMealSlimeSaplings(true);
+        Config.setTConstructCanBoneMealSlimeSaplings(true);
     }
 
     /**
@@ -312,8 +322,8 @@ public class Config {
      * bone meal applied.
      */
     public static void toggleTConstructCanBoneMealSlimeSaplings() {
-        setTConstructCanBoneMealSlimeSaplings(
-            !getTConstructCanBoneMealSlimeSaplings());
+        Config.setTConstructCanBoneMealSlimeSaplings(
+            !Config.getTConstructCanBoneMealSlimeSaplings());
     }
 
     /**
@@ -324,7 +334,7 @@ public class Config {
      *         meal applied.
      */
     public static boolean getThaumcraftCanBoneMealGreatwoodSaplings() {
-        return thaumcraftCanBoneMealGreatwoodSaplings;
+        return Config.thaumcraftCanBoneMealGreatwoodSaplings;
     }
 
     /**
@@ -336,9 +346,9 @@ public class Config {
      */
     public static void setThaumcraftCanBoneMealGreatwoodSaplings(
         final boolean value) {
-        thaumcraftCanBoneMealGreatwoodSaplings = value;
-        gameplayConfig.thaumcraft.canBoneMealGreatwoodSaplings
-            .saveValue(configInstance);
+        Config.thaumcraftCanBoneMealGreatwoodSaplings = value;
+        Config.gameplayConfig.thaumcraft.canBoneMealGreatwoodSaplings
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -346,7 +356,7 @@ public class Config {
      * meal applied.
      */
     public static void resetThaumcraftCanBoneMealGreatwoodSaplings() {
-        setThaumcraftCanBoneMealGreatwoodSaplings(true);
+        Config.setThaumcraftCanBoneMealGreatwoodSaplings(true);
     }
 
     /**
@@ -354,8 +364,8 @@ public class Config {
      * meal applied.
      */
     public static void toggleThaumcraftCanBoneMealGreatwoodSaplings() {
-        setThaumcraftCanBoneMealGreatwoodSaplings(
-            !getThaumcraftCanBoneMealGreatwoodSaplings());
+        Config.setThaumcraftCanBoneMealGreatwoodSaplings(
+            !Config.getThaumcraftCanBoneMealGreatwoodSaplings());
     }
 
     /**
@@ -366,7 +376,7 @@ public class Config {
      *         bone meal applied.
      */
     public static boolean getThaumcraftCanBoneMealSilverwoodSaplings() {
-        return thaumcraftCanBoneMealSilverwoodSaplings;
+        return Config.thaumcraftCanBoneMealSilverwoodSaplings;
     }
 
     /**
@@ -378,9 +388,9 @@ public class Config {
      */
     public static void setThaumcraftCanBoneMealSilverwoodSaplings(
         final boolean value) {
-        thaumcraftCanBoneMealSilverwoodSaplings = value;
-        gameplayConfig.thaumcraft.canBoneMealSilverwoodSaplings
-            .saveValue(configInstance);
+        Config.thaumcraftCanBoneMealSilverwoodSaplings = value;
+        Config.gameplayConfig.thaumcraft.canBoneMealSilverwoodSaplings
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -388,7 +398,7 @@ public class Config {
      * meal applied.
      */
     public static void resetThaumcraftCanBoneMealSilverwoodSaplings() {
-        setThaumcraftCanBoneMealSilverwoodSaplings(true);
+        Config.setThaumcraftCanBoneMealSilverwoodSaplings(true);
     }
 
     /**
@@ -396,8 +406,8 @@ public class Config {
      * meal applied.
      */
     public static void toggleThaumcraftCanBoneMealSilverwoodSaplings() {
-        setThaumcraftCanBoneMealSilverwoodSaplings(
-            !getThaumcraftCanBoneMealSilverwoodSaplings());
+        Config.setThaumcraftCanBoneMealSilverwoodSaplings(
+            !Config.getThaumcraftCanBoneMealSilverwoodSaplings());
     }
 
     /**
@@ -406,7 +416,7 @@ public class Config {
      * @return Whether to show the hovered biome in Xaero's World Map.
      */
     public static boolean getXaerosWorldMapShowHoveredBiome() {
-        return xaerosWorldMapShowHoveredBiome;
+        return Config.xaerosWorldMapShowHoveredBiome;
     }
 
     /**
@@ -416,24 +426,24 @@ public class Config {
      */
     public static void setXaerosWorldMapShowHoveredBiome(
         final boolean value) {
-        xaerosWorldMapShowHoveredBiome = value;
-        gameplayConfig.xaerosWorldMap.showHoveredBiome
-            .saveValue(configInstance);
+        Config.xaerosWorldMapShowHoveredBiome = value;
+        Config.gameplayConfig.xaerosWorldMap.showHoveredBiome
+            .saveValue(Config.configInstance);
     }
 
     /**
      * Reset whether to show the hovered biome in Xaero's World Map.
      */
     public static void resetXaerosWorldMapShowHoveredBiome() {
-        setXaerosWorldMapShowHoveredBiome(true);
+        Config.setXaerosWorldMapShowHoveredBiome(true);
     }
 
     /**
      * Toggle whether to show the hovered biome in Xaero's World Map.
      */
     public static void toggleXaerosWorldMapShowHoveredBiome() {
-        setXaerosWorldMapShowHoveredBiome(
-            !getXaerosWorldMapShowHoveredBiome());
+        Config.setXaerosWorldMapShowHoveredBiome(
+            !Config.getXaerosWorldMapShowHoveredBiome());
     }
 
     /**
@@ -444,7 +454,7 @@ public class Config {
      *         containers ignores liquids.
      */
     public static boolean getRepairCommandRaycastIgnoresLiquids() {
-        return repairCommandIgnoresLiquids;
+        return Config.repairCommandIgnoresLiquids;
     }
 
     /**
@@ -456,8 +466,9 @@ public class Config {
      */
     public static void setRepairCommandRaycastIgnoresLiquids(
         final boolean value) {
-        repairCommandIgnoresLiquids = value;
-        commandsConfig.repairRaycastIgnoresLiquids.saveValue(configInstance);
+        Config.repairCommandIgnoresLiquids = value;
+        Config.commandsConfig.repairRaycastIgnoresLiquids
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -465,7 +476,7 @@ public class Config {
      * containers ignores liquids.
      */
     public static void resetRepairCommandRaycastIgnoresLiquids() {
-        setRepairCommandRaycastIgnoresLiquids(false);
+        Config.setRepairCommandRaycastIgnoresLiquids(false);
     }
 
     /**
@@ -473,8 +484,8 @@ public class Config {
      * containers ignores liquids.
      */
     public static void toggleRepairCommandRaycastIgnoresLiquids() {
-        setRepairCommandRaycastIgnoresLiquids(
-            !getRepairCommandRaycastIgnoresLiquids());
+        Config.setRepairCommandRaycastIgnoresLiquids(
+            !Config.getRepairCommandRaycastIgnoresLiquids());
     }
 
     /**
@@ -485,7 +496,7 @@ public class Config {
      *         should process.
      */
     public static int getExtinguishCommandMaxVolume() {
-        return extinguishCommandMaxVolume;
+        return Config.extinguishCommandMaxVolume;
     }
 
     /**
@@ -496,8 +507,9 @@ public class Config {
      *        should process.
      */
     public static void setExtinguishCommandMaxVolume(final int value) {
-        extinguishCommandMaxVolume = value;
-        commandsConfig.extinguishMaxVolume.saveValue(configInstance);
+        Config.extinguishCommandMaxVolume = value;
+        Config.commandsConfig.extinguishMaxVolume
+            .saveValue(Config.configInstance);
     }
 
     /**
@@ -505,7 +517,7 @@ public class Config {
      * process.
      */
     public static void resetExtinguishCommandMaxVolume() {
-        setExtinguishCommandMaxVolume(Integer.MAX_VALUE);
+        Config.setExtinguishCommandMaxVolume(Integer.MAX_VALUE);
     }
 
     /**
@@ -514,7 +526,7 @@ public class Config {
      * @return Whether verbose logging is enabled.
      */
     public static boolean getVerboseLoggingEnabled() {
-        return verboseLoggingEnabled;
+        return Config.verboseLoggingEnabled;
     }
 
     /**
@@ -523,22 +535,22 @@ public class Config {
      * @param value Whether verbose logging is enabled.
      */
     public static void setVerboseLoggingEnabled(final boolean value) {
-        verboseLoggingEnabled = value;
-        debuggingConfig.verboseLogging.saveValue(configInstance);
+        Config.verboseLoggingEnabled = value;
+        Config.debuggingConfig.verboseLogging.saveValue(Config.configInstance);
     }
 
     /**
      * Reset whether verbose logging is enabled.
      */
     public static void resetVerboseLoggingEnabled() {
-        setVerboseLoggingEnabled(false);
+        Config.setVerboseLoggingEnabled(false);
     }
 
     /**
      * Toggle whether verbose logging is enabled.
      */
     public static void toggleVerboseLoggingEnabled() {
-        setVerboseLoggingEnabled(!getVerboseLoggingEnabled());
+        Config.setVerboseLoggingEnabled(!Config.getVerboseLoggingEnabled());
     }
 
     /**
@@ -548,13 +560,13 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static List<ConfigCategory> getTopLevelCategories() {
-        if (configInstance == null) {
+        if (Config.configInstance == null) {
             return Collections.emptyList();
         }
         final List<ConfigCategory> list = new ArrayList<>();
         final List<String> children = new ArrayList<>();
-        for (final String name : configInstance.getCategoryNames()) {
-            if (configInstance.getCategory(name).parent == null) {
+        for (final String name : Config.configInstance.getCategoryNames()) {
+            if (Config.configInstance.getCategory(name).parent == null) {
                 children.add(name);
             }
         }
@@ -562,7 +574,7 @@ public class Config {
             if (category.contains(Configuration.CATEGORY_SPLITTER)) {
                 continue;
             }
-            list.add(configInstance.getCategory(category));
+            list.add(Config.configInstance.getCategory(category));
         }
         return list;
     }
@@ -584,28 +596,28 @@ public class Config {
     public static void init(final File configDir, final String fileName)
         throws KeyAlreadyExistsException, NoSuchElementException {
         // -- Register migrations
-        registerMigration(
-            1, 2, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+        Config.registerMigration(
+            1, 2, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "general.immunePlayers")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(instance,
                         "general.immunePlayers", "globallyImmunePlayers");
                 }
             });
-        registerMigration(
-            2, 3, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+        Config.registerMigration(
+            2, 3, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "general.globallyImmunePlayers")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(instance,
                         "general.globallyImmunePlayers",
                         "globally_immune_players");
                 }
             });
-        registerMigration(
-            5, 6, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+        Config.registerMigration(
+            5, 6, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "general.globally_immune_players")) {
-                    configInstance
+                    instance
                         .setCategoryComment(
                             "gameplay", "Gameplay-related tweaks")
                         .setCategoryLanguageKey(
@@ -615,46 +627,46 @@ public class Config {
                             "gameplay", false)
                         .setCategoryRequiresMcRestart(
                             "gameplay", false);
-                    MigrationUtils.moveProperty(configInstance,
+                    MigrationUtils.moveProperty(instance,
                         "general.globally_immune_players", "gameplay");
                     // -- This SHOULD be `true` but let's be safe about things
-                    if (configInstance.getCategory("general").isEmpty()) {
-                        configInstance
+                    if (instance.getCategory("general").isEmpty()) {
+                        instance
                             .removeCategory(
-                                configInstance.getCategory("general"));
+                                instance.getCategory("general"));
                     }
                 }
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+                if (MigrationUtils.hasPropertyByPath(Config.configInstance,
                     "command.repair_ignores_liquids")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(Config.configInstance,
                         "command.repair_ignores_liquids",
                         "repair_raycast_ignores_liquids");
                 }
             });
-        registerMigration(
-            6, 7, (configInstance) -> {
-                if (MigrationUtils.hasPropertyByPath(configInstance,
+        Config.registerMigration(
+            6, 7, instance -> {
+                if (MigrationUtils.hasPropertyByPath(instance,
                     "gameplay.tconstruct.slime_sapling_bone_mealable")) {
-                    MigrationUtils.renameProperty(configInstance,
+                    MigrationUtils.renameProperty(instance,
                         "gameplay.tconstruct.slime_sapling_bone_mealable",
                         "can_bone_meal_slime_saplings");
                 }
             });
-        registerMigration(
-            7, 8, (configInstance) -> {
-                if (MigrationUtils.hasCategoryByPath(configInstance,
+        Config.registerMigration(
+            7, 8, instance -> {
+                if (MigrationUtils.hasCategoryByPath(instance,
                     "command")) {
-                    MigrationUtils.renameCategory(configInstance, "command",
+                    MigrationUtils.renameCategory(instance, "command",
                         "commands");
                 }
             });
-        if (configInstance != null) {
+        if (Config.configInstance != null) {
             return;
         }
 
-        configInstance = new Configuration(new File(configDir, fileName),
-            Integer.toString(CONFIG_VERSION.intValue(), 10), false);
-        configInstanceVersion = CONFIG_VERSION.intValue();
+        Config.configInstance = new Configuration(new File(configDir, fileName),
+            Integer.toString(Config.CONFIG_VERSION.intValue(), 10), false);
+        Config.configInstanceVersion = Config.CONFIG_VERSION.intValue();
     }
 
     /**
@@ -662,33 +674,34 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static void refresh() {
-        if (configInstance == null) {
-            LOGGER.error("Cannot load configuration!");
-            LOGGER.error("Configuration has not been initialized yet!");
+        if (Config.configInstance == null) {
+            Config.LOGGER.error("Cannot load configuration!");
+            Config.LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        Number parsedConfigVersion;
+        final Number parsedConfigVersion;
         try {
             parsedConfigVersion = Integer
-                .parseInt(configInstance.getLoadedConfigVersion(), 10);
+                .parseInt(Config.configInstance.getLoadedConfigVersion(), 10);
         } catch (final Throwable t) {
-            LOGGER.error("Failed to parse in-memory configuration version:", t);
-            LOGGER.error(
+            Config.LOGGER
+                .error("Failed to parse in-memory configuration version:", t);
+            Config.LOGGER.error(
                 "Got a string '{}' that could not be parsed as an integer",
-                configInstance.getLoadedConfigVersion());
+                Config.configInstance.getLoadedConfigVersion());
             return;
         }
-        if (!parsedConfigVersion.equals(CONFIG_VERSION)) {
-            LOGGER.error("Cannot load configuration!");
-            LOGGER.error(
+        if (!parsedConfigVersion.equals(Config.CONFIG_VERSION)) {
+            Config.LOGGER.error("Cannot load configuration!");
+            Config.LOGGER.error(
                 "In-memory configuration version of '{}' does not equal expected configuration version of '{}'!",
-                parsedConfigVersion, CONFIG_VERSION);
+                parsedConfigVersion, Config.CONFIG_VERSION);
             return;
         }
         // -- Load updated values
-        commandsConfig.loadValues(configInstance);
-        gameplayConfig.loadValues(configInstance);
-        debuggingConfig.loadValues(configInstance);
+        Config.commandsConfig.loadValues(Config.configInstance);
+        Config.gameplayConfig.loadValues(Config.configInstance);
+        Config.debuggingConfig.loadValues(Config.configInstance);
     }
 
     /**
@@ -709,11 +722,12 @@ public class Config {
             throw new ArgumentNullException("config",
                 "Cannot create a backup of a null configuration");
         }
-        LOGGER.debug("Creating a backup of configuration file '{}'...",
+        Config.LOGGER.debug("Creating a backup of configuration file '{}'...",
             config.getConfigFile().getAbsolutePath());
         final File backupLocation = new File(String.format("%s.bak",
             config.getConfigFile().getAbsolutePath()));
-        LOGGER.debug("Copying main configuration to backup location '{}'...",
+        Config.LOGGER.debug(
+            "Copying main configuration to backup location '{}'...",
             backupLocation.getAbsolutePath());
         Files.copy(config.getConfigFile().toPath(),
             backupLocation.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -731,7 +745,7 @@ public class Config {
      */
     @Nullable
     public static Path recreateConfig(@Nullable final Configuration config) {
-        return recreateConfig(config, true);
+        return Config.recreateConfig(config, true);
     }
 
     /**
@@ -751,21 +765,21 @@ public class Config {
         Path backupPath = null;
         if (backup) {
             try {
-                backupPath = backUpConfig(config);
+                backupPath = Config.backUpConfig(config);
             } catch (final Throwable t) {
-                LOGGER.warn(
+                Config.LOGGER.warn(
                     "Failed to backup your current configuration!");
-                LOGGER.warn(
+                Config.LOGGER.warn(
                     "Here's a stack trace for you to use if you want to diagnose what happened:",
                     t);
-                LOGGER.warn(
+                Config.LOGGER.warn(
                     "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                LOGGER.warn("Proceeding anyway, sorry!");
+                Config.LOGGER.warn("Proceeding anyway, sorry!");
             }
         }
         if (config != null) {
             config.getCategoryNames().stream()
-                .forEach((categoryName) -> config.removeCategory(
+                .forEach(categoryName -> config.removeCategory(
                     config.getCategory(categoryName)));
         }
         return backupPath;
@@ -776,109 +790,123 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static void load() {
-        if (configInstance == null) {
-            LOGGER.error("Cannot load configuration!");
-            LOGGER.error("Configuration has not been initialized yet!");
+        if (Config.configInstance == null) {
+            Config.LOGGER.error("Cannot load configuration!");
+            Config.LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        configInstance.load();
+        Config.configInstance.load();
         try {
-            configInstanceVersion = Integer
-                .parseInt(configInstance.getLoadedConfigVersion(), 10);
-        } catch (final NumberFormatException ex) {
-            LOGGER.error(
+            Config.configInstanceVersion = Integer
+                .parseInt(Config.configInstance.getLoadedConfigVersion());
+        } catch (final NumberFormatException _) {
+            Config.LOGGER.error(
                 "Got a value of '{}' that could not be parsed as an integer",
-                configInstance.getLoadedConfigVersion());
-            LOGGER.warn(
+                Config.configInstance.getLoadedConfigVersion());
+            Config.LOGGER.warn(
                 "Unable to determine the version of your configuration!");
-            LOGGER.warn(
+            Config.LOGGER.warn(
                 "Assuming your configuration is corrupted, backing it up and recreating!");
-            LOGGER.warn(
+            Config.LOGGER.warn(
                 "Any customizations you've made are probably about to get nuked!");
-            final Path backupPath = recreateConfig(configInstance);
+            final Path backupPath = Config
+                .recreateConfig(Config.configInstance);
             if (backupPath != null) {
-                LOGGER.warn(
+                Config.LOGGER.warn(
                     "Your old config was backed up to '{}'", backupPath);
             }
-            configInstance.load();
+            Config.configInstance.load();
         }
-        if (!configInstanceVersion.equals(CONFIG_VERSION)) {
-            LOGGER.warn("Your configuration is out of date!");
-            LOGGER.warn("We're running version '{}' but you have version '{}'",
-                CONFIG_VERSION, configInstance.getLoadedConfigVersion());
-            LOGGER.warn("Attempting to migrate!");
+        if (!Config.configInstanceVersion.equals(Config.CONFIG_VERSION)) {
+            Config.LOGGER.warn("Your configuration is out of date!");
+            Config.LOGGER.warn(
+                "We're running version '{}' but you have version '{}'",
+                Config.CONFIG_VERSION,
+                Config.configInstance.getLoadedConfigVersion());
+            Config.LOGGER.warn("Attempting to migrate!");
             try {
-                applyConfigMigrations(
-                    Integer.parseInt(configInstance.getLoadedConfigVersion(),
+                Config.applyConfigMigrations(
+                    Integer.parseInt(
+                        Config.configInstance.getLoadedConfigVersion(),
                         10),
-                    CONFIG_VERSION);
+                    Config.CONFIG_VERSION);
             } catch (final NoSuchElementException t) {
-                LOGGER.info(
+                Config.LOGGER.info(
                     "No migrations available from version '{}' to version '{}', assuming migration is not required!",
-                    configInstance.getLoadedConfigVersion(), CONFIG_VERSION);
+                    Config.configInstance.getLoadedConfigVersion(),
+                    Config.CONFIG_VERSION);
             } catch (final Throwable t) {
-                LOGGER.warn(
+                Config.LOGGER.warn(
                     "Could not migrate configuration from version '{}' to version '{}'!",
-                    configInstance.getLoadedConfigVersion(), CONFIG_VERSION);
-                LOGGER.warn(
+                    Config.configInstance.getLoadedConfigVersion(),
+                    Config.CONFIG_VERSION);
+                Config.LOGGER.warn(
                     "Here's a stack trace for you to use if you want to file a bug report about migrations failing:",
                     t);
-                LOGGER.warn(
+                Config.LOGGER.warn(
                     "Any customizations you've made are probably about to get nuked!");
-                final Path backupPath = recreateConfig(configInstance);
+                final Path backupPath = Config
+                    .recreateConfig(Config.configInstance);
                 if (backupPath != null) {
-                    LOGGER.warn(
+                    Config.LOGGER.warn(
                         "Your old config was backed up to '{}'", backupPath);
                 }
-                configInstance.load();
+                Config.configInstance.load();
             }
         }
 
         // -- Register all our configurations
-        commandsConfig.registerForgeConfigCategory(configInstance, true);
-        gameplayConfig.registerForgeConfigCategory(configInstance, true);
-        debuggingConfig.registerForgeConfigCategory(configInstance, true);
+        Config.commandsConfig.registerForgeConfigCategory(Config.configInstance,
+            true);
+        Config.gameplayConfig.registerForgeConfigCategory(Config.configInstance,
+            true);
+        Config.debuggingConfig
+            .registerForgeConfigCategory(Config.configInstance, true);
 
         // -- Load updated values
-        commandsConfig.loadValues(configInstance);
-        gameplayConfig.loadValues(configInstance);
-        debuggingConfig.loadValues(configInstance);
+        Config.commandsConfig.loadValues(Config.configInstance);
+        Config.gameplayConfig.loadValues(Config.configInstance);
+        Config.debuggingConfig.loadValues(Config.configInstance);
 
-        if (getVerboseLoggingEnabled()) {
-            LOGGER.debug("Loaded mod configuration! Settings are:");
-            LOGGER.debug("=== Gameplay ===");
-            LOGGER.debug("Globally Immune Players:");
-            for (final String player : getGloballyImmunePlayers()) {
-                LOGGER.debug(String.format("* %s", player));
+        if (Config.getVerboseLoggingEnabled()) {
+            Config.LOGGER.debug("Loaded mod configuration! Settings are:");
+            Config.LOGGER.debug("=== Gameplay ===");
+            Config.LOGGER.debug("Globally Immune Players:");
+            for (final String player : Config.getGloballyImmunePlayers()) {
+                Config.LOGGER.debug(String.format("* %s", player));
             }
-            LOGGER.debug(String.format("Prevent Ender Mob Teleportation: %s",
-                getPreventEnderMobTeleportation()));
-            LOGGER.debug("");
-            LOGGER.debug("=== Commands ===");
-            LOGGER.debug(String.format("Repair Raycast Ignores Liquids: %s",
-                getRepairCommandRaycastIgnoresLiquids()));
-            LOGGER.debug(String.format("Extinguish Max Block Volume: %s",
-                getExtinguishCommandMaxVolume()));
-            LOGGER.debug("");
-            LOGGER.debug("=== Debugging ===");
-            LOGGER.debug(String.format("Verbose Logging: %s",
-                getVerboseLoggingEnabled()));
-            LOGGER.debug("");
-            LOGGER.debug("=== Gameplay - Tinker's Construct ===");
-            LOGGER.debug(String.format("Can Bone Meal Slime Saplings: %s",
-                getTConstructCanBoneMealSlimeSaplings()));
-            LOGGER.debug("");
-            LOGGER.debug("=== Gameplay - Thaumcraft ===");
-            LOGGER.debug(String.format("Can Bone Meal Greatwood Saplings: %s",
-                getTConstructCanBoneMealSlimeSaplings()));
-            LOGGER.debug(String.format("Can Bone Meal Silverwood: %s",
-                getTConstructCanBoneMealSlimeSaplings()));
-            LOGGER.debug("");
-            LOGGER.debug("=== Gameplay - Xaero's World Map ===");
-            LOGGER
+            Config.LOGGER
+                .debug(String.format("Prevent Ender Mob Teleportation: %s",
+                    Config.getPreventEnderMobTeleportation()));
+            Config.LOGGER.debug("");
+            Config.LOGGER.debug("=== Commands ===");
+            Config.LOGGER
+                .debug(String.format("Repair Raycast Ignores Liquids: %s",
+                    Config.getRepairCommandRaycastIgnoresLiquids()));
+            Config.LOGGER.debug(String.format("Extinguish Max Block Volume: %s",
+                Config.getExtinguishCommandMaxVolume()));
+            Config.LOGGER.debug("");
+            Config.LOGGER.debug("=== Debugging ===");
+            Config.LOGGER.debug(String.format("Verbose Logging: %s",
+                Config.getVerboseLoggingEnabled()));
+            Config.LOGGER.debug("");
+            Config.LOGGER.debug("=== Gameplay - Tinker's Construct ===");
+            Config.LOGGER
+                .debug(String.format("Can Bone Meal Slime Saplings: %s",
+                    Config.getTConstructCanBoneMealSlimeSaplings()));
+            Config.LOGGER.debug("");
+            Config.LOGGER.debug("=== Gameplay - Thaumcraft ===");
+            Config.LOGGER
+                .debug(String.format("Can Bone Meal Greatwood Saplings: %s",
+                    Config.getTConstructCanBoneMealSlimeSaplings()));
+            Config.LOGGER.debug(String.format("Can Bone Meal Silverwood: %s",
+                Config.getTConstructCanBoneMealSlimeSaplings()));
+            Config.LOGGER.debug("");
+            Config.LOGGER.debug("=== Gameplay - Xaero's World Map ===");
+            Config.LOGGER
                 .debug(String.format("Show Hovered Over Biome in World Map: %s",
-                    getXaerosWorldMapShowHoveredBiome()));
-            LOGGER.debug("");
+                    Config.getXaerosWorldMapShowHoveredBiome()));
+            Config.LOGGER.debug("");
         }
     }
 
@@ -888,7 +916,8 @@ public class Config {
      * @return Whether the configuration has changed.
      */
     public static boolean hasChanged() {
-        return configInstance == null ? false : configInstance.hasChanged();
+        return Config.configInstance == null ? false
+            : Config.configInstance.hasChanged();
     }
 
     /**
@@ -896,15 +925,15 @@ public class Config {
      */
     @SuppressWarnings("null")
     public static void save() {
-        if (configInstance == null) {
-            LOGGER.error("Cannot save configuration!");
-            LOGGER.error("Configuration has not been initialized yet!");
+        if (Config.configInstance == null) {
+            Config.LOGGER.error("Cannot save configuration!");
+            Config.LOGGER.error("Configuration has not been initialized yet!");
             return;
         }
-        commandsConfig.saveValues(configInstance);
-        gameplayConfig.saveValues(configInstance);
-        debuggingConfig.saveValues(configInstance);
-        configInstance.save();
+        Config.commandsConfig.saveValues(Config.configInstance);
+        Config.gameplayConfig.saveValues(Config.configInstance);
+        Config.debuggingConfig.saveValues(Config.configInstance);
+        Config.configInstance.save();
     }
 
     /**
@@ -915,8 +944,8 @@ public class Config {
      */
     @Deprecated
     public static void sync() {
-        save();
-        load();
+        Config.save();
+        Config.load();
     }
 
     /**
@@ -937,9 +966,9 @@ public class Config {
         final LinkedList<ImmutableTuple<Number, Consumer<Configuration>>> migrators = new LinkedList<ImmutableTuple<Number, Consumer<Configuration>>>();
         final HashSet<Number> alreadyMigratedVersions = new HashSet<Number>();
         Number lastMigratedVersion = fromVersion;
-        while (MIGRATIONS.containsKey(lastMigratedVersion)
+        while (Config.MIGRATIONS.containsKey(lastMigratedVersion)
             && !lastMigratedVersion.equals(toVersion)) {
-            migrators.push(MIGRATIONS.get(lastMigratedVersion));
+            migrators.push(Config.MIGRATIONS.get(lastMigratedVersion));
             migrators
                 .sort((a, b) -> a.getFirst().intValue()
                     - b.getFirst().intValue());
@@ -955,16 +984,16 @@ public class Config {
                 fromVersion, toVersion));
         }
         final Configuration currentInstance = MigrationUtils
-            .cloneConfiguration(configInstance);
-        Number currentVersion = configInstanceVersion;
+            .cloneConfiguration(Config.configInstance);
+        Number currentVersion = Config.configInstanceVersion;
         for (final ImmutableTuple<Number, Consumer<Configuration>> migrator : migrators) {
             migrator.getSecond().accept(currentInstance);
             currentVersion = migrator.getFirst().intValue();
         }
-        configInstance = currentInstance;
-        configInstanceVersion = currentVersion;
-        if (hasChanged()) {
-            save();
+        Config.configInstance = currentInstance;
+        Config.configInstanceVersion = currentVersion;
+        if (Config.hasChanged()) {
+            Config.save();
         }
     }
 
@@ -980,18 +1009,26 @@ public class Config {
      *         from the old configuration version to the new configuration
      *         version.
      */
+    @SuppressWarnings("null")
     private static void registerMigration(@NotNull final Number fromVersion,
         @NotNull final Number toVersion, final Consumer<Configuration> migrator)
         throws KeyAlreadyExistsException {
-        if (MIGRATIONS.containsKey(fromVersion)) {
+        if (Config.MIGRATIONS.containsKey(fromVersion)) {
             throw new KeyAlreadyExistsException(fromVersion,
                 String.format(
                     "Migration already exists from configuration '%d' version to configuration version '%d'",
                     fromVersion,
                     toVersion));
         }
-        MIGRATIONS.put(fromVersion,
+        Config.MIGRATIONS.put(fromVersion,
             new ImmutableTuple<Number, Consumer<Configuration>>(toVersion,
                 migrator));
+    }
+
+    /**
+     * Create a new instance.
+     */
+    private Config() {
+        // -- Does nothing.
     }
 }

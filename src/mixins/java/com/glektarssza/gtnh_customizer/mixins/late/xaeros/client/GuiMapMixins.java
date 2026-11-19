@@ -1,10 +1,5 @@
 package com.glektarssza.gtnh_customizer.mixins.late.xaeros.client;
 
-import java.lang.invoke.MethodHandles;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
@@ -21,22 +16,15 @@ import xaero.map.MapProcessor;
 import xaero.map.WorldMap;
 import xaero.map.gui.GuiMap;
 
-import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
+/**
+ * Mixin for the {@link GuiMap} class.
+ */
 @Mixin(GuiMap.class)
 public class GuiMapMixins {
-    /**
-     * The logger for this class.
-     */
-    @SuppressWarnings("unused")
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
-
     /**
      * A shadow of the {@code mouseBlockPosX} field.
      */

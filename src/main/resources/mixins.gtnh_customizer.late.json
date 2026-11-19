@@ -4,5 +4,8 @@
     "minVersion": "0.8.3-GTNH",
     "package": "com.glektarssza.gtnh_customizer.mixins.late",
     "refmap": "mixins.gtnh_customizer.refmap.json",
-    "compatibilityLevel": "JAVA_8"
+    "compatibilityLevel": "JAVA_8",
+    "mixinextras": {
+        "minVersion": "0.5.0"
+    }
 }

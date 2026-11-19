@@ -18,14 +18,22 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 
 import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.annotations.NotNull;
-import com.glektarssza.gtnh_customizer.api.annotations.Nullable;
-import com.glektarssza.gtnh_customizer.api.command.ISubCommand;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.command.ISubCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
 import com.glektarssza.gtnh_customizer.utils.CommandUtils;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
+/**
+ * The sub-command for changing players globally immune to targeting.
+ */
 public class GloballyImmunePlayersSubCommand implements ISubCommand {
+    /**
+     * The maximum number of players to return from a query.
+     */
+    public static final int MAX_PLAYERS_TO_RETURN = 512;
+
     /**
      * An enumeration of valid sub-commands.
      */
@@ -53,11 +61,11 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
         /**
          * Create a new instance.
          *
-         * @param commandValue The value to use in commands when representing
+         * @param argCommandValue The value to use in commands when representing
          *        the new instance.
          */
-        private SubCommand(final String commandValue) {
-            this.commandValue = commandValue;
+        SubCommand(final String argCommandValue) {
+            this.commandValue = argCommandValue;
         }
 
         /**
@@ -73,8 +81,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
             throws NoSuchElementException {
             final Iterator<@NotNull SubCommand> iter = Arrays
                 .stream(SubCommand.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(
-                    argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator();
             if (!iter.hasNext()) {
                 throw new NoSuchElementException(String.format(
@@ -97,7 +104,7 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
             final String argument) {
             return Arrays
                 .stream(SubCommand.values())
-                .filter((item) -> item.commandValue.equalsIgnoreCase(argument))
+                .filter(item -> item.commandValue.equalsIgnoreCase(argument))
                 .iterator()
                 .next();
         }
@@ -126,7 +133,6 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
         this.commandBase = base;
     }
 
-    @NotNull
     @Override
     public CommandBase getCommandBase() {
         return this.commandBase;
@@ -188,23 +194,25 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
         final String[] args) {
         final int index = args.length - 1;
         final String arg = args[index];
-        switch (index) {
-            case 0:
+        return switch (index) {
+            case 0 ->
                 // -- First argument is action to take
-                return Arrays.stream(SubCommand.values())
-                    .map((subCommand) -> subCommand.commandValue)
-                    .filter((subCommand) -> args[0] == null || args[0].isEmpty()
+                Arrays.stream(SubCommand.values())
+                    .map(subCommand -> subCommand.commandValue)
+                    .filter(subCommand -> args[0] == null || args[0].isEmpty()
                         || subCommand.startsWith(args[0].toLowerCase()))
                     .collect(Collectors.toList());
-            case 1:
+            case 1 ->
                 // -- Second argument is a player to act on
-                return CommandUtils.getTruncatedPlayerUsernameIterable(512)
-                    .stream().filter((playerName) -> arg == null
+                CommandUtils.getTruncatedPlayerUsernameIterable(
+                    GloballyImmunePlayersSubCommand.MAX_PLAYERS_TO_RETURN)
+                    .stream()
+                    .filter(playerName -> arg == null
                         || arg.isEmpty() || playerName.startsWith(arg))
                     .collect(Collectors.toList());
-            default:
-                return null;
-        }
+            default -> null;
+        };
+
     }
 
     /**
@@ -216,8 +224,8 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
     @Override
     public void processCommand(final ICommandSender sender,
         final String[] args) {
-        EntityPlayerMP victim;
-        SubCommand action;
+        final EntityPlayerMP victim;
+        final SubCommand action;
         if (args.length > 0) {
             action = SubCommand.tryGetFromCommandArgument(args[0]);
             if (action == null) {
@@ -242,15 +250,15 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                 : playerUuid.toString().toLowerCase();
             final String playerName = victim.getGameProfile().getName();
             switch (action) {
-                case Add:
+                case Add -> {
                     Config.addImmunePlayer(
                         playerId == null ? playerName : playerId);
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        LOGGER
+                        GloballyImmunePlayersSubCommand.LOGGER
                             .warn("Failed to save updated mod configuration!");
-                        LOGGER.warn(t);
+                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.added",
@@ -258,22 +266,23 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                             victim.getDisplayName()
                         });
                     return;
-                case Remove:
-                    if (playerId != null && Arrays.stream(immunePlayers)
-                        .anyMatch(
-                            (player) -> player.equalsIgnoreCase(playerId))) {
+                }
+                case Remove -> {
+                    if (playerId != null
+                        && Arrays.stream(immunePlayers).anyMatch(
+                            player -> player.equalsIgnoreCase(playerId))) {
                         Config.removeImmunePlayer(playerId);
                     }
-                    if (Arrays.stream(immunePlayers).anyMatch((player) -> player
+                    if (Arrays.stream(immunePlayers).anyMatch(player -> player
                         .equalsIgnoreCase(playerName))) {
                         Config.removeImmunePlayer(playerName);
                     }
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        LOGGER
+                        GloballyImmunePlayersSubCommand.LOGGER
                             .warn("Failed to save updated mod configuration!");
-                        LOGGER.warn(t);
+                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.removed",
@@ -281,25 +290,28 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                             victim.getDisplayName()
                         });
                     return;
-                case Clear:
+                }
+                case Clear -> {
                     Config.clearImmunePlayers();
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        LOGGER
+                        GloballyImmunePlayersSubCommand.LOGGER
                             .warn("Failed to save updated mod configuration!");
-                        LOGGER.warn(t);
+                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.cleared",
                         new Object[0]);
                     return;
-                default:
+                }
+                default -> {
                     throw new CommandException(
                         "gtnh_customizer.commands.gtnh_customizer.error.invalid_sub_command",
                         new Object[] {
                             action.commandValue
                         });
+                }
             }
         }
         throw new CommandException(
