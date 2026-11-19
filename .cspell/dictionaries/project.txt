@@ -145,6 +145,7 @@ refmaps
 remotehub
 reobf
 reobfuscated
+requestor
 retrofuturagradle
 rong
 rshift

@@ -7,7 +7,7 @@ plugins {
 }
 
 project.ext.hasProperty = { String key ->
-    return providers..gradleProperty(key) != null
+    return providers.gradleProperty(key) != null
 }
 
 project.ext.getProperty = { String key ->
@@ -58,8 +58,9 @@ tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) 
             "-Dlog4j.configurationFile=file://${new File(project.projectDir, "log4j2-debug.xml").absolutePath}"
         ])
     }
-    if (new Boolean(project.findProperty("enableProxy")) && hasProperty("proxyHost") && hasProperty("proxyPort")) {
-        def proxyHost = getProperty("proxyHost")
+    if (new Boolean(project.findProperty("enableProxy"))) {
+        def proxyType = getPropertyOrDefault("proxyType", "jvm")
+        def proxyHost = getPropertyOrDefault("proxyHost", "")
         def proxyPort = getPropertyOrDefault("proxyPort", "")
         def proxyUser = getPropertyOrDefault("proxyUser", "")
         def proxyPass = getPropertyOrDefault("proxyPass", "")
@@ -68,9 +69,9 @@ tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) 
         if (proxyProtocol.equalsIgnoreCase("socks") && proxyProtocolVersion.isEmpty()) {
             proxyProtocolVersion = "5"
         }
-        if (getPropertyOrDefault("proxyType", "jvm").equalsIgnoreCase("env")) {
+        if (proxyType.equalsIgnoreCase("env")) {
             // -- Not implemented yet!
-        } else if (getPropertyOrDefault("proxyType", "jvm").equalsIgnoreCase("jvm")) {
+        } else if (proxyType.equalsIgnoreCase("jvm")) {
             if (proxyProtocol.equalsIgnoreCase("socks")) {
                 extraJvmArgs.add("-DsocksProxyHost=${proxyHost}")
                 if (!proxyPort.isEmpty()) {
@@ -112,7 +113,7 @@ tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) 
                     ])
                 }
             }
-        } else if (getPropertyOrDefault("proxyType", "jvm").equalsIgnoreCase("cli")) {
+        } else if (proxyType.equalsIgnoreCase("cli")) {
             extraArgs.add("-proxyHost=${proxyHost}")
             if (!proxyPort.isEmpty()) {
                 extraArgs.add("-proxyPort=${proxyPort}")

@@ -1,6 +1,7 @@
 package com.glektarssza.gtnh_customizer;
 
 import java.lang.invoke.MethodHandles;
+import java.net.ProxySelector;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,9 +10,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.networking.JVMPropertyProxySelector;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
@@ -44,7 +47,7 @@ public class ClientProxy extends CommonProxy {
     @NotNull
     @Override
     public Side getSide() {
-        return Side.SERVER;
+        return Side.CLIENT;
     }
 
     /**
@@ -55,6 +58,27 @@ public class ClientProxy extends CommonProxy {
     @Override
     public int getViewDistanceChunks() {
         return Minecraft.getMinecraft().gameSettings.renderDistanceChunks;
+    }
+
+    @Override
+    public void preInit(final FMLPreInitializationEvent event) {
+        super.preInit(event);
+        ClientProxy.LOGGER.info("Pre-initializing client-side for {}...",
+            Tags.MOD_NAME);
+        ClientProxy.LOGGER.info("Registering global proxy selector...",
+            Tags.MOD_NAME);
+        try {
+            ProxySelector.setDefault(
+                new JVMPropertyProxySelector("socksProxyHost",
+                    "socksProxyPort"));
+        } catch (final Throwable t) {
+            ClientProxy.LOGGER
+                .warn("Failed to register global proxy selector!");
+            ClientProxy.LOGGER
+                .warn(t);
+        }
+        ClientProxy.LOGGER.info("Done pre-initializing client-side for {}!",
+            Tags.MOD_NAME);
     }
 
     /**

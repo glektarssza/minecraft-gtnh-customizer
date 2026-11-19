@@ -3,6 +3,7 @@ package com.glektarssza.gtnh_customizer.mixins.early.vanilla;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.URI;
@@ -25,6 +26,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.networking.Socks5TunnelHandler;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 import io.netty.bootstrap.Bootstrap;
@@ -82,20 +84,14 @@ public abstract class NetworkManagerMixin {
             final Iterator<Proxy> it = proxies.iterator();
             while (it.hasNext()) {
                 final Proxy p = it.next();
+                Bootstrap bootstrap = (new Bootstrap())
+                    .group(NetworkManager.eventLoops);
                 if (p == Proxy.NO_PROXY) {
                     NetworkManagerMixin.LOGGER
                         .debug("Attempting non-proxied connection to \"{}\"...",
                             uri);
-                } else {
-                    NetworkManagerMixin.LOGGER
-                        .debug(
-                            "Attempting proxied connection via \"{}\" to \"{}\"...",
-                            p.address(), uri);
-                }
-                try {
-                    final Bootstrap bootstrap = new Bootstrap();
-                    bootstrap.group(NetworkManager.eventLoops)
-                        .handler(new ChannelInitializer<NioSocketChannel>() {
+                    bootstrap = bootstrap.handler(
+                        new ChannelInitializer<NioSocketChannel>() {
                             @Override
                             protected void initChannel(
                                 final NioSocketChannel channel) {
@@ -128,19 +124,78 @@ public abstract class NetworkManagerMixin {
                                     .addLast("encoder",
                                         new MessageSerializer(
                                             NetworkManager.field_152462_h))
-                                    .addLast("packet_handler", networkManager);
+                                    .addLast("packet_handler",
+                                        networkManager);
                             }
-                        }).channel(NioSocketChannel.class).connect(p.address())
+                        });
+                } else if (p.address() instanceof final InetSocketAddress sa) {
+                    NetworkManagerMixin.LOGGER
+                        .debug(
+                            "Attempting proxied connection via \"{}\" to \"{}\"...",
+                            p, uri);
+                    bootstrap = bootstrap.handler(
+                        new ChannelInitializer<NioSocketChannel>() {
+                            @Override
+                            protected void initChannel(
+                                final NioSocketChannel channel) {
+                                try {
+                                    channel.config().setOption(
+                                        ChannelOption.IP_TOS,
+                                        Integer.valueOf(24));
+                                } catch (final ChannelException _) {
+                                    // -- Does nothing
+                                }
+
+                                try {
+                                    channel.config().setOption(
+                                        ChannelOption.TCP_NODELAY,
+                                        Boolean.valueOf(false));
+                                } catch (final ChannelException _) {
+                                    // -- Does nothing
+                                }
+
+                                channel.pipeline()
+                                    .addFirst("proxy",
+                                        new Socks5TunnelHandler(sa))
+                                    .addLast("timeout",
+                                        new ReadTimeoutHandler(20))
+                                    .addLast("splitter",
+                                        new MessageDeserializer2())
+                                    .addLast("decoder",
+                                        new MessageDeserializer(
+                                            NetworkManager.field_152462_h))
+                                    .addLast("prepender",
+                                        new MessageSerializer2())
+                                    .addLast("encoder",
+                                        new MessageSerializer(
+                                            NetworkManager.field_152462_h))
+                                    .addLast("packet_handler",
+                                        networkManager);
+                            }
+                        });
+                } else {
+                    NetworkManagerMixin.LOGGER
+                        .warn(
+                            "Unsupported proxy type, continuing to next proxy!");
+                    continue;
+                }
+                try {
+                    bootstrap.channel(NioSocketChannel.class)
+                        .connect(address, port)
                         .syncUninterruptibly();
-                    return networkManager;
-                } catch (final Throwable tt) {
-                    if (tt instanceof final IOException ioe) {
+                } catch (final Throwable t) {
+                    if (t instanceof final IOException ioe) {
                         NetworkManagerMixin.LOGGER
                             .debug(
                                 "Failed to establish a connection via proxy, continuing to next proxy!");
                         ps.connectFailed(uri, p.address(), ioe);
+                        continue;
                     }
                 }
+                NetworkManagerMixin.LOGGER
+                    .debug(
+                        "Establish a connection via proxy! Proceeding!");
+                return networkManager;
             }
             NetworkManagerMixin.LOGGER
                 .debug(
