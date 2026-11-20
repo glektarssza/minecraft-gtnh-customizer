@@ -25,6 +25,7 @@ datafaker
 decomp
 decompiled
 deobf
+desugar
 diffplug
 dists
 divinerpg
