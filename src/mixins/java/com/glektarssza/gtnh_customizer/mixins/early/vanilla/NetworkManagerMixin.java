@@ -26,16 +26,16 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import com.glektarssza.gtnh_customizer.Tags;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
-import com.glektarssza.gtnh_customizer.networking.SocksClient;
-import com.glektarssza.gtnh_customizer.networking.SocksClient.ProxyEndpoint;
-import com.glektarssza.gtnh_customizer.networking.SocksClient.TargetEndpoint;
+import com.glektarssza.gtnh_customizer.networking.SOCKSv5Handler;
 import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelException;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.util.concurrent.Promise;
 
 /**
  * A mixin to the {@link NetworkManager} class.
@@ -85,8 +85,8 @@ public abstract class NetworkManagerMixin {
             final Iterator<Proxy> it = proxies.iterator();
             while (it.hasNext()) {
                 final Proxy p = it.next();
-                final Bootstrap bootstrap = (new Bootstrap())
-                    .group(NetworkManager.eventLoops);
+                Bootstrap bootstrap = new Bootstrap();
+                bootstrap = bootstrap.group(NetworkManager.eventLoops);
                 if (p == Proxy.NO_PROXY) {
                     original.call(address, port);
                 } else if (p.address() instanceof InetSocketAddress) {
@@ -94,49 +94,68 @@ public abstract class NetworkManagerMixin {
                         .debug(
                             "Attempting proxied connection via \"{}\" to \"{}\"...",
                             p, uri);
-                    final ProxyEndpoint pe = new ProxyEndpoint(
-                        ((InetSocketAddress) p.address()).getHostString(),
-                        ((InetSocketAddress) p.address()).getPort());
-                    final TargetEndpoint te = new TargetEndpoint(
-                        address.toString().split("/")[0].isEmpty()
-                            ? address.toString().split("/")[1]
-                            : address.toString().split("/")[0],
-                        address.toString().split(":").length > 1
+                    @NotNull
+                    final String proxyHostAddress = TypeHelpers
+                        .castToNonNull(
+                            ((InetSocketAddress) p.address()).getHostString());
+                    final Short proxyHostPort = (short) ((InetSocketAddress) p
+                        .address()).getPort();
+                    @NotNull
+                    final String targetHostAddress = TypeHelpers
+                        .castToNonNull(address.toString()
+                            .split("/")[0].isEmpty()
+                                ? address.toString().split("/")[1]
+                                : address.toString().split("/")[0]);
+                    final Short targetHostPort = address.toString()
+                        .split(":").length > 1
                             ? Short.parseShort(address.toString().split(":")[1])
-                            : 25565);
-                    SocksClient.connectThroughProxy(NetworkManager.eventLoops,
-                        pe, te, (channel, _) -> {
-                            try {
-                                channel.config().setOption(
-                                    ChannelOption.IP_TOS,
-                                    Integer.valueOf(24));
-                            } catch (final ChannelException _) {
-                                // -- Does nothing
-                            }
+                            : 25565;
+                    bootstrap = bootstrap
+                        .handler(new ChannelInitializer<NioSocketChannel>() {
+                            @Override
+                            protected void initChannel(
+                                final NioSocketChannel channel)
+                                throws Exception {
+                                final Promise<Object> socksPromise = NetworkManager.eventLoops
+                                    .next().<Object>newPromise();
+                                socksPromise.addListener(_ -> {
+                                    try {
+                                        channel.config().setOption(
+                                            ChannelOption.IP_TOS,
+                                            Integer.valueOf(24));
+                                    } catch (final ChannelException _) {
+                                        // -- Does nothing
+                                    }
 
-                            try {
-                                channel.config().setOption(
-                                    ChannelOption.TCP_NODELAY,
-                                    Boolean.valueOf(false));
-                            } catch (final ChannelException _) {
-                                // -- Does nothing
-                            }
+                                    try {
+                                        channel.config().setOption(
+                                            ChannelOption.TCP_NODELAY,
+                                            Boolean.valueOf(false));
+                                    } catch (final ChannelException _) {
+                                        // -- Does nothing
+                                    }
 
-                            channel.pipeline()
-                                .addLast("timeout",
-                                    new ReadTimeoutHandler(20))
-                                .addLast("splitter",
-                                    new MessageDeserializer2())
-                                .addLast("decoder",
-                                    new MessageDeserializer(
-                                        NetworkManager.field_152462_h))
-                                .addLast("prepender",
-                                    new MessageSerializer2())
-                                .addLast("encoder",
-                                    new MessageSerializer(
-                                        NetworkManager.field_152462_h))
-                                .addLast("packet_handler",
-                                    networkManager);
+                                    channel.pipeline()
+                                        .addLast("timeout",
+                                            new ReadTimeoutHandler(20))
+                                        .addLast("splitter",
+                                            new MessageDeserializer2())
+                                        .addLast("decoder",
+                                            new MessageDeserializer(
+                                                NetworkManager.field_152462_h))
+                                        .addLast("prepender",
+                                            new MessageSerializer2())
+                                        .addLast("encoder",
+                                            new MessageSerializer(
+                                                NetworkManager.field_152462_h))
+                                        .addLast("packet_handler",
+                                            networkManager);
+                                });
+                                channel.pipeline().addFirst("socks_connector",
+                                    new SOCKSv5Handler(proxyHostAddress,
+                                        proxyHostPort, targetHostAddress,
+                                        targetHostPort, socksPromise));
+                            }
                         });
                 } else {
                     NetworkManagerMixin.LOGGER

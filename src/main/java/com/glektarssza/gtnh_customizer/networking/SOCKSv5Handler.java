@@ -111,7 +111,7 @@ public class SOCKSv5Handler extends ChannelDuplexHandler {
      * The port of the proxy server to connect to.
      */
     @NotNull
-    public final Integer proxyPort;
+    public final Short proxyPort;
 
     /**
      * The address of the server to connect to on the other side of the proxy.
@@ -123,7 +123,7 @@ public class SOCKSv5Handler extends ChannelDuplexHandler {
      * The address of the server to connect to on the other side of the proxy.
      */
     @NotNull
-    public final Integer targetPort;
+    public final Short targetPort;
 
     /**
      * The address type of the target address.
@@ -176,9 +176,9 @@ public class SOCKSv5Handler extends ChannelDuplexHandler {
      */
     public SOCKSv5Handler(
         final @NotNull String aProxyAddress,
-        final @NotNull Integer aProxyPort,
+        final @NotNull Short aProxyPort,
         final @NotNull String aTargetAddress,
-        final @NotNull Integer aTargetPort,
+        final @NotNull Short aTargetPort,
         final @NotNull Promise<Object> aPromise) {
         this(aProxyAddress, aProxyPort,
             TypeHelpers.castToNonNull(Optional.empty()),
@@ -198,11 +198,11 @@ public class SOCKSv5Handler extends ChannelDuplexHandler {
      */
     public SOCKSv5Handler(
         final @NotNull String aProxyAddress,
-        final @NotNull Integer aProxyPort,
+        final @NotNull Short aProxyPort,
         final @NotNull String aProxyUsername,
         final @NotNull String aProxyPassword,
         final @NotNull String aTargetAddress,
-        final @NotNull Integer aTargetPort,
+        final @NotNull Short aTargetPort,
         final @NotNull Promise<Object> aPromise) {
         this(aProxyAddress, aProxyPort,
             TypeHelpers.castToNonNull(Optional.of(aProxyUsername)),
@@ -222,11 +222,11 @@ public class SOCKSv5Handler extends ChannelDuplexHandler {
      */
     private SOCKSv5Handler(
         final @NotNull String aProxyAddress,
-        final @NotNull Integer aProxyPort,
+        final @NotNull Short aProxyPort,
         final @NotNull Optional<@NotNull String> aProxyUsername,
         final @NotNull Optional<@NotNull String> aProxyPassword,
         final @NotNull String aTargetAddress,
-        final @NotNull Integer aTargetPort,
+        final @NotNull Short aTargetPort,
         final @NotNull Promise<Object> aPromise) {
         this.proxyAddress = aProxyAddress;
         this.proxyPort = aProxyPort;
