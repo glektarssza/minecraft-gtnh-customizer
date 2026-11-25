@@ -63,6 +63,7 @@ greatwood
 gregtech
 griefing
 gson
+gssapi
 gtnewhorizons
 gtnh
 gtnhconvention
