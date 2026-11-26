@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://logging.apache.org/xml/ns/log4j-config-2.xsd" type="application/xml" schematypens="https://logging.apache.org/xml/ns/"?>
 <Configuration status="WARN" packages="com.mojang.util">
     <Appenders>
         <Console name="FmlSysOut" target="SYSTEM_OUT">
