@@ -1,34 +1,21 @@
 package com.glektarssza.gtnh_customizer.commands.gtnh_customizer;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 
-import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.command.ISubCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * A sub-command to reload the mod configuration.
  */
 public class ReloadConfigSubCommand implements ISubCommand {
-    /**
-     * The logger for this class.
-     */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
-
     /**
      * The {@link CommandBase} that this instance belongs to.
      */
@@ -95,9 +82,9 @@ public class ReloadConfigSubCommand implements ISubCommand {
                 new Object[0]);
             return;
         } catch (final Throwable t) {
-            ReloadConfigSubCommand.LOGGER
+            GTNHCustomizer.getLogger()
                 .error("Failed to synchronize mod configuration!");
-            ReloadConfigSubCommand.LOGGER.error(t);
+            GTNHCustomizer.getLogger().error(t);
         }
         throw new CommandException(
             "gtnh_customizer.commands.gtnh_customizer.error.reload_config.failed",

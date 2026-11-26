@@ -35,25 +35,34 @@
                 </Route>
             </Routes>
         </Routing>
+        <RollingRandomAccessFile name="ModDebugFile" fileName="logs/mod-latest.log" filePattern="logs/mod-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%level] [%logger]: %msg%n" />
+            <Policies>
+                <OnStartupTriggeringPolicy />
+            </Policies>
+        </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
-        <Logger level="debug" name="com.mojang" additivity="false">
-            <AppenderRef ref="SysOut" level="DEBUG" />
+        <Logger level="info" name="com.mojang" additivity="false">
+            <AppenderRef ref="SysOut" level="INFO" />
             <AppenderRef ref="File" />
-            <AppenderRef ref="ServerGuiConsole" level="DEBUG" />
+            <AppenderRef ref="ServerGuiConsole" level="INFO" />
         </Logger>
-        <Logger level="debug" name="net.minecraft" additivity="false">
+        <Logger level="info" name="net.minecraft" additivity="false">
             <filters>
                 <MarkerFilter marker="NETWORK_PACKETS" onMatch="DENY" onMismatch="NEUTRAL" />
             </filters>
-            <AppenderRef ref="SysOut" level="DEBUG" />
-            <AppenderRef ref="File" />
-            <AppenderRef ref="ServerGuiConsole" level="DEBUG" />
+            <AppenderRef ref="SysOut" level="INFO" />
+            <AppenderRef ref="File" level="INFO" />
+            <AppenderRef ref="ServerGuiConsole" level="INFO" />
+        </Logger>
+        <Logger level="debug" name="gtnh_customizer">
+            <AppenderRef ref="ModDebugFile" level="DEBUG" />
         </Logger>
         <Root level="all">
-            <AppenderRef ref="FmlSysOut" level="DEBUG" />
-            <AppenderRef ref="ServerGuiConsole" level="DEBUG" />
-            <AppenderRef ref="FmlFile" />
+            <AppenderRef ref="FmlSysOut" level="INFO" />
+            <AppenderRef ref="ServerGuiConsole" level="INFO" />
+            <AppenderRef ref="FmlFile" level="INFO" />
         </Root>
     </Loggers>
 </Configuration>

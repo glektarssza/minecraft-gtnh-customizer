@@ -1,11 +1,9 @@
 package com.glektarssza.gtnh_customizer;
 
 import java.io.File;
-import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.Mod;
@@ -18,22 +16,14 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.exception.InvalidStateException;
 import com.glektarssza.gtnh_customizer.api.v2.functional.consumer.UnaryConsumer;
-import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * The root mod class.
  */
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.MOD_VERSION, dependencies = Tags.MOD_DEPENDENCIES, acceptableRemoteVersions = Tags.MOD_ACCEPTABLE_REMOTE_VERSION_RANGE, acceptedMinecraftVersions = Tags.MOD_MC_VERSION_RANGE, modLanguage = Tags.MOD_LANGUAGE, guiFactory = Tags.MOD_GUI_CLASS, canBeDeactivated = false, useMetadata = true)
 public class GTNHCustomizer {
-    /**
-     * The logger for this class.
-     */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
-
     /**
      * The proxy class.
      */
@@ -85,20 +75,76 @@ public class GTNHCustomizer {
      * Get the configuration directory for the mod.
      *
      * @return The configuration directory for the mod.
+     *
+     * @throws InvalidStateException Thrown if the configuration directory is
+     *         not available.
+     */
+    @NotNull
+    public File getConfigDir() throws InvalidStateException {
+        return GTNHCustomizer.getProxy().getConfigDir();
+    }
+
+    /**
+     * Get the configuration directory for the mod.
+     *
+     * @return The configuration directory for the mod.
      */
     @Nullable
-    public File getConfigDir() {
-        return GTNHCustomizer.proxy.getConfigDir();
+    public File tryGetConfigDir() {
+        final CommonProxy proxy = GTNHCustomizer.tryGetProxy();
+        if (proxy != null) {
+            return proxy.getConfigDir();
+        }
+        return null;
     }
 
     /**
      * Get the mod proxy object.
      *
      * @return The mod proxy object.
+     *
+     * @throws InvalidStateException Thrown if the mod proxy object is not
+     *         available.
      */
     @NotNull
-    public static CommonProxy getProxy() {
-        return TypeHelpers.castToNonNull(GTNHCustomizer.proxy);
+    public static CommonProxy getProxy() throws InvalidStateException {
+        if (GTNHCustomizer.proxy != null) {
+            return GTNHCustomizer.proxy;
+        }
+        throw new InvalidStateException(
+            "Mod proxy object is not available");
+    }
+
+    /**
+     * Try to get the mod proxy object.
+     *
+     * @return The mod proxy object.
+     */
+    @Nullable
+    public static CommonProxy tryGetProxy() {
+        return GTNHCustomizer.proxy;
+    }
+
+    /**
+     * Get the mod logger.
+     *
+     * @return The mod logger.
+     *
+     * @throws InvalidStateException Thrown if the logger is not available.
+     */
+    @NotNull
+    public static Logger getLogger() throws InvalidStateException {
+        return GTNHCustomizer.getProxy().getLogger();
+    }
+
+    /**
+     * Try to get the mod logger.
+     *
+     * @return The mod logger or {@code null} if the logger is not available.
+     */
+    @Nullable
+    public static Logger tryGetLogger() {
+        return GTNHCustomizer.getProxy().tryGetLogger();
     }
 
     /**
@@ -112,7 +158,7 @@ public class GTNHCustomizer {
      */
     public static void emitTrackedWarning(@NotNull final String category,
         @NotNull final UnaryConsumer<Logger> logFunction) {
-        GTNHCustomizer.emitTrackedWarning(GTNHCustomizer.LOGGER, category,
+        GTNHCustomizer.emitTrackedWarning(GTNHCustomizer.getLogger(), category,
             logFunction);
     }
 
@@ -144,7 +190,7 @@ public class GTNHCustomizer {
      *         {@code false} otherwise.
      */
     public static boolean shouldEmitWarning(@NotNull final String category) {
-        return GTNHCustomizer.shouldEmitWarning(GTNHCustomizer.LOGGER,
+        return GTNHCustomizer.shouldEmitWarning(GTNHCustomizer.getLogger(),
             category);
     }
 
@@ -171,7 +217,7 @@ public class GTNHCustomizer {
      * @param category The warning category to check.
      */
     public static void trackEmitWarning(@NotNull final String category) {
-        GTNHCustomizer.trackEmitWarning(GTNHCustomizer.LOGGER, category);
+        GTNHCustomizer.trackEmitWarning(GTNHCustomizer.getLogger(), category);
     }
 
     /**
