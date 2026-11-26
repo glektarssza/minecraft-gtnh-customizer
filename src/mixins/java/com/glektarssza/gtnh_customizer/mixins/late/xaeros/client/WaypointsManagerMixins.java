@@ -1,13 +1,9 @@
 package com.glektarssza.gtnh_customizer.mixins.late.xaeros.client;
 
-import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
@@ -26,24 +22,14 @@ import xaero.common.minimap.waypoints.WaypointWorldConnectionManager;
 import xaero.common.minimap.waypoints.WaypointWorldRootContainer;
 import xaero.common.minimap.waypoints.WaypointsManager;
 
-import com.glektarssza.gtnh_customizer.Tags;
-import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 /**
  * Mixin for the {@link WaypointsManager} class.
  */
 @Mixin(WaypointsManager.class)
 public abstract class WaypointsManagerMixins {
-    /**
-     * The logger for this class.
-     */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
-
     /**
      * The regex pattern to use to match parameters for replacement in commands.
      */
@@ -128,7 +114,7 @@ public abstract class WaypointsManagerMixins {
                 final int dimId = Integer.parseInt(dimensionId.substring(4));
                 dimensionId = String.format("%d", dimId);
             } catch (final NumberFormatException t) {
-                WaypointsManagerMixins.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Non-integer dimension ID '{}', teleport command is probably going to fail!",
                     dimensionId.substring(4));
             }
@@ -170,7 +156,7 @@ public abstract class WaypointsManagerMixins {
         }
         matcher.appendTail(teleportCommandBuffer);
         if (Config.getVerboseLoggingEnabled()) {
-            WaypointsManagerMixins.LOGGER.debug(
+            GTNHCustomizer.getLogger().debug(
                 "Final Xaero's teleport command: {}",
                 teleportCommandBuffer.toString());
         }

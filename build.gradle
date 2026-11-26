@@ -54,7 +54,8 @@ tasks.withType(com.gtnewhorizons.gtnhgradle.tasks.RunHotswappableMinecraftTask) 
         ])
     }
     if (new Boolean(project.findProperty("enableDebugMCLogging"))) {
-        extraJvmArgs.addAll(["-Dlog4j.configurationFile=file://${new File(project.projectDir, "config/log4j2-debug.xml").absolutePath}"])
+        def logConfig = new File(project.projectDir, "config/log4j-debug.xml").toURI()
+        extraJvmArgs.addAll(["-Dlog4j.configurationFile=${logConfig}"])
     }
 }
 

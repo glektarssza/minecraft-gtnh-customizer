@@ -1,6 +1,5 @@
 package com.glektarssza.gtnh_customizer.commands.gtnh_customizer;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -8,16 +7,13 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentTranslation;
 
-import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.api.v2.command.ISubCommand;
@@ -109,14 +105,6 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                 .next();
         }
     }
-
-    /**
-     * The logger for this class.
-     */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
 
     /**
      * The {@link CommandBase} that this instance belongs to.
@@ -256,9 +244,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        GloballyImmunePlayersSubCommand.LOGGER
+                        GTNHCustomizer.getLogger()
                             .warn("Failed to save updated mod configuration!");
-                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
+                        GTNHCustomizer.getLogger().warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.added",
@@ -280,9 +268,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        GloballyImmunePlayersSubCommand.LOGGER
+                        GTNHCustomizer.getLogger()
                             .warn("Failed to save updated mod configuration!");
-                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
+                        GTNHCustomizer.getLogger().warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.removed",
@@ -296,9 +284,9 @@ public class GloballyImmunePlayersSubCommand implements ISubCommand {
                     try {
                         Config.save();
                     } catch (final Throwable t) {
-                        GloballyImmunePlayersSubCommand.LOGGER
+                        GTNHCustomizer.getLogger()
                             .warn("Failed to save updated mod configuration!");
-                        GloballyImmunePlayersSubCommand.LOGGER.warn(t);
+                        GTNHCustomizer.getLogger().warn(t);
                     }
                     CommandBase.func_152373_a(sender, this.getCommandBase(),
                         "gtnh_customizer.commands.gtnh_customizer.info.success.globally_immune_players.cleared",

@@ -1,9 +1,7 @@
 package com.glektarssza.gtnh_customizer;
 
 import java.io.File;
-import java.lang.invoke.MethodHandles;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.server.MinecraftServer;
@@ -26,6 +24,7 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
+import com.glektarssza.gtnh_customizer.api.v2.exception.InvalidStateException;
 import com.glektarssza.gtnh_customizer.commands.CureCommand;
 import com.glektarssza.gtnh_customizer.commands.ExtinguishCommand;
 import com.glektarssza.gtnh_customizer.commands.GTNHCustomizerCommand;
@@ -33,7 +32,6 @@ import com.glektarssza.gtnh_customizer.commands.ListDimensionsCommand;
 import com.glektarssza.gtnh_customizer.commands.RepairCommand;
 import com.glektarssza.gtnh_customizer.commands.TeleportCrossDimensionCommand;
 import com.glektarssza.gtnh_customizer.config.Config;
-import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
 
 import serverutils.ServerUtilitiesRegistry;
 import thaumcraft.common.blocks.BlockCustomPlant;
@@ -43,18 +41,42 @@ import thaumcraft.common.blocks.BlockCustomPlant;
  */
 public class CommonProxy {
     /**
-     * The logger for this class.
+     * The logger for the mod.
      */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
+    @Nullable
+    private Logger logger;
 
     /**
      * The configuration directory.
      */
     @Nullable
     private File configDir;
+
+    /**
+     * Get the logger for this mod.
+     *
+     * @return The logger for this mod.
+     *
+     * @throws InvalidStateException Thrown if the logger is not available.
+     */
+    @NotNull
+    public Logger getLogger() throws InvalidStateException {
+        if (this.logger != null) {
+            return this.logger;
+        }
+        throw new InvalidStateException("Mod logger is not available");
+    }
+
+    /**
+     * Try to get the logger for this mod.
+     *
+     * @return The logger for this mod or {@code null} if the logger is not
+     *         available.
+     */
+    @Nullable
+    public Logger tryGetLogger() {
+        return this.logger;
+    }
 
     /**
      * Get the Minecraft world.
@@ -101,9 +123,27 @@ public class CommonProxy {
      * Get the configuration directory for the mod.
      *
      * @return The configuration directory for the mod.
+     *
+     * @throws InvalidStateException Thrown if the configuration directory is
+     *         not available.
+     */
+    @NotNull
+    public File getConfigDir() throws InvalidStateException {
+        if (this.configDir != null) {
+            return this.configDir;
+        }
+        throw new InvalidStateException(
+            "Configuration directory is not available");
+    }
+
+    /**
+     * Try to get the configuration directory for the mod.
+     *
+     * @return The configuration directory for the mod or {@code null} if the
+     *         configuration directory is not available.
      */
     @Nullable
-    public File getConfigDir() {
+    public File tryGetConfigDir() {
         return this.configDir;
     }
 
@@ -113,21 +153,22 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void preInit(final FMLPreInitializationEvent event) {
-        CommonProxy.LOGGER.info("Pre-initializing server/common-side for {}...",
+        this.logger = event.getModLog();
+        this.getLogger().info("Pre-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         this.configDir = event.getModConfigurationDirectory();
         Config.init(this.configDir, String.format("%s.cfg", Tags.MOD_ID));
-        CommonProxy.LOGGER.info("Loading configuration for {}...",
+        this.getLogger().info("Loading configuration for {}...",
             Tags.MOD_NAME);
         Config.load();
-        CommonProxy.LOGGER.info(
+        this.getLogger().info(
             "Registering mod {} with the Forge event bus...",
             Tags.MOD_NAME);
         MinecraftForge.EVENT_BUS.register(this);
         // -- OnConfigChangedEvent comes in through here
         FMLCommonHandler.instance().bus().register(this);
         this.serverUtilitiesPreInit();
-        CommonProxy.LOGGER.info(
+        this.getLogger().info(
             "Done pre-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
@@ -138,10 +179,10 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void init(final FMLInitializationEvent event) {
-        CommonProxy.LOGGER.info("Initializing server/common-side for {}...",
+        this.getLogger().info("Initializing server/common-side for {}...",
             Tags.MOD_NAME);
         // -- Does nothing yet!
-        CommonProxy.LOGGER.info("Done initializing server/common-side for {}!",
+        this.getLogger().info("Done initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
 
@@ -151,11 +192,11 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void postInit(final FMLPostInitializationEvent event) {
-        CommonProxy.LOGGER.info(
+        this.getLogger().info(
             "Post-initializing server/common-side for {}...",
             Tags.MOD_NAME);
         // -- Does nothing yet!
-        CommonProxy.LOGGER.info(
+        this.getLogger().info(
             "Done post-initializing server/common-side for {}!",
             Tags.MOD_NAME);
     }
@@ -166,14 +207,14 @@ public class CommonProxy {
      * @param event The incoming event.
      */
     public void serverStarting(final FMLServerStartingEvent event) {
-        CommonProxy.LOGGER.info("Handling server about to start for {}...",
+        this.getLogger().info("Handling server about to start for {}...",
             Tags.MOD_NAME);
-        CommonProxy.LOGGER.info("Registering custom commands for {}...",
+        this.getLogger().info("Registering custom commands for {}...",
             Tags.MOD_NAME);
         this.registerCommands(event);
-        CommonProxy.LOGGER.info("Done registering custom commands for {}!",
+        this.getLogger().info("Done registering custom commands for {}!",
             Tags.MOD_NAME);
-        CommonProxy.LOGGER.info("Done handling server about to start for {}!",
+        this.getLogger().info("Done handling server about to start for {}!",
             Tags.MOD_NAME);
     }
 
@@ -240,7 +281,7 @@ public class CommonProxy {
      * Handle the Server Utilities mod pre-initialization registry event.
      */
     private void serverUtilitiesPreInit() {
-        CommonProxy.LOGGER.info(
+        this.getLogger().info(
             "Pre-initializing server/common-side of Server Utilities stuff for {}...",
             Tags.MOD_NAME);
         ServerUtilitiesRegistry.registerServerReloadHandler(
@@ -254,7 +295,7 @@ public class CommonProxy {
                 }
                 return true;
             });
-        CommonProxy.LOGGER.info(
+        this.getLogger().info(
             "Done pre-initializing server/common-side of Server Utilities stuff for {}!",
             Tags.MOD_NAME);
     }

@@ -2,7 +2,6 @@ package com.glektarssza.gtnh_customizer.config;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -19,13 +18,10 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 
-import com.glektarssza.gtnh_customizer.Tags;
+import com.glektarssza.gtnh_customizer.GTNHCustomizer;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.NotNull;
 import com.glektarssza.gtnh_customizer.api.v2.annotation.Nullable;
 import com.glektarssza.gtnh_customizer.api.v2.exception.argument.ArgumentNullException;
@@ -40,14 +36,6 @@ import com.glektarssza.gtnh_customizer.utils.TypeHelpers;
  * The main configuration for the mod.
  */
 public final class Config {
-    /**
-     * The logger for this class.
-     */
-    @NotNull
-    private static final Logger LOGGER = TypeHelpers
-        .castToNonNull(LogManager.getLogger(String.format("%s:%s", Tags.MOD_ID,
-            MethodHandles.lookup().lookupClass().getSimpleName())));
-
     /**
      * The current version of the configuration.
      */
@@ -675,8 +663,9 @@ public final class Config {
     @SuppressWarnings("null")
     public static void refresh() {
         if (Config.configInstance == null) {
-            Config.LOGGER.error("Cannot load configuration!");
-            Config.LOGGER.error("Configuration has not been initialized yet!");
+            GTNHCustomizer.getLogger().error("Cannot load configuration!");
+            GTNHCustomizer.getLogger()
+                .error("Configuration has not been initialized yet!");
             return;
         }
         final Number parsedConfigVersion;
@@ -684,16 +673,16 @@ public final class Config {
             parsedConfigVersion = Integer
                 .parseInt(Config.configInstance.getLoadedConfigVersion(), 10);
         } catch (final Throwable t) {
-            Config.LOGGER
+            GTNHCustomizer.getLogger()
                 .error("Failed to parse in-memory configuration version:", t);
-            Config.LOGGER.error(
+            GTNHCustomizer.getLogger().error(
                 "Got a string '{}' that could not be parsed as an integer",
                 Config.configInstance.getLoadedConfigVersion());
             return;
         }
         if (!parsedConfigVersion.equals(Config.CONFIG_VERSION)) {
-            Config.LOGGER.error("Cannot load configuration!");
-            Config.LOGGER.error(
+            GTNHCustomizer.getLogger().error("Cannot load configuration!");
+            GTNHCustomizer.getLogger().error(
                 "In-memory configuration version of '{}' does not equal expected configuration version of '{}'!",
                 parsedConfigVersion, Config.CONFIG_VERSION);
             return;
@@ -722,11 +711,12 @@ public final class Config {
             throw new ArgumentNullException("config",
                 "Cannot create a backup of a null configuration");
         }
-        Config.LOGGER.debug("Creating a backup of configuration file '{}'...",
+        GTNHCustomizer.getLogger().debug(
+            "Creating a backup of configuration file '{}'...",
             config.getConfigFile().getAbsolutePath());
         final File backupLocation = new File(String.format("%s.bak",
             config.getConfigFile().getAbsolutePath()));
-        Config.LOGGER.debug(
+        GTNHCustomizer.getLogger().debug(
             "Copying main configuration to backup location '{}'...",
             backupLocation.getAbsolutePath());
         Files.copy(config.getConfigFile().toPath(),
@@ -767,14 +757,14 @@ public final class Config {
             try {
                 backupPath = Config.backUpConfig(config);
             } catch (final Throwable t) {
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Failed to backup your current configuration!");
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Here's a stack trace for you to use if you want to diagnose what happened:",
                     t);
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Please do NOT file a bug report about failing to create a backup, this is almost certainly NOT the mod developer's fault!");
-                Config.LOGGER.warn("Proceeding anyway, sorry!");
+                GTNHCustomizer.getLogger().warn("Proceeding anyway, sorry!");
             }
         }
         if (config != null) {
@@ -791,8 +781,9 @@ public final class Config {
     @SuppressWarnings("null")
     public static void load() {
         if (Config.configInstance == null) {
-            Config.LOGGER.error("Cannot load configuration!");
-            Config.LOGGER.error("Configuration has not been initialized yet!");
+            GTNHCustomizer.getLogger().error("Cannot load configuration!");
+            GTNHCustomizer.getLogger()
+                .error("Configuration has not been initialized yet!");
             return;
         }
         Config.configInstance.load();
@@ -800,30 +791,31 @@ public final class Config {
             Config.configInstanceVersion = Integer
                 .parseInt(Config.configInstance.getLoadedConfigVersion());
         } catch (final NumberFormatException _) {
-            Config.LOGGER.error(
+            GTNHCustomizer.getLogger().error(
                 "Got a value of '{}' that could not be parsed as an integer",
                 Config.configInstance.getLoadedConfigVersion());
-            Config.LOGGER.warn(
+            GTNHCustomizer.getLogger().warn(
                 "Unable to determine the version of your configuration!");
-            Config.LOGGER.warn(
+            GTNHCustomizer.getLogger().warn(
                 "Assuming your configuration is corrupted, backing it up and recreating!");
-            Config.LOGGER.warn(
+            GTNHCustomizer.getLogger().warn(
                 "Any customizations you've made are probably about to get nuked!");
             final Path backupPath = Config
                 .recreateConfig(Config.configInstance);
             if (backupPath != null) {
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Your old config was backed up to '{}'", backupPath);
             }
             Config.configInstance.load();
         }
         if (!Config.configInstanceVersion.equals(Config.CONFIG_VERSION)) {
-            Config.LOGGER.warn("Your configuration is out of date!");
-            Config.LOGGER.warn(
+            GTNHCustomizer.getLogger()
+                .warn("Your configuration is out of date!");
+            GTNHCustomizer.getLogger().warn(
                 "We're running version '{}' but you have version '{}'",
                 Config.CONFIG_VERSION,
                 Config.configInstance.getLoadedConfigVersion());
-            Config.LOGGER.warn("Attempting to migrate!");
+            GTNHCustomizer.getLogger().warn("Attempting to migrate!");
             try {
                 Config.applyConfigMigrations(
                     Integer.parseInt(
@@ -831,24 +823,24 @@ public final class Config {
                         10),
                     Config.CONFIG_VERSION);
             } catch (final NoSuchElementException t) {
-                Config.LOGGER.info(
+                GTNHCustomizer.getLogger().info(
                     "No migrations available from version '{}' to version '{}', assuming migration is not required!",
                     Config.configInstance.getLoadedConfigVersion(),
                     Config.CONFIG_VERSION);
             } catch (final Throwable t) {
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Could not migrate configuration from version '{}' to version '{}'!",
                     Config.configInstance.getLoadedConfigVersion(),
                     Config.CONFIG_VERSION);
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Here's a stack trace for you to use if you want to file a bug report about migrations failing:",
                     t);
-                Config.LOGGER.warn(
+                GTNHCustomizer.getLogger().warn(
                     "Any customizations you've made are probably about to get nuked!");
                 final Path backupPath = Config
                     .recreateConfig(Config.configInstance);
                 if (backupPath != null) {
-                    Config.LOGGER.warn(
+                    GTNHCustomizer.getLogger().warn(
                         "Your old config was backed up to '{}'", backupPath);
                 }
                 Config.configInstance.load();
@@ -869,44 +861,50 @@ public final class Config {
         Config.debuggingConfig.loadValues(Config.configInstance);
 
         if (Config.getVerboseLoggingEnabled()) {
-            Config.LOGGER.debug("Loaded mod configuration! Settings are:");
-            Config.LOGGER.debug("=== Gameplay ===");
-            Config.LOGGER.debug("Globally Immune Players:");
+            GTNHCustomizer.getLogger()
+                .debug("Loaded mod configuration! Settings are:");
+            GTNHCustomizer.getLogger().debug("=== Gameplay ===");
+            GTNHCustomizer.getLogger().debug("Globally Immune Players:");
             for (final String player : Config.getGloballyImmunePlayers()) {
-                Config.LOGGER.debug(String.format("* %s", player));
+                GTNHCustomizer.getLogger().debug(String.format("* %s", player));
             }
-            Config.LOGGER
+            GTNHCustomizer.getLogger()
                 .debug(String.format("Prevent Ender Mob Teleportation: %s",
                     Config.getPreventEnderMobTeleportation()));
-            Config.LOGGER.debug("");
-            Config.LOGGER.debug("=== Commands ===");
-            Config.LOGGER
+            GTNHCustomizer.getLogger().debug("");
+            GTNHCustomizer.getLogger().debug("=== Commands ===");
+            GTNHCustomizer.getLogger()
                 .debug(String.format("Repair Raycast Ignores Liquids: %s",
                     Config.getRepairCommandRaycastIgnoresLiquids()));
-            Config.LOGGER.debug(String.format("Extinguish Max Block Volume: %s",
-                Config.getExtinguishCommandMaxVolume()));
-            Config.LOGGER.debug("");
-            Config.LOGGER.debug("=== Debugging ===");
-            Config.LOGGER.debug(String.format("Verbose Logging: %s",
-                Config.getVerboseLoggingEnabled()));
-            Config.LOGGER.debug("");
-            Config.LOGGER.debug("=== Gameplay - Tinker's Construct ===");
-            Config.LOGGER
+            GTNHCustomizer.getLogger()
+                .debug(String.format("Extinguish Max Block Volume: %s",
+                    Config.getExtinguishCommandMaxVolume()));
+            GTNHCustomizer.getLogger().debug("");
+            GTNHCustomizer.getLogger().debug("=== Debugging ===");
+            GTNHCustomizer.getLogger()
+                .debug(String.format("Verbose Logging: %s",
+                    Config.getVerboseLoggingEnabled()));
+            GTNHCustomizer.getLogger().debug("");
+            GTNHCustomizer.getLogger()
+                .debug("=== Gameplay - Tinker's Construct ===");
+            GTNHCustomizer.getLogger()
                 .debug(String.format("Can Bone Meal Slime Saplings: %s",
                     Config.getTConstructCanBoneMealSlimeSaplings()));
-            Config.LOGGER.debug("");
-            Config.LOGGER.debug("=== Gameplay - Thaumcraft ===");
-            Config.LOGGER
+            GTNHCustomizer.getLogger().debug("");
+            GTNHCustomizer.getLogger().debug("=== Gameplay - Thaumcraft ===");
+            GTNHCustomizer.getLogger()
                 .debug(String.format("Can Bone Meal Greatwood Saplings: %s",
                     Config.getTConstructCanBoneMealSlimeSaplings()));
-            Config.LOGGER.debug(String.format("Can Bone Meal Silverwood: %s",
-                Config.getTConstructCanBoneMealSlimeSaplings()));
-            Config.LOGGER.debug("");
-            Config.LOGGER.debug("=== Gameplay - Xaero's World Map ===");
-            Config.LOGGER
+            GTNHCustomizer.getLogger()
+                .debug(String.format("Can Bone Meal Silverwood: %s",
+                    Config.getTConstructCanBoneMealSlimeSaplings()));
+            GTNHCustomizer.getLogger().debug("");
+            GTNHCustomizer.getLogger()
+                .debug("=== Gameplay - Xaero's World Map ===");
+            GTNHCustomizer.getLogger()
                 .debug(String.format("Show Hovered Over Biome in World Map: %s",
                     Config.getXaerosWorldMapShowHoveredBiome()));
-            Config.LOGGER.debug("");
+            GTNHCustomizer.getLogger().debug("");
         }
     }
 
@@ -926,8 +924,9 @@ public final class Config {
     @SuppressWarnings("null")
     public static void save() {
         if (Config.configInstance == null) {
-            Config.LOGGER.error("Cannot save configuration!");
-            Config.LOGGER.error("Configuration has not been initialized yet!");
+            GTNHCustomizer.getLogger().error("Cannot save configuration!");
+            GTNHCustomizer.getLogger()
+                .error("Configuration has not been initialized yet!");
             return;
         }
         Config.commandsConfig.saveValues(Config.configInstance);
